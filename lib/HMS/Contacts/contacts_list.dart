@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
 import 'package:horse_management/Network_Operations.dart';
-
 import '../../Utils.dart';
 import 'add_contacts.dart';
 import 'contact_detail.dart';
@@ -43,9 +41,7 @@ class _contacts_list_state extends State<contacts_list>{
           },
 
         ),
-        body: Column(
-          children: <Widget>[
-            RefreshIndicator(
+        body: RefreshIndicator(
               key: _refreshIndicatorKey,
               onRefresh: (){
                 return  Utils.check_connectivity().then((result){
@@ -139,8 +135,6 @@ class _contacts_list_state extends State<contacts_list>{
                 }),
               ),
             ),
-          ],
-        )
     );
   }
 

@@ -29,8 +29,6 @@ class _training_list_state extends State<training_list>{
  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   @override
   Widget build(BuildContext context) {
-
-    // TODO: implement build
     return Scaffold(
         appBar: AppBar(title: Text("Trainings")),
         floatingActionButton: FloatingActionButton(

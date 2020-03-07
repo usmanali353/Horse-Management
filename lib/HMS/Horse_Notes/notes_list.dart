@@ -40,9 +40,7 @@ class _notes_list_state extends State<notes_list>{
           },
 
         ),
-        body: Column(
-          children: <Widget>[
-            RefreshIndicator(
+        body: RefreshIndicator(
               key: _refreshIndicatorKey,
               onRefresh: (){
                 return  Utils.check_connectivity().then((result){
@@ -74,7 +72,7 @@ class _notes_list_state extends State<notes_list>{
               },
               child: Visibility(
                 visible: isvisible,
-                child: ListView.builder(shrinkWrap:true,itemCount:notes_list!=null?notes_list.length:temp.length,itemBuilder: (context,int index){
+                child: ListView.builder(itemCount:notes_list!=null?notes_list.length:temp.length,itemBuilder: (context,int index){
                   return Column(
                     children: <Widget>[
                       Slidable(
@@ -137,8 +135,6 @@ class _notes_list_state extends State<notes_list>{
                 }),
               ),
             ),
-          ],
-        )
     );
   }
 

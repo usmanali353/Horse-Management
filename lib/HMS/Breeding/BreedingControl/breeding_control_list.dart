@@ -39,9 +39,7 @@ class _breeding_control_list_state extends State<breeding_control_list>{
           },
 
         ),
-        body: Column(
-          children: <Widget>[
-            RefreshIndicator(
+        body: RefreshIndicator(
               key: _refreshIndicatorKey,
               onRefresh: (){
                 return  Utils.check_connectivity().then((result){
@@ -133,8 +131,6 @@ class _breeding_control_list_state extends State<breeding_control_list>{
                 }),
               ),
             ),
-          ],
-        )
     );
   }
 String get_check_method_by_id(int id){

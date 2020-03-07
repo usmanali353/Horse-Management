@@ -65,7 +65,7 @@ class _Home_Page_State extends State<Home_Page>{
                     leading: Icon(Icons.list),
                     onTap: () async{
                       SharedPreferences prefs=await SharedPreferences.getInstance();
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> all_horse_data(prefs.getString("token")) ));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> already_trained_horses_list(prefs.getString("token")) ));
                     },
                   ),
                   ListTile(

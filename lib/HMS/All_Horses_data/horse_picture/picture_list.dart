@@ -40,8 +40,7 @@ class _pictures_list_state extends State<pictures_list>{
           },
 
         ),
-        body: Column(
-          children: <Widget>[
+        body:
             RefreshIndicator(
               key: _refreshIndicatorKey,
               onRefresh: (){
@@ -74,7 +73,7 @@ class _pictures_list_state extends State<pictures_list>{
               },
               child: Visibility(
                 visible: isvisible,
-                child: ListView.builder(shrinkWrap:true,itemCount:picture_list!=null?picture_list.length:temp.length,itemBuilder: (context,int index){
+                child: ListView.builder(itemCount:picture_list!=null?picture_list.length:temp.length,itemBuilder: (context,int index){
                   return Column(
                     children: <Widget>[
                       Slidable(
@@ -131,8 +130,6 @@ class _pictures_list_state extends State<pictures_list>{
                 }),
               ),
             ),
-          ],
-        )
     );
   }
 

@@ -43,9 +43,7 @@ class _semen_collection_list_state extends State<semen_collection_list>{
             Navigator.push(context, MaterialPageRoute(builder: (context)=>add_semen_collection(token)));
           },
         ),
-        body: Column(
-          children: <Widget>[
-            RefreshIndicator(
+        body: RefreshIndicator(
               key: _refreshIndicatorKey,
               onRefresh: (){
                 return  Utils.check_connectivity().then((result){
@@ -78,7 +76,7 @@ class _semen_collection_list_state extends State<semen_collection_list>{
               },
               child: Visibility(
                 visible: isvisible,
-                child: ListView.builder(shrinkWrap:true,itemCount:siemen_col_list!=null?siemen_col_list.length:temp.length,itemBuilder: (context,int index){
+                child: ListView.builder(itemCount:siemen_col_list!=null?siemen_col_list.length:temp.length,itemBuilder: (context,int index){
                   return Column(
                     children: <Widget>[
                       Slidable(
@@ -140,8 +138,6 @@ class _semen_collection_list_state extends State<semen_collection_list>{
                 }),
               ),
             ),
-          ],
-        )
     );
   }
 
