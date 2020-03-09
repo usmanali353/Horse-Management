@@ -65,7 +65,7 @@ class _incomeExpense_list_state extends State<specificTraining_list>{
           return Column(
             children: <Widget>[
               ExpansionTile(
-                title: Text(list[index]['trainingType'] != null ? get_training_type_by_id(list[index]['trainingType']):'Type Empty',textScaleFactor: 1.3,),
+                title: Text(list[index]['trainingType'] != null ? get_training_type_by_id(list[index]['trainingType']):'TrainerType Empty',textScaleFactor: 1.3,),
                 subtitle: Text(list != null ?list[index]['startDate'].toString():"date empty"),
                 trailing: Text(list != null ? list[index]['status'].toString():'status empty'),
 
