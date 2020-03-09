@@ -1,10 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:horse_management/HMS/All_Horses_data/Horse_Notes/add_new_note.dart';
+import 'package:horse_management/HMS/All_Horses_data/Horse_Notes/notes_list.dart';
 import 'package:horse_management/HMS/All_Horses_data/Horse_Videos/horse_videos_list.dart';
 import 'package:horse_management/HMS/All_Horses_data/Movement/movement.list.dart';
-import 'package:horse_management/HMS/All_Horses_data/add_horse/horses_list.dart';
 import 'package:horse_management/HMS/All_Horses_data/competetion/competetion_list.dart';
 import 'package:horse_management/HMS/All_Horses_data/farrier/farrierList.dart';
 import 'package:horse_management/HMS/All_Horses_data/lab_reports/lab_test_list.dart';
@@ -109,7 +108,7 @@ class _Profile_Page_State extends State<all_horse_data>{
                 leading: Icon(FontAwesomeIcons.stickyNote,size: 40,),
                 trailing: Icon(Icons.arrow_right),
                 onTap: () {
-                  Navigator.push(context,MaterialPageRoute(builder: (context)=>add_new_note(token)));
+                  Navigator.push(context,MaterialPageRoute(builder: (context)=>notes_list(token)));
                 },
               ),
               ListTile(
