@@ -153,9 +153,6 @@ class _Home_Page_State extends State<Home_Page>{
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -189,7 +186,7 @@ class _Home_Page_State extends State<Home_Page>{
                           onPressed: () async{
                             prefs= await SharedPreferences.getInstance();
                             setState(() {
-                              currentScreen = already_trained_horses_list(prefs.getString("token"));
+                              currentScreen = all_horse_data(prefs.getString("token"));
                               // if user taps on this dashboard tab will be active
                               currentTab = 1;
                               print(currentTab.toString());
@@ -272,10 +269,6 @@ class _Home_Page_State extends State<Home_Page>{
                         )
                       ],
                     )
-                  ],
-                )
-
-
               ],
             ),
           ),
