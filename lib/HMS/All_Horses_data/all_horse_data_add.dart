@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:horse_management/HMS/All_Horses_data/Horse_Notes/add_new_note.dart';
 import 'package:horse_management/HMS/All_Horses_data/Horse_Videos/horse_videos_list.dart';
 import 'package:horse_management/HMS/All_Horses_data/Movement/movement.list.dart';
 import 'package:horse_management/HMS/All_Horses_data/add_horse/horses_list.dart';
@@ -11,6 +10,7 @@ import 'package:horse_management/HMS/All_Horses_data/services/add_horse_services
 import 'package:horse_management/HMS/All_Horses_data/swabbing/swabbing_list.dart';
 import 'package:horse_management/HMS/All_Horses_data/vaccination/vaccination_list.dart';
 import 'package:horse_management/HMS/All_Horses_data/weight_hieght/hieght_weight_list.dart';
+import 'package:horse_management/HMS/Horse_Notes/notes_list.dart';
 import 'health_record/health_record_list.dart';
 import 'horse_picture/picture_list.dart';
 import 'incomeExpense/income_expense_list.dart';
@@ -108,7 +108,7 @@ class _Profile_Page_State extends State<all_horse_data>{
                 leading: Icon(Icons.speaker_notes,size: 40,),
                 trailing: Icon(Icons.arrow_right),
                 onTap: () {
-                  Navigator.push(context,MaterialPageRoute(builder: (context)=>add_new_note(token)));
+                  Navigator.push(context,MaterialPageRoute(builder: (context)=>notes_list(token)));
                 },
               ),
               ListTile(

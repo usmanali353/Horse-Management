@@ -115,7 +115,7 @@ class _breeding_control_list_state extends State<breeding_control_list>{
                           ),
                         ],
                         child: ListTile(
-                          trailing:Text(b_c_list!=null?b_c_list[index]['date'].toString():''),
+                          trailing:Text(b_c_list!=null?b_c_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
                           title: Text(b_c_list!=null?b_c_list[index]['horseName']['name']:''),
                           subtitle: Text(b_c_list!=null?get_check_method_by_id(b_c_list[index]['check_Method']):''),
                           leading: Icon(Icons.pets,size: 40,color: Colors.teal,),

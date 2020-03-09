@@ -118,7 +118,7 @@ class _pictures_list_state extends State<pictures_list>{
                         ],
                         child: ListTile(
                           title: Text(picture_list!=null?picture_list[index]['horseName']['name']:''),
-                          subtitle: Text(picture_list!=null?picture_list[index]['date'].toString():''),
+                          subtitle: Text(picture_list!=null?picture_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
                           leading: picture_list[index]['image']!=null?Image.memory(base64.decode(picture_list[index]['image'])):Text(''),
                         ),
                       ),

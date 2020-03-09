@@ -111,7 +111,7 @@ class _already_trained_horses_list_state extends State<already_trained_horses_li
                   ],
                   child: ListTile(
                     title: Text(already_trained_list!=null?already_trained_list[index]['horseName']['name']:''),
-                    trailing: Text(already_trained_list!=null?already_trained_list[index]['startDate']:''),
+                    trailing: Text(already_trained_list!=null?already_trained_list[index]['startDate'].replaceAll("T00:00:00",''):''),
                     subtitle: Text(already_trained_list!=null?get_training_type_by_id(already_trained_list[index]['trainingType']):''),
                     leading: Image.asset("Assets/horse_icon.png"),
                     onTap: (){

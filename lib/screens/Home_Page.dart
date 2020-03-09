@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/All_Horses_data/all_horse_data_add.dart';
 import 'package:horse_management/HMS/Breeding/breeding_mainPage.dart';
+import 'package:horse_management/HMS/Contacts/contacts_list.dart';
 import 'package:horse_management/HMS/Operation%20Notes/operation_notes.dart';
 import 'package:horse_management/HMS/Training/already_trained_horses_list.dart';
 import 'package:horse_management/HMS/Training/training_list.dart';
@@ -65,7 +66,7 @@ class _Home_Page_State extends State<Home_Page>{
                     leading: Icon(Icons.list),
                     onTap: () async{
                       SharedPreferences prefs=await SharedPreferences.getInstance();
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> already_trained_horses_list(prefs.getString("token")) ));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> all_horse_data(prefs.getString("token")) ));
                     },
                   ),
                   ListTile(

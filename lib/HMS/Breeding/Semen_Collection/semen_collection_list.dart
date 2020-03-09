@@ -120,7 +120,7 @@ class _semen_collection_list_state extends State<semen_collection_list>{
                         ],
                         child: ListTile(
                           title: Text(siemen_col_list!=null?siemen_col_list[index]['horseName']['name']:''),
-                          trailing: Text(siemen_col_list!=null?siemen_col_list[index]['date']:''),
+                          trailing: Text(siemen_col_list!=null?siemen_col_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
                           //subtitle: Text(training_list!=null?get_training_type_by_id(training_list[index]['trainingType']):''),
                           leading: Image.asset("Assets/horse_icon.png"),
                           onTap: (){

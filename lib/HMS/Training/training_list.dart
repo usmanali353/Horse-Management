@@ -168,7 +168,7 @@ class _training_list_state extends State<training_list>{
                         ],
                         child: ListTile(
                           title: Text(training_list!=null?training_list[index]['horseName']['name']:''),
-                          trailing: Text(training_list!=null?training_list[index]['startDate']:''),
+                          trailing: Text(training_list!=null?training_list[index]['startDate'].toString().replaceAll("T00:00:00",''):''),
                           subtitle: Text(training_list!=null?get_training_type_by_id(training_list[index]['trainingType']):''),
                           leading: Icon(Icons.fitness_center,size: 40,color: Colors.teal,),
                           onTap: (){

@@ -40,11 +40,13 @@ class update_note_state extends State<update_notes>{
       if(result){
         network_operations.get_notes_dropdown(token).then((response){
           if(response!=null){
-            notes_dropdowns=json.decode(response);
-            horses_loaded=true;
-            for(int i=0;i<notes_dropdowns['horseDropDown'].length;i++){
-              horse_name.add(notes_dropdowns['horseDropDown'][i]['name']);
-            }
+           setState(() {
+             notes_dropdowns=json.decode(response);
+             horses_loaded=true;
+             for(int i=0;i<notes_dropdowns['horseDropDown'].length;i++){
+               horse_name.add(notes_dropdowns['horseDropDown'][i]['name']);
+             }
+           });
           }else{
 
           }

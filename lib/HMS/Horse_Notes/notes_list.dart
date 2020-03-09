@@ -117,7 +117,7 @@ class _notes_list_state extends State<notes_list>{
                         ],
                         child: ListTile(
                           title: Text(notes_list!=null?notes_list[index]['horseName']['name']:''),
-                          subtitle: Text(notes_list!=null?notes_list[index]['date']:''),
+                          subtitle: Text(notes_list!=null?notes_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
                           //subtitle: Text(training_list!=null?get_training_type_by_id(training_list[index]['trainingType']):''),
                           leading: Icon(Icons.note,size: 40,color: Colors.teal,),
                           onTap: (){

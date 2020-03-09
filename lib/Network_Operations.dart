@@ -234,7 +234,7 @@ static Future<String> get_all_notes(String token) async{
 }
 static Future<String> change_contact_visibility(String token,int id) async{
   Map<String,String> headers = {'Authorization':'Bearer '+token};
-  var response =await http.get('http://192.236.147.77:8083/api/HMS.Contacts/ContactsVisibility/'+id.toString(),headers: headers);
+  var response =await http.get('http://192.236.147.77:8083/api/Contacts/ContactsVisibility/'+id.toString(),headers: headers);
   if(response.statusCode==200){
     return response.body;
   }else
@@ -242,16 +242,16 @@ static Future<String> change_contact_visibility(String token,int id) async{
 }
 static Future<String> get_all_contacts(String token) async{
   Map<String,String> headers = {'Authorization':'Bearer '+token};
-  final response = await http.get('http://192.236.147.77:8083/api/HMS.Contacts/GetAllContacts', headers: headers,);
+  final response = await http.get('http://192.236.147.77:8083/api/Contacts/GetAllContacts', headers: headers,);
   if(response.statusCode==200){
     return response.body;
   }else
     return null;
 }
-static Future<String> add_contact(String token,int contactId,String name,String website,String facebook,String instagram,String twitter,String email,String address,String mobile,String phone,String cnic,Uint8List picture)async{
-  Map<String,String> headers = {'Authorization':'Bearer '+token};
-  final body = jsonEncode({"contactId":contactId,"Name":name,"website":website,"facebook":facebook,"instagram":instagram,"twiter":twitter,"email":email,"address":address,"mobileNo":mobile,"phoneNo":phone,"cnic":cnic,"picture":picture},toEncodable: Utils.myEncode);
-  var response= await http.post("http://192.236.147.77:8083/api/HMS.Contacts/ContactSave",headers: headers,body: body);
+static Future<String> add_contact(String token,int contactId,String name,String website,String facebook,String instagram,String twitter,String email,String address,String mobile,String phone,String cnic,Uint8List picture,List<Map> contact_type)async{
+  Map<String,String> headers = {'Authorization':'Bearer '+token,'Content-Type':'application/json'};
+  final body = jsonEncode({"contactId":contactId,"Name":name,"website":website,"facebook":facebook,"instagram":instagram,"twiter":twitter,"email":email,"address":address,"mobileNo":mobile,"phoneNo":phone,"cnic":cnic,"picture":picture,"contactTypess":contact_type},toEncodable: Utils.myEncode);
+  var response= await http.post("http://192.236.147.77:8083/api/Contacts/ContactSave",headers: headers,body: body);
   print(response.body);
   if(response.statusCode==200){
     return response.body;
