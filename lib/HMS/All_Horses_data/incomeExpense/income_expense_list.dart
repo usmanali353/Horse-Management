@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/All_Horses_data/services/incomeExpense_services.dart';
@@ -91,12 +90,47 @@ class _incomeExpense_list_state extends State<income_expense_list>{
         body:ListView.builder(itemCount:list!=null?list.length:temp.length,itemBuilder: (context,int index){
           return Column(
             children: <Widget>[
-              ExpansionTile(
-          //['categoryName']['name']
-                title: Text(list[index]['horseName']['name']),
-                trailing: Text(list[index]['date'].toString()),
+              Slidable(
+                actionPane: SlidableDrawerActionPane(),
+                actionExtentRatio: 0.20,
+                actions: <Widget>[
+                  IconSlideAction(onTap: ()async{
+                    prefs = await SharedPreferences.getInstance();
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_IncomeExpense(list[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
 
-                children: <Widget>[
+                  },color: Colors.blue,icon: Icons.border_color,caption: 'update',),
+                  IconSlideAction(
+                    icon: Icons.visibility_off,
+                    color: Colors.red,
+                    caption: 'Hide',
+                    onTap: () async {
+                      income_expense_services.incomevisibilty(token, list[index]['id']).then((response){
+                        //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
+                        print(response);
+                        if(response!=null){
+
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            backgroundColor:Colors.green ,
+                            content: Text('Visibility Changed'),
+                          ));
+
+                        }else{
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            backgroundColor:Colors.red ,
+                            content: Text('Failed'),
+                          ));
+                        }
+                      });
+                    },
+                  ),
+                ],
+                child: ExpansionTile(
+          //['categoryName']['name']
+                  title: Text(list != null ? list[index]['horseName']['name']:""),
+                  subtitle: Text(list != null ? "Account: "+list[index]['categoryName']['name']:""),
+                  trailing: Text(list != null ? "Date: "+list[index]['date'].toString().substring(0,10):""),
+
+                  children: <Widget>[
 //
 //                   ListTile(
 //                    title: Text((list[index]['id'].toString())),
@@ -107,34 +141,35 @@ class _incomeExpense_list_state extends State<income_expense_list>{
 //                    },
 //                  ),
 //                  Divider(),
-              ListTile(
-                title: Text("Date"),
-                trailing: Text(list[index]['date'].toString()),
-                onTap: ()async{
-                  //list[index]['categoryDropDown']['categoryId']['name'].toString()
-//                  print(incomelist['horseDropdown'][list[0]['horseId']]==['id']);
-//                  print(incomelist['horseDropdown']);
-//                  print(list);
-                  print(list[index]['id']);
-                  prefs= await SharedPreferences.getInstance();
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => update_IncomeExpense(list[index]['id'],prefs.get('token'),prefs.get('createdBy'))),);
+//                ListTile(
+//                  title: Text("Date"),
+//                  trailing: Text(list[index]['date'].toString()),
+//                  onTap: ()async{
+//                    //list[index]['categoryDropDown']['categoryId']['name'].toString()
+////                  print(incomelist['horseDropdown'][list[0]['horseId']]==['id']);
+////                  print(incomelist['horseDropdown']);
+////                  print(list);
+//                    print(list[index]['id']);
+//                    prefs= await SharedPreferences.getInstance();
+//                    //Navigator.push(context, MaterialPageRoute(builder: (context) => update_IncomeExpense(list[index]['id'],prefs.get('token'),prefs.get('createdBy'))),);
+//
+//                  },
+//                ),
+//                Divider(),
+//                ListTile(
+//                  title: Text("Cost Center"),
+//                  trailing: Text(list[index]['costCenterId'].toString()),
+//                ),
+                Divider(),
+                ListTile(
+                  title: Text("Amount"),
+                  trailing: Text(list != null ? list[index]['amount'].toString():""),
+                )
 
-                },
-              ),
-              Divider(),
-              ListTile(
-                title: Text("Cost Center"),
-                trailing: Text(list[index]['costCenterId'].toString()),
-              ),
-              Divider(),
-              ListTile(
-                title: Text("Amount"),
-                trailing: Text(list[index]['amount'].toString()),
-              )
-
-                ],
+                  ],
 
 
+                ),
               ),
               Divider(),
             ],

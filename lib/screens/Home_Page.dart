@@ -6,6 +6,7 @@ import 'package:horse_management/HMS/Operation%20Notes/operation_notes.dart';
 import 'package:horse_management/HMS/Training/already_trained_horses_list.dart';
 import 'package:horse_management/HMS/Training/training_list.dart';
 import 'package:horse_management/HMS/Veterinary/vet_mainPage.dart';
+import 'package:horse_management/HMS/my_horses/horses_list.dart';
 import 'package:horse_management/screens/tasks_Page.dart';
 import 'package:horse_management/screens/Notification_Page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -62,7 +63,7 @@ class _Home_Page_State extends State<Home_Page>{
 //                  ),
                   ListTile(
                     title: Text("All Horses Data", style: TextStyle(fontWeight: FontWeight.bold)),
-                    leading: Icon(Icons.list),
+                    leading: Icon(FontAwesomeIcons.horseHead),
                     onTap: () async{
                       SharedPreferences prefs=await SharedPreferences.getInstance();
                       Navigator.push(context, MaterialPageRoute(builder: (context)=> all_horse_data(prefs.getString("token")) ));
@@ -185,7 +186,7 @@ class _Home_Page_State extends State<Home_Page>{
                       onPressed: () async{
                         prefs= await SharedPreferences.getInstance();
                         setState(() {
-                          currentScreen = already_trained_horses_list(prefs.getString("token"));
+                          currentScreen = horse_list(prefs.getString("token"));
                              // if user taps on this dashboard tab will be active
                           currentTab = 1;
                           print(currentTab.toString());
@@ -195,8 +196,8 @@ class _Home_Page_State extends State<Home_Page>{
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Icon(
-                            Icons.person,
-                            color: currentTab == 1 ? Colors.teal : Colors.grey,
+                            FontAwesomeIcons.horse,
+                            color: currentTab == 1 ? Colors.teal : Colors.brown,
                           ),
                           Text(
                             'My Horses',

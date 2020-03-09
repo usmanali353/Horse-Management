@@ -55,6 +55,7 @@ class _Profile_Page_State extends State<weight_hieght_list>{
             context, isDismissible: true, type: ProgressDialogType.Normal);
         pd.show();
         weight_hieght_services.weight_hieght_list(token).then((response){
+          pd.dismiss();
           setState(() {
             print(response);
             weightlist =json.decode(response);
@@ -74,7 +75,7 @@ class _Profile_Page_State extends State<weight_hieght_list>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Lab Test"),actions: <Widget>[
+        appBar: AppBar(title: Text("Weight & Height"),actions: <Widget>[
           Center(child: Text("Add New",textScaleFactor: 1.3,)),
           IconButton(
 
@@ -118,11 +119,17 @@ class _Profile_Page_State extends State<weight_hieght_list>{
                       });
                     },
                   ),
+                  IconSlideAction(onTap: ()async{
+                    prefs = await SharedPreferences.getInstance();
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_weight_and_height(weightlist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
+
+                  },color: Colors.blue,icon: Icons.border_color,caption: 'update',)
                 ],
                 child: ListTile(
                   //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                   title: Text(weightlist!=null?(weightlist[index]['horseName']['name']):''),
-                  subtitle: Text(""),
+                  subtitle: Text(weightlist[index]['weight']!=null?"Weight: "+(weightlist[index]['weight']).toString():'weight empty'),
+                  trailing: Text(weightlist[index]['height']!=null?"Height: "+(weightlist[index]['height']).toString():'hieght empty'),
                   //leading: Image.asset("Assets/horses_icon.png"),
                   onTap: ()async{
                     prefs = await SharedPreferences.getInstance();
@@ -131,13 +138,9 @@ class _Profile_Page_State extends State<weight_hieght_list>{
                   },
                 ),
 
-               secondaryActions: <Widget>[
-                 IconSlideAction(onTap: ()async{
-                   prefs = await SharedPreferences.getInstance();
-                   Navigator.push(context, MaterialPageRoute(builder: (context)=>update_weight_and_height(weightlist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
-
-                 },color: Colors.blue,icon: Icons.border_color,caption: 'update',)
-               ],
+//               secondaryActions: <Widget>[
+//
+//               ],
               ),
               Divider(),
             ],

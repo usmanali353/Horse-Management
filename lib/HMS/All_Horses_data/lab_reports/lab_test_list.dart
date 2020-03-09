@@ -28,6 +28,7 @@ class _Profile_Page_State extends State<lab_list>{
   _Profile_Page_State (this.token);
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   String token;
+  bool isVisible=false;
   var lablist;
   var temp=['',''];
 
@@ -51,6 +52,7 @@ class _Profile_Page_State extends State<lab_list>{
           pd.show();
           labtest_services.labTestlist(token).then((response) {
             pd.dismiss();
+            isVisible = true;
             setState(() {
               print(response);
              lablist = json.decode(response);
@@ -64,24 +66,6 @@ class _Profile_Page_State extends State<lab_list>{
         }
 
           });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   }
 
   @override
@@ -102,64 +86,94 @@ class _Profile_Page_State extends State<lab_list>{
           )
         ],),
 
-        body: ListView.builder(itemCount:lablist!=null?lablist.length:temp.length,itemBuilder: (context,int index){
-          return Column(
-            children: <Widget>[
-              Slidable(
-                actionPane: SlidableDrawerActionPane(),
-                actionExtentRatio: 0.20,
-                secondaryActions: <Widget>[
-                  IconSlideAction(onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_labTest(lablist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
+        body: Visibility(
+          visible: isVisible,
+          child: RefreshIndicator(
+            key: _refreshIndicatorKey,
+            onRefresh: (){
+              return Utils.check_connectivity().then((result){
+                if(result){
+                  labtest_services.labTestlist(token).then((response){
+                    // print(response.length.toString());
+                    if(response!=null){
+                      setState(() {
+                        //var parsedjson = jsonDecode(response);
+                        lablist  = jsonDecode(response);
+                        print(lablist);
+                        //print(horse_list['createdBy']);
+                      });
+                    }
+                  });
+                }else{
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    backgroundColor:Colors.red ,
+                    content: Text('Network Error'),
+                  ));
+                }
+              });
+            },
+            child: ListView.builder(itemCount:lablist!=null?lablist.length:temp.length,itemBuilder: (context,int index){
+              return Column(
+                children: <Widget>[
+                  Slidable(
+                    actionPane: SlidableDrawerActionPane(),
+                    actionExtentRatio: 0.20,
+//                secondaryActions: <Widget>[
+//
+//                ],
+                    actions: <Widget>[
+                      IconSlideAction(onTap: ()async{
+                        prefs = await SharedPreferences.getInstance();
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>update_labTest(lablist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
 
-                  },color: Colors.blue,icon: Icons.border_color,caption: 'update',)
-                ],
-                actions: <Widget>[
-                  IconSlideAction(
-                    icon: Icons.visibility_off,
-                    color: Colors.red,
-                    caption: 'Hide',
-//                    onTap: () async {
-//                      Add_horse_services.horsevisibilty(token, horse_list[index]['horseId']).then((response){
-//                        //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
-//                        print(response);
-//                        if(response!=null){
-//
-//                          Scaffold.of(context).showSnackBar(SnackBar(
-//                            backgroundColor:Colors.green ,
-//                            content: Text('Visibility Changed'),
-//                          ));
-//
-//                        }else{
-//                          Scaffold.of(context).showSnackBar(SnackBar(
-//                            backgroundColor:Colors.red ,
-//                            content: Text('Failed'),
-//                          ));
-//                        }
-//                      });
-//                    },
+                      },color: Colors.blue,icon: Icons.border_color,caption: 'update',),
+                      IconSlideAction(
+                        icon: Icons.visibility_off,
+                        color: Colors.red,
+                        caption: 'Hide',
+                        onTap: () async {
+                          labtest_services.labTestvisibilty(token, lablist[index]['id']).then((response){
+                            //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
+                            print(response);
+                            if(response!=null){
+
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                backgroundColor:Colors.green ,
+                                content: Text('Visibility Changed'),
+                              ));
+
+                            }else{
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                backgroundColor:Colors.red ,
+                                content: Text('Failed'),
+                              ));
+                            }
+                          });
+                        },
+                      ),
+                    ],
+                    child: ListTile(
+              //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
+                      title: Text(lablist!=null?(lablist[index]['horseName']['name']):''),
+                      subtitle: Text(lablist[index]['testTypes']!=null?(lablist[index]['testTypes']['name']):'testtype empty'),
+                      trailing: Text(lablist[index]['responsibleName'] != null ? lablist[index]['responsibleName']['contactName']['name']:" name empty"),
+                      //leading: Image.asset("Assets/horses_icon.png"),
+                      onTap: ()async{
+                        prefs = await SharedPreferences.getInstance();
+                        print((lablist[index]));
+                      },
+                    ),
+
+
                   ),
+                  Divider(),
                 ],
-                child: ListTile(
-          //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
-                  title: Text(lablist!=null?(lablist[index]['horseName']['name']):''),
-                  subtitle: Text(""),
-                  //leading: Image.asset("Assets/horses_icon.png"),
-                  onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    print((lablist[index]));
-                  },
-                ),
 
+              );
 
-              ),
-              Divider(),
-            ],
-
-          );
-
-        })
+            }),
+          ),
+        )
     );
   }
 

@@ -5,6 +5,8 @@ import 'package:horse_management/HMS/All_Horses_data/farrier/add_farrier.dart';
 import 'package:horse_management/HMS/All_Horses_data/farrier/updateFarrier.dart';
 import 'package:horse_management/HMS/All_Horses_data/lab_reports/update_lab_reports.dart';
 import 'package:horse_management/HMS/All_Horses_data/services/farrier_services.dart';
+import 'package:horse_management/Utils.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -46,13 +48,23 @@ class _Profile_Page_State extends State<farrier_list>{
 //        labdropDown = json.decode(response);
 //      });
 //    });
-    farrier_services.farrierlist(token).then((
-        response) {
-      setState(() {
-        print(response);
-        farrierlist = json.decode(response);
-      });
+
+    Utils.check_connectivity().then((result){
+      if(result) {
+        ProgressDialog pd = ProgressDialog(
+            context, isDismissible: true, type: ProgressDialogType.Normal);
+        pd.show();
+        farrier_services.farrierlist(token).then((response) {
+          pd.dismiss();
+          setState(() {
+            print(response);
+            farrierlist = json.decode(response);
+          });
+        });
+      }else
+        print("network nahi hai");
     });
+
   }
 
   @override
@@ -107,7 +119,8 @@ class _Profile_Page_State extends State<farrier_list>{
                 child: ListTile(
                   //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                   title: Text(farrierlist!=null?(farrierlist[index]['horseName']['name']):''),
-                  subtitle: Text(farrierlist!=null?(farrierlist[index]['farrierName']['contactName']['name']):'farrier name not showing'),
+                  subtitle: Text(farrierlist!=null?"Farrier: "+(farrierlist[index]['farrierName']['contactName']['name']):'farrier name not showing'),
+                  trailing: Text(farrierlist!=null?"Amount: "+(farrierlist[index]['amount']).toString():''),
                   //leading: Image.asset("Assets/horses_icon.png"),
                   onTap: ()async{
                     prefs = await SharedPreferences.getInstance();

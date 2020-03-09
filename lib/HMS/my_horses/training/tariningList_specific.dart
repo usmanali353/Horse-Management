@@ -66,8 +66,9 @@ class _incomeExpense_list_state extends State<specificTraining_list>{
             children: <Widget>[
               ExpansionTile(
                 title: Text(list[index]['trainingType'] != null ? get_training_type_by_id(list[index]['trainingType']):'Type Empty',textScaleFactor: 1.3,),
-                subtitle: Text(list[index]['startDate'].toString()),
+                subtitle: Text(list != null ?list[index]['startDate'].toString():"date empty"),
                 trailing: Text(list != null ? list[index]['status'].toString():'status empty'),
+
                 children: <Widget>[
 //                  ListTile(
 //                    title: Text((list[index]['id'].toString())),
@@ -78,27 +79,27 @@ class _incomeExpense_list_state extends State<specificTraining_list>{
 //                    },
 //                  ),
                   Divider(),
-                  ListTile(
-                    title: Text("End Date"),
-                    trailing: Text(list[index]['endDate'].toString()),
-                  ),
-//                  Divider(),
 //                  ListTile(
-//                    title: Text("Trainer Id"),
-//                    trailing: Text(list[index]['trainerId'].toString()),
+//                    title: Text("End Date"),
+//                    trailing: Text(list[index]['endDate'].toString()),
 //                  ),
+////                  Divider(),
+////                  ListTile(
+////                    title: Text("Trainer Id"),
+////                    trailing: Text(list[index]['trainerId'].toString()),
+////                  ),
                   Divider(),
                   ListTile(
                     title: Text("Session"),
                     trailing: Text(list != null ? list[index]['sessions'].toString():"sesssion empty "),
                     onTap: (){
-                      print(get_trainer_by_id(list[index]['trainerId']));
+                      print(list[index]['trainerId']);
                     },
                   ),
                   Divider(),
                   ListTile(
                     title: Text("Trainer"),
-                    trailing: Text(list[index]['trainerId'] != null ? get_trainer_by_id(list[index]['trainerId']):"trainer empty"),
+                   trailing: Text(get_trainer_by_id(list[index]['trainerId']) != null ? "Trainer: "+get_trainer_by_id(list[index]['trainerId']):"trainer empty"),
                   ),
 
                 ],
@@ -126,6 +127,9 @@ class _incomeExpense_list_state extends State<specificTraining_list>{
       }else if(id==4){
         training_type_name="Speed";
       }
+      else{
+        training_type_name= "empty";
+      }
     return training_type_name;
   }
   String get_trainer_by_id(int id){
@@ -139,7 +143,7 @@ class _incomeExpense_list_state extends State<specificTraining_list>{
 
       return responsible_name;
     }else
-      return null;
+      return responsible_name = "empty";
   }
 
 }
