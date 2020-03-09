@@ -129,7 +129,7 @@ class _breeding_services_State extends State<breeding_services>{
                     child: ListTile(
                       title: Text(breeding_services_list!=null?breeding_services_list[index]['horseName']['name']:''),
                       subtitle: Text(breeding_services_list!=null?breeding_services_list[index]['serviceType'].toString():''),
-                      trailing: Text(breeding_services_list!=null?breeding_services_list[index]['serviceDate'].toString():'') ,
+                      trailing: Text(breeding_services_list!=null?breeding_services_list[index]['serviceDate'].toString().replaceAll("T00:00:00", ''):'') ,
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>update_breeding(token,breeding_services_list[index])));
                       },

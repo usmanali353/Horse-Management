@@ -176,7 +176,6 @@ class scrollview extends StatelessWidget {
                              Utils.check_connectivity().then((result){
                                if(result){
                                  var pd= ProgressDialog(context, type: ProgressDialogType.Normal);
-                                 pd.style(message: "Authenticating User...");
                                  pd.show();
                                  network_operations.Sign_In(email.text,password.text).then((response_json)async{
                                    pd.dismiss();

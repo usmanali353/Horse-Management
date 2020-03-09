@@ -34,7 +34,6 @@ class _already_trained_horses_list_state extends State<already_trained_horses_li
           return  Utils.check_connectivity().then((result){
             if(result){
               ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-              pd.style(message: "Fetching Already Trained Horses List...");
               pd.show();
               network_operations.get_horses_already_trained(token).then((response){
                 pd.dismiss();
@@ -80,7 +79,6 @@ class _already_trained_horses_list_state extends State<already_trained_horses_li
                         Utils.check_connectivity().then((result){
                           if(result){
                             ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                            pd.style(message: "Deleting Already Trained Horse...");
                             pd.show();
                             network_operations.delete_already_trained_horses(token, already_trained_list[index]['trainingId']).then((response){
                               pd.dismiss();

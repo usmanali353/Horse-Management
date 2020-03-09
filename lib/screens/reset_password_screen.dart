@@ -176,7 +176,6 @@ class scrollview extends StatelessWidget {
                             Utils.check_connectivity().then((result){
                               if(result){
                                 var pd= ProgressDialog(context, type: ProgressDialogType.Normal);
-                                pd.style(message: "Reseting your Password");
                                 pd.show();
                                 network_operations.Reset_Password(Email,token,password.text).then((response_json)async{
                                   if(response_json==null){

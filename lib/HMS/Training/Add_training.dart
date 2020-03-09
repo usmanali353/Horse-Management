@@ -366,7 +366,6 @@ class add_training_button extends StatelessWidget {
          Utils.check_connectivity().then((result){
            if(result){
              ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-             pd.style(message: "Adding Training...");
              pd.show();
              network_operations.add_training(0,selected_training_type,Start_date, End_Date,training_response['horses'][selected_horse_id]['id'], training_center.text, target_date, target_competition.text,token,training_response['trainerDropDown'][selected_trainer_id]['id'],selected_horse,training_response['trainingPlans'][selected_excercise_plan]['id']!=null?training_response['trainingPlans'][selected_excercise_plan]['id']:null,selected_trainer!=null?selected_trainer:'',excerciseplan!=null?excerciseplan:null,'').then((response){
                 pd.dismiss();

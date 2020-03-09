@@ -42,7 +42,6 @@ class _contacts_list_state extends State<contacts_list>{
           return  Utils.check_connectivity().then((result){
             if(result){
               ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-              pd.style(message: "Fetching Contacts List...");
               pd.show();
               network_operations.get_all_contacts(token).then((response){
                 pd.dismiss();
@@ -85,7 +84,6 @@ class _contacts_list_state extends State<contacts_list>{
                         Utils.check_connectivity().then((result){
                           if(result){
                             ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                            pd.style(message: "Changing Visibility of Contact...");
                             pd.show();
                             network_operations.change_contact_visibility(token, contacts_list[index]['contactId']).then((response){
                               pd.dismiss();
