@@ -130,7 +130,6 @@ class scrollview extends StatelessWidget {
                              Utils.check_connectivity().then((result){
                                if(result){
                                  var pd= ProgressDialog(context, type: ProgressDialogType.Normal);
-                                 pd.style(message: "Verifying Email...");
                                  pd.show();
                                  network_operations.Forgot_Password(email.text).then((response){
                                    pd.dismiss();

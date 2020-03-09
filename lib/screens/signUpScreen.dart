@@ -198,7 +198,6 @@ class scrollview extends StatelessWidget {
                               Utils.check_connectivity().then((result){
                                 if(result){
                                   var pd= ProgressDialog(context, type: ProgressDialogType.Normal);
-                                  pd.style(message: "Registering User...");
                                   pd.show();
                                   network_operations.Sign_Up(name.text, email.text, password.text).then((response) async{
                                     pd.dismiss();

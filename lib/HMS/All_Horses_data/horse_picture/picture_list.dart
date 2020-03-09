@@ -40,8 +40,7 @@ class _pictures_list_state extends State<pictures_list>{
           },
 
         ),
-        body: Column(
-          children: <Widget>[
+        body:
             RefreshIndicator(
               key: _refreshIndicatorKey,
               onRefresh: (){
@@ -74,7 +73,7 @@ class _pictures_list_state extends State<pictures_list>{
               },
               child: Visibility(
                 visible: isvisible,
-                child: ListView.builder(shrinkWrap:true,itemCount:picture_list!=null?picture_list.length:temp.length,itemBuilder: (context,int index){
+                child: ListView.builder(itemCount:picture_list!=null?picture_list.length:temp.length,itemBuilder: (context,int index){
                   return Column(
                     children: <Widget>[
                       Slidable(
@@ -119,7 +118,7 @@ class _pictures_list_state extends State<pictures_list>{
                         ],
                         child: ListTile(
                           title: Text(picture_list!=null?picture_list[index]['horseName']['name']:''),
-                          subtitle: Text(picture_list!=null?picture_list[index]['date'].toString():''),
+                          subtitle: Text(picture_list!=null?picture_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
                           leading: picture_list[index]['image']!=null?Image.memory(base64.decode(picture_list[index]['image'])):Text(''),
                         ),
                       ),
@@ -131,8 +130,6 @@ class _pictures_list_state extends State<pictures_list>{
                 }),
               ),
             ),
-          ],
-        )
     );
   }
 

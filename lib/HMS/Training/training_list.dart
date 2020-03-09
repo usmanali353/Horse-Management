@@ -29,8 +29,6 @@ class _training_list_state extends State<training_list>{
  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   @override
   Widget build(BuildContext context) {
-
-    // TODO: implement build
     return Scaffold(
         appBar: AppBar(title: Text("Trainings")),
         floatingActionButton: FloatingActionButton(
@@ -49,7 +47,6 @@ class _training_list_state extends State<training_list>{
                 return  Utils.check_connectivity().then((result){
                   if(result){
                     ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                    pd.style(message: "Fetching Trainings List...");
                     pd.show();
                     network_operations.get_training(token).then((response){
                       pd.dismiss();
@@ -95,7 +92,6 @@ class _training_list_state extends State<training_list>{
                               Utils.check_connectivity().then((result){
                                 if(result){
                                   ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                                  pd.style(message: "Changing Visibility...");
                                   pd.show();
                                   network_operations.change_training_visibility(token, training_list[index]['trainingId']).then((response){
                                     pd.dismiss();
@@ -132,7 +128,6 @@ class _training_list_state extends State<training_list>{
                               Utils.check_connectivity().then((result){
                                 if(result){
                                   var pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                                  pd.style(message: "Ending Training...");
                                   pd.show();
                                   network_operations.end_training(token,training_list[index]['trainingId']).then((response){
                                     pd.dismiss();
@@ -170,7 +165,7 @@ class _training_list_state extends State<training_list>{
                         ],
                         child: ListTile(
                           title: Text(training_list!=null?training_list[index]['horseName']['name']:''),
-                          trailing: Text(training_list!=null?training_list[index]['startDate']:''),
+                          trailing: Text(training_list!=null?training_list[index]['startDate'].toString().replaceAll("T00:00:00",''):''),
                           subtitle: Text(training_list!=null?get_training_type_by_id(training_list[index]['trainingType']):''),
                           leading: Icon(Icons.fitness_center,size: 40,color: Colors.teal,),
                           onTap: (){

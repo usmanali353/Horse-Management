@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:horse_management/HMS/Contacts/contactTypes.dart';
+import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
 
@@ -19,6 +21,7 @@ class _add_contacts_state extends State<add_contacts>{
   _add_contacts_state(this.token);
   Uint8List picked_image;
   var _myActivities = [];
+  List<Map> roles=[];
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
   TextEditingController name,cnic,address,mobile,phone,email,website,facebook,twitter,instagram;
   @override
@@ -87,6 +90,7 @@ class _add_contacts_state extends State<add_contacts>{
                         valueField: 'value',
                         titleText: 'Contact Type',
                         value: _myActivities,
+                        required: true,
                         onSaved: (value) {
                           if (value == null) return;
                           setState(() {
@@ -313,20 +317,7 @@ class _add_contacts_state extends State<add_contacts>{
                 ),
 
               ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: MaterialButton(
-                    onPressed: (){
-                      if(_fbKey.currentState.validate()){
-
-                      }
-                    },
-                    child: Text("Add Contact",style: TextStyle(color: Colors.white),),
-                    color: Colors.teal,
-                  ),
-                ),
-              ),
+              add_contact_button(fbKey: _fbKey, myActivities: _myActivities, roles: roles, token: token, name: name, website: website, facebook: facebook, instagram: instagram, twitter: twitter, email: email, address: address, mobile: mobile, phone: phone, cnic: cnic, picked_image: picked_image),
             ],
           ),
         ],
@@ -334,4 +325,74 @@ class _add_contacts_state extends State<add_contacts>{
     );
   }
 
+}
+
+class add_contact_button extends StatelessWidget {
+  const add_contact_button({
+    Key key,
+    @required GlobalKey<FormBuilderState> fbKey,
+    @required List myActivities,
+    @required this.roles,
+    @required this.token,
+    @required this.name,
+    @required this.website,
+    @required this.facebook,
+    @required this.instagram,
+    @required this.twitter,
+    @required this.email,
+    @required this.address,
+    @required this.mobile,
+    @required this.phone,
+    @required this.cnic,
+    @required this.picked_image,
+  }) : _fbKey = fbKey, _myActivities = myActivities, super(key: key);
+
+  final GlobalKey<FormBuilderState> _fbKey;
+  final List _myActivities;
+  final List<Map> roles;
+  final String token;
+  final TextEditingController name;
+  final TextEditingController website;
+  final TextEditingController facebook;
+  final TextEditingController instagram;
+  final TextEditingController twitter;
+  final TextEditingController email;
+  final TextEditingController address;
+  final TextEditingController mobile;
+  final TextEditingController phone;
+  final TextEditingController cnic;
+  final Uint8List picked_image;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 16),
+        child: MaterialButton(
+          onPressed: (){
+            if(_fbKey.currentState.validate()){
+              for(int i=0;i<_myActivities.length;i++){
+                roles.add(contactTypes(int.parse(_myActivities[i])).toJson());
+              }
+              network_operations.add_contact(token, 0, name.text, website.text, facebook.text, instagram.text, twitter.text, email.text, address.text, mobile.text, phone.text, cnic.text, picked_image, roles).then((response){
+                 if(response!=null){
+                   Scaffold.of(context).showSnackBar(SnackBar(
+                     content: Text("Contact Added Sucessfully"),
+                     backgroundColor: Colors.green,
+                   ));
+                 }else{
+                   Scaffold.of(context).showSnackBar(SnackBar(
+                     content: Text("Contact not Added"),
+                     backgroundColor: Colors.red,
+                   ));
+                 }
+              });
+            }
+          },
+          child: Text("Add Contact",style: TextStyle(color: Colors.white),),
+          color: Colors.teal,
+        ),
+      ),
+    );
+  }
 }

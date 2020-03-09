@@ -127,7 +127,7 @@ class _horse_videos_list_page_state extends State<horse_videos_list>{
                     ],
                     child: ListTile(
                       title: Text(videos_list!=null?videos_list[index]['horseName']['name']:''),
-                      subtitle: Text(videos_list!=null?videos_list[index]['date']:''),
+                      subtitle: Text(videos_list!=null?videos_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
                       leading: Icon(
                         Icons.videocam,
                         size: 40,

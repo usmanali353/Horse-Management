@@ -40,11 +40,13 @@ class _add_new_note_state extends State<add_new_note>{
        if(result){
          network_operations.get_notes_dropdown(token).then((response){
            if(response!=null){
-              notes_dropdowns=json.decode(response);
-              horses_loaded=true;
-              for(int i=0;i<notes_dropdowns['horseDropDown'].length;i++){
-                horse_name.add(notes_dropdowns['horseDropDown'][i]['name']);
-              }
+             setState(() {
+               notes_dropdowns=json.decode(response);
+               horses_loaded=true;
+               for(int i=0;i<notes_dropdowns['horseDropDown'].length;i++){
+                 horse_name.add(notes_dropdowns['horseDropDown'][i]['name']);
+               }
+             });
            }else{
 
            }
@@ -178,6 +180,7 @@ class add_note_button extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: MaterialButton(
+        color: Colors.teal,
         onPressed: (){
           Utils.check_connectivity().then((result){
              if(result){
