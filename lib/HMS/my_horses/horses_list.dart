@@ -111,7 +111,6 @@ class _training_list_state extends State<horse_list>{
       if(result) {
         ProgressDialog pd = ProgressDialog(
             context, isDismissible: true, type: ProgressDialogType.Normal);
-        pd.style(message: "Fetching Horse List");
         pd.show();
         Add_horse_services.horselist(token).then((response){
           pd.dismiss();
