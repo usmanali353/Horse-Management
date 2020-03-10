@@ -9,23 +9,25 @@ import 'package:horse_management/Utils.dart';
 import 'package:intl/intl.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
-class addInventory extends StatefulWidget{
+class updateInventory extends StatefulWidget{
   String token;
+  var inventoryList;
 
-  addInventory(this.token);
+  updateInventory(this.token,this.inventoryList);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _add_training_state(token);
+    return _add_training_state(token,inventoryList);
   }
 }
 
 
 
-class _add_training_state extends State<addInventory>{
+class _add_training_state extends State<updateInventory>{
   String token;
-  _add_training_state(this.token);
+  var inventoryList;
+  _add_training_state(this.token,this.inventoryList);
   String selected_itemtype,selected_stock,selected_status ;
   DateTime enter_date = DateTime.now();
   DateTime dueDate =DateTime.now();
@@ -194,7 +196,7 @@ class _add_training_state extends State<addInventory>{
 
                         ),
                       ),
-                      
+
                       Padding(
                         padding: EdgeInsets.only(top:16,left: 16,right: 16),
                         child:FormBuilderDateTimePicker(
@@ -332,7 +334,7 @@ class _add_training_state extends State<addInventory>{
                         ),
                       ),
                       Visibility(
-                       visible: _isvisible,
+                        visible: _isvisible,
                         child: Padding(
                           padding: EdgeInsets.all(16),
                           child: FormBuilderTextField(
@@ -378,7 +380,7 @@ class _add_training_state extends State<addInventory>{
                           ),
                         ),
                       ),
-                      
+
                       Visibility(
                         visible: othersvisibility,
                         child: Padding(
@@ -486,30 +488,30 @@ class add_training_button extends StatelessWidget {
           print(comment);
 //          Utils.check_connectivity().then((result){
 //            if(result){
-              ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-              //pd.show();
-              inventoryServices.inventorySave(null, token, 0, name.text, itemtypeid, stockid, code.text, location.text, enterDate, dueDate, serialNo.text, batchNo.text, 1, itemstatusid, toberepaire, outofRanch, "abc").then((response){
-               pd.dismiss();
-                print(response);
-                if(response!=null) {
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                    backgroundColor: Colors.green,
-                    content: Text("Training Added Sucessfully"),
-                  ));
-                }else{
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                    backgroundColor: Colors.red,
-                    content: Text("Training not Added"),
-                  ));
-                }
-              });
-           // }
+          ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+          //pd.show();
+          inventoryServices.inventorySave(null, token, 0, name.text, itemtypeid, stockid, code.text, location.text, enterDate, dueDate, serialNo.text, batchNo.text, 1, itemstatusid, toberepaire, outofRanch, "abc").then((response){
+            pd.dismiss();
+            print(response);
+            if(response!=null) {
+              Scaffold.of(context).showSnackBar(SnackBar(
+                backgroundColor: Colors.green,
+                content: Text("Training Added Sucessfully"),
+              ));
+            }else{
+              Scaffold.of(context).showSnackBar(SnackBar(
+                backgroundColor: Colors.red,
+                content: Text("Training not Added"),
+              ));
+            }
+          });
+          // }
 //            else{
 //              Scaffold.of(context).showSnackBar(SnackBar(
 //                backgroundColor: Colors.red,
 //                content: Text("Network not Available"),
 //              ));
-              // local_db.create_training(Training(selected_horse,selected_trainer,'',training_center.text,Start_date.toString(),End_Date.toString(),target_date.toString(),excerciseplan,));
+          // local_db.create_training(Training(selected_horse,selected_trainer,'',training_center.text,Start_date.toString(),End_Date.toString(),target_date.toString(),excerciseplan,));
 //            }
           //});
 
