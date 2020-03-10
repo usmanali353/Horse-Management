@@ -1,22 +1,11 @@
 import 'dart:convert';
-
-import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/my_horses/add_horse/add_horse_new.dart';
 import 'package:horse_management/HMS/my_horses/services/add_horse_services.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'horse_detail_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-
-import 'dart:convert';
-
-import 'package:circular_profile_avatar/circular_profile_avatar.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:horse_management/HMS/Training/training_detail_page.dart';
-import 'package:horse_management/Network_Operations.dart';
 
 
 
@@ -35,7 +24,7 @@ class horse_list extends StatefulWidget{
 }
 class _training_list_state extends State<horse_list>{
   String token;
-
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   _training_list_state (this.token);
 
   var horse_list;
@@ -91,6 +80,7 @@ class _training_list_state extends State<horse_list>{
                   ),
                 ],
                 child: ListTile(
+                  leading: Image.asset("Assets/horse_icon.png", fit: BoxFit.cover),
                   title: Text(horse_list!=null?(horse_list[index]['name']):''),
                   subtitle: Text(horse_list!=null?horse_list[index]['dateOfBirth'].toString():''),
                   //leading: Image.asset("Assets/horses_icon.png"),
@@ -114,6 +104,8 @@ class _training_list_state extends State<horse_list>{
 
   @override
   void initState() {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
 
     Utils.check_connectivity().then((result){
       if(result) {

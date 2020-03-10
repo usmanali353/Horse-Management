@@ -197,7 +197,7 @@ class _update_horse_state extends State<update_horse>{
                           attribute: "date",
                           style: Theme.of(context).textTheme.body1,
                           inputType: InputType.date,
-                          initialValue: DateTime.parse(horsedata['dateOfBirth']),
+                          initialValue: DateTime.parse(horsedata['dateOfBirth'] != null ? horsedata['dateOfBirth']:DateTime.now()),
                           validators: [FormBuilderValidators.required()],
                           format: DateFormat("MM-dd-yyyy"),
                           decoration: InputDecoration(labelText: "Start Date",
@@ -223,7 +223,7 @@ class _update_horse_state extends State<update_horse>{
                         padding: const EdgeInsets.all(16),
                         child: FormBuilderDropdown(
                           attribute: "Gender",
-                          initialValue: get_gender_info_by_id(horsedata['genderId']),
+                          initialValue: get_gender_info_by_id(horsedata['genderId'] != null ? horsedata['genderId']:1),
                           validators: [FormBuilderValidators.required()],
                           hint: Text("Gender"),
                           items: gender.map((name) => DropdownMenuItem(
@@ -272,7 +272,7 @@ class _update_horse_state extends State<update_horse>{
                       Padding(
                         padding: const EdgeInsets.only(left: 16,right: 16),
                         child: FormBuilderDropdown(
-                          initialValue:get_barn_by_id(barnid),
+                          initialValue:get_barn_by_id(barnid!= null ? barnid:""),
                           attribute: "Barn",
                           hint: Text("Barn"),
                           items: barn.map((name) => DropdownMenuItem(

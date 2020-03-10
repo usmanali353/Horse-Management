@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:horse_management/HMS/my_horses/add_horse/update_horse.dart';
+import 'package:horse_management/HMS/my_horses/training/tariningList_specific.dart';
 import 'package:horse_management/HMS/my_horses/vaccination/vaccination_list.dart';
 import 'health_record/health_record_list.dart';
 import 'incomeExpense/income_expense_list.dart';
 import 'package:horse_management/HMS/my_horses/lab_reports/lab_test_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'training/tariningList_specific.dart';
-import 'package:horse_management/HMS/my_horses/add_horse/update_horse.dart';
 
 class horse_detail extends StatefulWidget {
   var horse_data;
@@ -52,11 +52,11 @@ class _Profile_Page_State extends State<horse_detail> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               ListTile(
-               // leading: Image(image:  ),
+                leading: Image.asset("Assets/horse_icon.png", fit: BoxFit.cover),
                 title: Text(horsedata['name']),
-                subtitle: Text(horsedata['dateOfBirth']),
+                subtitle: Text(horsedata['dateOfBirth'] != null ?horsedata['dateOfBirth'].toString().substring(0,10):"date of birth empty" ),
                 // leading: Image.asset("Assets/horse_icon.png",width: 50,height: 50,),
-                trailing: Icon(Icons.arrow_right),
+                trailing: Icon(FontAwesomeIcons.solidEdit),
                 onTap: () async {
                   print(horsedata['horseId']);
                   prefs = await SharedPreferences.getInstance();
@@ -105,7 +105,7 @@ class _Profile_Page_State extends State<horse_detail> {
                 onTap: () async{
                   prefs = await SharedPreferences.getInstance();
                   Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => specificTraining_list(prefs.get('token'),horsedata != null ? horsedata['allTrainings'] : '')));
+                          builder: (context) => specificTraining_list(prefs.get('token'),horsedata['allTrainings'] != null ? horsedata['allTrainings']: 'A')));
                 },
               ),
 
@@ -121,7 +121,7 @@ class _Profile_Page_State extends State<horse_detail> {
                 onTap: () async{
                   print(horsedata['allVaccinations'] != null ? horsedata['allVaccinations']:"Abc");
                   prefs = await SharedPreferences.getInstance();
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => vaccinationList(prefs.get("token"),horsedata != null ? horsedata['allVaccinations'] : '')));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => vaccinationList(prefs.get("token"),horsedata != null ? horsedata['allVaccinations']: '')));
                 },
               ),
               ListTile(

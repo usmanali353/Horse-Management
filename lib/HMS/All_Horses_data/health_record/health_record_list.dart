@@ -26,14 +26,17 @@ class _Profile_Page_State extends State<healthRecord_list>{
   int id;SharedPreferences prefs;
 
   _Profile_Page_State (this.token);
-
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   String token;
   var specifichorsehealthRecord,healthlist;
   var temp=['',''];
+  bool isVisible = false;
  // MainPageState _mainPageState;
 
   @override
   void initState () {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
    // _mainPageState = MainPageState();
 //    healthServices.horseIdhealthRecord(token, id).then((response){
 //      setState(() {
@@ -55,9 +58,11 @@ class _Profile_Page_State extends State<healthRecord_list>{
         pd.show();
         healthServices.healthRecordTestlist(token).then((response) {
           pd.dismiss();
+          isVisible = true;
           setState(() {
 
             healthlist = json.decode(response);
+
 
             print(healthlist);
           });
@@ -89,72 +94,175 @@ class _Profile_Page_State extends State<healthRecord_list>{
             },
           )
         ],),
-        body: ListView.builder(itemCount:healthlist!=null?healthlist.length:temp.length,itemBuilder: (context,int index){
-          return Column(
-            children: <Widget>[
-              Slidable(
+        body: Visibility(
+          visible: isVisible,
+          child: RefreshIndicator(
+            key: _refreshIndicatorKey,
+            onRefresh: (){
+              return Utils.check_connectivity().then((result){
+                if(result){
+                  healthServices.healthRecordTestlist(token).then((response){
+                    // print(response.length.toString());
+                    if(response!=null){
+                      setState(() {
+                        //var parsedjson = jsonDecode(response);
+                        healthlist  = jsonDecode(response);
+                        print(healthlist);
+                        //print(horse_list['createdBy']);
+                      });
+                    }
+                  });
+                }else{
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    backgroundColor:Colors.red ,
+                    content: Text('Network Error'),
+                  ));
+                }
+              });
+            },
+            child: ListView.builder(itemCount:healthlist!=null?healthlist.length:temp.length,itemBuilder: (context,int index){
+              return Column(
+                children: <Widget>[
+                  Slidable(
 
-                actionPane: SlidableDrawerActionPane(),
-                actionExtentRatio: 0.20,
-                secondaryActions: <Widget>[
-                  IconSlideAction(onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_health(healthlist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
+                    actionPane: SlidableDrawerActionPane(),
+                    actionExtentRatio: 0.10,
+                     closeOnScroll: true,
+                    secondaryActions: <Widget>[
+                      IconSlideAction(onTap: ()async{
+                        healthServices.healthstatus(token, healthlist[index]['id'],0).then((response){
+                          //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
+                          print(response);
+                          if(response!=null){
 
-                  },color: Colors.blue,icon: Icons.border_color,caption: 'update',)
-                ],
-                actions: <Widget>[
-                  IconSlideAction(
-                    icon: Icons.visibility_off,
-                    color: Colors.red,
-                    caption: 'Hide',
-//                    onTap: () async {
-//                      Add_horse_services.horsevisibilty(token, horse_list[index]['horseId']).then((response){
-//                        //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
-//                        print(response);
-//                        if(response!=null){
-//
-//                          Scaffold.of(context).showSnackBar(SnackBar(
-//                            backgroundColor:Colors.green ,
-//                            content: Text('Visibility Changed'),
-//                          ));
-//
-//                        }else{
-//                          Scaffold.of(context).showSnackBar(SnackBar(
-//                            backgroundColor:Colors.red ,
-//                            content: Text('Failed'),
-//                          ));
-//                        }
-//                      });
-//                    },
-                  ),
-                ],
-                child: ListTile(
-                  //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
-                  title: Text(healthlist!=null?healthlist[index]['horseId'].toString():'responsible name not show'),
-                  subtitle: Text(healthlist!=null?healthlist[index]['id'].toString():'date not showing'),
-                  //leading: Image.asset("Assets/horses_icon.png"),
-                  onTap: ()async{
-                    print(healthlist[index]['id']);
-                    prefs= await SharedPreferences.getInstance();
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              backgroundColor:Colors.green ,
+                              content: Text('Status Changed'),
+                            ));
+
+                          }else{
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              backgroundColor:Colors.red ,
+                              content: Text('Failed'),
+                            ));
+                          }
+                        });
+                      },iconWidget: CircleAvatar(radius: 40.0,backgroundColor: Colors.red,),caption: 'Bad',),
+                      IconSlideAction(onTap: ()async{
+                        healthServices.healthstatus(token, healthlist[index]['id'],1).then((response){
+                          //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
+                          print(response);
+                          if(response!=null){
+
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              backgroundColor:Colors.green ,
+                              content: Text('Status Changed'),
+                            ));
+
+                          }else{
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              backgroundColor:Colors.red ,
+                              content: Text('Failed'),
+                            ));
+                          }
+                        });
+
+                      },iconWidget: CircleAvatar(radius: 40.0,backgroundColor: Colors.yellow,),caption: 'Fair',),
+                      IconSlideAction(onTap: ()async{
+                        healthServices.healthstatus(token, healthlist[index]['id'],2).then((response){
+                          //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
+                          print(response);
+                          if(response!=null){
+
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              backgroundColor:Colors.green ,
+                              content: Text('Status Changed to good'),
+                            ));
+
+                          }else{
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              backgroundColor:Colors.red ,
+                              content: Text('Failed'),
+                            ));
+                          }
+                        });
+                      },iconWidget: CircleAvatar(radius: 40.0,backgroundColor: Colors.green,),caption: 'Good',),
+                    ],
+                    actions: <Widget>[
+                      IconSlideAction(onTap: ()async{
+
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => update_health(healthlist[index]['id'],token,prefs.get('createdBy'))),);
+
+                      },color: Colors.blue,icon: Icons.border_color,caption: 'update',),
+                      IconSlideAction(
+                        icon: Icons.visibility_off,
+                        color: Colors.red,
+                        caption: 'Hide',
+                        onTap: () async {
+                          healthServices.healthvisibilty(token, healthlist[index]['id']).then((response){
+                            //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
+                            print(response);
+                            if(response!=null){
+
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                backgroundColor:Colors.green ,
+                                content: Text('Visibility Changed'),
+                              ));
+
+                            }else{
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                backgroundColor:Colors.red ,
+                                content: Text('Failed'),
+                              ));
+                            }
+                          });
+                        },
+                      ),
+                    ],
+                    child: ListTile(
+                      //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
+                      title: Text(healthlist!=null?healthlist[index]['horseName']['name'].toString():'name not show'),
+                      subtitle: Text(healthlist!=null? "Responsible: "+healthlist[index]['responsibleName']['contactName']['name'].toString():'responsible empty'),
+                      trailing: Text(healthlist[index]['status'] != null ? "Status: "+get_status_by_id(healthlist[index]['status']):"empty"),
+                      //trailing: healthlist != null ? CircleAvatar(backgroundColor: get_status_by_id(healthlist[index]['status'])):"empty",
+                      //leading: Image.asset("Assets/horses_icon.png"),
+                      onTap: ()async{
+                        print(healthlist[index]['id']);
+                        prefs= await SharedPreferences.getInstance();
 //                    Scaffold.of(context).showSnackBar(SnackBar(
 //                      backgroundColor: Colors.green,
 //                      content: Text("Training Updated Sucessfully"),
 //                    ));
 //                    Utils.createSnackBar("qwerty",context);
-                  },
-                ),
+                      },
+                    ),
 
 
-              ),
-              Divider(),
-            ],
+                  ),
+                  Divider(),
+                ],
 
-          );
+              );
 
-        })
+            }),
+          ),
+        )
     );
   }
+  String get_status_by_id(int id){
+    var status;
+    if(healthlist!=null && id!=null){
+      if(id == 2)
+        status = "Good";
+      else if(id == 1)
+           status = "Fair";
+      else if(id == 0)
+        status = "Bad";
+      return status;
+    }else
+      return null;
+  }
+
 }
 
 

@@ -53,7 +53,22 @@ class healthServices{
     }else
       return null;
   }
-
-
+  static Future<String> healthvisibilty(String token,int id) async{
+    Map<String,String> headers = {'Authorization':'Bearer '+token};
+    final response = await http.get('http://192.236.147.77:8083/api/horse/HealthRecordVisibility/'+id.toString(), headers: headers,);
+    if(response.statusCode==200){
+      return response.body;
+    }else
+      return null;
+  }
+  static Future<String> healthstatus(String token,int id,int status) async{
+    Map<String,String> headers = {'Authorization':'Bearer '+token};
+    final response = await http.get('http://192.236.147.77:8083/api/horse/HealthRecordChangeStatus/'+id.toString()+'?status='+status.toString(), headers: headers,);
+    print('http://192.236.147.77:8083/api/horse/HealthRecordChangeStatus/'+id.toString()+'?status='+status.toString());
+    if(response.statusCode==200){
+      return response.body;
+    }else
+      return null;
+  }
 
 }

@@ -42,7 +42,14 @@ class labtest_services {
     } else
       return null;
   }
-
+  static Future<String> labTestvisibilty(String token,int id) async{
+    Map<String,String> headers = {'Authorization':'Bearer '+token};
+    final response = await http.get('http://192.236.147.77:8083/api/horse/LabTestVisibility/'+id.toString(), headers: headers,);
+    if(response.statusCode==200){
+      return response.body;
+    }else
+      return null;
+  }
   static Future<String> labTestSave (String createdby,int id,String token, int horseid, DateTime date, int testtypeid, bool positive, int responsibleid, String lab, String result, String amount, int currencyid, int categoryId, int costcenterid, int contactid,) async {
     Map<String, String> headers = {
       HttpHeaders.contentTypeHeader: 'application/json',
