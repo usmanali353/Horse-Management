@@ -21,6 +21,20 @@
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		0DA4E0AD2418D34700953F82 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = file.rcproject;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+			);
+			script = "# rctool\n";
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		9705A1C41CF9048500538489 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -164,6 +178,7 @@
 				E089BB3711A8D4D919A911AF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
+				0DA4E0AD2418D34700953F82 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -275,10 +290,10 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
+			inputFileListPaths = (
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
+			outputFileListPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
