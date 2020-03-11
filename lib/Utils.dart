@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Utils{
   static bool validateStructure(String value){
@@ -25,5 +26,9 @@ class Utils{
  static Future<File> getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
     return image;
+  }
+  static Future<bool> isLogin()async{
+     SharedPreferences prefs=await SharedPreferences.getInstance();
+     return prefs.getBool("isLogin");
   }
 }
