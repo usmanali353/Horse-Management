@@ -161,11 +161,19 @@ class _add_training_state extends State<addInventory>{
                                 setState(() {
                                   _isvisible=true;
                                   othersvisibility = false;
+                                  serial.text = "";
+                                  batch.text = "";
+                                  selected_stock_id =0;
+
                                 });
                               }else{
                                 setState(() {
                                   _isvisible=false;
                                   othersvisibility = true;
+                                  toberepaire = 0;
+                                  outofranch = 0;
+                                  quantity.text = "0";
+                                  selected_status_type = 0;
                                 });
                               }
                             });

@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/All_Horses_data/all_horse_data_add.dart';
 import 'package:horse_management/HMS/Breeding/breeding_mainPage.dart';
 import 'package:horse_management/HMS/Inventory/add_inventory.dart';
+import 'package:horse_management/HMS/Inventory/inventory_list.dart';
 import 'package:horse_management/HMS/Operation%20Notes/operation_notes.dart';
 import 'package:horse_management/HMS/Training/already_trained_horses_list.dart';
 import 'package:horse_management/HMS/Training/training_list.dart';
@@ -109,14 +110,14 @@ class _Home_Page_State extends State<Home_Page>{
 //                      Navigator.push(context, MaterialPageRoute(builder: (context)=> sub_categories_page("Configuration") ));
 //                    },
 //                  ),
-
-                  //                  ListTile(
-//                    title: Text("Inventory", style: TextStyle(fontWeight: FontWeight.bold)),
-//                    leading: Icon(Icons.beach_access),
-//                    onTap: (){
-//                      Navigator.push(context, MaterialPageRoute(builder: (context)=> sub_categories_page("Inventory") ));
-//                    },
-//                  ),
+                  ListTile(
+                    title: Text("Inventory", style: TextStyle(fontWeight: FontWeight.bold)),
+                    leading: Icon(Icons.beach_access),
+                    onTap: ()async{
+                      prefs = await SharedPreferences.getInstance();
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> inventory_list(prefs.get('token')) ));
+                    },
+                  ),
 //                  ListTile(
 //                    title: Text("Horse Group", style: TextStyle(fontWeight: FontWeight.bold)),
 //                    leading: Icon(Icons.all_inclusive),

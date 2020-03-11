@@ -9,11 +9,11 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-class lab_list extends StatefulWidget{
+class inventory_list extends StatefulWidget{
   String token;
 
 
-  lab_list (this.token);
+  inventory_list (this.token);
 
   @override
   State<StatefulWidget> createState() {
@@ -22,7 +22,7 @@ class lab_list extends StatefulWidget{
   }
 
 }
-class _Profile_Page_State extends State<lab_list>{
+class _Profile_Page_State extends State<inventory_list>{
   int id;
   SharedPreferences prefs;
   _Profile_Page_State (this.token);
@@ -124,7 +124,8 @@ class _Profile_Page_State extends State<lab_list>{
                     actions: <Widget>[
                       IconSlideAction(onTap: ()async{
                         prefs = await SharedPreferences.getInstance();
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>updateInventory(inventorylist[index],prefs.get('token'))));
+                        print(inventorylist[index]);
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>updateInventory(prefs.get('token'),inventorylist[index])));
 
                       },color: Colors.blue,icon: Icons.border_color,caption: 'update',),
                       IconSlideAction(
@@ -152,25 +153,28 @@ class _Profile_Page_State extends State<lab_list>{
                         },
                       ),
                     ],
-                    child: ExpansionTile(
-                      //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
-                      title: Text(inventorylist!=null?(inventorylist[index]['horseName']['name']):''),
-                      subtitle: Text(inventorylist[index]['testTypes']!=null?(inventorylist[index]['testTypes']['name']):'testtype empty'),
-                      trailing: Text(inventorylist[index]['responsibleName'] != null ? inventorylist[index]['responsibleName']['contactName']['name']:" name empty"),
-                      //leading: Image.asset("Assets/horses_icon.png"),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ExpansionTile(
+                        //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
+                        title: Text(inventorylist!=null?(inventorylist[index]['name']):''),
+                       subtitle: Text(inventorylist[index]['itemType']!=null?(inventorylist[index]['itemType']).toString():'testtype empty'),
+                        trailing: Text(inventorylist[index]['stock'] != null ? inventorylist[index]['stock'].toString():" name empty"),
+                        //leading: Image.asset("Assets/horses_icon.png"),
 
 
-                      children: <Widget>[
+                        children: <Widget>[
 
-                        Divider(),
-                        ListTile(
-                          title: Text("Amount"),
-                          trailing: Text(inventorylist != null ? inventorylist[index]['amount'].toString():""),
-                        )
+                          Divider(),
+                          ListTile(
+                            title: Text("Amount"),
+                            //trailing: Text(inventorylist != null ? inventorylist[index]['amount'].toString():""),
+                          )
 
-                      ],
+                        ],
 
 
+                      ),
                     ),
 
 
