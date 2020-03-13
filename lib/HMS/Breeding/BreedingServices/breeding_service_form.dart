@@ -127,7 +127,7 @@ class _breeding_service_form extends State<breeding_service_form> {
                 'date': DateTime.now(),
                 'accept_terms': false,
               },
-              autovalidate: true,
+             // autovalidate: true,
               child: Column(
                 children: <Widget>[
 

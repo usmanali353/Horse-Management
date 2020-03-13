@@ -392,7 +392,7 @@ class add_semen_stock_button extends StatelessWidget {
          });
         }
       },
-      child: Text("Add Semen Collection",style: TextStyle(color: Colors.white),),
+      child: Text("Save",style: TextStyle(color: Colors.white),),
     );
   }
 }

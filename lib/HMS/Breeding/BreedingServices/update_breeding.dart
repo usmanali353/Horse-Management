@@ -74,7 +74,7 @@ class _update_breeding extends State<update_breeding> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(title: Text("Update Breeding Service Form"),),
+      appBar: AppBar(title: Text("Update Breeding Service"),),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -84,7 +84,7 @@ class _update_breeding extends State<update_breeding> {
                 'date': DateTime.now(),
                 'accept_terms': false,
               },
-              autovalidate: true,
+             // autovalidate: true,
               child: Column(
                 children: <Widget>[
 
@@ -627,7 +627,7 @@ class _update_breeding extends State<update_breeding> {
                   });
                 }
               },
-              child: Text("Save", style: TextStyle(color: Colors.white),
+              child: Text("Update", style: TextStyle(color: Colors.white),
               ),
               color: Colors.teal,
             ),

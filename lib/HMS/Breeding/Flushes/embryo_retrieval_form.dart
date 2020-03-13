@@ -99,7 +99,7 @@ class _add_flushes extends State<add_flushes>{
                       'date': DateTime.now(),
                       'accept_terms': false,
                     },
-                    autovalidate: true,
+                    //autovalidate: true,
                     child: Column(children: <Widget>[
 //
                       Padding(

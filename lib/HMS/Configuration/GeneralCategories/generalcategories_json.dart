@@ -1,0 +1,36 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+import '../../../Utils.dart';
+
+
+class GeneralCategoryServices{
+
+  //General Category
+  static Future<String> addGeneralCategory(String token,int id,String name, String description, String createdBy) async{
+    Map<String,String> headers = {'Authorization':'Bearer '+token,'Content-Type':'application/json'};
+    final body = jsonEncode({"id":id,"name":name, "description":description,"createdBy":createdBy,"createdOn":DateTime.now(),"isActive":true},toEncodable: Utils.myEncode);
+    var response= await http.post("http://192.236.147.77:8083/api/configuration/GeneralCategorySave",headers: headers,body: body);
+    print(response.body);
+    if(response.statusCode==200){
+      return response.body;
+    }else
+      return null;
+  }
+  static Future<String> getGeneralCategory(String token) async{
+    Map<String,String> headers = {'Authorization':'Bearer '+token};
+    final response = await http.get('http://192.236.147.77:8083/api/configuration/GetAllGenerallCategories', headers: headers,);
+    if(response.statusCode==200){
+      return response.body;
+    }else
+      return null;
+  }
+  static Future<String> changeGeneralCategoryVisibility(String token,int Id) async{
+    Map<String,String> headers = {'Authorization':'Bearer '+token};
+    final response = await http.get('http://192.236.147.77:8083/api/configuration/GeneralCategoryVisibility/'+Id.toString(), headers: headers,);
+    if(response.statusCode==200){
+      return response.body;
+    }else
+      return null;
+  }
+}

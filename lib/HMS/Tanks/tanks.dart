@@ -1,40 +1,147 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:horse_management/HMS/Tanks/tanks_json.dart';
+import 'package:horse_management/HMS/Tanks/update_tanks.dart';
+
+import '../../Utils.dart';
 import 'add_tanks_form.dart';
 
 
-class paddocks extends StatefulWidget{
+class tanks_list extends StatefulWidget{
+  String token;
+  tanks_list(this.token);
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _paddocks_State();
+    return _tanks_list(token);
   }
 
 }
 
-class _paddocks_State extends State<paddocks>{
+class _tanks_list extends State<tanks_list>{
+  String token;
+  _tanks_list(this.token);
+  var temp=['','',''];
+  bool isVisible=false;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+  var tanks_list;
+
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(title: Text("Tanks"),),
-      body: Center(
-
-        child: Column(
-
-          children: <Widget>[
-
-          ],
-        ),
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          Navigator.push(context,MaterialPageRoute(builder: (context)=>add_tanks_form()));
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_tanks_form(token)));
         },
-        tooltip: 'Add Tanks Form',
         child: Icon(Icons.add),
-      ), // This trailing comma mak
+      ),
+      appBar: AppBar(
+        title: Text("Tanks"),
+      ),
+      body: RefreshIndicator(
+        key: _refreshIndicatorKey,
+        onRefresh: (){
+          return Utils.check_connectivity().then((result){
+            if(result){
+              TanksServices.get_Tanks(token).then((response){
+                if(response!=null){
+                  setState(() {
+                    tanks_list=json.decode(response);
+                    isVisible=true;
+                  });
+
+                }else{
+                  setState(() {
+                    isVisible=false;
+                  });
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.red,
+                    content: Text("List Not Available"),
+                  ));
+                }
+              });
+            }else{
+              Scaffold.of(context).showSnackBar(SnackBar(
+                backgroundColor: Colors.red,
+                content: Text("Network Not Available"),
+              ));
+            }
+          });
+        },
+        child: Visibility(
+          visible: isVisible,
+          child: ListView.builder(itemCount:tanks_list!=null?tanks_list.length:temp.length,itemBuilder: (context,int index){
+            return Column(
+              children: <Widget>[
+                Slidable(
+                    actionPane: SlidableDrawerActionPane(),
+                    actionExtentRatio: 0.20,
+                    secondaryActions: <Widget>[
+                      IconSlideAction(
+                        icon: Icons.edit,
+                        color: Colors.blue,
+                        caption: 'Update',
+                        onTap: () async {
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_tanks_form(token,tanks_list[index])));
+                        },
+                      ),
+                    ],
+                    actions: <Widget>[
+                      IconSlideAction(
+                        icon: Icons.visibility_off,
+                        color: Colors.red,
+                        caption: 'Hide',
+                        onTap: () async {
+                          TanksServices.change_Tanks_Visibility(token, tanks_list[index]['id']).then((response){
+                            print(response);
+                            if(response!=null){
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                backgroundColor:Colors.green ,
+                                content: Text('Visibility Changed'),
+                              ));
+                              setState(() {
+                                tanks_list.removeAt(index);
+                              });
+
+                            }else{
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                backgroundColor:Colors.red ,
+                                content: Text('Failed'),
+                              ));
+                            }
+                          });
+                        },
+                      ),
+                    ],
+                    child: ListTile(
+                      title: Text(tanks_list!=null?tanks_list[index]['name']:''),
+                      // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
+                      //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                      onTap: (){
+                        // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_breeding_sales_form(token,sales_list[index])));
+                      },
+                    )
+                ),
+                Divider(),
+              ],
+            );
+          }),
+        ),
+      ),
     );
   }
+
 }
 

@@ -441,7 +441,7 @@ class update_semen_stock_button extends StatelessWidget {
         });
 
       },
-      child: Text("Add Semen Collection",style: TextStyle(color: Colors.white),),
+      child: Text("Update",style: TextStyle(color: Colors.white),),
     );
   }
 }
