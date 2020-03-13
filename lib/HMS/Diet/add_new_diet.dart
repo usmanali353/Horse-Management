@@ -27,7 +27,7 @@ class _add_new_note_state extends State<AddNewDiet>{
   var notes_data;
   var dietItemDropdown;
   bool horses_loaded=false;
-  List<String> dietItem = ['abc','xyz'],time = ['Am','Lunch','Pm','Night'];
+  List<String> dietItem = ['abc','xyzz'],time = ['Am','Lunch','Pm','Night'];
   TextEditingController name,description;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
   _add_new_note_state(this.token);
