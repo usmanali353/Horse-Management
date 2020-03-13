@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/All_Horses_data/all_horse_data_add.dart';
 import 'package:horse_management/HMS/Breeding/breeding_mainPage.dart';
+import 'package:horse_management/HMS/Configuration/configuration_mainpage.dart';
 import 'package:horse_management/HMS/Inventory/add_inventory.dart';
 import 'package:horse_management/HMS/Inventory/inventory_list.dart';
-import 'package:horse_management/HMS/Operation%20Notes/operation_notes.dart';
+import 'package:horse_management/HMS/OperationNotes/operation_notes.dart';
+import 'package:horse_management/HMS/Tanks/tanks.dart';
 import 'package:horse_management/HMS/Training/already_trained_horses_list.dart';
 import 'package:horse_management/HMS/Training/training_list.dart';
 import 'package:horse_management/HMS/Veterinary/vet_mainPage.dart';
@@ -103,13 +105,27 @@ class _Home_Page_State extends State<Home_Page>{
                     },
                   ),
 
-//                  ListTile(
-//                    title: Text("Configuration", style: TextStyle(fontWeight: FontWeight.bold)),
-//                    leading: Icon(Icons.settings),
-//                    onTap: (){
-//                      Navigator.push(context, MaterialPageRoute(builder: (context)=> sub_categories_page("Configuration") ));
-//                    },
-//                  ),
+                  ListTile(
+                    title: Text("Tanks", style: TextStyle(fontWeight: FontWeight.bold)),
+                    leading: Icon(Icons.settings),
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> tanks_list("Tanks") ));
+                    },
+                  ),
+                  ListTile(
+                    title: Text("Operation Notes", style: TextStyle(fontWeight: FontWeight.bold)),
+                    leading: Icon(Icons.settings),
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> operational_noteList("Operation Notes") ));
+                    },
+                  ),
+                  ListTile(
+                    title: Text("Configuration", style: TextStyle(fontWeight: FontWeight.bold)),
+                    leading: Icon(Icons.settings),
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> configuration_Category("Configuration") ));
+                    },
+                  ),
                   ListTile(
                     title: Text("Inventory", style: TextStyle(fontWeight: FontWeight.bold)),
                     leading: Icon(Icons.beach_access),
