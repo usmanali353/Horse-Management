@@ -342,7 +342,7 @@ class _add_embryo_stock extends State<add_embryo_stock>{
                       padding: const EdgeInsets.all(16),
                       child:MaterialButton(
                         color: Colors.teal,
-                        child: Text("Update",style: TextStyle(color: Colors.white),),
+                        child: Text("Save",style: TextStyle(color: Colors.white),),
 
                         onPressed: (){
                           EmbryoStockServices.add_embryo_stock(null, token, 0, stock_response['horseDropDown'][selected_horse_id]['id'], stock_response['tankDropDown'][selected_tank_id]['id'], stock_response['sireDropDown'][selected_sire_id]['id'], selected_gender_id, Collection_date,selected_on_sale_id, price.text, grade.text, stage.text, status.text, comments.text);

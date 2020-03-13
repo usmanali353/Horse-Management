@@ -1,0 +1,146 @@
+import 'package:flutter/material.dart';
+import 'package:horse_management/HMS/Configuration/IronBrand/add_ironbrand.dart';
+import 'package:horse_management/HMS/Configuration/IronBrand/ironbrand_json.dart';
+import 'package:horse_management/HMS/Configuration/IronBrand/update_ironbrand.dart';
+import '../../../Utils.dart';
+import 'dart:convert';
+import 'package:flutter_slidable/flutter_slidable.dart';
+
+
+
+class ironbrand_list extends StatefulWidget{
+  String token;
+  ironbrand_list(this.token);
+
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _ironbrand_list(token);
+  }
+}
+
+class _ironbrand_list extends State<ironbrand_list>{
+  String token;
+  _ironbrand_list(this.token);
+  var temp=['','',''];
+  bool isVisible=false;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+  var ironbrand_lists;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_ironbrand(token)));
+        },
+        child: Icon(Icons.add),
+      ),
+      appBar: AppBar(
+        title: Text("Iron Brand"),
+      ),
+      body: RefreshIndicator(
+        key: _refreshIndicatorKey,
+        onRefresh: (){
+          return Utils.check_connectivity().then((result){
+            if(result){
+             IronBrandServices.getIronBrand(token).then((response){
+                if(response!=null){
+                  setState(() {
+                    ironbrand_lists=json.decode(response);
+                    isVisible=true;
+                  });
+
+                }else{
+                  setState(() {
+                    isVisible=false;
+                  });
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.red,
+                    content: Text("List Not Available"),
+                  ));
+                }
+              });
+            }else{
+              Scaffold.of(context).showSnackBar(SnackBar(
+                backgroundColor: Colors.red,
+                content: Text("Network Not Available"),
+              ));
+            }
+          });
+        },
+        child: Visibility(
+          visible: isVisible,
+          child: ListView.builder(itemCount:ironbrand_lists!=null?ironbrand_lists.length:temp.length,itemBuilder: (context,int index){
+            return Column(
+              children: <Widget>[
+                Slidable(
+                    actionPane: SlidableDrawerActionPane(),
+                    actionExtentRatio: 0.20,
+                    secondaryActions: <Widget>[
+                      IconSlideAction(
+                        icon: Icons.edit,
+                        color: Colors.blue,
+                        caption: 'Update',
+                        onTap: () async {
+                          print(ironbrand_lists[index]);
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_ironbrand(token,ironbrand_lists[index])));
+                        },
+                      ),
+                    ],
+                    actions: <Widget>[
+                      IconSlideAction(
+                        icon: Icons.visibility_off,
+                        color: Colors.red,
+                        caption: 'Hide',
+                        onTap: () async {
+                          IronBrandServices.changeIronBrandVisibility(token, ironbrand_lists[index]['brandId']).then((response){
+                            print(response);
+                            if(response!=null){
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                backgroundColor:Colors.green ,
+                                content: Text('Visibility Changed'),
+                              ));
+                              setState(() {
+                                ironbrand_lists.removeAt(index);
+                              });
+
+                            }else{
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                backgroundColor:Colors.red ,
+                                content: Text('Failed'),
+                              ));
+                            }
+                          });
+                        },
+                      ),
+                    ],
+                    child: ListTile(
+                      title: Text(ironbrand_lists!=null?ironbrand_lists[index]['brandTitle']:''),
+                      // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
+                      //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                      onTap: (){
+                        // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                      },
+                    )
+                ),
+                Divider(),
+              ],
+            );
+          }),
+        ),
+      ),
+    );
+  }
+
+
+}

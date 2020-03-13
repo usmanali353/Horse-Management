@@ -69,7 +69,7 @@ class _flushes_update extends State<flushes_update>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Update Embryo Retrieval Form"),),
+        appBar: AppBar(title: Text("Update Embryo Retrieval"),),
         body:  Padding(
           padding: EdgeInsets.all(10),
           child: SingleChildScrollView(
@@ -81,7 +81,7 @@ class _flushes_update extends State<flushes_update>{
                       'date': DateTime.now(),
                       'accept_terms': false,
                     },
-                    autovalidate: true,
+                   // autovalidate: true,
                     child: Column(children: <Widget>[
 //
                       Padding(
@@ -237,7 +237,7 @@ class _flushes_update extends State<flushes_update>{
                             });
                           }
                         },
-                        child: Text("Save",style: TextStyle(color: Colors.white),
+                        child: Text("Update",style: TextStyle(color: Colors.white),
                         ),
                         color: Colors.teal,
                       ),

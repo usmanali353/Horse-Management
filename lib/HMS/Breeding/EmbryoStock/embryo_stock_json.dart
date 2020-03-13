@@ -37,7 +37,7 @@ class EmbryoStockServices{
       "horseId":horseID,
       "TankId":tankID,
       "sireId":sireID,
-      "genderId":2,
+      "genderId":gender,
       "collectionDate":collection_date,
       "grade":grade,
       "stage":stage,

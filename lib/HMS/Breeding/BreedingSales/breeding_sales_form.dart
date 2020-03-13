@@ -99,9 +99,9 @@ class _breeding_sales_form extends State<breeding_sales_form>{
                   'date': DateTime.now(),
                   'accept_terms': false,
                 },
-                autovalidate: true,
+                //autovalidate: true,
                 child: Column(children: <Widget>[
-//
+
                   Padding(
                     padding: const EdgeInsets.only(left: 16,right: 16, top:16),
                     child: Visibility(
