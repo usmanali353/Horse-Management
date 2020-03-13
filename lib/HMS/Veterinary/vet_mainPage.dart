@@ -1,9 +1,9 @@
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:horse_management/HMS/Veterinary/VetVisits/vet_visit.dart';
 import 'package:horse_management/health_record_form.dart';
 
 import 'Confirmation/confirmation.dart';
-import 'Vet Visits/vet_visit.dart';
 
 
 
