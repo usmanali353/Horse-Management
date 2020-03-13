@@ -109,21 +109,21 @@ class _Home_Page_State extends State<Home_Page>{
                     title: Text("Tanks", style: TextStyle(fontWeight: FontWeight.bold)),
                     leading: Icon(Icons.settings),
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> tanks_list("Tanks") ));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> tanks_list("token") ));
                     },
                   ),
                   ListTile(
                     title: Text("Operation Notes", style: TextStyle(fontWeight: FontWeight.bold)),
                     leading: Icon(Icons.settings),
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> operational_noteList("Operation Notes") ));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> operational_noteList("token") ));
                     },
                   ),
                   ListTile(
                     title: Text("Configuration", style: TextStyle(fontWeight: FontWeight.bold)),
                     leading: Icon(Icons.settings),
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> configuration_Category("Configuration") ));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> configuration_Category("token") ));
                     },
                   ),
                   ListTile(
