@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/All_Horses_data/all_horse_data_add.dart';
 import 'package:horse_management/HMS/Breeding/breeding_mainPage.dart';
-import 'package:horse_management/HMS/Configuration/configuration_mainpage.dart';
-import 'package:horse_management/HMS/OperationNotes/operation_notes.dart';
-import 'package:horse_management/HMS/Tanks/tanks.dart';
+import 'package:horse_management/HMS/Inventory/add_inventory.dart';
+import 'package:horse_management/HMS/Inventory/inventory_list.dart';
+import 'package:horse_management/HMS/Operation%20Notes/operation_notes.dart';
 import 'package:horse_management/HMS/Training/already_trained_horses_list.dart';
 import 'package:horse_management/HMS/Training/training_list.dart';
 import 'package:horse_management/HMS/Veterinary/vet_mainPage.dart';
@@ -102,36 +102,22 @@ class _Home_Page_State extends State<Home_Page>{
                      // Navigator.push(context, MaterialPageRoute(builder: (context)=> sub_categories_page("Diets") ));
                     },
                   ),
-                  ListTile(
-                    title: Text("Tanks", style: TextStyle(fontWeight: FontWeight.bold)),
-                    leading: Icon(Icons.fastfood),
-                    onTap: (){
-                       Navigator.push(context, MaterialPageRoute(builder: (context)=> tanks_list("token") ));
-                    },
-                  ),
-                  ListTile(
-                    title: Text("Operation Notes", style: TextStyle(fontWeight: FontWeight.bold)),
-                    leading: Icon(Icons.fastfood),
-                    onTap: (){
-                       Navigator.push(context, MaterialPageRoute(builder: (context)=> operational_noteList("token") ));
-                    },
-                  ),
 
-                  ListTile(
-                    title: Text("Configurations", style: TextStyle(fontWeight: FontWeight.bold)),
-                    leading: Icon(Icons.settings),
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> configuration_Category("Configurations") ));
-                    },
-                  ),
-
-                  //                  ListTile(
-//                    title: Text("Inventory", style: TextStyle(fontWeight: FontWeight.bold)),
-//                    leading: Icon(Icons.beach_access),
+//                  ListTile(
+//                    title: Text("Configuration", style: TextStyle(fontWeight: FontWeight.bold)),
+//                    leading: Icon(Icons.settings),
 //                    onTap: (){
-//                      Navigator.push(context, MaterialPageRoute(builder: (context)=> sub_categories_page("Inventory") ));
+//                      Navigator.push(context, MaterialPageRoute(builder: (context)=> sub_categories_page("Configuration") ));
 //                    },
 //                  ),
+                  ListTile(
+                    title: Text("Inventory", style: TextStyle(fontWeight: FontWeight.bold)),
+                    leading: Icon(Icons.beach_access),
+                    onTap: ()async{
+                      prefs = await SharedPreferences.getInstance();
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> inventory_list(prefs.get('token')) ));
+                    },
+                  ),
 //                  ListTile(
 //                    title: Text("Horse Group", style: TextStyle(fontWeight: FontWeight.bold)),
 //                    leading: Icon(Icons.all_inclusive),
@@ -260,11 +246,12 @@ class _Home_Page_State extends State<Home_Page>{
                     ),
                     MaterialButton(
                       minWidth: 40,
-                      onPressed: () {
+                      onPressed: () async{
+                        prefs  =await SharedPreferences.getInstance();
                         setState(() {
-//                          currentScreen =
-//                              operational_noteList(token); // if user taps on this dashboard tab will be active
-//                          currentTab = 3;
+                          currentScreen =
+                              addInventory(prefs.get('token')); // if user taps on this dashboard tab will be active
+                          currentTab = 3;
                         });
                       },
                       child: Column(

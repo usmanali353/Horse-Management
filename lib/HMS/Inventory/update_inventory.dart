@@ -9,23 +9,25 @@ import 'package:horse_management/Utils.dart';
 import 'package:intl/intl.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
-class addInventory extends StatefulWidget{
+class updateInventory extends StatefulWidget{
   String token;
+  var inventoryList;
 
-  addInventory(this.token);
+  updateInventory(this.token,this.inventoryList);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _add_training_state(token);
+    return _add_training_state(token,inventoryList);
   }
 }
 
 
 
-class _add_training_state extends State<addInventory>{
+class _add_training_state extends State<updateInventory>{
   String token;
-  _add_training_state(this.token);
+  var inventoryList;
+  _add_training_state(this.token,this.inventoryList);
   String selected_itemtype,selected_stock,selected_status ;
   DateTime enter_date = DateTime.now();
   DateTime dueDate =DateTime.now();
@@ -39,10 +41,13 @@ class _add_training_state extends State<addInventory>{
   TextEditingController name,code,serial,batch,location,quantity,comment;
   bool _isvisible=false;
   bool othersvisibility = true;
+  String intialname;
+
   //bool horses_loaded=false;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
   @override
   void initState() {
+
     this.name=TextEditingController();
     this.code=TextEditingController();
     this.serial=TextEditingController();
@@ -51,6 +56,9 @@ class _add_training_state extends State<addInventory>{
     this.quantity=TextEditingController();
     this.comment=TextEditingController();
     local_db=sqlite_helper();
+
+    name.text = inventoryList['name'];
+    code.text = inventoryList['code'] != null ? inventoryList['code']:"";
 
     Utils.check_connectivity().then((result){
       if(result){
@@ -105,7 +113,7 @@ class _add_training_state extends State<addInventory>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Trainings"),),
+        appBar: AppBar(title: Text("Update "),),
         body: ListView(
           children: <Widget>[
             Column(
@@ -118,6 +126,7 @@ class _add_training_state extends State<addInventory>{
                         padding: EdgeInsets.all(16),
                         child: FormBuilderTextField(
                           controller: name,
+
                           attribute: "name",
                           validators: [FormBuilderValidators.required()],
                           decoration: InputDecoration(labelText: "Name",
@@ -130,12 +139,13 @@ class _add_training_state extends State<addInventory>{
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(16),
+                        padding: EdgeInsets.only(bottom: 16,left: 16,right: 16),
                         child: FormBuilderTextField(
                           controller: code,
+                          initialValue: inventoryList['code'] != null ? inventoryList['code']:"",
                           attribute: "Training Center",
                           validators: [FormBuilderValidators.required()],
-                          decoration: InputDecoration(labelText: "Training Center",
+                          decoration: InputDecoration(labelText: "Code",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -145,11 +155,13 @@ class _add_training_state extends State<addInventory>{
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.only(right: 16,left: 16,bottom: 16),
                         child: FormBuilderDropdown(
+                          initialValue: itemtype[selected_itemtype_id],
                           attribute: "Training Type",
+
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Select Training"),
+                          hint: Text("Select itemType"),
                           items: itemtype.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -189,7 +201,7 @@ class _add_training_state extends State<addInventory>{
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(16),
+                        padding: EdgeInsets.only(bottom: 16,right: 16,left: 16),
                         child: FormBuilderTextField(
                           controller: location,
                           attribute: "location",
@@ -202,9 +214,9 @@ class _add_training_state extends State<addInventory>{
 
                         ),
                       ),
-                      
+
                       Padding(
-                        padding: EdgeInsets.only(top:16,left: 16,right: 16),
+                        padding: EdgeInsets.only(bottom:16,left: 16,right: 16),
                         child:FormBuilderDateTimePicker(
                           attribute: "enter Date",
                           style: Theme.of(context).textTheme.body1,
@@ -225,7 +237,7 @@ class _add_training_state extends State<addInventory>{
                       Visibility(
                         visible: othersvisibility,
                         child: Padding(
-                          padding: EdgeInsets.only(top:16,left: 16,right: 16),
+                          padding: EdgeInsets.only(bottom:16,left: 16,right: 16),
                           child:FormBuilderDateTimePicker(
                             attribute: "due Date",
                             style: Theme.of(context).textTheme.body1,
@@ -277,7 +289,7 @@ class _add_training_state extends State<addInventory>{
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                        padding: const EdgeInsets.only(bottom:16,left: 16,right: 16),
                         child: Visibility(
                           visible: _isvisible,
                           child: FormBuilderDropdown(
@@ -308,7 +320,7 @@ class _add_training_state extends State<addInventory>{
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                        padding: const EdgeInsets.only(bottom:16,left: 16,right: 16),
                         child: Visibility(
                           visible: _isvisible,
                           child: FormBuilderDropdown(
@@ -340,9 +352,9 @@ class _add_training_state extends State<addInventory>{
                         ),
                       ),
                       Visibility(
-                       visible: _isvisible,
+                        visible: _isvisible,
                         child: Padding(
-                          padding: EdgeInsets.all(16),
+                          padding: EdgeInsets.only(bottom: 16,left: 16, right: 16),
                           child: FormBuilderTextField(
                             controller: quantity,
                             attribute: "quantity",
@@ -358,7 +370,7 @@ class _add_training_state extends State<addInventory>{
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 16,right: 16),
+                        padding: const EdgeInsets.only(left: 16,right: 16,bottom: 16),
                         child: Visibility(
                           visible: othersvisibility,
                           child: FormBuilderDropdown(
@@ -386,11 +398,11 @@ class _add_training_state extends State<addInventory>{
                           ),
                         ),
                       ),
-                      
+
                       Visibility(
                         visible: othersvisibility,
                         child: Padding(
-                          padding: EdgeInsets.all(16),
+                          padding: EdgeInsets.only(right: 16,left: 16,bottom: 16),
                           child: FormBuilderTextField(
                             controller: serial,
                             attribute: "serial",
@@ -422,7 +434,7 @@ class _add_training_state extends State<addInventory>{
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 16,right: 16),
+                        padding: EdgeInsets.only(left: 16,right: 16,bottom: 16),
                         child: FormBuilderTextField(
                           controller: comment,
                           attribute: "comment",
@@ -442,9 +454,13 @@ class _add_training_state extends State<addInventory>{
                 Center(
                     child:Padding(
                       padding: const EdgeInsets.all(16),
-                      child: add_training_button(fbKey: _fbKey, local_db: local_db, token: token, name: name,code: code,itemtypeid: selected_itemtype_id,location: location,
-                        enterDate: enter_date, dueDate: dueDate,itemstatusid: selected_status_type,toberepaire: toberepaire,outofRanch: outofranch,stockid: selected_stock_id,serialNo: serial,batchNo: batch,quantity: quantity,),
+                      child: add_training_button(fbKey: _fbKey, local_db: local_db, token: token,inventoryList: inventoryList, name: name,code: code,itemtypeid: selected_itemtype_id,location: location,
+                        enterDate: enter_date, dueDate: dueDate,itemstatusid: selected_status_type,toberepaire: toberepaire,outofRanch: outofranch,stockid: selected_stock_id,serialNo: serial,batchNo: batch,quantity: quantity,comment: comment,),
                     )
+                ),
+                MaterialButton(child: Text("check me"),onPressed: (){
+                  print(inventoryList['stock']);
+                }
                 )
               ],
             )
@@ -461,6 +477,7 @@ class add_training_button extends StatelessWidget {
     @required GlobalKey<FormBuilderState> fbKey,
     @required this.local_db,
     this.token,
+    this.inventoryList,
     this.name,
     this.code,
     this.itemtypeid,
@@ -483,41 +500,43 @@ class add_training_button extends StatelessWidget {
   final DateTime enterDate;
   final DateTime dueDate;
   final TextEditingController name,code,location,serialNo,batchNo,quantity,comment;
+  final inventoryList;
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
       color: Colors.teal,
       onPressed: () {
+
         if (_fbKey.currentState.validate()) {
           print(name.text);
           print(comment);
 //          Utils.check_connectivity().then((result){
 //            if(result){
-              ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-              //pd.show();
-              inventoryServices.inventorySave(null, token, 0, name.text, itemtypeid, stockid, code.text, location.text, enterDate, dueDate, serialNo.text, batchNo.text, 1, itemstatusid, toberepaire, outofRanch, "abc").then((response){
-               pd.dismiss();
-                print(response);
-                if(response!=null) {
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                    backgroundColor: Colors.green,
-                    content: Text("Training Added Sucessfully"),
-                  ));
-                }else{
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                    backgroundColor: Colors.red,
-                    content: Text("Training not Added"),
-                  ));
-                }
-              });
-           // }
+          ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+          //pd.show();
+          inventoryServices.inventorySave(inventoryList['createdBy'], token, inventoryList['id'], name.text, itemtypeid, stockid, code.text, location.text, enterDate, dueDate, serialNo.text, batchNo.text, 1, itemstatusid, toberepaire, outofRanch, "abc").then((response){
+            pd.dismiss();
+            print(response);
+            if(response!=null) {
+              Scaffold.of(context).showSnackBar(SnackBar(
+                backgroundColor: Colors.green,
+                content: Text("Training Added Sucessfully"),
+              ));
+            }else{
+              Scaffold.of(context).showSnackBar(SnackBar(
+                backgroundColor: Colors.red,
+                content: Text("Training not Added"),
+              ));
+            }
+          });
+          // }
 //            else{
 //              Scaffold.of(context).showSnackBar(SnackBar(
 //                backgroundColor: Colors.red,
 //                content: Text("Network not Available"),
 //              ));
-              // local_db.create_training(Training(selected_horse,selected_trainer,'',training_center.text,Start_date.toString(),End_Date.toString(),target_date.toString(),excerciseplan,));
+          // local_db.create_training(Training(selected_horse,selected_trainer,'',training_center.text,Start_date.toString(),End_Date.toString(),target_date.toString(),excerciseplan,));
 //            }
           //});
 
@@ -525,5 +544,8 @@ class add_training_button extends StatelessWidget {
       },
       child:Text("Add Training",style: TextStyle(color: Colors.white),),
     );
+  }
+  String get_itemtype_by_id(int id){
+
   }
 }

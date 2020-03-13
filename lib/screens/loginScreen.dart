@@ -187,12 +187,14 @@ class scrollview extends StatelessWidget {
                                    }else{
                                      var parsedJson = json.decode(response_json);
                                      if(parsedJson['isSuccess']==true){
+
                                        Scaffold.of(context).showSnackBar(SnackBar(
                                          backgroundColor: Colors.green,
                                          content: Text("Login Sucess"),
                                        ));
                                        SharedPreferences  prefs= await SharedPreferences.getInstance();
                                        await prefs.setString("token", parsedJson['result']);
+                                       await prefs.setBool("isLogin", true);
                                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Home_Page()),(Route<dynamic> route) => false);
                                      }else{
                                        Scaffold.of(context).showSnackBar(SnackBar(

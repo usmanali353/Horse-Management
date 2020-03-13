@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:horse_management/Utils.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -78,11 +79,11 @@ class inventoryServices{
       "providorId": null,
       "quantity": quantity,
       "itemStatus": itemstatus,
-      "toBeRepaired": tobeeRaoaire,
-      "outOfRanch": outofRanch,
+      "toBeRepaired": 0,
+      "outOfRanch": 0,
       "comments": comment,
 
-    });
+    },toEncodable: Utils.myEncode);
     final response = await http.post('http://192.236.147.77:8083/api/Inventory/InventorySave', headers: headers, body: body
     );
     print(response.body);
