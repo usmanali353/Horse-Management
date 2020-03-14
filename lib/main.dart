@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:horse_management/Utils.dart';
+import 'package:horse_management/screens/Home_Page.dart';
 import 'package:horse_management/screens/welcome_screen.dart';
 import 'HMS/Training/excercises_page.dart';
 import 'HMS/Training/training_plans.dart';
@@ -39,7 +40,7 @@ class myAppState extends State<MyApp>{
   }
   Widget checkLogin(){
     if(isLogin){
-      return WelcomeScreen();
+      return Home_Page();
     }else
      return WelcomeScreen();
   }

@@ -67,7 +67,15 @@ class _excercisesState extends State<excercises> {
          network_operations.addTrainingPlan(token, 0, entries,trainingPlanName, '').then((response){
            pd.dismiss();
             if(response!=null){
-
+             Scaffold.of(context).showSnackBar(SnackBar(
+               content: Text("Training Plan Added Sucessfully"),
+               backgroundColor: Colors.green,
+             ));
+            }else{
+              Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text("Training Plan not Added"),
+                backgroundColor: Colors.red,
+              ));
             }
          });
       }else{
