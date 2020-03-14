@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:horse_management/Utils.dart';
-import 'package:horse_management/screens/Home_Page.dart';
 import 'package:horse_management/screens/welcome_screen.dart';
-
-
-
-
+import 'HMS/Training/excercises_page.dart';
+import 'HMS/Training/training_plans.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
@@ -16,7 +13,7 @@ class MyApp extends StatefulWidget {
   }
 }
 class myAppState extends State<MyApp>{
-  bool isLogin=true;
+  bool isLogin=false;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -42,7 +39,7 @@ class myAppState extends State<MyApp>{
   }
   Widget checkLogin(){
     if(isLogin){
-      return Home_Page();
+      return WelcomeScreen();
     }else
      return WelcomeScreen();
   }

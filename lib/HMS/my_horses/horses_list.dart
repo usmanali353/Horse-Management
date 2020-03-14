@@ -28,7 +28,7 @@ class _training_list_state extends State<horse_list>{
   _training_list_state (this.token);
 
   var horse_list;
-  var temp=['',''];
+  var temp=[];
   @override
   Widget build(BuildContext context) {
 

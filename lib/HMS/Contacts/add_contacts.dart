@@ -36,7 +36,6 @@ class _add_contacts_state extends State<add_contacts>{
     facebook=TextEditingController();
     twitter=TextEditingController();
     instagram=TextEditingController();
-
   }
   @override
   Widget build(BuildContext context) {
