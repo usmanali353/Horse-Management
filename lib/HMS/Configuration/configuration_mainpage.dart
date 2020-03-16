@@ -41,14 +41,8 @@ class _configuration_Category extends State<configuration_Category>{
         appBar: AppBar(title: Text("Configuration"),
 
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
+        body: ListView(
 
-            Padding(
-              padding: EdgeInsets.all(10.0),
-              child: ListView(
-                shrinkWrap: true,
                 children: <Widget>[
                   ListTile(
                     title: Text("Barn"),
@@ -224,10 +218,8 @@ class _configuration_Category extends State<configuration_Category>{
                   ),
                 ],
               ),
-            ),
-          ],
-        )
-    );
+            );
+
   }
 
 }

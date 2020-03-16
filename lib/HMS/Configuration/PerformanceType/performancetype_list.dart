@@ -66,10 +66,10 @@ class _performancetype_list extends State<performancetype_list>{
                   setState(() {
                     isVisible=false;
                   });
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                    backgroundColor: Colors.red,
-                    content: Text("List Not Available"),
-                  ));
+//                  Scaffold.of(context).showSnackBar(SnackBar(
+//                    backgroundColor: Colors.red,
+//                    content: Text("List Not Available"),
+//                  ));
                 }
               });
             }else{

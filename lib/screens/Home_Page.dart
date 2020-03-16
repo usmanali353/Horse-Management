@@ -11,6 +11,7 @@ import 'package:horse_management/HMS/Training/already_trained_horses_list.dart';
 import 'package:horse_management/HMS/Training/training_list.dart';
 import 'package:horse_management/HMS/Veterinary/vet_mainPage.dart';
 import 'package:horse_management/HMS/my_horses/horses_list.dart';
+import 'package:horse_management/MainScreens/home.dart';
 import 'package:horse_management/screens/tasks_Page.dart';
 import 'package:horse_management/screens/Notification_Page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,19 +25,19 @@ class Home_Page extends StatefulWidget{
   }
 }
 class _Home_Page_State extends State<Home_Page>{
-  bool darkTheme = false;
+  bool darkTheme = true;
   int currentTab;
   Widget currentScreen;
   PageStorageBucket bucket;
-  String title="Tasks";
+  String title="Home";
   SharedPreferences prefs;
   @override
   void initState() {
     setState(() {
       currentTab=0;
-      currentScreen=tasks_Page();
+      currentScreen=Home();
       bucket = PageStorageBucket();
-      title="Tasks";
+      title="Home";
     });
   }
   @override
@@ -162,137 +163,137 @@ class _Home_Page_State extends State<Home_Page>{
             });
           }
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: BottomAppBar(
-          shape: CircularNotchedRectangle(),
-          notchMargin: 10,
-          child: Container(
-            height: 60,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    MaterialButton(
-                      minWidth: 40,
-                      onPressed: () {
-                        setState(() {
-                          currentScreen =
-                              tasks_Page(); // if user taps on this dashboard tab will be active
-                          currentTab = 0;
-                        });
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.event,
-                            color: currentTab == 0 ? Colors.teal : Colors.grey,
-                          ),
-                          Text(
-                            'Tasks',
-                            style: TextStyle(
-                              color: currentTab == 0 ? Colors.teal : Colors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    MaterialButton(
-                      minWidth: 40,
-                      onPressed: () async{
-                        prefs= await SharedPreferences.getInstance();
-                        setState(() {
-                          currentScreen = horse_list(prefs.getString("token"));
-                             // if user taps on this dashboard tab will be active
-                          currentTab = 1;
-                          print(currentTab.toString());
-                        });
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            FontAwesomeIcons.horse,
-                            color: currentTab == 1 ? Colors.teal : Colors.brown,
-                          ),
-                          Text(
-                            'My Horses',
-                            style: TextStyle(
-                              color: currentTab == 1 ? Colors.teal : Colors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-
-                // Right Tab bar icons
-
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    MaterialButton(
-                      minWidth: 40,
-                      onPressed: () {
-                        setState(() {
-                          currentScreen =
-                              Notification_Page(); // if user taps on this dashboard tab will be active
-                          currentTab = 2;
-                          print(currentTab.toString());
-                        });
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.notifications,
-                            color: currentTab == 2 ? Colors.teal : Colors.grey,
-                          ),
-                          Text(
-                            'Notifications',
-                            style: TextStyle(
-                              color: currentTab == 2 ? Colors.teal : Colors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    MaterialButton(
-                      minWidth: 40,
-                      onPressed: () async{
-                        prefs  =await SharedPreferences.getInstance();
-                        setState(() {
-                          currentScreen =
-                              addInventory(prefs.get('token')); // if user taps on this dashboard tab will be active
-                          currentTab = 3;
-                        });
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                           FontAwesomeIcons.bookReader,
-                            color: currentTab == 3 ? Colors.teal  : Colors.grey,
-                          ),
-                          Text(
-                            'Diary',
-                            style: TextStyle(
-                              color: currentTab == 3 ? Colors.teal : Colors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                )
-
-              ],
-            ),
-          ),
-        ),
+//        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+//        bottomNavigationBar: BottomAppBar(
+//          shape: CircularNotchedRectangle(),
+//          notchMargin: 10,
+//          child: Container(
+//            height: 60,
+//            child: Row(
+//              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//              children: <Widget>[
+//                Row(
+//                  crossAxisAlignment: CrossAxisAlignment.start,
+//                  children: <Widget>[
+//                    MaterialButton(
+//                      minWidth: 40,
+//                      onPressed: () {
+//                        setState(() {
+//                          currentScreen =
+//                              tasks_Page(); // if user taps on this dashboard tab will be active
+//                          currentTab = 0;
+//                        });
+//                      },
+//                      child: Column(
+//                        mainAxisAlignment: MainAxisAlignment.center,
+//                        children: <Widget>[
+//                          Icon(
+//                            Icons.home,
+//                            color: currentTab == 0 ? Colors.teal : Colors.grey,
+//                          ),
+//                          Text(
+//                            'Home',
+//                            style: TextStyle(
+//                              color: currentTab == 0 ? Colors.teal : Colors.grey,
+//                            ),
+//                          ),
+//                        ],
+//                      ),
+//                    ),
+//                    MaterialButton(
+//                      minWidth: 40,
+//                      onPressed: () async{
+//                        prefs= await SharedPreferences.getInstance();
+//                        setState(() {
+//                          currentScreen = Home();
+//                             // if user taps on this dashboard tab will be active
+//                          currentTab = 1;
+//                          print(currentTab.toString());
+//                        });
+//                      },
+//                      child: Column(
+//                        mainAxisAlignment: MainAxisAlignment.center,
+//                        children: <Widget>[
+//                          Icon(
+//                            FontAwesomeIcons.horse,
+//                            color: currentTab == 1 ? Colors.teal : Colors.brown,
+//                          ),
+//                          Text(
+//                            'My Horses',
+//                            style: TextStyle(
+//                              color: currentTab == 1 ? Colors.teal : Colors.grey,
+//                            ),
+//                          ),
+//                        ],
+//                      ),
+//                    )
+//                  ],
+//                ),
+//
+//                // Right Tab bar icons
+//
+//                Row(
+//                  crossAxisAlignment: CrossAxisAlignment.start,
+//                  children: <Widget>[
+//                    MaterialButton(
+//                      minWidth: 40,
+//                      onPressed: () {
+//                        setState(() {
+//                          currentScreen =
+//                              Notification_Page(); // if user taps on this dashboard tab will be active
+//                          currentTab = 2;
+//                          print(currentTab.toString());
+//                        });
+//                      },
+//                      child: Column(
+//                        mainAxisAlignment: MainAxisAlignment.center,
+//                        children: <Widget>[
+//                          Icon(
+//                            Icons.notifications,
+//                            color: currentTab == 2 ? Colors.teal : Colors.grey,
+//                          ),
+//                          Text(
+//                            'Notifications',
+//                            style: TextStyle(
+//                              color: currentTab == 2 ? Colors.teal : Colors.grey,
+//                            ),
+//                          ),
+//                        ],
+//                      ),
+//                    ),
+//                    MaterialButton(
+//                      minWidth: 40,
+//                      onPressed: () async{
+//                        prefs  =await SharedPreferences.getInstance();
+//                        setState(() {
+//                          currentScreen =
+//                              addInventory(prefs.get('token')); // if user taps on this dashboard tab will be active
+//                          currentTab = 3;
+//                        });
+//                      },
+//                      child: Column(
+//                        mainAxisAlignment: MainAxisAlignment.center,
+//                        children: <Widget>[
+//                          Icon(
+//                           FontAwesomeIcons.bookReader,
+//                            color: currentTab == 3 ? Colors.teal  : Colors.grey,
+//                          ),
+//                          Text(
+//                            'Diary',
+//                            style: TextStyle(
+//                              color: currentTab == 3 ? Colors.teal : Colors.grey,
+//                            ),
+//                          ),
+//                        ],
+//                      ),
+//                    )
+//                  ],
+//                )
+//
+//              ],
+//            ),
+//          ),
+//        ),
       ),
       theme: ThemeData(
         primarySwatch: Colors.teal

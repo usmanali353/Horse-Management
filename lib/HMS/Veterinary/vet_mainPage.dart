@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:horse_management/health_record_form.dart';
 
 import 'Confirmation/confirmation.dart';
-import 'Vet Visits/vet_visit.dart';
+//import 'Vet Visits/vet_visit.dart';
 
 
 
@@ -59,7 +59,7 @@ class _Profile_Page_State extends State<vet_category>{
                     leading: Icon(Icons.speaker_notes,size: 40,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: (){
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=>vet_visit()));
+                   //   Navigator.push(context,MaterialPageRoute(builder: (context)=>vet_visit()));
                     },
                   ),
 
