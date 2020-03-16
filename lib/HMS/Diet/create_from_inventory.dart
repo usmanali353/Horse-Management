@@ -43,6 +43,7 @@ class _add_new_note_state extends State<createFromInventory>{
               horses_loaded=true;
               for(int i=0;i<inventoryDropdown['inventoryDropDown'].length;i++){
                 inventoryItem.add(inventoryDropdown['inventoryDropDown'][i]['name']);
+                print(inventoryDropdown);
               }
             });
           }else{
@@ -77,7 +78,7 @@ class _add_new_note_state extends State<createFromInventory>{
                             attribute: "item",
                             validators: [FormBuilderValidators.required()],
                             hint: Text("Select Item"),
-                            items: category.map((name) => DropdownMenuItem(
+                            items: inventoryItem.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
                             style: Theme.of(context).textTheme.body1,
@@ -123,13 +124,13 @@ class _add_new_note_state extends State<createFromInventory>{
                             onSaved: (value){
                               setState(() {
                                 this.selected_category=value;
-                                selected_category_id= category.indexOf(value);
+                                selected_category_id= category.indexOf(value)+1;
                               });
                             },
                             onChanged: (value){
                               setState(() {
                                 this.selected_category=value;
-                                selected_category_id= category.indexOf(value);
+                                selected_category_id= category.indexOf(value)+1;
                               });
                             },
                           ),
@@ -154,7 +155,7 @@ class _add_new_note_state extends State<createFromInventory>{
                     ],
                   ),
                 ),
-                add_note_button(fbKey: _fbKey,token: token,selected_item_id: selected_item_id,selected_category_id: selected_category_id,cost: cost,)
+                add_note_button(fbKey: _fbKey,token: token,selected_item_id: selected_item_id,selected_category_id: selected_category_id,cost: cost,inventoryDropdown: inventoryDropdown,)
               ],
             )
           ],
@@ -172,11 +173,13 @@ class add_note_button extends StatelessWidget {
      this.selected_item_id,
     this.selected_category_id,
     this.cost,
+    this.inventoryDropdown,
      GlobalKey<FormBuilderState> fbKey,
 
   }) :_fbKey = fbKey, super(key: key);
   final String token;
   final TextEditingController cost;
+  final  inventoryDropdown;
   final int selected_item_id,selected_category_id;
   final GlobalKey<FormBuilderState> _fbKey;
   @override
@@ -185,11 +188,14 @@ class add_note_button extends StatelessWidget {
       child: MaterialButton(
         color: Colors.teal,
         onPressed: (){
+          print(inventoryDropdown['inventoryDropDown'][selected_item_id]['id']);
+          print(selected_category_id);
+          print(1);
           Utils.check_connectivity().then((result){
             if(result){
               if(_fbKey.currentState.validate()){
                 _fbKey.currentState.save();
-                DietServices.inventoryProductSave(null, token, 0, selected_item_id, selected_category_id, int.parse(cost.text)).then((response){
+                DietServices.inventoryProductSave(null, token, 0,inventoryDropdown['inventoryDropDown'][selected_item_id]['id'], selected_category_id,cost.text).then((response){
                   if(response!=null){
                     Scaffold.of(context).showSnackBar(SnackBar(
                       backgroundColor: Colors.green,

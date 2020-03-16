@@ -79,35 +79,32 @@ class _add_new_note_state extends State<addProductType>{
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.all(16),
-                        child: Visibility(
-                          visible: horses_loaded,
-                          child: FormBuilderDropdown(
-                            attribute: "category",
-                            validators: [FormBuilderValidators.required()],
-                            hint: Text("Select category"),
-                            items: category.map((name) => DropdownMenuItem(
-                                value: name, child: Text("$name")))
-                                .toList(),
-                            style: Theme.of(context).textTheme.body1,
-                            decoration: InputDecoration(labelText: "Category",
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(9.0),
-                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                              ),
+                        child: FormBuilderDropdown(
+                          attribute: "category",
+                          validators: [FormBuilderValidators.required()],
+                          hint: Text("Select category"),
+                          items: category.map((name) => DropdownMenuItem(
+                              value: name, child: Text("$name")))
+                              .toList(),
+                          style: Theme.of(context).textTheme.body1,
+                          decoration: InputDecoration(labelText: "Category",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(9.0),
+                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
                             ),
-                            onSaved: (value){
-                              setState(() {
-                                this.selected_category=value;
-                                selected_category_id= category.indexOf(value)+1;
-                              });
-                            },
-                            onChanged: (value){
-                              setState(() {
-                                this.selected_category=value;
-                                selected_category_id= category.indexOf(value)+1;
-                              });
-                            },
                           ),
+                          onSaved: (value){
+                            setState(() {
+                              this.selected_category=value;
+                              selected_category_id= category.indexOf(value)+1;
+                            });
+                          },
+                          onChanged: (value){
+                            setState(() {
+                              this.selected_category=value;
+                              selected_category_id= category.indexOf(value)+1;
+                            });
+                          },
                         ),
                       ),
 
@@ -116,7 +113,7 @@ class _add_new_note_state extends State<addProductType>{
                         child: FormBuilderTextField(
                           attribute: "name",
                           controller: name,
-                          decoration: InputDecoration(labelText: "Details",
+                          decoration: InputDecoration(labelText: "Name",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -129,7 +126,7 @@ class _add_new_note_state extends State<addProductType>{
                         child: FormBuilderTextField(
                           attribute: "cost",
                           controller: cost,
-                          decoration: InputDecoration(labelText: "Details",
+                          decoration: InputDecoration(labelText: "Cost",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -140,9 +137,9 @@ class _add_new_note_state extends State<addProductType>{
                       Padding(
                         padding: EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderTextField(
-                          attribute: "Details",
+                          attribute: "unit",
                           controller: unit,
-                          decoration: InputDecoration(labelText: "Details",
+                          decoration: InputDecoration(labelText: "Unit",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -194,12 +191,12 @@ class add_note_button extends StatelessWidget {
                   if(response!=null){
                     Scaffold.of(context).showSnackBar(SnackBar(
                       backgroundColor: Colors.green,
-                      content: Text("Notes Added Sucessfully"),
+                      content: Text("prouct Added Sucessfully"),
                     ));
                   }else{
                     Scaffold.of(context).showSnackBar(SnackBar(
                       backgroundColor: Colors.red,
-                      content: Text("Notes not Added"),
+                      content: Text("product not Added"),
                     ));
                   }
                 });
@@ -212,7 +209,7 @@ class add_note_button extends StatelessWidget {
             }
           });
         },
-        child: Text("Add Notes",style: TextStyle(color: Colors.white),),
+        child: Text("Add Product",style: TextStyle(color: Colors.white),),
       ),
     );
   }

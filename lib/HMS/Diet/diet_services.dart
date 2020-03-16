@@ -132,13 +132,13 @@ class DietServices {
       HttpHeaders.contentTypeHeader: 'application/json',
       HttpHeaders.authorizationHeader: 'Bearer '+token
     };
-    final body = jsonEncode({	"productTypeId": 0,
-      "category": 2,
-      "name": "Product Type API",
-      "costPerUnit": 120,
-      "unit": "1",
+    final body = jsonEncode({	"productTypeId": id,
+      "category": category,
+      "name": name,
+      "costPerUnit": cost,
+      "unit": unit,
       "IsInventory": false,
-      "createdBy": "41b19c63-510c-48db-85b5-f745c9132c53",
+      "createdBy": createdBy,
       "createdOn": "2020-03-06T10:18:37.417",
       "isActive": true
     });
@@ -152,20 +152,20 @@ class DietServices {
     } else
       return null;
   }
-  static Future<String> inventoryProductSave (String createdBy,String token,int id,int inventoryId,int categoryId,int cost) async {
+  static Future<String> inventoryProductSave (String createdBy,String token,int id,int inventoryId,int categoryId,String cost) async {
     Map<String, String> headers = {
       HttpHeaders.contentTypeHeader: 'application/json',
       HttpHeaders.authorizationHeader: 'Bearer '+token
     };
-    final body = jsonEncode({	"productTypeId": 0,
-      "category": 2,
+    final body = jsonEncode({	"productTypeId": id,
+      "category": categoryId,
       "name": "No name",
-      "costPerUnit": 120,
+      "costPerUnit": cost,
       "unit": "1",
-      "inventoryId": 2,
+      "inventoryId": inventoryId,
       "IsInventory": true,
-      "createdBy": "41b19c63-510c-48db-85b5-f745c9132c53",
-      "createdOn": DateTime.now(),
+      "createdBy": createdBy,
+      "createdOn": "2020-03-06T10:18:37.417",
       "isActive": true
     });
     final response = await http.post(
