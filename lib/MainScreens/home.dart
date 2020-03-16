@@ -5,6 +5,7 @@ import 'package:horse_management/HMS/Breeding/breeding_mainPage.dart';
 import 'package:horse_management/HMS/Configuration/Breeds/breeds_list.dart';
 import 'package:horse_management/HMS/Configuration/configuration_mainpage.dart';
 import 'package:horse_management/HMS/Contacts/contacts_list.dart';
+import 'package:horse_management/HMS/Diet/dietList.dart';
 import 'package:horse_management/HMS/Inventory/inventory_list.dart';
 import 'package:horse_management/HMS/OperationNotes/operation_notes.dart';
 import 'package:horse_management/HMS/Tanks/tanks.dart';
@@ -138,7 +139,7 @@ class _HomeState extends State<Home>{ //with AutomaticKeepAliveClientMixin<Home>
                           Navigator.push(context, MaterialPageRoute(builder: (context)=> vet_category() ));
                         }else if(index == 4){
                           prefs= await SharedPreferences.getInstance();
-                          // Navigator.push(context, MaterialPageRoute(builder: (context)=> sub_categories_page("Diets") ));
+                           Navigator.push(context, MaterialPageRoute(builder: (context)=> dietList(prefs.getString("token")) ));
                         }else if(index == 5){
                           prefs= await SharedPreferences.getInstance();
                          // Navigator.push(context, MaterialPageRoute(builder: (context)=> inventory_list() ));
