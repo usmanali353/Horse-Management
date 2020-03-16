@@ -59,7 +59,7 @@ class _add_horsecategory extends State<add_horsecategory>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Horse Category"),),
+        appBar: AppBar(title: Text("Add Horse Cetagory"),),
         body:  Padding(
           padding: EdgeInsets.all(10),
           child: SingleChildScrollView(
