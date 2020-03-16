@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
@@ -415,4 +414,32 @@ static Future<String> delete_already_trained_horses(String token,int id) async{
     }else
       return null;
   }
+  //Training Plan
+  static Future<String> addTrainingPlan(String token,int planId,List<Map> planExercises,String name,String createdBy)async{
+    Map<String,String> headers = {'Authorization':'Bearer '+token,'Content-Type':'application/json'};
+    final body = jsonEncode({'planId':planId,'name':name,'createdBy':createdBy,'isActive':true,'createdOn':DateTime.now(),'planExercises':planExercises},toEncodable: Utils.myEncode);
+    var response= await http.post("http://192.236.147.77:8083/api/Training/TrainingPlanSave",headers: headers,body: body);
+    print(response.body);
+    if(response.statusCode==200){
+      return response.body;
+    }else
+      return null;
+  }
+  static Future<String> getTrainingPlans(String token) async{
+    Map<String,String> headers = {'Authorization':'Bearer '+token};
+    final response = await http.get('http://192.236.147.77:8083/api/Training/GetAllTrainingPlans', headers: headers,);
+    if(response.statusCode==200){
+      return response.body;
+    }else
+      return null;
+  }
+  static Future<String> changeTrainingPlanVisibility(String token,int Id) async{
+    Map<String,String> headers = {'Authorization':'Bearer '+token};
+    final response = await http.get('http://192.236.147.77:8083/api/Training/TrainingPlanVisibility/'+Id.toString(), headers: headers,);
+    if(response.statusCode==200){
+      return response.body;
+    }else
+      return null;
+  }
+
 }

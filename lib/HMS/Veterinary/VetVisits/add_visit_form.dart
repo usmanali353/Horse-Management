@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import  'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 
+
+
 class add_visit_form extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -12,8 +14,12 @@ class add_visit_form extends StatefulWidget{
 
 }
 class _add_visit_form extends State<add_visit_form>{
+  Map<String, String> _formdata = {};
+  var _myPets = List<Widget>();
+  int _index = 1;
+
   var data;
-  bool autoValidate = true;
+  //bool autoValidate = true;
   bool readOnly = false;
   bool showSegmentedControl = true;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
@@ -29,6 +35,7 @@ class _add_visit_form extends State<add_visit_form>{
       body:  Padding(
         padding: EdgeInsets.all(10),
         child: SingleChildScrollView(
+
           child: Column(
               children: <Widget>[
                 FormBuilder(
@@ -999,23 +1006,42 @@ class _add_visit_form extends State<add_visit_form>{
                       child: IconButton(
                         icon: Icon(Icons.add_circle),
                         color: Colors.teal,
-                        onPressed: ()  {}
+                        onPressed: ()  {
+                          _add();
+                        }
                       ),
                     ),
-                    MaterialButton(
-                      onPressed: (){
-                        _fbKey.currentState.save();
-                        if (_fbKey.currentState.validate()) {
-                          print(_fbKey.currentState.value);
-                        }
-                      },
-                      child: Text("Save",style: TextStyle(color: Colors.white),
+                    ListView(
+                      shrinkWrap: true,
+                      children: _myPets,
+                    ),
+//                    Column(
+//                      children: <Widget>[
+//                        ListView(
+//                          children: _myPets,
+//                        ),
+//                      ],
+//                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: MaterialButton(
+                        onPressed: (){
+                          print(_formdata);
+                          _fbKey.currentState.save();
+                          if (_fbKey.currentState.validate()) {
+                            print(_fbKey.currentState.value);
+                          }
+                        },
+                        child: Text("Save",style: TextStyle(color: Colors.white),
+                        ),
+                        color: Colors.teal,
                       ),
-                      color: Colors.teal,
                     ),
                   ],
                   ),
                 ),
+
               ]
           ),
         ),
@@ -1024,4 +1050,71 @@ class _add_visit_form extends State<add_visit_form>{
 
   }
 
+
+  void _add() {
+    int keyValue = _index;
+    _myPets = List.from(_myPets)
+      ..add(
+          Column(
+        key: Key("${keyValue}"),
+        children: <Widget>[
+          ListTile(
+            // leading: Text('Pet $_index : '),
+            title:FormBuilderDropdown(
+                attribute: "name",
+                decoration: InputDecoration(labelText: "Trachea Auscultation",
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(9.0),
+                      borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                  ),
+                ),
+                // initialValue: 'Male',
+                hint: Text('Air'),
+                validators: [FormBuilderValidators.required()],
+                items: ['Air','Liquid','Stridor']
+                    .map((name) => DropdownMenuItem(
+                    value: name, child: Text("$name")))
+                    .toList(),
+                onChanged: (value) {
+                  setState(() => _formdata['dd${keyValue - 1}'] = value);
+                  print(value);
+                  print(_formdata['dd${keyValue - 1}']);
+                }
+            ),
+//            DropdownButton(
+//
+//              //style: Theme.of(context).textTheme.body1,
+//
+//                hint: Text("Select item"),
+//                items: ['Air','Liquid','Stridor']
+//                    .map((name) => DropdownMenuItem(
+//                    value: name, child: Text("$name")))
+//                    .toList(),
+//                onChanged: (value) {
+//                  setState(() => _formdata['dd${keyValue - 1}'] = value);
+//                  print(value);
+//                  print(_formdata['dd${keyValue - 1}']);
+//                }
+//            ),
+          ),
+          ListTile(
+            leading: Text('Quantity $_index : '),
+            title: TextField(
+              onChanged: (val) {
+                _formdata['tt${keyValue - 1}'] = val;
+              },
+            ),
+          ),
+        ],
+      ));
+    print(_formdata);
+    setState(() => ++_index);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _add();
+  }
 }
