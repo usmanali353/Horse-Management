@@ -3,6 +3,10 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/HMS/Configuration/Colors/colors_json.dart';
 import 'dart:convert';
 
+import 'package:progress_dialog/progress_dialog.dart';
+
+import '../../../Utils.dart';
+
 
 class update_color extends StatefulWidget{
   final token;
@@ -112,17 +116,25 @@ class _update_color extends State<update_color>{
                       MaterialButton(
                         onPressed: (){
                           if (_fbKey.currentState.validate()) {
-                            ColorsServices.addColor(token,specificColor['id'],color_name.text,abbreviation.text,specificColor['createdBy'],).then((response){
-                              setState(() {
-                                var parsedjson  = jsonDecode(response);
-                                if(parsedjson != null){
-                                  if(parsedjson['isSuccess'] == true){
-                                    print("Successfully data saved");
-                                  }else
-                                    print("not saved");
-                                }else
-                                  print("json response null");
-                              });
+                            Utils.check_connectivity().then((result){
+                              if(result){
+                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                pd.show();
+                                ColorsServices.addColor(token,specificColor['id'],color_name.text,abbreviation.text,specificColor['createdBy'],).then((respons){
+                                  pd.dismiss();
+                                  if(respons!=null){
+//                                    Scaffold.of(context).showSnackBar(SnackBar(
+//                                      content: Text("Updated "),
+//                                      backgroundColor: Colors.green,
+//                                    ));
+                                  }else{
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Not Updated "),
+                                      backgroundColor: Colors.red,
+                                    ));
+                                  }
+                                });
+                              }
                             });
                           }
                         },

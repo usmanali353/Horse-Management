@@ -27,10 +27,10 @@ class SemenStockServices{
     }else
       return null;
   }
-  static Future<String> add_semen_dose(String token,int embryostockId,int horseID,int tankID, DateTime entry_date, DateTime collection_date, String quantity, String cannister, String price, String serial_number,  String batch_number, bool was_bought, bool on_sale, ) async{
+  static Future<String> add_semen_dose(String token,int embryostockId,int horseID,int tankID, DateTime entry_date, DateTime collection_date, String quantity, String cannister, String price, String serial_number,  String batch_number, bool was_bought, bool on_sale, String createdBy) async{
     Map<String,String> headers = {'Content-Type':'application/json',"Authorization":"Bearer "+token};
     final body = jsonEncode({"createdOn":DateTime.now(),
-      "createdBy":"ce84c3c9-c8b3-464f-8516-49aae24af9ea",
+      "createdBy":createdBy,
       "isActive":true,
       "semenCollectionId":embryostockId,
       "horseId":horseID,
@@ -45,7 +45,7 @@ class SemenStockServices{
       "isbrought":was_bought,
       "onSale":on_sale,
     },toEncodable: Utils.myEncode);
-    var response=await http.post("http://192.236.147.77:8083/api/breed/SemenCollectionSave",
+    var response=await http.post("http://192.236.147.77:8083/api/breed/SemenDoseSave",
         headers: headers,
         body:body);
     print(response.body);

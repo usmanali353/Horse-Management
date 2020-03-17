@@ -7,6 +7,7 @@ import 'dart:async';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import  'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 import '../../../Utils.dart';
 import 'utils/breeding_services_json.dart';
@@ -591,41 +592,47 @@ class _update_breeding extends State<update_breeding> {
 
             MaterialButton(
               onPressed: () {
-                //_fbKey.currentState.save();
                 if (_fbKey.currentState.validate()) {
-                  print(_fbKey.currentState.value);
-                  BreedingServicesJson.update_and_add_breeding_service(
-                      specificservice['createdBy'],
-                      token,
-                      specificservice['breedingServiceId'],
-                      breeddropdown['horseDropDown'][horse_id]['id'],
-                      selected_date,
-                      its_programmed_service_id,
-                      selected_flushed_id,
-                      breeddropdown['damDropDown'][dam_id]['id'],
-                      breeddropdown['sireDropDown'][sire_id]['id'],
-                      service_type_id,
-                      semen_type_id,
-                      embryo_age.text,
-                      breeddropdown['donorDropDown'][donor_id]['id'],
-                      amount.text,
-                      breeddropdown['currencyDropDown'][currency_id]['id'],
-                      breeddropdown['categoryDropDown'][category_id]['id'],
-                      breeddropdown['costCenterDropDown'][category_id]['id'],
-                      breeddropdown['contactsDropDown'][category_id]['id'],
-                      comments.text).then((response) {
-                    setState(() {
-                      var parsedjson = jsonDecode(response);
-                      if (parsedjson != null) {
-                        if (parsedjson['isSuccess'] == true) {
-                          print("Successfully data saved");
-                        } else
-                          print("not saved");
-                      } else
-                        print("json response null");
-                    });
+                  Utils.check_connectivity().then((result){
+                    if(result){
+                      ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                      pd.show();
+                      BreedingServicesJson.update_and_add_breeding_service(
+                          specificservice['createdBy'],
+                          token,
+                          specificservice['breedingServiceId'],
+                          breeddropdown['horseDropDown'][horse_id]['id'],
+                          selected_date,
+                          its_programmed_service_id,
+                          selected_flushed_id,
+                          breeddropdown['damDropDown'][dam_id]['id'],
+                          breeddropdown['sireDropDown'][sire_id]['id'],
+                          service_type_id,
+                          semen_type_id,
+                          embryo_age.text,
+                          breeddropdown['donorDropDown'][donor_id]['id'],
+                          amount.text,
+                          breeddropdown['currencyDropDown'][currency_id]['id'],
+                          breeddropdown['categoryDropDown'][category_id]['id'],
+                          breeddropdown['costCenterDropDown'][category_id]['id'],
+                          breeddropdown['contactsDropDown'][category_id]['id'],
+                          comments.text).then((response) {
+                        setState(() {
+                          var parsedjson = jsonDecode(response);
+                          if (parsedjson != null) {
+                            if (parsedjson['isSuccess'] == true) {
+                              print("Successfully data saved");
+                            } else
+                              print("not saved");
+                          } else
+                            print("json response null");
+                        });
+                      });
+                    }
                   });
+
                 }
+
               },
               child: Text("Update", style: TextStyle(color: Colors.white),
               ),

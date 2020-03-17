@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'embryo_retrieval_form.dart';
 import 'dart:convert';
@@ -58,7 +59,10 @@ class _flushes_list extends State<flushes_list>{
         onRefresh: (){
           return Utils.check_connectivity().then((result){
             if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
               FlushesServicesJson.flusheslist(token).then((response){
+                pd.dismiss();
                 if(response!=null){
                   setState(() {
                     flushes_list=json.decode(response);
@@ -71,7 +75,7 @@ class _flushes_list extends State<flushes_list>{
                   });
                   Scaffold.of(context).showSnackBar(SnackBar(
                     backgroundColor: Colors.red,
-                    content: Text("Flushes Not Available"),
+                    content: Text("List Not Available"),
                   ));
                 }
               });

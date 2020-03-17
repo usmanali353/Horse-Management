@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/HMS/Configuration/VaccinationTypes/vaccinationtypes_json.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+
+import '../../../Utils.dart';
 
 
 
@@ -130,7 +133,28 @@ class _add_vaccinationtypes extends State<add_vaccinationtypes>{
                             child: Text("Save",style: TextStyle(color: Colors.white),),
 
                             onPressed: (){
-                              VaccinationTypesServices.addVaccinationType(token, 0, name.text, selected_canDelayed_id,null );
+                              if (_fbKey.currentState.validate()) {
+                                Utils.check_connectivity().then((result){
+                                  if(result){
+                                    ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                    pd.show();
+                                    VaccinationTypesServices.addVaccinationType(token, 0, name.text, selected_canDelayed_id,null )                                        .then((respons){
+                                      pd.dismiss();
+                                      if(respons!=null){
+//                                        Scaffold.of(context).showSnackBar(SnackBar(
+//                                          content: Text("Saved "),
+//                                          backgroundColor: Colors.green,
+//                                        ));
+                                      }else{
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text("Not Saved "),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                      }
+                                    });
+                                  }
+                                });
+                              }
                             },
 
                           )

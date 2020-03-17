@@ -7,6 +7,7 @@ import 'package:horse_management/HMS/OperationNotes/add_new_operation_note.dart'
 import 'package:horse_management/HMS/OperationNotes/operation_notes_json.dart';
 import 'package:horse_management/HMS/OperationNotes/update_operation_note.dart';
 import 'package:horse_management/screens/loginScreen.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Utils.dart';
@@ -58,7 +59,10 @@ class _operational_noteList extends State<operational_noteList>{
         onRefresh: (){
           return Utils.check_connectivity().then((result){
             if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
               OperationNotesServices.get_Operation_Notes(token).then((response){
+                pd.dismiss();
                 if(response!=null){
                   setState(() {
                     notes_list=json.decode(response);

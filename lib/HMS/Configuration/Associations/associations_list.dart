@@ -3,6 +3,7 @@ import 'package:horse_management/HMS/Configuration/Associations/add_associations
 import 'package:horse_management/HMS/Configuration/Associations/associations_json.dart';
 import 'package:horse_management/HMS/Configuration/Associations/update_associations.dart';
 import 'package:horse_management/HMS/Configuration/Barns/barn_json.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'dart:convert';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -53,7 +54,10 @@ class _associations_list extends State<associations_list>{
         onRefresh: (){
           return Utils.check_connectivity().then((result){
             if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
               AssociationServices.getAssociations(token).then((response){
+                pd.dismiss();
                 if(response!=null){
                   setState(() {
                     name_lists=json.decode(response);

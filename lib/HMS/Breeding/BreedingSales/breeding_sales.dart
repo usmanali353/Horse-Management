@@ -5,6 +5,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/Breeding/BreedingSales/breeding_sales_json.dart';
 import 'package:horse_management/HMS/Breeding/BreedingSales/update_breeding_sales.dart';
 import 'package:horse_management/HMS/Breeding/BreedingServices/breeding_service_form.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 import '../../../Utils.dart';
 import 'breeding_sales_form.dart';
@@ -56,7 +57,10 @@ class _breeding_sales extends State<breeding_sales>{
         onRefresh: (){
           return Utils.check_connectivity().then((result){
             if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
               BreedingSalesServices.get_breeding_sales(token).then((response){
+                pd.dismiss();
                 if(response!=null){
                   setState(() {
                     sales_list=json.decode(response);

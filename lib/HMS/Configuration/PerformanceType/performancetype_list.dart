@@ -3,6 +3,7 @@ import 'package:horse_management/HMS/Configuration/Locations/location_json.dart'
 import 'package:horse_management/HMS/Configuration/PerformanceType/add_performancetype.dart';
 import 'package:horse_management/HMS/Configuration/PerformanceType/performancetype_json.dart';
 import 'package:horse_management/HMS/Configuration/PerformanceType/update_performancetype.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'dart:convert';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -55,7 +56,10 @@ class _performancetype_list extends State<performancetype_list>{
         onRefresh: (){
           return Utils.check_connectivity().then((result){
             if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
               PerformanceTypesServices.getPerformanceType(token).then((response){
+                pd.dismiss();
                 if(response!=null){
                   setState(() {
                     type_lists=json.decode(response);

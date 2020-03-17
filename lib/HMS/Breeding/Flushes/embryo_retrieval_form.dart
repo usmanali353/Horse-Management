@@ -19,6 +19,7 @@ import 'package:horse_management/HMS/my_horses/services/add_horse_services.dart'
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/Training/training_detail_page.dart';
 import 'package:horse_management/Network_Operations.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Utils.dart';
@@ -241,18 +242,27 @@ class _add_flushes extends State<add_flushes>{
                       MaterialButton(
                         onPressed: (){
                           if (_fbKey.currentState.validate()) {
-                            FlushesServicesJson.add_flushes(null,token,0,flushes_response['horseDropDown'][selected_horse_id]['id'],Select_date, flushes_response['vetDropDown'][selected_vet_id]['id'],selected_success_id,embryos.text, comments.text ).then((response){
-                              setState(() {
-                                var parsedjson  = jsonDecode(response);
-                                if(parsedjson != null){
-                                  if(parsedjson['isSuccess'] == true){
-                                    print("Successfully data saved");
-                                  }else
-                                    print("not saved");
-                                }else
-                                  print("json response null");
-                              });
+                            Utils.check_connectivity().then((result){
+                              if(result){
+                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                pd.show();
+                                FlushesServicesJson.add_flushes(null,token,0,flushes_response['horseDropDown'][selected_horse_id]['id'],Select_date, flushes_response['vetDropDown'][selected_vet_id]['id'],selected_success_id,embryos.text, comments.text ).then((response){
+                                  pd.dismiss();
+                                  if(response!=null){
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Saved"),
+                                      backgroundColor: Colors.green,
+                                    ));
+                                  }else{
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Not Saved"),
+                                      backgroundColor: Colors.red,
+                                    ));
+                                  }
+                                });
+                              }
                             });
+
                           }
                         },
                         child: Text("Save",style: TextStyle(color: Colors.white),

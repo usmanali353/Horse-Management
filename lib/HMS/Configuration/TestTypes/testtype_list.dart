@@ -3,6 +3,7 @@ import 'package:horse_management/HMS/Configuration/Colors/colors_json.dart';
 import 'package:horse_management/HMS/Configuration/TestTypes/add_testtype.dart';
 import 'package:horse_management/HMS/Configuration/TestTypes/testtype_json.dart';
 import 'package:horse_management/HMS/Configuration/TestTypes/update_testtype.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'dart:convert';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -54,7 +55,10 @@ class _testtype_list extends State<testtype_list>{
         onRefresh: (){
           return Utils.check_connectivity().then((result){
             if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
               TestTypesServices.getTestTypes(token).then((response){
+                pd.dismiss();
                 if(response!=null){
                   setState(() {
                     types_lists=json.decode(response);

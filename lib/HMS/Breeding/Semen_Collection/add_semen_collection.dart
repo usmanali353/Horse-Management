@@ -5,6 +5,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:intl/intl.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 class add_semen_collection extends StatefulWidget{
   String token;
@@ -376,20 +377,27 @@ class add_semen_stock_button extends StatelessWidget {
     return MaterialButton(
       color: Colors.teal,
       onPressed: (){
-        if(_fbKey.currentState.validate()){
-         network_operations.add_semen_collection(token, 0, selected_date, selected_horse, semen_collection_list['horseDropDown'][selected_horse_id]['id'], '', toFreeze, semen_collection_list['inChargeDropDown'][selected_incharge_id]['id'], comments.text,int.parse(extracted_volume.text) ,int.parse(concentration.text) , int.parse(general.text),int.parse(progressive.text), selected_incharge,selected_incharge).then((respons){
-           if(respons!=null){
-             Scaffold.of(context).showSnackBar(SnackBar(
-               content: Text("Semen Collection added "),
-               backgroundColor: Colors.green,
-             ));
-           }else{
-             Scaffold.of(context).showSnackBar(SnackBar(
-               content: Text("Semen Collection not added "),
-               backgroundColor: Colors.red,
-             ));
-           }
-         });
+        if (_fbKey.currentState.validate()) {
+          Utils.check_connectivity().then((result){
+            if(result){
+              ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+              pd.show();
+              network_operations.add_semen_collection(token, 0, selected_date, selected_horse, semen_collection_list['horseDropDown'][selected_horse_id]['id'], '', toFreeze, semen_collection_list['inChargeDropDown'][selected_incharge_id]['id'], comments.text,int.parse(extracted_volume.text) ,int.parse(concentration.text) , int.parse(general.text),int.parse(progressive.text), selected_incharge,selected_incharge).then((respons){
+                pd.dismiss();
+                if(respons!=null){
+//                  Scaffold.of(context).showSnackBar(SnackBar(
+//                    content: Text("Saved "),
+//                    backgroundColor: Colors.green,
+//                  ));
+                }else{
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text("Not Saved "),
+                    backgroundColor: Colors.red,
+                  ));
+                }
+              });
+            }
+          });
         }
       },
       child: Text("Save",style: TextStyle(color: Colors.white),),

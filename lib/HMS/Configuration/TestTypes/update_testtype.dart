@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/HMS/Configuration/TestTypes/testtype_json.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+
+import '../../../Utils.dart';
 
 
 
@@ -165,8 +168,29 @@ class _update_testtype extends State<update_testtype>{
                             child: Text("Update",style: TextStyle(color: Colors.white),),
 
                             onPressed: (){
-                              print(showReminders.text);
-                              TestTypesServices.addTestTypes(token, specifictype['id'], name.text, validity.text, selected_reminder_id, showReminders.text, specifictype['createdBy'],);
+                              if (_fbKey.currentState.validate()) {
+                                Utils.check_connectivity().then((result){
+                                  if(result){
+                                    ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                    pd.show();
+                                    TestTypesServices.addTestTypes(token, specifictype['id'], name.text, validity.text, selected_reminder_id, showReminders.text, specifictype['createdBy'],)
+                                        .then((respons){
+                                      pd.dismiss();
+                                      if(respons!=null){
+//                                        Scaffold.of(context).showSnackBar(SnackBar(
+//                                          content: Text("Updated "),
+//                                          backgroundColor: Colors.green,
+//                                        ));
+                                      }else{
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text("Not Updated "),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                      }
+                                    });
+                                  }
+                                });
+                              }
                             },
 
                           )

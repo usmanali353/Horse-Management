@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import  'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/HMS/Configuration/Locations/location_json.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'dart:convert';
+
+import '../../../Utils.dart';
 
 
 class add_location extends StatefulWidget{
@@ -109,17 +112,26 @@ class _add_location extends State<add_location>{
                       MaterialButton(
                         onPressed: (){
                           if (_fbKey.currentState.validate()) {
-                            LocationServices.addLocation(token,0,location_name.text,description.text,null).then((response){
-                              setState(() {
-                                var parsedjson  = jsonDecode(response);
-                                if(parsedjson != null){
-                                  if(parsedjson['isSuccess'] == true){
-                                    print("Successfully data saved");
-                                  }else
-                                    print("not saved");
-                                }else
-                                  print("json response null");
-                              });
+                            Utils.check_connectivity().then((result){
+                              if(result){
+                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                pd.show();
+                                LocationServices.addLocation(token,0,location_name.text,description.text,null)
+                                    .then((respons){
+                                  pd.dismiss();
+                                  if(respons!=null){
+//                                    Scaffold.of(context).showSnackBar(SnackBar(
+//                                      content: Text("Saved "),
+//                                      backgroundColor: Colors.green,
+//                                    ));
+                                  }else{
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Not Saved "),
+                                      backgroundColor: Colors.red,
+                                    ));
+                                  }
+                                });
+                              }
                             });
                           }
                         },

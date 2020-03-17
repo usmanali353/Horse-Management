@@ -8,6 +8,7 @@ import 'package:horse_management/HMS/Configuration/TestTypes/testtype_json.dart'
 import 'package:horse_management/HMS/Paddock/padocks_json.dart';
 import 'package:horse_management/main.dart';
 import 'package:intl/intl.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 import '../../../Utils.dart';
 
@@ -223,17 +224,26 @@ class _add_dam extends State<add_dam>{
                             child: Text("Save",style: TextStyle(color: Colors.white),),
                             onPressed: (){
                               if (_fbKey.currentState.validate()) {
-                                DamServices.addDam(token, 0, name.text, selected_breed_id, selected_color_id, select_DOB, number.text, microchip.text, null).then((response){
-                                  setState(() {
-                                    var parsedjson  = jsonDecode(response);
-                                    if(parsedjson != null){
-                                      if(parsedjson['isSuccess'] == true){
-                                        print("Successfully data saved");
-                                      }else
-                                        print("not saved");
-                                    }else
-                                      print("json response null");
-                                  });
+                                Utils.check_connectivity().then((result){
+                                  if(result){
+                                    ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                    pd.show();
+                                    DamServices.addDam(token, 0, name.text, selected_breed_id, selected_color_id, select_DOB, number.text, microchip.text, null)
+                                        .then((respons){
+                                      pd.dismiss();
+                                      if(respons!=null){
+//                                        Scaffold.of(context).showSnackBar(SnackBar(
+//                                          content: Text("Saved "),
+//                                          backgroundColor: Colors.green,
+//                                        ));
+                                      }else{
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text("Not Saved "),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                      }
+                                    });
+                                  }
                                 });
                               }
                             },
