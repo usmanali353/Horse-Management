@@ -125,12 +125,12 @@ class _currency_list extends State<currency_list>{
                       ),
                     ],
                     child: ListTile(
-                      title: Text(currency_lists!=null?currency_lists[index]['symbol']:''),
+                      title: Text(currency_lists!=null?currency_lists[index]['name']:''),
                       // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
                       //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
-                      onTap: (){
-                       // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
-                      },
+//                      onTap: (){
+//                       // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+//                      },
                     )
                 ),
                 Divider(),

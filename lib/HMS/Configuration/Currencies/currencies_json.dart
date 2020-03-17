@@ -34,7 +34,7 @@ class CurrenciesServices{
   }
   static Future<String> getCurrencyDropdown(String token) async{
     Map<String,String> headers = {'Authorization':'Bearer '+token};
-    final response = await http.get('http://192.236.147.77:8083/api/configuration/CurrencyDropdown', headers: headers,);
+    final response = await http.get('http://192.236.147.77:8083/api/configuration/GetCurrencyById/', headers: headers,);
     if(response.statusCode==200){
       return response.body;
     }else

@@ -88,7 +88,7 @@ class _Profile_Page_State extends State<breeding_Category>{
                     leading: Icon(Icons.attach_money,size: 40, color: Colors.green,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: (){
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=>tanks_list(token)));
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=>breeding_sales(token)));
                     },
                   ),
                   ListTile(

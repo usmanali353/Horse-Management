@@ -7,6 +7,7 @@ import 'package:horse_management/HMS/Configuration/Breeds/breeds_list.dart';
 import 'package:horse_management/HMS/Configuration/Colors/colors_list.dart';
 import 'package:horse_management/HMS/Configuration/CostCenters/costcenter_list.dart';
 import 'package:horse_management/HMS/Configuration/Currencies/currency_list.dart';
+import 'package:horse_management/HMS/Configuration/Dam/dam_list.dart';
 import 'package:horse_management/HMS/Configuration/GeneralCategories/generalcategories_list.dart';
 import 'package:horse_management/HMS/Configuration/HorseCategories/horsecategory_list.dart';
 import 'package:horse_management/HMS/Configuration/IronBrand/ironbrand_list.dart';
@@ -47,7 +48,7 @@ class _configuration_Category extends State<configuration_Category>{
                   ListTile(
                     title: Text("Barn"),
                     subtitle: Text("Add Barn"),
-                    leading: Icon(Icons.settings,size: 40,),
+                    leading: Icon(Icons.home,size: 40,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: () async{
                       SharedPreferences prefs= await SharedPreferences.getInstance();
@@ -57,7 +58,7 @@ class _configuration_Category extends State<configuration_Category>{
                   ListTile(
                     title: Text("Sire"),
                     subtitle: Text("Add Sire"),
-                    leading: Icon(Icons.build,size: 40, color: Colors.black,),
+                    leading: Icon(Icons.pets,size: 40, color: Colors.greenAccent,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: (){
                     Navigator.push(context,MaterialPageRoute(builder: (context)=>sire_list(token)));
@@ -66,10 +67,10 @@ class _configuration_Category extends State<configuration_Category>{
                   ListTile(
                     title: Text("Dam"),
                     subtitle: Text("Add Dam"),
-                    leading: Icon(Icons.attach_money,size: 40, color: Colors.green,),
+                    leading: Icon(Icons.local_convenience_store,size: 40, color: Colors.green,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: (){
-                     //Navigator.push(context,MaterialPageRoute(builder: (context)=>ironbrand_list(token)));
+                     Navigator.push(context,MaterialPageRoute(builder: (context)=>dam_list(token)));
                     },
                   ),
                   ListTile(
@@ -102,7 +103,7 @@ class _configuration_Category extends State<configuration_Category>{
                   ListTile(
                     title: Text("Iron Brand"),
                     subtitle: Text("Add Iron Brand"),
-                    leading: Icon(Icons.store,size: 40, color: Colors.blueAccent,),
+                    leading: Icon(Icons.donut_large,size: 40, color: Colors.blueGrey,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: (){
                       Navigator.push(context,MaterialPageRoute(builder: (context)=>ironbrand_list(token)));
@@ -111,7 +112,7 @@ class _configuration_Category extends State<configuration_Category>{
                   ListTile(
                     title: Text("Horse Categories"),
                     subtitle: Text("Add Horse Categories"),
-                    leading: Icon(Icons.store,size: 40, color: Colors.blueAccent,),
+                    leading: Icon(Icons.format_list_numbered,size: 40, color: Colors.deepOrange,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: (){
                       Navigator.push(context,MaterialPageRoute(builder: (context)=>horsecategory_list(token)));
@@ -120,7 +121,7 @@ class _configuration_Category extends State<configuration_Category>{
                   ListTile(
                     title: Text("General Categories"),
                     subtitle: Text("Add General Categories"),
-                    leading: Icon(Icons.store,size: 40, color: Colors.blueAccent,),
+                    leading: Icon(Icons.format_list_bulleted,size: 40, color: Colors.deepPurple,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: (){
                       Navigator.push(context,MaterialPageRoute(builder: (context)=>generalcategory_list(token)));
@@ -129,7 +130,7 @@ class _configuration_Category extends State<configuration_Category>{
                   ListTile(
                     title: Text("Locations"),
                     subtitle: Text("Add Locations"),
-                    leading: Icon(Icons.store,size: 40, color: Colors.blueAccent,),
+                    leading: Icon(Icons.location_on,size: 40, color: Colors.red,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: (){
                       Navigator.push(context,MaterialPageRoute(builder: (context)=>location_list(token)));
@@ -138,7 +139,7 @@ class _configuration_Category extends State<configuration_Category>{
                   ListTile(
                     title: Text("Vaccines"),
                     subtitle: Text("Add Vaccines"),
-                    leading: Icon(Icons.store,size: 40, color: Colors.blueAccent,),
+                    leading: Icon(Icons.enhanced_encryption,size: 40, color: Colors.green,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: (){
                       Navigator.push(context,MaterialPageRoute(builder: (context)=>vaccines_list(token)));
@@ -147,7 +148,7 @@ class _configuration_Category extends State<configuration_Category>{
                   ListTile(
                     title: Text("Vaccination Types"),
                     subtitle: Text("Add Vaccination Types"),
-                    leading: Icon(Icons.store,size: 40, color: Colors.blueAccent,),
+                    leading: Icon(Icons.local_hospital,size: 40, color: Colors.pinkAccent,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: (){
                       Navigator.push(context,MaterialPageRoute(builder: (context)=>vaccinationtypes_list(token)));
@@ -156,7 +157,7 @@ class _configuration_Category extends State<configuration_Category>{
                   ListTile(
                     title: Text("Test Types"),
                     subtitle: Text("Add Test Types"),
-                    leading: Icon(Icons.store,size: 40, color: Colors.blueAccent,),
+                    leading: Icon(Icons.assignment,size: 40, color: Colors.brown,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: (){
                       Navigator.push(context,MaterialPageRoute(builder: (context)=>testtype_list(token)));
@@ -165,7 +166,7 @@ class _configuration_Category extends State<configuration_Category>{
                   ListTile(
                     title: Text("Performance Types"),
                     subtitle: Text("Add Performance Types"),
-                    leading: Icon(Icons.store,size: 40, color: Colors.blueAccent,),
+                    leading: Icon(Icons.library_books,size: 40, color: Colors.tealAccent,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: (){
                       Navigator.push(context,MaterialPageRoute(builder: (context)=>performancetype_list(token)));
@@ -174,7 +175,7 @@ class _configuration_Category extends State<configuration_Category>{
                   ListTile(
                     title: Text("Associations"),
                     subtitle: Text("Add Associations"),
-                    leading: Icon(Icons.store,size: 40, color: Colors.blueAccent,),
+                    leading: Icon(Icons.shopping_basket,size: 40, color: Colors.redAccent,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: (){
                       Navigator.push(context,MaterialPageRoute(builder: (context)=>associations_list(token)));
@@ -183,7 +184,7 @@ class _configuration_Category extends State<configuration_Category>{
                   ListTile(
                     title: Text("Account Categories"),
                     subtitle: Text("Add Account Categories"),
-                    leading: Icon(Icons.store,size: 40, color: Colors.blueAccent,),
+                    leading: Icon(Icons.category,size: 40, color: Colors.cyan,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: (){
                       Navigator.push(context,MaterialPageRoute(builder: (context)=>accountcategories_list(token)));
@@ -192,7 +193,7 @@ class _configuration_Category extends State<configuration_Category>{
                   ListTile(
                     title: Text("Cost Centers"),
                     subtitle: Text("Add Cost Centers "),
-                    leading: Icon(Icons.store,size: 40, color: Colors.blueAccent,),
+                    leading: Icon(Icons.polymer,size: 40, color: Colors.yellow,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: (){
                       Navigator.push(context,MaterialPageRoute(builder: (context)=>costcenter_list(token)));
@@ -201,7 +202,7 @@ class _configuration_Category extends State<configuration_Category>{
                   ListTile(
                     title: Text("Currencies"),
                     subtitle: Text("Add Currencies"),
-                    leading: Icon(Icons.store,size: 40, color: Colors.blueAccent,),
+                    leading: Icon(Icons.monetization_on,size: 40, color: Colors.lightGreen,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: (){
                       Navigator.push(context,MaterialPageRoute(builder: (context)=>currency_list(token)));
@@ -210,7 +211,7 @@ class _configuration_Category extends State<configuration_Category>{
                   ListTile(
                     title: Text("Scoring"),
                     subtitle: Text("Add Scoring"),
-                    leading: Icon(Icons.store,size: 40, color: Colors.blueAccent,),
+                    leading: Icon(Icons.score,size: 40, color: Colors.blueAccent,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: (){
                      // Navigator.push(context,MaterialPageRoute(builder: (context)=>scoring_list(token)));

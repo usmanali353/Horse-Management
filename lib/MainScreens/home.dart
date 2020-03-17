@@ -7,6 +7,7 @@ import 'package:horse_management/HMS/Configuration/configuration_mainpage.dart';
 import 'package:horse_management/HMS/Contacts/contacts_list.dart';
 import 'package:horse_management/HMS/Inventory/inventory_list.dart';
 import 'package:horse_management/HMS/OperationNotes/operation_notes.dart';
+import 'package:horse_management/HMS/Paddock/paddocks.dart';
 import 'package:horse_management/HMS/Tanks/tanks.dart';
 import 'package:horse_management/HMS/Training/training_list.dart';
 import 'package:horse_management/HMS/Veterinary/vet_mainPage.dart';
@@ -93,7 +94,7 @@ class _HomeState extends State<Home>{ //with AutomaticKeepAliveClientMixin<Home>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 FadeAnimation(2.4,Text("Best management system for", style: TextStyle(
-                    color: Colors.grey.shade100,
+                    color: Colors.grey.shade600,
                     fontSize: 22,
                     letterSpacing: 2
                 ))),
@@ -194,7 +195,7 @@ class _HomeState extends State<Home>{ //with AutomaticKeepAliveClientMixin<Home>
                             Navigator.push(context, MaterialPageRoute(builder: (context)=> tanks_list(prefs.getString('token')) ));
                           }else if(index == 2){//For Paddock
                             prefs= await SharedPreferences.getInstance();
-                            //Navigator.push(context, MaterialPageRoute(builder: (context)=> tanks_list(prefs.getString('token')) ));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=> paddocks_list(prefs.getString('token')) ));
                           }else if(index == 3){//For Contacts
                             prefs= await SharedPreferences.getInstance();
                            // Navigator.push(context, MaterialPageRoute(builder: (context)=> contacts_list(prefs.getString('token')) ));

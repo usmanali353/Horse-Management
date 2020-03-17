@@ -39,8 +39,8 @@ class _add_currency extends State<add_currency>{
             print(response);
             setState(() {
               currency_response=json.decode(response);
-              for(int i=0;i<currency_response.length;i++)
-                currency.add(currency_response[i]['name']);
+              for(int i=0;i<currency_response['currencySymbolsDropDown'].length;i++)
+                currency.add(currency_response['currencySymbolsDropDown'][i]['name']);
 
              // stocks_loaded=true;
             });

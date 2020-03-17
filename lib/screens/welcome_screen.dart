@@ -18,7 +18,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          Image.asset("Assets/crop.jpg", fit: BoxFit.cover),
+          Image.asset("assets/crop.jpg", fit: BoxFit.cover),
           Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,

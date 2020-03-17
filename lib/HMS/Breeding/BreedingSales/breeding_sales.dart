@@ -130,9 +130,9 @@ class _breeding_sales extends State<breeding_sales>{
                       title: Text(sales_list!=null?sales_list[index]['horseName']['name']:''),
                       // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
                       //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>update_breeding_sales_form(token,sales_list[index])));
-                      },
+//                      onTap: (){
+//                        Navigator.push(context, MaterialPageRoute(builder: (context)=>update_breeding_sales_form(token,sales_list[index])));
+//                      },
                     )
                 ),
                 Divider(),

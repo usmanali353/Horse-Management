@@ -54,7 +54,7 @@ class scrollview extends StatelessWidget {
 
           decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("Assets/wallpaper2.jpg"),
+                image: AssetImage("assets/wallpaper2.jpg"),
                 fit: BoxFit.contain,
                 alignment: Alignment.topCenter,
 
