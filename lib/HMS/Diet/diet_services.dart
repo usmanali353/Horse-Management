@@ -29,9 +29,7 @@ class DietServices {
 
   static Future<String> newDietDropDown (String token) async {
     Map<String, String> headers = {'Authorization': 'Bearer ' + token};
-    final response = await http.get(
-      'http://192.236.147.77:8083/api/Diet/GetDietById',
-      headers: headers,
+    var response = await http.get('http://192.236.147.77:8083/api/Diet/GetDietById', headers: headers,
     );
     if (response.statusCode == 200) {
       return response.body;
@@ -51,35 +49,23 @@ class DietServices {
       return null;
   }
 
-  static Future<String> newDietSave (String createdBy,String token,int dietId,String name,String description,int dietDetailId,int quantity,int dietTimeId,
-      int itemTypeId,) async {
+  static Future<String> newDietSave (String createdBy,String token,int dietId,String name,String description,List<Map> dietDetails) async {
     Map<String, String> headers = {
       HttpHeaders.contentTypeHeader: 'application/json',
       HttpHeaders.authorizationHeader: 'Bearer '+token
     };
-    final body = jsonEncode({	"DietId": 4,
-      "Name": "Update Diet API",
-      "decription": null,
-      "createdBy": "41b19c63-510c-48db-85b5-f745c9132c53",
-      "createdOn": "2020-02-28T08:39:23.943",
+    final body = jsonEncode({	"DietId": dietId,
+      "Name": name,
+      "decription": description,
+      "createdBy": createdBy,
+      "createdOn": DateTime.now(),
       "isActive": true,
-      "dietDetails": [
-        {
-          "id": 0,
-          "quantity": 1,
-          "dietTimeId": null,
-          "productTypesId": 4,
-          "createdBy": "41b19c63-510c-48db-85b5-f745c9132c53",
-          "createdOn": "2020-03-03T09:26:12.933",
-          "isActive": true,
-        },
-      ]
-    });
+      "dietDetails": dietDetails,
+    },toEncodable: Utils.myEncode);
     final response = await http.post(
         'http://192.236.147.77:8083/api/Diet/DietSave', headers: headers,
         body: body
     );
-    print(response.body);
     if (response.statusCode == 200) {
       return response.body;
     } else
@@ -146,13 +132,13 @@ class DietServices {
       HttpHeaders.contentTypeHeader: 'application/json',
       HttpHeaders.authorizationHeader: 'Bearer '+token
     };
-    final body = jsonEncode({	"productTypeId": 0,
-      "category": 2,
-      "name": "Product Type API",
-      "costPerUnit": 120,
-      "unit": "1",
+    final body = jsonEncode({	"productTypeId": id,
+      "category": category,
+      "name": name,
+      "costPerUnit": cost,
+      "unit": unit,
       "IsInventory": false,
-      "createdBy": "41b19c63-510c-48db-85b5-f745c9132c53",
+      "createdBy": createdBy,
       "createdOn": "2020-03-06T10:18:37.417",
       "isActive": true
     });
@@ -166,20 +152,20 @@ class DietServices {
     } else
       return null;
   }
-  static Future<String> inventoryProductSave (String createdBy,String token,int id,int inventoryId,int categoryId,int cost) async {
+  static Future<String> inventoryProductSave (String createdBy,String token,int id,int inventoryId,int categoryId,String cost) async {
     Map<String, String> headers = {
       HttpHeaders.contentTypeHeader: 'application/json',
       HttpHeaders.authorizationHeader: 'Bearer '+token
     };
-    final body = jsonEncode({	"productTypeId": 0,
-      "category": 2,
+    final body = jsonEncode({	"productTypeId": id,
+      "category": categoryId,
       "name": "No name",
-      "costPerUnit": 120,
+      "costPerUnit": cost,
       "unit": "1",
-      "inventoryId": 2,
+      "inventoryId": inventoryId,
       "IsInventory": true,
-      "createdBy": "41b19c63-510c-48db-85b5-f745c9132c53",
-      "createdOn": DateTime.now(),
+      "createdBy": createdBy,
+      "createdOn": "2020-03-06T10:18:37.417",
       "isActive": true
     });
     final response = await http.post(

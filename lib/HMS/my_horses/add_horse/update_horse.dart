@@ -45,6 +45,7 @@ class _update_horse_state extends State<update_horse>{
   int horseId,barnid;
   String intaial_gender_value;
   sqlite_helper local_db;
+  var getinfo;
   bool _isvisible=false;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
   @override
@@ -66,7 +67,13 @@ class _update_horse_state extends State<update_horse>{
 //      }
     });
 
-
+    Add_horse_services.horseDashBoard(token,horsedata['horseId']).then((response){
+      setState(() {
+        getinfo = jsonDecode(response);
+        print(getinfo['horseDetails']);
+        _isvisible =true;
+      });
+    });
 
     Add_horse_services.horsesdropdown(token).then((response){
       setState(() {
@@ -155,6 +162,9 @@ class _update_horse_state extends State<update_horse>{
        horseId = horsedata['horseId'];
 
        name.text = horsedata['name'];
+       number.text = horsedata['number'] != null ?horsedata['number'].toString():null;
+       passport.text = horsedata['passportNo'] != null ?horsedata['passportNo'].toString():null;
+       chip.text = horsedata['microchipNo'] != null ? horsedata['microchipNo'].toString():null;
     });
 
   }
@@ -165,87 +175,87 @@ class _update_horse_state extends State<update_horse>{
     // TODO: implement build
     return Scaffold(
         appBar: AppBar(title: Text("Update Horse"),),
-        body: ListView(
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                FormBuilder(
-                  key: _fbKey,
-                  child: Column(
-                    children: <Widget>[
+        body: Visibility(
+          visible: _isvisible,
+          child: ListView(
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  FormBuilder(
+                    key: _fbKey,
+                    child: Column(
+                      children: <Widget>[
 
-                      Padding(
-                        padding: EdgeInsets.all(16),
-                        child: FormBuilderTextField(
-                          controller: name,
-
-                          initialValue: horsedata['name'],
-                          attribute: "Name",
-                          validators: [FormBuilderValidators.required()],
-                          decoration: InputDecoration(labelText: "Horse Name",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                        Padding(
+                          padding: EdgeInsets.all(16),
+                          child: FormBuilderTextField(
+                            controller: name,
+                            attribute: "Name",
+                            validators: [FormBuilderValidators.required()],
+                            decoration: InputDecoration(labelText: "Horse Name",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
                             ),
+
                           ),
-
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top:16,left: 16,right: 16),
-                        child:FormBuilderDateTimePicker(
-                          attribute: "date",
-                          style: Theme.of(context).textTheme.body1,
-                          inputType: InputType.date,
-                          initialValue: DateTime.parse(horsedata['dateOfBirth'] != null ? horsedata['dateOfBirth']:DateTime.now()),
-                          validators: [FormBuilderValidators.required()],
-                          format: DateFormat("MM-dd-yyyy"),
-                          decoration: InputDecoration(labelText: "Start Date",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                            ),),
-                          onChanged: (value){
-                            setState(() {
-                              this.Select_date=value;
-                            });
+                        Padding(
+                          padding: EdgeInsets.only(top:16,left: 16,right: 16),
+                          child:FormBuilderDateTimePicker(
+                            attribute: "date",
+                            style: Theme.of(context).textTheme.body1,
+                            inputType: InputType.date,
+                            initialValue: DateTime.parse(horsedata['dateOfBirth'] != null ? horsedata['dateOfBirth']:DateTime.now().toString()),
+                            validators: [FormBuilderValidators.required()],
+                            format: DateFormat("MM-dd-yyyy"),
+                            decoration: InputDecoration(labelText: "Start Date",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),),
+                            onChanged: (value){
+                              setState(() {
+                                this.Select_date=value;
+                              });
 
-                          },
-                          onSaved: (value){
-                            setState(() {
-                              this.Select_date = value;
-                            });
-                          },
+                            },
+                            onSaved: (value){
+                              setState(() {
+                                this.Select_date = value;
+                              });
+                            },
+                          ),
                         ),
-                      ),
 
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: FormBuilderDropdown(
-                          attribute: "Gender",
-                          initialValue: get_gender_info_by_id(horsedata['genderId'] != null ? horsedata['genderId']:1),
-                          validators: [FormBuilderValidators.required()],
-                          hint: Text("Gender"),
-                          items: gender.map((name) => DropdownMenuItem(
-                              value: name,
-                              child: Text(name)))
-                              .toList(),
-                          onChanged: (value){
+                        Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: FormBuilderDropdown(
+                            attribute: "Gender",
+                            initialValue: get_gender_info_by_id(horsedata['genderId'] != null ? horsedata['genderId']:null),
+                            validators: [FormBuilderValidators.required()],
+                            hint: Text("Gender"),
+                            items: gender.map((name) => DropdownMenuItem(
+                                value: name,
+                                child: Text(name)))
+                                .toList(),
+                            onChanged: (value){
 
-                            setState(() {
-                              this.select_gender=value;
-                              this.select_gender_id=gender.indexOf(value)+1;
+                              setState(() {
+                                this.select_gender=value;
+                                this.select_gender_id=gender.indexOf(value)+1;
 
-                            });
+                              });
 
-                          },
-                          onSaved: (value){
-                            setState(() {
-                              this.select_gender=value;
-                              this.select_gender_id=gender.indexOf(value)+1;
+                            },
+                            onSaved: (value){
+                              setState(() {
+                                this.select_gender=value;
+                                this.select_gender_id=gender.indexOf(value)+1;
 
-                            });
-                          },
+                              });
+                            },
 //                          onChanged: (value){
 //                            this.ddvalue=value;
 //                            if(value=="Customized"){
@@ -258,39 +268,43 @@ class _update_horse_state extends State<update_horse>{
 //                              });
 //                            }
 //                          },
-                          style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Gender",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                            style: Theme.of(context).textTheme.body1,
+                            decoration: InputDecoration(labelText: "Gender",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
                             ),
+
                           ),
-
                         ),
-                      ),
 
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16,right: 16),
-                        child: FormBuilderDropdown(
-                          initialValue:get_barn_by_id(barnid!= null ? barnid:""),
-                          attribute: "Barn",
-                          hint: Text("Barn"),
-                          items: barn.map((name) => DropdownMenuItem(
-                              value: name, child: Text(name)))
-                              .toList(),
-                          style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Barn",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16,right: 16),
+                          child: FormBuilderDropdown(
+                           initialValue:horsedata['barnId'] != null ? get_barn_by_id(barnid):null,
+                            attribute: "Barn",
+                            hint: Text("Barn"),
+                            items: barn.map((name) => DropdownMenuItem(
+                                value: name, child: Text("$name")))
+                                .toList(),
+                            style: Theme.of(context).textTheme.body1,
+                            decoration: InputDecoration(labelText: "Barn",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
                             ),
+                            onChanged: (value){
+                              this.selected_barn=value;
+                              this.select_barn_id=barn.indexOf(value);
+                            },
+                            onSaved: (value){
+                              this.selected_barn=value;
+                              this.select_barn_id=barn.indexOf(value);
+                            },
                           ),
-                          onChanged: (value){
-                            this.selected_barn=value;
-                            this.select_barn_id=barn.indexOf(value);
-                          },
                         ),
-                      ),
 
 //                      Padding(
 //                        padding: EdgeInsets.only(top:16,left: 16,right: 16),
@@ -328,397 +342,528 @@ class _update_horse_state extends State<update_horse>{
 //                          },
 //                        ),
 //                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: FormBuilderDropdown(
-                          attribute: "Breed",
-                          hint: Text("Breed"),
-                          items: breeding.map((name) => DropdownMenuItem(
-                              value: name, child: Text("$name")))
-                              .toList(),
-                          style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Breed",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                        Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                          child: FormBuilderDropdown(
+                            attribute: "Breed",
+                           initialValue:horsedata['breedId'] != null ? horsedata['breedName']['name']:null,
+                            hint: Text("Breed"),
+                            items: breeding.map((name) => DropdownMenuItem(
+                                value: name, child: Text("$name")))
+                                .toList(),
+                            style: Theme.of(context).textTheme.body1,
+                            decoration: InputDecoration(labelText: "Breed",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
                             ),
-                          ),
-                          onChanged: (value){
-                            this.selected_breed=value;
+                            onChanged: (value){
+                              this.selected_breed=value;
 
-                            this.select_breed_id=breeding.indexOf(value);
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(16),
-                        child: FormBuilderTextField(
-                          controller: number,
-                          attribute: "Number",
-                          decoration: InputDecoration(labelText: "Number",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                            ),
+                              this.select_breed_id=breeding.indexOf(value);
+                            },
                           ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(16),
+                          child: FormBuilderTextField(
+                            controller: number,
+                            attribute: "Number",
+                            decoration: InputDecoration(labelText: "Number",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
+                            ),
 
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(16),
-                        child: FormBuilderTextField(
-                          controller: passport,
-                          attribute: "Passpost#",
-                          decoration: InputDecoration(labelText: "Passpost#",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                            ),
                           ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(16),
+                          child: FormBuilderTextField(
+                            controller: passport,
+                            attribute: "Passpost#",
+                            decoration: InputDecoration(labelText: "Passpost#",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
+                            ),
 
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(16),
-                        child: FormBuilderTextField(
+                        Padding(
+                          padding: EdgeInsets.all(16),
+                          child: FormBuilderTextField(
 
-                          controller: chip,
-                          attribute: "Chip No",
-                          decoration: InputDecoration(labelText: "Chip No",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                            controller: chip,
+                            attribute: "Chip No",
+                            decoration: InputDecoration(labelText: "Chip No",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
                             ),
-                          ),
 
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: FormBuilderDropdown(
-                          attribute: "Color",
-                          hint: Text("Color"),
-                          items: colors.map((name) => DropdownMenuItem(
-                              value: name, child: Text("$name")))
-                              .toList(),
-                          style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Color",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                            ),
                           ),
-                          onChanged: (value){
-                            setState(() {
-                              this.selected_color=value;
-                              this.select_color_id=colors.indexOf(value);
-                            });
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                          child: FormBuilderDropdown(
+                            attribute: "Color",
+                            initialValue: horsedata['colorId'] != null ? horsedata['colorName']['name']:null,
+                            hint: Text("Color"),
+                            items: colors.map((name) => DropdownMenuItem(
+                                value: name, child: Text("$name")))
+                                .toList(),
+                            style: Theme.of(context).textTheme.body1,
+                            decoration: InputDecoration(labelText: "Color",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
+                            ),
+                            onChanged: (value){
+                              setState(() {
+                                this.selected_color=value;
+                                this.select_color_id=colors.indexOf(value);
+                              });
 
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: FormBuilderDropdown(
-                          attribute: "Category",
-                          hint: Text("Category"),
-                          items: category.map((name) => DropdownMenuItem(
-                              value: name, child: Text("$name")))
-                              .toList(),
-                          style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Category",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                            ),
-                          ),
-                          onChanged: (value){
-                            this.selected_category=value;
-                            this.select_category_id=category.indexOf(value);
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: FormBuilderDropdown(
-                          attribute: "sireName",
-                          hint: Text("SirName"),
-                          items: sire.map((name) => DropdownMenuItem(
-                              value: name, child: Text("$name")))
-                              .toList(),
-                          style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Sire",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                            ),
-                          ),
-                          onChanged: (value){
-                            this.selected_sire=value;
-                            this.select_sire_id=sire.indexOf(value);
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: FormBuilderDropdown(
-                          attribute: "damName",
-                          hint: Text("DamName"),
-                          items: dam.map((name) => DropdownMenuItem(
-                              value: name, child: Text("$name")))
-                              .toList(),
-                          style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Dam",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                            ),
-                          ),
-                          onChanged: (value){
-                            this.selected_dam=value;
-                            this.select_dam_id=dam.indexOf(value);
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: FormBuilderDropdown(
-                          attribute: "Diet",
-                          hint: Text("Diet"),
-                          items: diet.map((name) => DropdownMenuItem(
-                              value: name, child: Text("$name")))
-                              .toList(),
-                          style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Diet",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                            ),
-                          ),
-                          onChanged: (value){
-                            this.selected_diet=value;
-                            this.select_diet_id=diet.indexOf(value);
-                          },
-                        ),
-                      ),
-                      Text("Particular Marking",textScaleFactor: 2,),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: FormBuilderDropdown(
-                          attribute: "headMarking",
-                          hint: Text("Head Marking"),
-                          items: headmark.map((name) => DropdownMenuItem(
-                              value: name, child: Text("$name")))
-                              .toList(),
-                          style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Head Mark",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                            ),
-                          ),
-                          onChanged: (value){
-                            this.selected_headMark=value;
-                            this.select_headmark_id=headmark.indexOf(value);
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: FormBuilderDropdown(
-                          attribute: "Leg",
-                          hint: Text("Leg Mark"),
-                          items: legmark.map((name) => DropdownMenuItem(
-                              value: name, child: Text("$name")))
-                              .toList(),
-                          style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Leg MArking",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                            ),
-                          ),
-                          onChanged: (value){
-                            this.selected_legMark=value;
-                            this.select_legmark_id=legmark.indexOf(value);
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: FormBuilderDropdown(
-                          attribute: "body",
-                          hint: Text("Body Mark"),
-                          items: bodymark.map((name) => DropdownMenuItem(
-                              value: name, child: Text("$name")))
-                              .toList(),
-                          style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "BodyMark",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                            ),
-                          ),
-                          onChanged: (value){
-                            this.selected_bodymark=value;
-                            this.select_bodymark_id=bodymark.indexOf(value);
-                          },
-                        ),
-                      ),
-                      Text("More Information",textScaleFactor: 2,),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: FormBuilderDropdown(
-                          attribute: "Breeder",
-                          hint: Text("Breeder"),
-                          items: breeder.map((name) => DropdownMenuItem(
-                              value: name, child: Text("$name")))
-                              .toList(),
-                          style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Breeder",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                            ),
-                          ),
-                          onChanged: (value){
-                            this.selected_breeder=value;
-                            this.select_breeder_id=breeder.indexOf(value);
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: FormBuilderDropdown(
-                          attribute: "",
-                          hint: Text("Vet"),
-                          items: vet.map((name) => DropdownMenuItem(
-                              value: name, child: Text("$name")))
-                              .toList(),
-                          style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Vet",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                            ),
-                          ),
-                          onChanged: (value){
-                            this.selected_vet=value;
-                            this.select_vet_id=vet.indexOf(value);
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: FormBuilderDropdown(
-                          attribute: "",
-                          hint: Text("IronBrand"),
-                          items: ironbrand.map((name) => DropdownMenuItem(
-                              value: name, child: Text("$name")))
-                              .toList(),
-                          style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Iron Brand",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                            ),
-                          ),
-                          onChanged: (value){
-                            this.selected_ironbrand=value;
-                            this.select_ironbrand_id=ironbrand.indexOf(value);
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: FormBuilderDropdown(
-                          attribute: "",
-                          hint: Text("Rider"),
-                          items: rider.map((name) => DropdownMenuItem(
-                              value: name, child: Text("$name")))
-                              .toList(),
-                          style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Rider",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                            ),
-                          ),
-                          onChanged: (value){
-                            this.selected_rider=value;
-                            this.select_rider_id=rider.indexOf(value);
+                            },
+                            onSaved: (value){
+                              setState(() {
+                                this.selected_color=value;
+                                this.select_color_id=colors.indexOf(value);
+                              });
 
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: FormBuilderDropdown(
-                          attribute: "",
-                          hint: Text("Incharge"),
-                          items: incharge.map((name) => DropdownMenuItem(
-                              value: name, child: Text("$name")))
-                              .toList(),
-                          style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Incharge",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                            ),
+                            },
                           ),
-                          onChanged: (value){
-                            this.selected_incharge=value;
-                            this.select_incharge_id=incharge.indexOf(value);
-                          },
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: FormBuilderDropdown(
-                          attribute: "",
-                          hint: Text("Association"),
-                          items: association.map((name) => DropdownMenuItem(
-                              value: name, child: Text("$name")))
-                              .toList(),
-                          style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Association",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                        Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                          child: FormBuilderDropdown(
+                            attribute: "Category",
+                            initialValue: horsedata['horseCategoryId'] != null ? getinfo['categoryName']['name']:null,
+                            hint: Text("Category"),
+                            items: category.map((name) => DropdownMenuItem(
+                                value: name, child: Text("$name")))
+                                .toList(),
+                            style: Theme.of(context).textTheme.body1,
+                            decoration: InputDecoration(labelText: "Category",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
                             ),
-                          ),
-                          onChanged: (value){
-                            this.selected_associate=value;
-                            this.select_associate_id=association.indexOf(value);
-                          },
-                        ),
-                      ),
+                            onChanged: (value){
+                              setState(() {
+                                this.selected_category=value;
+                                this.select_category_id=category.indexOf(value);
 
-                      Padding(
-                        padding: EdgeInsets.only(left: 16,right: 16),
-                        child: FormBuilderTextField(
-                          attribute: "DNA",
-                          decoration: InputDecoration(labelText: "DNA",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                            ),
-                          ),
+                              });
+                              },
+                            onSaved: (value){
+                              setState(() {
+                                this.selected_category=value;
+                                this.select_category_id=category.indexOf(value);
 
+                              });
+                            },
+                          ),
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                          child: FormBuilderDropdown(
+                            attribute: "sireName",
+                            initialValue: horsedata['sireId'] != null ? horsedata['sireName']['name']:null,
+                            hint: Text("SirName"),
+                            items: sire.map((name) => DropdownMenuItem(
+                                value: name, child: Text("$name")))
+                                .toList(),
+                            style: Theme.of(context).textTheme.body1,
+                            decoration: InputDecoration(labelText: "Sire",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
+                            ),
+                            onChanged: (value){
+                              setState(() {
+                                this.selected_sire=value;
+                                this.select_sire_id=sire.indexOf(value);
+                              });
+
+                            },
+                            onSaved: (value){
+                              setState(() {
+                                this.selected_sire=value;
+                                this.select_sire_id=sire.indexOf(value);
+                              });
+
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                          child: FormBuilderDropdown(
+                            attribute: "damName",
+                            initialValue: horsedata['damId'] != null ? horsedata['damName']['name']:null,
+                            hint: Text("DamName"),
+                            items: dam.map((name) => DropdownMenuItem(
+                                value: name, child: Text("$name")))
+                                .toList(),
+                            style: Theme.of(context).textTheme.body1,
+                            decoration: InputDecoration(labelText: "Dam",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
+                            ),
+                            onChanged: (value){
+                              setState(() {
+                                this.selected_dam=value;
+                                this.select_dam_id=dam.indexOf(value);
+                              });
+
+                            },
+                            onSaved: (value){
+                              setState(() {
+                                this.selected_dam=value;
+                                this.select_dam_id=dam.indexOf(value);
+                              });
+
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                          child: FormBuilderDropdown(
+                            attribute: "Diet",
+                            initialValue: horsedata['diet'] != null ? getinfo['dietName']['name']:null,
+                            hint: Text("Diet"),
+                            items: diet.map((name) => DropdownMenuItem(
+                                value: name, child: Text("$name")))
+                                .toList(),
+                            style: Theme.of(context).textTheme.body1,
+                            decoration: InputDecoration(labelText: "Diet",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
+                            ),
+                            onChanged: (value){
+                              setState(() {
+                                this.selected_diet=value;
+                                this.select_diet_id=diet.indexOf(value);
+                              });
+
+                            },
+                            onSaved: (value){
+                              setState(() {
+                                this.selected_diet=value;
+                                this.select_diet_id=diet.indexOf(value);
+                              });
+
+                            },
+                          ),
+                        ),
+                        Text("Particular Marking",textScaleFactor: 2,),
+                        Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                          child: FormBuilderDropdown(
+                            attribute: "headMarking",
+                           // initialValue: getinfo['headmarkingId'] != null ? getinfo['headMarkingName']['name']:null,
+                            hint: Text("Head Marking"),
+                            items: headmark.map((name) => DropdownMenuItem(
+                                value: name, child: Text("$name")))
+                                .toList(),
+                            style: Theme.of(context).textTheme.body1,
+                            decoration: InputDecoration(labelText: "Head Mark",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
+                            ),
+                            onChanged: (value){
+                              setState(() {
+                                this.selected_headMark=value;
+                                this.select_headmark_id=headmark.indexOf(value);
+                              });
+
+                            },
+                            onSaved: (value){
+                              setState(() {
+                                this.selected_headMark=value;
+                                this.select_headmark_id=headmark.indexOf(value);
+                              });
+
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                          child: FormBuilderDropdown(
+                            attribute: "Leg",
+                            //initialValue: getinfo['legmarkingId'] != null ? getinfo['legMarkingName']['name']:null,
+                            hint: Text("Leg Mark"),
+                            items: legmark.map((name) => DropdownMenuItem(
+                                value: name, child: Text("$name")))
+                                .toList(),
+                            style: Theme.of(context).textTheme.body1,
+                            decoration: InputDecoration(labelText: "Leg MArking",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
+                            ),
+                            onChanged: (value){
+                              setState(() {
+                                this.selected_legMark=value;
+                                this.select_legmark_id=legmark.indexOf(value);
+                              });
+
+                            },
+                            onSaved: (value){
+                              setState(() {
+                                this.selected_legMark=value;
+                                this.select_legmark_id=legmark.indexOf(value);
+                              });
+
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                          child: FormBuilderDropdown(
+                            attribute: "body",
+                            initialValue: getinfo['bodymarkingId'] != null ? getinfo['bodyMarkingName']['name']:null,
+                            hint: Text("Body Mark"),
+                            items: bodymark.map((name) => DropdownMenuItem(
+                                value: name, child: Text("$name")))
+                                .toList(),
+                            style: Theme.of(context).textTheme.body1,
+                            decoration: InputDecoration(labelText: "BodyMark",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
+                            ),
+                            onChanged: (value){
+                              setState(() {
+                                this.selected_bodymark=value;
+                                this.select_bodymark_id=bodymark.indexOf(value);
+                              });
+                            },
+                            onSaved: (value){
+                              setState(() {
+                                this.selected_bodymark=value;
+                                this.select_bodymark_id=bodymark.indexOf(value);
+                              });
+                            },
+                          ),
+                        ),
+                        Text("More Information",textScaleFactor: 2,),
+                        Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                          child: FormBuilderDropdown(
+                            attribute: "Breeder",
+                            //initialValue: getinfo['horseDetails']['breederId'] != null ? getinfo['horseDetail']['breederName']['contactName']['name']:null,
+                            hint: Text("Breeder"),
+                            items: breeder.map((name) => DropdownMenuItem(
+                                value: name, child: Text("$name")))
+                                .toList(),
+                            style: Theme.of(context).textTheme.body1,
+                            decoration: InputDecoration(labelText: "Breeder",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
+                            ),
+                            onChanged: (value){
+                              setState(() {
+                                this.selected_breeder=value;
+                                this.select_breeder_id=breeder.indexOf(value);
+                              });
+                            },
+                            onSaved: (value){
+                              setState(() {
+                                this.selected_breeder=value;
+                                this.select_breeder_id=breeder.indexOf(value);
+                              });
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                          child: FormBuilderDropdown(
+                            attribute: "vet",
+                            initialValue: getinfo['horseDetails']['vetId'] != null ? getinfo['horseDetails']['vetName']['contactName']['name']:null,
+                            hint: Text("Vet"),
+                            items: vet.map((name) => DropdownMenuItem(
+                                value: name, child: Text("$name")))
+                                .toList(),
+                            style: Theme.of(context).textTheme.body1,
+                            decoration: InputDecoration(labelText: "Vet",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
+                            ),
+                            onChanged: (value){
+                              setState(() {
+                                this.selected_vet=value;
+                                this.select_vet_id=vet.indexOf(value);
+                              });
+                            },
+                            onSaved: (value){
+                              setState(() {
+                                this.selected_vet=value;
+                                this.select_vet_id=vet.indexOf(value);
+                              });
+                            },
+                          ),
+                        ),
+//                      Padding(
+//                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+//                        child: FormBuilderDropdown(
+//                          attribute: "",
+//                          hint: Text("IronBrand"),
+//                          items: ironbrand.map((name) => DropdownMenuItem(
+//                              value: name, child: Text("$name")))
+//                              .toList(),
+//                          style: Theme.of(context).textTheme.body1,
+//                          decoration: InputDecoration(labelText: "Iron Brand",
+//                            border: OutlineInputBorder(
+//                                borderRadius: BorderRadius.circular(9.0),
+//                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
+//                            ),
+//                          ),
+//                          onChanged: (value){
+//                            this.selected_ironbrand=value;
+//                            this.select_ironbrand_id=ironbrand.indexOf(value);
+//                          },
+//                        ),
+//                      ),
+                        Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                          child: FormBuilderDropdown(
+                            attribute: "rider",
+                            initialValue: getinfo['horseDetails']['riderId'] != null ? getinfo['horseDetails']['riderName']['contactName']['name']:null,
+                            hint: Text("Rider"),
+                            items: rider.map((name) => DropdownMenuItem(
+                                value: name, child: Text("$name")))
+                                .toList(),
+                            style: Theme.of(context).textTheme.body1,
+                            decoration: InputDecoration(labelText: "Rider",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
+                            ),
+                            onChanged: (value){
+                              setState(() {
+                                this.selected_rider=value;
+                                this.select_rider_id=rider.indexOf(value);
+
+                              });
+                            },
+                            onSaved: (value){
+                              setState(() {
+                                this.selected_rider=value;
+                                this.select_rider_id=rider.indexOf(value);
+
+                              });
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                          child: FormBuilderDropdown(
+                            attribute: "incharge",
+                            initialValue: getinfo['horseDetails']['inchargeId'] != null ? getinfo['horseDetails']['inchargeName']['contactName']['name']:null,
+                            hint: Text("Incharge"),
+                            items: incharge.map((name) => DropdownMenuItem(
+                                value: name, child: Text("$name")))
+                                .toList(),
+                            style: Theme.of(context).textTheme.body1,
+                            decoration: InputDecoration(labelText: "Incharge",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
+                            ),
+                            onChanged: (value){
+                             setState(() {
+                               this.selected_incharge=value;
+                               this.select_incharge_id=incharge.indexOf(value);
+                             });
+                            },
+                            onSaved: (value){
+                              setState(() {
+                                this.selected_incharge=value;
+                                this.select_incharge_id=incharge.indexOf(value);
+                              });
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                          child: FormBuilderDropdown(
+                            attribute: "associ",
+                            initialValue: horsedata['horseDetails']['associationId'] != null ?getinfo['horseDetails']['associationName']['name']:null,
+                            hint: Text("Association"),
+                            items: association.map((name) => DropdownMenuItem(
+                                value: name, child: Text("$name")))
+                                .toList(),
+                            style: Theme.of(context).textTheme.body1,
+                            decoration: InputDecoration(labelText: "Association",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
+                            ),
+                            onChanged: (value){
+                              setState(() {
+                                this.selected_associate=value;
+                                this.select_associate_id=association.indexOf(value);
+                              });
+                              },
+                            onSaved: (value){
+                              setState(() {
+                                this.selected_associate=value;
+                                this.select_associate_id=association.indexOf(value);
+                              });
+                            },
+                          ),
+                        ),
+
+                        Padding(
+                          padding: EdgeInsets.only(left: 16,right: 16),
+                          child: FormBuilderTextField(
+                            controller: dna,
+                            attribute: "DNA",
+                            decoration: InputDecoration(labelText: "DNA",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
+                            ),
+
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Center(
-                    child:
-                    Padding(
-                      padding: const EdgeInsets.all(16),
+                  Center(
+                      child:
+                      Padding(
+                        padding: const EdgeInsets.all(16),
 //                      child: add_horse_button(fbKey: _fbKey,select_gender_id:select_gender_id,name: name ,token: token,number: number.text,passport: passport.text,microchip: passport.text,dateofbirth: Select_date,colorid: select_color_id,breedid: select_breed_id,categoryid: select_category_id,sireid: select_sire_id,damid: select_dam_id,headmarkid: select_headmark_id,bodymarkid: select_bodymark_id,legmarkid: select_legmark_id,dietid: select_diet_id,barnid: select_barn_id,ironbrandid:select_ironbrand_id,riderid: select_rider_id,inchargeid: select_incharge_id,associationid:select_associate_id,dna: name.text,genderlist: genderlist,getHorses:getHorses),
-                      child: add_horse_button(fbKey: _fbKey,token: token,horseId: horseId,name: name ,select_gender_id: select_gender_id,genderlist: genderlist,getHorses: getHorses,number: number.text,passport: passport.text,microchip: chip.text,dateofbirth: Select_date,colorid: select_color_id,breedid: select_breed_id,categoryid: select_category_id,sireid: select_sire_id,damid: select_dam_id,dna: dna.text),
+                        child: add_horse_button(fbKey: _fbKey,token: token,horseId: horseId,name: name ,select_gender_id: select_gender_id,genderlist: genderlist,getHorses: getHorses,number: number.text,passport: passport.text,microchip: chip.text,dateofbirth: Select_date,colorid: select_color_id,breedid: select_breed_id,categoryid: select_category_id,sireid: select_sire_id,damid: select_dam_id,dna: dna.text),
 
 //                      child: add_horse_button(fbKey: _fbKey,getHorses:getHorses,genderlist: genderlist,select_gender_id:select_gender_id,name: name ,token: token,number: number.text,passport: passport.text,microchip: passport.text,breedid: select_breed_id,categoryid: select_category_id,colorid: select_color_id,dateofbirth: Select_date,bodymarkid: select_bodymark_id,headmarkid: select_headmark_id,damid: select_dam_id,dietid: select_diet_id,barnid: select_barn_id,sireid: select_sire_id,dna: name.text,inchargeid: select_incharge_id,legmarkid: select_legmark_id,ironbrandid:select_associate_id,riderid: select_rider_id,),
-                    )
+                      )
 //                      padding: const EdgeInsets.all(16),
 //                      child: MaterialButton(
 //                        color: Colors.teal,
@@ -747,10 +892,11 @@ class _update_horse_state extends State<update_horse>{
 //                        child:Text("Add Horse",style: TextStyle(color: Colors.white),),
 //                      ),
 //                    )
-                )
-              ],
-            )
-          ],
+                  )
+                ],
+              )
+            ],
+          ),
         )
     );
   }

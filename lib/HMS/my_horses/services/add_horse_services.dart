@@ -223,6 +223,14 @@ class Add_horse_services{
     }else
       return null;
   }
+  static Future<String> horseDashBoard(String token,int id) async{
+    Map<String,String> headers = {'Authorization':'Bearer '+token};
+    final response = await http.get('http://192.236.147.77:8083/api/horse/GetHorseDashboard/'+id.toString(), headers: headers,);
+    if(response.statusCode==200){
+      return response.body;
+    }else
+      return null;
+  }
   static Future<String> horsesave(String token,int horseid,String name,int genderid,bool ishorse,String number,String passportNo,String microChip,DateTime dateofbirth,int colorId,int breedId,int categoryId,int sireid,int damid,int headmarkid,int bodymarkid,int legmarkid,int dietid,int barnid,int vet,int breeder,int location,int riderid,int inchargeid,int associationid,String dna) async{
 ////  static Future<String> horsesave(String token,int horseid,String name,int genderid,bool ishorse,DateTime dateofbirth,String number,String passportNo,int colorId,int breedId,int categoryId,int sireid,int damid,int headmarkid,int bodymarkid,int legmarkid,int dietid,int barnid,int ironbrandid,int riderid,int inchargeid,String dna) async{
     Map<String,String> headers = {

@@ -60,6 +60,7 @@ class _Profile_Page_State extends State<horse_detail> {
                 onTap: () async {
                   print(horsedata['horseId']);
                   prefs = await SharedPreferences.getInstance();
+                  print(horsedata);
                   Navigator.push(context, MaterialPageRoute(builder: (context) => update_horse(prefs.get('token'), horsedata)));
                 },
               ),

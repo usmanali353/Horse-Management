@@ -5,12 +5,15 @@ import 'package:horse_management/HMS/Breeding/breeding_mainPage.dart';
 import 'package:horse_management/HMS/Configuration/Breeds/breeds_list.dart';
 import 'package:horse_management/HMS/Configuration/configuration_mainpage.dart';
 import 'package:horse_management/HMS/Contacts/contacts_list.dart';
+import 'package:horse_management/HMS/Diet/DietSubCategory.dart';
+import 'package:horse_management/HMS/Diet/dietList.dart';
 import 'package:horse_management/HMS/Inventory/inventory_list.dart';
 import 'package:horse_management/HMS/OperationNotes/operation_notes.dart';
 import 'package:horse_management/HMS/Paddock/paddocks.dart';
 import 'package:horse_management/HMS/Tanks/tanks.dart';
 import 'package:horse_management/HMS/Training/training_list.dart';
 import 'package:horse_management/HMS/Veterinary/vet_mainPage.dart';
+import 'package:horse_management/HMS/my_horses/horses_list.dart';
 import 'package:horse_management/MainScreens/trending.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:horse_management/screens/settings_page.dart';
@@ -127,7 +130,7 @@ class _HomeState extends State<Home>{ //with AutomaticKeepAliveClientMixin<Home>
                         print(index.toString());
                         if(index == 0){
                           SharedPreferences prefs=await SharedPreferences.getInstance();
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=> all_horse_data(prefs.getString("token")) ));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> horse_list(prefs.getString("token")) ));
                         }else if(index == 1){
                           prefs= await SharedPreferences.getInstance();
                           Navigator.push(context, MaterialPageRoute(builder: (context)=> breeding_Category(prefs.getString('token')) ));
@@ -139,10 +142,10 @@ class _HomeState extends State<Home>{ //with AutomaticKeepAliveClientMixin<Home>
                           Navigator.push(context, MaterialPageRoute(builder: (context)=> vet_category() ));
                         }else if(index == 4){
                           prefs= await SharedPreferences.getInstance();
-                          // Navigator.push(context, MaterialPageRoute(builder: (context)=> sub_categories_page("Diets") ));
+                           Navigator.push(context, MaterialPageRoute(builder: (context)=> dietMainList(prefs.getString("token")) ));
                         }else if(index == 5){
                           prefs= await SharedPreferences.getInstance();
-                         // Navigator.push(context, MaterialPageRoute(builder: (context)=> inventory_list() ));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> inventory_list(prefs.getString("token")) ));
                         }else if(index == 6){
                           prefs= await SharedPreferences.getInstance();
                           Navigator.push(context, MaterialPageRoute(builder: (context)=> configuration_Category(prefs.getString('token')) ));
@@ -189,7 +192,7 @@ class _HomeState extends State<Home>{ //with AutomaticKeepAliveClientMixin<Home>
                           print(index.toString());
                           if(index == 0){// For Horse Groups
                             SharedPreferences prefs=await SharedPreferences.getInstance();
-                           // Navigator.push(context, MaterialPageRoute(builder: (context)=> all_horse_data(prefs.getString("token")) ));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=> all_horse_data(prefs.getString("token")) ));
                           }else if(index == 1){
                             prefs= await SharedPreferences.getInstance();
                             Navigator.push(context, MaterialPageRoute(builder: (context)=> tanks_list(prefs.getString('token')) ));
