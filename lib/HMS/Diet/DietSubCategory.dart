@@ -27,7 +27,7 @@ class _notes_list_state extends State<dietMainList>{
   String token;
   var itemList;
   //var notes_list=[];
-  var temp=['',''];
+  var temp=[''];
   bool isvisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   @override
