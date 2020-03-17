@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:horse_management/MainScreens/home.dart';
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:horse_management/screens/Home_Page.dart';
@@ -195,7 +196,7 @@ class scrollview extends StatelessWidget {
                                        SharedPreferences  prefs= await SharedPreferences.getInstance();
                                        await prefs.setString("token", parsedJson['result']);
                                        await prefs.setBool("isLogin", true);
-                                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Home_Page()),(Route<dynamic> route) => false);
+                                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Home()),(Route<dynamic> route) => false);
                                      }else{
                                        Scaffold.of(context).showSnackBar(SnackBar(
                                          backgroundColor: Colors.red,

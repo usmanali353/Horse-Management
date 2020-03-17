@@ -1,3 +1,6 @@
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:horse_management/HMS/All_Horses_data/Horse_Videos/video_details.dart';
+import 'package:horse_management/screens/welcome_screen.dart';
 import 'package:horse_management/util/theme_notifier.dart';
 import 'package:horse_management/values/strings.dart';
 import 'package:horse_management/values/theme.dart';
@@ -40,6 +43,23 @@ class _SettingsPageState extends State<SettingsPage> {
                 },
               ),
             ),
+          ),
+          ListTile(
+            title: Text("Sign Out"),
+            trailing: Icon(FontAwesomeIcons.signOutAlt),
+            onTap: ()async{
+              SharedPreferences prefs=await SharedPreferences.getInstance();
+              prefs.remove("token");
+              prefs.remove("isLogin");
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>WelcomeScreen()),(Route<dynamic> route) => false);
+            },
+          ),
+          ListTile(
+            title: Text("Visit our Website"),
+            trailing: Icon(Icons.http),
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder:(context)=>video_details("http://192.236.147.77:8085/Account/Login")));
+            },
           )
         ],
       ),
