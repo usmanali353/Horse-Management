@@ -30,7 +30,7 @@ class _Profile_Page_State extends State<swabbing_list>{
 
   String token;
   var swabbinglist;
-  var temp=['',''];
+  var temp=[];
 
 
   @override
@@ -50,7 +50,10 @@ class _Profile_Page_State extends State<swabbing_list>{
           });
         });
       }else
-        print("network nahi hai");
+        Scaffold.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.red,
+          content: Text("network error"),
+        ));
     });
 
 
@@ -62,7 +65,7 @@ class _Profile_Page_State extends State<swabbing_list>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Competetion"),actions: <Widget>[
+        appBar: AppBar(title: Text("Swabbing"),actions: <Widget>[
           Center(child: Text("Add New",textScaleFactor: 1.3,)),
           IconButton(
 
@@ -106,12 +109,17 @@ class _Profile_Page_State extends State<swabbing_list>{
                       });
                     },
                   ),
+                  IconSlideAction(onTap: ()async{
+                    prefs = await SharedPreferences.getInstance();
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_swabbing(swabbinglist[index],prefs.get('token'))));
+
+                  },color: Colors.blue,icon: Icons.border_color,caption: 'update',)
                 ],
                 child: ListTile(
                   //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                   title: Text(swabbinglist!=null?(swabbinglist[index]['horseName']['name']):'Horse Name'),
-                  subtitle: Text(swabbinglist!=null?(swabbinglist[index]['swabbingDate']):'performance not showing'),
-                  trailing: Text(swabbinglist!=null?(swabbinglist[index]['antibiotic']):'performance not showing'),
+                  subtitle: Text(swabbinglist!=null?'Date '+(swabbinglist[index]['swabbingDate'].toString().substring(0,10)):'empty'),
+                  trailing: Text(swabbinglist!=null?'Antibiotic '+(swabbinglist[index]['antibiotic']):' epmty'),
                   onTap: ()async{
                     prefs = await SharedPreferences.getInstance();
                     print((swabbinglist[index]));
@@ -119,11 +127,7 @@ class _Profile_Page_State extends State<swabbing_list>{
                   },
                 ),
                 secondaryActions: <Widget>[
-                  IconSlideAction(onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_swabbing(swabbinglist[index],prefs.get('token'))));
 
-                  },color: Colors.blue,icon: Icons.border_color,caption: 'update',)
                 ],
 
               ),

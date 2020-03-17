@@ -191,7 +191,7 @@ class _Profile_Page_State extends State<healthRecord_list>{
                     actions: <Widget>[
                       IconSlideAction(onTap: ()async{
 
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => update_health(healthlist[index]['id'],token,prefs.get('createdBy'))),);
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => update_health(healthlist[index],token)),);
 
                       },color: Colors.blue,icon: Icons.border_color,caption: 'update',),
                       IconSlideAction(

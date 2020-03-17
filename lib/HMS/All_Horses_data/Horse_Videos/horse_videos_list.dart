@@ -89,14 +89,7 @@ class _horse_videos_list_page_state extends State<horse_videos_list>{
                     actionPane: SlidableDrawerActionPane(),
                     actionExtentRatio: 0.20,
                     secondaryActions: <Widget>[
-                      IconSlideAction(
-                        icon: Icons.edit,
-                        color: Colors.blue,
-                        caption: 'Update',
-                        onTap: () async {
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_videos(token,videos_list[index])));
-                        },
-                      ),
+
                     ],
                     actions: <Widget>[
                       IconSlideAction(
@@ -122,6 +115,14 @@ class _horse_videos_list_page_state extends State<horse_videos_list>{
                               ));
                             }
                           });
+                        },
+                      ),
+                      IconSlideAction(
+                        icon: Icons.edit,
+                        color: Colors.blue,
+                        caption: 'Update',
+                        onTap: () async {
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_videos(token,videos_list[index])));
                         },
                       ),
                     ],

@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/All_Horses_data/all_horse_data_add.dart';
 import 'package:horse_management/HMS/Breeding/breeding_mainPage.dart';
-import 'package:horse_management/HMS/Diet/add_Diet.dart';
-import 'package:horse_management/HMS/Diet/dietList.dart';
+import 'package:horse_management/HMS/Diet/productType/productTypeList.dart';
 import 'package:horse_management/HMS/Inventory/add_inventory.dart';
 import 'package:horse_management/HMS/Inventory/inventory_list.dart';
-import 'package:horse_management/HMS/Training/trainingPlansList.dart';
 import 'package:horse_management/HMS/Training/training_list.dart';
-import 'package:horse_management/HMS/Training/training_plans.dart';
 import 'package:horse_management/HMS/Veterinary/vet_mainPage.dart';
 import 'package:horse_management/HMS/my_horses/horses_list.dart';
 import 'package:horse_management/screens/tasks_Page.dart';
@@ -100,9 +97,8 @@ class _Home_Page_State extends State<Home_Page>{
                   ListTile(
                     title: Text("Diets", style: TextStyle(fontWeight: FontWeight.bold)),
                     leading: Icon(Icons.fastfood),
-                    onTap: () async{
-                      prefs= await SharedPreferences.getInstance();
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> dietList(prefs.getString("token"))));
+                    onTap: (){
+                     // Navigator.push(context, MaterialPageRoute(builder: (context)=> sub_categories_page("Diets") ));
                     },
                   ),
 
@@ -253,7 +249,7 @@ class _Home_Page_State extends State<Home_Page>{
                         prefs  =await SharedPreferences.getInstance();
                         setState(() {
                           currentScreen =
-                              addDiet(); // if user taps on this dashboard tab will be active
+                              productList(prefs.get('token')); // if user taps on this dashboard tab will be active
                           currentTab = 3;
                         });
                       },
