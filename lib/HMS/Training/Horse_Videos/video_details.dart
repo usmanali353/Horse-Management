@@ -28,16 +28,18 @@ class _video_details_state extends State<video_details>{
   }
 
   @override
-  Widget build(BuildContext context)
-    // TODO: implement build
+  Widget build(BuildContext context){
     return Scaffold(
-      body: SafeArea(
-        child:  WebView(
-          initialUrl: url,
-          javascriptMode: JavascriptMode.unrestricted,
-          gestureNavigationEnabled: true,
-          initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
-        ),
-      )
+        body: SafeArea(
+          child:  WebView(
+            initialUrl: url,
+            javascriptMode: JavascriptMode.unrestricted,
+            gestureNavigationEnabled: true,
+            initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
+          ),
+        )
     );
+  }
+
+
 }
