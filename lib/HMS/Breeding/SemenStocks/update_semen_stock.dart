@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import  'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 import '../../../Utils.dart';
 import 'semen_stock_json.dart';
@@ -341,7 +342,29 @@ class _update_semen_stock_form extends State<update_semen_stock_form>{
                             child: Text("Update",style: TextStyle(color: Colors.white),),
 
                             onPressed: (){
-                              SemenStockServices.add_semen_dose(token, 0, dose_response['horseDropDown'][selected_horse_id]['id'], dose_response['tankDropDown'][selected_tank_id]['id'], DateTime.now(), Collection_date, quantity.text, cannister.text, price.text, serial_number.text, batch_number.text, selected_was_bought_id, selected_on_sale_id,);
+                              if (_fbKey.currentState.validate()) {
+                                Utils.check_connectivity().then((result){
+                                  if(result){
+                                    ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                    pd.show();
+                                    SemenStockServices.add_semen_dose(token, dose_data['id'], dose_response['horseDropDown'][selected_horse_id]['id'], dose_response['tankDropDown'][selected_tank_id]['id'], DateTime.now(), Collection_date, quantity.text, cannister.text, price.text, serial_number.text, batch_number.text, selected_was_bought_id, selected_on_sale_id,dose_data['createdBy'])
+                                  .then((respons){
+                                      pd.dismiss();
+                                      if(respons!=null){
+//                                        Scaffold.of(context).showSnackBar(SnackBar(
+//                                          content: Text("Updated"),
+//                                          backgroundColor: Colors.green,
+//                                        ));
+                                      }else{
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text("Not Updated"),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                      }
+                                    });
+                                  }
+                                });
+                              }
                             },
 
                           )

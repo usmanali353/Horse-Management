@@ -1,153 +1,36 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/breeding_control_form.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/update_breeding_control.dart';
+import 'package:horse_management/HMS/Breeding/EmbryoStock/update_embryo_stock.dart';
+
 import 'package:horse_management/Network_Operations.dart';
-import '../../../Utils.dart';
+import 'package:horse_management/Utils.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+
+
 class breeding_control_list extends StatefulWidget{
   String token;
+
   breeding_control_list(this.token);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _breeding_control_list_state(token);
+    return _breeding_control_list(token);
   }
 
 }
-class _breeding_control_list_state extends State<breeding_control_list>{
+class _breeding_control_list extends State< breeding_control_list>{
   String token;
-  var horse_list;
-  var b_c_list=[];
-  var temp=['',''];
-  bool isvisible=false;
+  _breeding_control_list(this.token);
+  bool isVisible=false;
+  var temp=['','',''];
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  @override
-  Widget build(BuildContext context) {
+  var control_list;
 
-    // TODO: implement build
-    return Scaffold(
-        appBar: AppBar(title: Text("Breeding Controls")),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
-          onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>add_breeding_control(token)));
-          },
-
-        ),
-        body: RefreshIndicator(
-              key: _refreshIndicatorKey,
-              onRefresh: (){
-                return  Utils.check_connectivity().then((result){
-                  if(result){
-                    network_operations.get_all_breeding_controls(token).then((response){
-                      if(response!=null){
-                        setState(() {
-                          isvisible=true;
-                          b_c_list=json.decode(response);
-                        });
-
-                      }else{
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                          backgroundColor: Colors.red,
-                          content: Text("List Not Found"),
-                        ));
-                        setState(() {
-                          isvisible=false;
-                        });
-                      }
-                    });
-                  }else{
-                    Scaffold.of(context).showSnackBar(SnackBar(
-                      backgroundColor: Colors.red,
-                      content: Text("Network not Available"),
-                    ));
-                  }
-                });
-              },
-              child: Visibility(
-                visible: isvisible,
-                child: ListView.builder(shrinkWrap:true,itemCount:b_c_list!=null?b_c_list.length:temp.length,itemBuilder: (context,int index){
-                  return Column(
-                    children: <Widget>[
-                      Slidable(
-                        actionPane: SlidableDrawerActionPane(),
-                        actionExtentRatio: 0.20,
-                        secondaryActions: <Widget>[
-                          IconSlideAction(
-                            icon: Icons.edit,
-                            color: Colors.blue,
-                            caption: 'Update',
-                            onTap: () async {
-                              Navigator.push(context,MaterialPageRoute(builder: (context)=>update_breeding_control(token,b_c_list[index])));
-                            },
-                          ),
-                        ],
-                        actions: <Widget>[
-                          IconSlideAction(
-                            icon: Icons.visibility_off,
-                            color: Colors.red,
-                            caption: 'Hide',
-                            onTap: () async {
-                              network_operations.change_breeding_control_visibility(token, b_c_list[index]['breedingControlId']).then((response){
-                                print(response);
-                                if(response!=null){
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    backgroundColor:Colors.green ,
-                                    content: Text('Visibility Changed'),
-                                  ));
-                                  setState(() {
-                                    b_c_list.removeAt(index);
-                                  });
-
-                                }else{
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    backgroundColor:Colors.red ,
-                                    content: Text('Failed'),
-                                  ));
-                                }
-                              });
-                            },
-                          ),
-                        ],
-                        child: ListTile(
-                          trailing:Text(b_c_list!=null?b_c_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
-                          title: Text(b_c_list!=null?b_c_list[index]['horseName']['name']:''),
-                          subtitle: Text(b_c_list!=null?get_check_method_by_id(b_c_list[index]['check_Method']):''),
-                          leading: Icon(Icons.pets,size: 40,color: Colors.teal,),
-                        ),
-
-
-                      ),
-                      Divider(),
-                    ],
-
-                  );
-
-                }),
-              ),
-            ),
-    );
-  }
-String get_check_method_by_id(int id){
-    var check_method;
-    if(b_c_list!=null&&id!=null){
-      if(id==1){
-          check_method="Palpation";
-      }else if(id==2){
-          check_method="Ultrasound";
-      }else if(id==3){
-          check_method="Visual Observation";
-      }else{
-          check_method="Blood Test";
-      }
-    }
-    return check_method;
-  }
   @override
   void initState() {
     super.initState();
@@ -155,6 +38,140 @@ String get_check_method_by_id(int id){
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
   }
 
-  _breeding_control_list_state(this.token);
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_breeding_control(token)));
+        },
+        child: Icon(Icons.add),
+      ),
+      appBar: AppBar(
+        title: Text("Breeding Control"),
+      ),
+      body: RefreshIndicator(
+        key: _refreshIndicatorKey,
+        onRefresh: (){
+          return Utils.check_connectivity().then((result){
+            if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
+              network_operations.get_all_breeding_controls(token).then((response){
+                pd.dismiss();
+                if(response!=null){
+                  setState(() {
+                    control_list=json.decode(response);
+                    isVisible=true;
+                  });
 
+                }else{
+                  setState(() {
+                    isVisible=false;
+                  });
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.red,
+                    content: Text("List Not Available"),
+                  ));
+                }
+              });
+            }else{
+              Scaffold.of(context).showSnackBar(SnackBar(
+                backgroundColor: Colors.red,
+                content: Text("Network Not Available"),
+              ));
+            }
+          });
+        },
+        child: Visibility(
+          visible: isVisible,
+          child: ListView.builder(itemCount:control_list!=null?control_list.length:temp.length,itemBuilder: (context,int index){
+            return Column(
+              children: <Widget>[
+                Slidable(
+                    actionPane: SlidableDrawerActionPane(),
+                    actionExtentRatio: 0.20,
+                    secondaryActions: <Widget>[
+                      IconSlideAction(
+                        icon: Icons.edit,
+                        color: Colors.blue,
+                        caption: 'Update',
+                        onTap: () async {
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_breeding_control(token,control_list[index])));
+                        },
+                      ),
+                    ],
+                    actions: <Widget>[
+                      IconSlideAction(
+                        icon: Icons.visibility_off,
+                        color: Colors.red,
+                        caption: 'Hide',
+                        onTap: () async {
+                          Utils.check_connectivity().then((result){
+                            if(result){
+                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                              pd.show();
+                              network_operations.change_breeding_control_visibility(token, control_list[index]['breedingControlId']).then((response){
+                                pd.dismiss();
+                                if(response!=null){
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.green ,
+                                    content: Text('Visibility Changed'),
+                                  ));
+                                  setState(() {
+                                    control_list.removeAt(index);
+                                  });
+                                }else{
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.red ,
+                                    content: Text('Failed'),
+                                  ));
+                                }
+                              });
+                            }else{
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text("Network not Available"),
+                                backgroundColor: Colors.red,
+                              ));
+                            }
+                          });
+
+                        },
+                      ),
+                    ],
+                    child: ListTile(
+                      trailing:Text(control_list!=null?control_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
+                      title: Text(control_list!=null?control_list[index]['horseName']['name']:''),
+                      subtitle: Text(control_list!=null?get_check_method_by_id(control_list[index]['check_Method']):''),
+                      leading: Icon(Icons.pets,size: 40,color: Colors.teal,),
+                      onTap: (){
+                       // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_embryo_stock(token,embryo_list[index])));
+                      },
+                    )
+                ),
+                Divider(),
+              ],
+            );
+          }),
+        ),
+      ),
+    );
+  }
+
+  String get_check_method_by_id(int id){
+    var check_method;
+    if(control_list!=null&&id!=null){
+      if(id==1){
+        check_method="Palpation";
+      }else if(id==2){
+        check_method="Ultrasound";
+      }else if(id==3){
+        check_method="Visual Observation";
+      }else{
+        check_method="Blood Test";
+      }
+    }
+    return check_method;
+  }
 }

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -7,34 +6,34 @@ import 'package:horse_management/HMS/Configuration/TestTypes/testtype_json.dart'
 import 'package:horse_management/HMS/Paddock/padocks_json.dart';
 import 'package:horse_management/main.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-
 import '../../Utils.dart';
 
 
 
-class add_paddock extends StatefulWidget{
+class update_paddock extends StatefulWidget{
   String token;
-
-  add_paddock(this.token);
+  var specificpaddock;
+  update_paddock(this.token, this.specificpaddock);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _add_paddock(token);
+    return _update_paddock(token, specificpaddock);
   }
 }
 
 
 
-class _add_paddock extends State<add_paddock>{
+class _update_paddock extends State<update_paddock>{
   String token;
-  _add_paddock(this.token);
+  var specificpaddock;
+  _update_paddock(this.token, this.specificpaddock);
   String selected_location, selected_hasShade, selected_hasWater, selected_grass, selected_otherAnimals;
   int selected_location_id=0;
   bool selected_hasShade_id, selected_hasWater_id, selected_grass_id, selected_otherAnimals_id;
   // sqlite_helper local_db;
   List<String> location=[],  hasShade=['Yes','No'],  hasWater=['Yes','No'],  grass=['Yes','No'],  otherAnimals=['Yes','No'] ;
-   var paddock_response;
+  var paddock_response;
   //var training_types_list=['Simple','Endurance','Customized','Speed'];
   TextEditingController name,mainUse,area,comments;
   bool paddock_loaded=false;
@@ -113,7 +112,7 @@ class _add_paddock extends State<add_paddock>{
                         Padding(
                           padding: const EdgeInsets.only(left: 16,right: 16, top:16),
                           child: Visibility(
-                          //  visible: sale_loaded,
+                            //  visible: sale_loaded,
                             child: FormBuilderDropdown(
                               attribute: "Location",
                               validators: [FormBuilderValidators.required()],
@@ -144,7 +143,7 @@ class _add_paddock extends State<add_paddock>{
                           padding: EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderTextField(
                             controller: area,
-                           // keyboardType: TextInputType.number,
+                            // keyboardType: TextInputType.number,
                             attribute: "Area",
                             validators: [FormBuilderValidators.required()],
                             decoration: InputDecoration(labelText: "Area",
@@ -276,7 +275,7 @@ class _add_paddock extends State<add_paddock>{
                           padding: EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderTextField(
                             controller: comments,
-                           // keyboardType: TextInputType.number,
+                            // keyboardType: TextInputType.number,
                             attribute: "Comments",
                             validators: [FormBuilderValidators.required()],
                             decoration: InputDecoration(labelText: "Comments",
@@ -303,17 +302,17 @@ class _add_paddock extends State<add_paddock>{
                                   if(result){
                                     ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                                     pd.show();
-                                    PaddockServices.addPaddock(token, 0, name.text, mainUse.text, paddock_response['locationDropDown'][selected_location_id]['id'], area.text, selected_hasShade_id, selected_hasWater_id, selected_grass_id,selected_otherAnimals_id, comments.text, null,)
+                                    PaddockServices.addPaddock(token, specificpaddock['id'], name.text, mainUse.text, paddock_response['locationDropDown'][selected_location_id]['id'], area.text, selected_hasShade_id, selected_hasWater_id, selected_grass_id,selected_otherAnimals_id, comments.text, specificpaddock['createdBy'],)
                                         .then((respons){
                                       pd.dismiss();
                                       if(respons!=null){
                                         Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Saved "),
+                                          content: Text("Updated "),
                                           backgroundColor: Colors.green,
                                         ));
                                       }else{
                                         Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Not Saved "),
+                                          content: Text("Not Updated "),
                                           backgroundColor: Colors.red,
                                         ));
                                       }

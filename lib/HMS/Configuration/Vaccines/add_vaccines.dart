@@ -3,6 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:horse_management/HMS/Configuration/Vaccines/vaccines_json.dart';
 import 'dart:convert';
 import  'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+
+import '../../../Utils.dart';
 
 
 
@@ -520,20 +523,26 @@ class _add_vaccines extends State<add_vaccines> {
 
             MaterialButton(
               onPressed: () {
-                //_fbKey.currentState.save();
                 if (_fbKey.currentState.validate()) {
-                  print(_fbKey.currentState.value);
-                  VaccinesServices.addVaccines(token, 0, name.text, comments.text,selected_reminder_id, usage_id, primaryvaccination.text, booster.text, revaccination.text, firstdose.text, seconddose.text, thirddose.text, null).then((response) {
-                    setState(() {
-                      var parsedjson = jsonDecode(response);
-                      if (parsedjson != null) {
-                        if (parsedjson['isSuccess'] == true) {
-                          print("Successfully data saved");
-                        } else
-                          print("not saved");
-                      } else
-                        print("json response null");
-                    });
+                  Utils.check_connectivity().then((result){
+                    if(result){
+                      ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                      pd.show();
+                      VaccinesServices.addVaccines(token, 0, name.text, comments.text,selected_reminder_id, usage_id, primaryvaccination.text, booster.text, revaccination.text, firstdose.text, seconddose.text, thirddose.text, null)                                      .then((respons){
+                        pd.dismiss();
+                        if(respons!=null){
+//                          Scaffold.of(context).showSnackBar(SnackBar(
+//                            content: Text("Saved "),
+//                            backgroundColor: Colors.green,
+//                          ));
+                        }else{
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text("Not Saved "),
+                            backgroundColor: Colors.red,
+                          ));
+                        }
+                      });
+                    }
                   });
                 }
               },

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import  'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/HMS/Configuration/CostCenters/costcenter_json.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'dart:convert';
+
+import '../../../Utils.dart';
+import 'location_json.dart';
 
 
 
@@ -109,21 +113,28 @@ class _update_location extends State<update_location>{
 
                         ),
                       ),
-
                       MaterialButton(
                         onPressed: (){
                           if (_fbKey.currentState.validate()) {
-                            CostCenterServices.addCostCenter(token,specificlocation['id'],location_name.text,description.text,specificlocation['createdBy'],).then((response){
-                              setState(() {
-                                var parsedjson  = jsonDecode(response);
-                                if(parsedjson != null){
-                                  if(parsedjson['isSuccess'] == true){
-                                    print("Successfully data saved");
-                                  }else
-                                    print("not saved");
-                                }else
-                                  print("json response null");
-                              });
+                            Utils.check_connectivity().then((result){
+                              if(result){
+                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                pd.show();
+                                LocationServices.addLocation(token,specificlocation['id'],location_name.text,description.text,specificlocation['createdBy']).then((respons){
+                                  pd.dismiss();
+                                  if(respons!=null){
+//                                    Scaffold.of(context).showSnackBar(SnackBar(
+//                                      content: Text("Updated "),
+//                                      backgroundColor: Colors.green,
+//                                    ));
+                                  }else{
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Not Updated "),
+                                      backgroundColor: Colors.red,
+                                    ));
+                                  }
+                                });
+                              }
                             });
                           }
                         },

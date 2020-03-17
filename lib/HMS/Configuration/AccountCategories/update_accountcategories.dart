@@ -3,6 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/HMS/Configuration/AccountCategories/accountcategories_json.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+
+import '../../../Utils.dart';
 
 
 class update_accountcategories extends StatefulWidget{
@@ -195,7 +198,29 @@ class _update_accountcategories extends State<update_accountcategories>{
                             child: Text("Update",style: TextStyle(color: Colors.white),),
 
                             onPressed: (){
-                              AccountCategoriesServices.addAccountCategory(token, specificcategory['id'], code.text, name.text, description.text, specificcategory['createdBy'], selected_isIncome_id, selected_isActive_id);
+                              if (_fbKey.currentState.validate()) {
+                                Utils.check_connectivity().then((result){
+                                  if(result){
+                                    ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                    pd.show();
+                                    AccountCategoriesServices.addAccountCategory(token, specificcategory['id'], code.text, name.text, description.text, specificcategory['createdBy'], selected_isIncome_id, selected_isActive_id)
+                                        .then((respons){
+                                      pd.dismiss();
+                                      if(respons!=null){
+//                                        Scaffold.of(context).showSnackBar(SnackBar(
+//                                          content: Text("Updated"),
+//                                          backgroundColor: Colors.green,
+//                                        ));
+                                      }else{
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text("Not Updated"),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                      }
+                                    });
+                                  }
+                                });
+                              }
                             },
 
                           )

@@ -72,7 +72,7 @@ class _Profile_Page_State extends State<inventory_list>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Lab Test"),actions: <Widget>[
+        appBar: AppBar(title: Text("Inventory List"),actions: <Widget>[
           Center(child: Text("Add New",textScaleFactor: 1.3,)),
           IconButton(
 

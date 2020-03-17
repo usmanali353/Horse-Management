@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import  'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 import 'dart:convert';
 import '../../../Utils.dart';
@@ -223,18 +224,27 @@ class _flushes_update extends State<flushes_update>{
                       MaterialButton(
                         onPressed: (){
                           if (_fbKey.currentState.validate()) {
-                            print(specificflushing['createdBy']);
-                            print(specificflushing['id']);
-                            print(flushes_response['horseDropDown'][selected_horse_id]['id']);
-                            FlushesServicesJson.add_flushes(specificflushing['createdBy'],token,specificflushing['id'],flushes_response['horseDropDown'][selected_horse_id]['id'],Select_date, flushes_response['vetDropDown'][selected_vet_id]['id'],selected_success_id,embryos.text, comments.text ).then((response){
-
-
-                                if(response != null){
-
-                                    print("Successfully data saved");
-                                }else
-                                  print("json response null");
+                            Utils.check_connectivity().then((result){
+                              if(result){
+                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                pd.show();
+                                FlushesServicesJson.add_flushes(specificflushing['createdBy'],token,specificflushing['id'],flushes_response['horseDropDown'][selected_horse_id]['id'],Select_date, flushes_response['vetDropDown'][selected_vet_id]['id'],selected_success_id,embryos.text, comments.text ).then((response){
+                                 pd.dismiss();
+                                 if(response!=null){
+                                   Scaffold.of(context).showSnackBar(SnackBar(
+                                     content: Text("Updated"),
+                                     backgroundColor: Colors.green,
+                                   ));
+                                 }else{
+                                   Scaffold.of(context).showSnackBar(SnackBar(
+                                     content: Text("Not Updated"),
+                                     backgroundColor: Colors.red,
+                                   ));
+                                 }
+                                });
+                              }
                             });
+
                           }
                         },
                         child: Text("Update",style: TextStyle(color: Colors.white),

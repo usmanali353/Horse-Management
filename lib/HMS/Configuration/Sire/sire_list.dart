@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Configuration/Sire/add_sire.dart';
 import 'package:horse_management/HMS/Configuration/Sire/sire_json.dart';
 import 'package:horse_management/HMS/Configuration/Sire/update_sire.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'dart:convert';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -52,7 +53,10 @@ class _sire_list extends State<sire_list>{
         onRefresh: (){
           return Utils.check_connectivity().then((result){
             if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
               SireServices.getSire(token).then((response){
+                pd.dismiss();
                 if(response!=null){
                   setState(() {
                     sire_lists=json.decode(response);

@@ -105,7 +105,7 @@ class _add_training_state extends State<addInventory>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Trainings"),),
+        appBar: AppBar(title: Text("Add "),),
         body: ListView(
           children: <Widget>[
             Column(
@@ -502,12 +502,12 @@ class add_training_button extends StatelessWidget {
                 if(response!=null) {
                   Scaffold.of(context).showSnackBar(SnackBar(
                     backgroundColor: Colors.green,
-                    content: Text("Training Added Sucessfully"),
+                    content: Text("Added Sucessfully"),
                   ));
                 }else{
                   Scaffold.of(context).showSnackBar(SnackBar(
                     backgroundColor: Colors.red,
-                    content: Text("Training not Added"),
+                    content: Text(" not Added"),
                   ));
                 }
               });
@@ -523,7 +523,7 @@ class add_training_button extends StatelessWidget {
 
         }
       },
-      child:Text("Add Training",style: TextStyle(color: Colors.white),),
+      child:Text("Add ",style: TextStyle(color: Colors.white),),
     );
   }
 }

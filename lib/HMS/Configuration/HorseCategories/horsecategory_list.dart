@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Configuration/HorseCategories/add_horsecategory.dart';
 import 'package:horse_management/HMS/Configuration/HorseCategories/horsecategory_json.dart';
 import 'package:horse_management/HMS/Configuration/HorseCategories/update_horsecategory.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'dart:convert';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -52,7 +53,10 @@ class _horsecategory_list extends State<horsecategory_list>{
         onRefresh: (){
           return Utils.check_connectivity().then((result){
             if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
               HorseCategoryServices.getHorseCategory(token).then((response){
+                pd.dismiss();
                 if(response!=null){
                   setState(() {
                     category_lists=json.decode(response);

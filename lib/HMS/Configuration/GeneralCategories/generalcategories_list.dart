@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Configuration/GeneralCategories/add_generalcategories.dart';
 import 'package:horse_management/HMS/Configuration/GeneralCategories/generalcategories_json.dart';
 import 'package:horse_management/HMS/Configuration/GeneralCategories/update_generalcategories.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'dart:convert';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -53,7 +54,10 @@ class _generalcategory_list extends State<generalcategory_list>{
         onRefresh: (){
           return Utils.check_connectivity().then((result){
             if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
               GeneralCategoryServices.getGeneralCategory(token).then((response){
+                pd.dismiss();
                 if(response!=null){
                   setState(() {
                     generalcategory_lists=json.decode(response);

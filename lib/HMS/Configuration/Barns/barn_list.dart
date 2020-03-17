@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Configuration/Barns/barn_json.dart';
 import 'package:horse_management/HMS/Configuration/Barns/update_barn.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'dart:convert';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -53,7 +54,10 @@ class _barn_list extends State<barn_list>{
         onRefresh: (){
           return Utils.check_connectivity().then((result){
             if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
               BarnServices.getBarns(token).then((response){
+                pd.dismiss();
                 if(response!=null){
                   setState(() {
                     barn_lists=json.decode(response);

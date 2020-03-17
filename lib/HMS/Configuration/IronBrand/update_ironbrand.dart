@@ -144,13 +144,13 @@ class add_picture_button extends StatelessWidget {
                     IronBrandServices.addIronBrand(token,picture_data['brandId'],title.text,picture_data['createdBy'],picked_image).then((response){
                       pd.dismiss();
                       if(response!=null){
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                          content: Text("Data Added Sucessfully"),
-                          backgroundColor: Colors.green,
-                        ));
+//                        Scaffold.of(context).showSnackBar(SnackBar(
+//                          content: Text("Updated"),
+//                          backgroundColor: Colors.green,
+//                        ));
                       }else{
                         Scaffold.of(context).showSnackBar(SnackBar(
-                          content: Text("Data not Added"),
+                          content: Text("Not Updated"),
                           backgroundColor: Colors.red,
                         ));
                       }
@@ -166,7 +166,7 @@ class add_picture_button extends StatelessWidget {
               });
 
             },
-            child:Text("Save",style: TextStyle(color: Colors.white),),
+            child:Text("Update",style: TextStyle(color: Colors.white),),
           ),
         )
     );

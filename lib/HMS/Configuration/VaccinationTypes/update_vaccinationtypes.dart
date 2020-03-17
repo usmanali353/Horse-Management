@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/HMS/Configuration/VaccinationTypes/vaccinationtypes_json.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+
+import '../../../Utils.dart';
 
 
 class update_vaccinationtypes extends StatefulWidget{
@@ -131,7 +134,29 @@ class _update_vaccinationtypes extends State<update_vaccinationtypes>{
                             child: Text("Update",style: TextStyle(color: Colors.white),),
 
                             onPressed: (){
-                              VaccinationTypesServices.addVaccinationType(token, specifictype['vaccinationTypeId'], name.text, selected_canDelayed_id,specifictype['createdBy'] );
+                              if (_fbKey.currentState.validate()) {
+                                Utils.check_connectivity().then((result){
+                                  if(result){
+                                    ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                    pd.show();
+                                    VaccinationTypesServices.addVaccinationType(token, specifictype['vaccinationTypeId'], name.text, selected_canDelayed_id,specifictype['createdBy'] )
+                                        .then((respons){
+                                      pd.dismiss();
+                                      if(respons!=null){
+//                                        Scaffold.of(context).showSnackBar(SnackBar(
+//                                          content: Text("Updated "),
+//                                          backgroundColor: Colors.green,
+//                                        ));
+                                      }else{
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text("Not Updated "),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                      }
+                                    });
+                                  }
+                                });
+                              }
                             },
 
                           )

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Configuration/CostCenters/add_costcenter.dart';
 import 'package:horse_management/HMS/Configuration/CostCenters/costcenter_json.dart';
 import 'package:horse_management/HMS/Configuration/CostCenters/update_costcenter.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'dart:convert';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -52,7 +53,10 @@ class _costcenter_list extends State<costcenter_list>{
         onRefresh: (){
           return Utils.check_connectivity().then((result){
             if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
               CostCenterServices.getCostCenters(token).then((response){
+                pd.dismiss();
                 if(response!=null){
                   setState(() {
                     costcenter_lists=json.decode(response);

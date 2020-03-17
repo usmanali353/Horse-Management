@@ -45,7 +45,7 @@ class scrollview extends StatelessWidget {
 
           decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("Assets/horse22.jpg"),
+                image: AssetImage("assets/horse22.jpg"),
                 fit: BoxFit.contain,
                 alignment: Alignment.topCenter,
               ),
@@ -54,7 +54,7 @@ class scrollview extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                SizedBox(height: 20),
+                SizedBox(height: 30),
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 40),
@@ -96,7 +96,7 @@ class scrollview extends StatelessWidget {
                           color: Colors.grey,
                           fontSize: 25
                       )),
-                      SizedBox(height: 90),
+                      SizedBox(height: 20),
                       TextField(
                         controller: email,
                         style: TextStyle(color: Colors.teal,fontWeight: FontWeight.bold),

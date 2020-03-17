@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Configuration/Currencies/update_currency.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'dart:convert';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -53,7 +54,10 @@ class _currency_list extends State<currency_list>{
         onRefresh: (){
           return Utils.check_connectivity().then((result){
             if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
               CurrenciesServices.getCurrency(token).then((response){
+                pd.dismiss();
                 if(response!=null){
                   setState(() {
                     currency_lists=json.decode(response);
@@ -125,12 +129,12 @@ class _currency_list extends State<currency_list>{
                       ),
                     ],
                     child: ListTile(
-                      title: Text(currency_lists!=null?currency_lists[index]['symbol']:''),
+                      title: Text(currency_lists!=null?currency_lists[index]['name']:''),
                       // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
                       //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
-                      onTap: (){
-                       // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
-                      },
+//                      onTap: (){
+//                       // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+//                      },
                     )
                 ),
                 Divider(),

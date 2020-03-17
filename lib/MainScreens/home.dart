@@ -96,7 +96,7 @@ class _HomeState extends State<Home>{ //with AutomaticKeepAliveClientMixin<Home>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 FadeAnimation(2.4,Text("Best management system for", style: TextStyle(
-                    color: Colors.grey.shade100,
+//                    color: Colors.grey.shade100,
                     fontSize: 22,
                     letterSpacing: 2
                 ))),

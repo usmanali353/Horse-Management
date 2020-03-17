@@ -54,7 +54,7 @@ class scrollview extends StatelessWidget {
 
           decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("Assets/wallpaper2.jpg"),
+                image: AssetImage("assets/wallpaper2.jpg"),
                 fit: BoxFit.contain,
                 alignment: Alignment.topCenter,
 
@@ -84,7 +84,7 @@ class scrollview extends StatelessWidget {
                 ),
 
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 40,vertical: 50),
+                  padding: EdgeInsets.symmetric(horizontal: 30,vertical: 30),
                   height: MediaQuery.of(context).size.height * 0.70,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
@@ -106,7 +106,7 @@ class scrollview extends StatelessWidget {
                           color: Colors.grey,
                           fontSize: 25
                       )),
-                      SizedBox(height: 35),
+                      SizedBox(height: 20),
                       TextFormField(
                         controller: name,
                         style: TextStyle(color: Colors.teal,fontWeight: FontWeight.bold),
