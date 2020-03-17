@@ -8,22 +8,22 @@ import 'package:horse_management/HMS/All_Horses_data/services/weight_hieght_serv
 
 class update_weight_and_height extends StatefulWidget{
   String token,createdBy;
-  int whid;
+  var whlist;
 
-  update_weight_and_height (this.whid,this.token,this.createdBy);
+  update_weight_and_height (this.whlist,this.token);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _add_weight_and_height(whid,token,createdBy);
+    return _add_weight_and_height(whlist,token);
   }
 
 }
 class _add_weight_and_height extends State<update_weight_and_height>{
   String selected_horse;int selected_horse_id;
-  String token,createdBy;
-  int whid;
-  _add_weight_and_height (this.whid,this.token,this.createdBy);
+  String token;
+  var whlist;
+  _add_weight_and_height (this.whlist,this.token);
 
   List<String> horse=[];
   DateTime Select_date = DateTime.now();
@@ -37,7 +37,12 @@ class _add_weight_and_height extends State<update_weight_and_height>{
     bodyindex= TextEditingController();
     comment= TextEditingController();
 
-
+   setState(() {
+     weight.text = whlist['weight'].toString();
+     height.text = whlist['height'].toString();
+     bodyindex.text = whlist['bodyCond'].toString();
+     comment.text =whlist['comments'].toString();
+   });
     weight_hieght_services.weight_hieghtdropdown(token).then((response){
       setState(() {
         print(response);
@@ -69,7 +74,9 @@ class _add_weight_and_height extends State<update_weight_and_height>{
                         padding: const EdgeInsets.only(top: 16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Horse",
+                          initialValue: whlist['horseName']['name'],
                           hint: Text("Horse"),
+                          validators: [FormBuilderValidators.required()],
                           items: horse!=null?horse.map((types)=>DropdownMenuItem(
                             child: Text(types),
                             value: types,
@@ -90,6 +97,13 @@ class _add_weight_and_height extends State<update_weight_and_height>{
                             });
 
                           },
+                          onSaved: (value){
+                            setState(() {
+                              this.selected_horse=value;
+                              selected_horse_id = horse.indexOf(value);
+                            });
+
+                          },
                         ),
                       ),
 //
@@ -97,6 +111,7 @@ class _add_weight_and_height extends State<update_weight_and_height>{
                         padding: EdgeInsets.only(top:16,left: 16,right: 16),
                         child:FormBuilderDateTimePicker(
                           attribute: "date",
+                          initialValue: DateTime.parse(whlist['date']!= null? whlist['date']:DateTime.now()),
                           style: Theme.of(context).textTheme.body1,
                           inputType: InputType.date,
                           validators: [FormBuilderValidators.required()],
@@ -180,7 +195,7 @@ class _add_weight_and_height extends State<update_weight_and_height>{
                 Center(
                     child:Padding(
                       padding: const EdgeInsets.all(16),
-                      child: addWeightButton(fbKey: _fbKey,whid: whid,createdBy: createdBy, token: token, weightHieghtdropdown: weightHieghtdropdown, selected_horse_id: selected_horse_id, Select_date: Select_date, weight: weight, height: height, bodyindex: bodyindex, comment: comment),
+                      child: addWeightButton(fbKey: _fbKey,whid: whlist['whid'],createdBy: whlist['createdBy'], token: token, weightHieghtdropdown: weightHieghtdropdown, selected_horse_id: selected_horse_id, Select_date: Select_date, weight: weight, height: height, bodyindex: bodyindex, comment: comment),
                     )
                 )
               ],

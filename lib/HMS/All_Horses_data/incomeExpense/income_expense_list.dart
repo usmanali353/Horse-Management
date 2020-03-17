@@ -96,7 +96,7 @@ class _incomeExpense_list_state extends State<income_expense_list>{
                 actions: <Widget>[
                   IconSlideAction(onTap: ()async{
                     prefs = await SharedPreferences.getInstance();
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_IncomeExpense(list[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_IncomeExpense(list[index],prefs.get('token'),prefs.get('createdBy'))));
 
                   },color: Colors.blue,icon: Icons.border_color,caption: 'update',),
                   IconSlideAction(
@@ -129,37 +129,8 @@ class _incomeExpense_list_state extends State<income_expense_list>{
                   title: Text(list != null ? list[index]['horseName']['name']:""),
                   subtitle: Text(list != null ? "Account: "+list[index]['categoryName']['name']:""),
                   trailing: Text(list != null ? "Date: "+list[index]['date'].toString().substring(0,10):""),
-
+                // leading: Text(list != null ? 'Amount '+list[index]['amount'].toString():""),
                   children: <Widget>[
-//
-//                   ListTile(
-//                    title: Text((list[index]['id'].toString())),
-//                    //leading: Image.asset("Assets/horses_icon.png"),
-//                    onTap: (){
-//                      print((list[index]['id']));
-//                     // Navigator.push(context, MaterialPageRoute(builder: (context)=>horse_detail(horse_list[index])));
-//                    },
-//                  ),
-//                  Divider(),
-//                ListTile(
-//                  title: Text("Date"),
-//                  trailing: Text(list[index]['date'].toString()),
-//                  onTap: ()async{
-//                    //list[index]['categoryDropDown']['categoryId']['name'].toString()
-////                  print(incomelist['horseDropdown'][list[0]['horseId']]==['id']);
-////                  print(incomelist['horseDropdown']);
-////                  print(list);
-//                    print(list[index]['id']);
-//                    prefs= await SharedPreferences.getInstance();
-//                    //Navigator.push(context, MaterialPageRoute(builder: (context) => update_IncomeExpense(list[index]['id'],prefs.get('token'),prefs.get('createdBy'))),);
-//
-//                  },
-//                ),
-//                Divider(),
-//                ListTile(
-//                  title: Text("Cost Center"),
-//                  trailing: Text(list[index]['costCenterId'].toString()),
-//                ),
                 Divider(),
                 ListTile(
                   title: Text("Amount"),

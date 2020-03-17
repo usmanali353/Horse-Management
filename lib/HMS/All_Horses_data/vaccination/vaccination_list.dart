@@ -32,7 +32,7 @@ class _Profile_Page_State extends State<vaccination_list>{
 
   String token;
   var vaccinationlist;
-  var temp=['',''];
+  var temp=[];
 
 
   @override
@@ -65,7 +65,10 @@ class _Profile_Page_State extends State<vaccination_list>{
           });
         });
       }else
-        print("network nahi hai");
+        Scaffold.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.red,
+          content: Text("network error"),
+        ));
     });
 
 
@@ -77,7 +80,7 @@ class _Profile_Page_State extends State<vaccination_list>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Farrier"),actions: <Widget>[
+        appBar: AppBar(title: Text("Vaccination"),actions: <Widget>[
           Center(child: Text("Add New",textScaleFactor: 1.3,)),
           IconButton(
 
@@ -124,12 +127,17 @@ class _Profile_Page_State extends State<vaccination_list>{
                       });
                     },
                   ),
+                  IconSlideAction(onTap: ()async{
+                    prefs = await SharedPreferences.getInstance();
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_vaccination(vaccinationlist[index],prefs.get('token'),prefs.get('createdBy'))));
+
+                  },color: Colors.blue,icon: Icons.mode_edit,caption: 'update',)
                 ],
                 child: ListTile(
                   //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                   title: Text(vaccinationlist!=null?(vaccinationlist[index]['horseName']['name']):' '),
-                  subtitle: Text(vaccinationlist!=null?(vaccinationlist[index]['vaccineName']['name']):'farrier name not showing'),
-                  trailing: Text(vaccinationlist!=null?(vaccinationlist[index]['vetName']['contactName']['name']):'Vet name empty'),
+                  subtitle: Text(vaccinationlist!=null?'Vaccine'+(vaccinationlist[index]['vaccineName']['name']):'farrier name not showing'),
+                  trailing: Text(vaccinationlist!=null?'Vet'+(vaccinationlist[index]['vetName']['contactName']['name']):'Vet name empty'),
                   onTap: ()async{
                     prefs = await SharedPreferences.getInstance();
                     print((vaccinationlist[index]));
@@ -137,11 +145,7 @@ class _Profile_Page_State extends State<vaccination_list>{
                   },
                 ),
                 secondaryActions: <Widget>[
-                  IconSlideAction(onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_vaccination(vaccinationlist[index],prefs.get('token'),prefs.get('createdBy'))));
 
-                  },color: Colors.blue,icon: Icons.mode_edit,caption: 'update',)
                 ],
 
               ),

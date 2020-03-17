@@ -80,14 +80,7 @@ class _pictures_list_state extends State<pictures_list>{
                         actionPane: SlidableDrawerActionPane(),
                         actionExtentRatio: 0.20,
                         secondaryActions: <Widget>[
-                          IconSlideAction(
-                            icon: Icons.edit,
-                            color: Colors.blue,
-                            caption: 'Update',
-                            onTap: () async {
-                              Navigator.push(context,MaterialPageRoute(builder: (context)=>update_picture(token,picture_list[index])));
-                            },
-                          ),
+
                         ],
                         actions: <Widget>[
                           IconSlideAction(
@@ -113,6 +106,14 @@ class _pictures_list_state extends State<pictures_list>{
                                   ));
                                 }
                               });
+                            },
+                          ),
+                          IconSlideAction(
+                            icon: Icons.edit,
+                            color: Colors.blue,
+                            caption: 'Update',
+                            onTap: () async {
+                              Navigator.push(context,MaterialPageRoute(builder: (context)=>update_picture(token,picture_list[index])));
                             },
                           ),
                         ],

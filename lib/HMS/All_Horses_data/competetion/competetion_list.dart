@@ -1,10 +1,14 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/All_Horses_data/competetion/add_competetion.dart';
 import 'package:horse_management/HMS/All_Horses_data/competetion/update_competetion.dart';
 import 'package:horse_management/HMS/All_Horses_data/services/competetion_services.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../Utils.dart';
 
 
 class competetion_list extends StatefulWidget{
@@ -32,13 +36,28 @@ class _Profile_Page_State extends State<competetion_list>{
 
   @override
   void initState () {
-    competetion_services.competetion_list(token).then((
-        response) {
-      setState(() {
-        print(response);
-        competetionlist = json.decode(response);
-      });
+
+
+
+    Utils.check_connectivity().then((result){
+      if(result) {
+        ProgressDialog pd = ProgressDialog(
+            context, isDismissible: true, type: ProgressDialogType.Normal);
+        pd.show();
+        competetion_services.competetion_list(token).then((response) {
+          pd.dismiss();
+          setState(() {
+            print(response);
+            competetionlist = json.decode(response);
+          });
+        });
+      }else
+        Scaffold.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.red,
+          content: Text("network error"),
+        ));
     });
+
   }
 
   @override
@@ -89,11 +108,17 @@ class _Profile_Page_State extends State<competetion_list>{
                       });
                     },
                   ),
+                  IconSlideAction(onTap: ()async{
+                    prefs = await SharedPreferences.getInstance();
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_competetion(competetionlist[index],prefs.get('token'))));
+
+                  },color: Colors.blue,icon: Icons.border_color,caption: 'update',)
                 ],
                 child: ListTile(
                   //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                   title: Text(competetionlist!=null?(competetionlist[index]['horseName']['name']):'Horse Name'),
-                  subtitle: Text(competetionlist!=null?(competetionlist[index]['performanceTypeName']['name']):'performance not showing'),
+                  trailing: Text(competetionlist!=null?'Performance :'+(competetionlist[index]['performanceTypeName']['name']):'performance not showing'),
+                  subtitle: Text(competetionlist[index]['date'] != null ? competetionlist[index]['date'].toString().substring(0,10):""),
                   //leading: Image.asset("Assets/horses_icon.png"),
                   onTap: ()async{
                     prefs = await SharedPreferences.getInstance();
@@ -102,11 +127,7 @@ class _Profile_Page_State extends State<competetion_list>{
                   },
                 ),
                 secondaryActions: <Widget>[
-                  IconSlideAction(onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_competetion(competetionlist[index],prefs.get('token'))));
 
-                  },color: Colors.blue,icon: Icons.border_color,caption: 'update',)
                 ],
 
               ),

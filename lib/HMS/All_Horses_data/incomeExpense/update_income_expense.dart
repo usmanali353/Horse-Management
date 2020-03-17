@@ -29,15 +29,18 @@ class _state_add_farrier extends State<update_IncomeExpense>{
   TextEditingController amount,description;
   String token,createdBy;
   var incomeExpenseDropdown,labDropdown;
-   int expenseid;
-  _state_add_farrier (this.expenseid,this.token,this.createdBy);
+   var expenselist;
+  _state_add_farrier (this.expenselist,this.token,this.createdBy);
 
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
   @override
   void initState() {
     amount= TextEditingController();
     description= TextEditingController();
-
+   setState(() {
+     amount.text = expenselist['amount'] != null ? expenselist['amount'].toString():null;
+     description.text = expenselist['description'] != null ? expenselist['description']:null;
+   });
     labtest_services.labdropdown(token).then((response){
       setState(() {
         incomeExpenseDropdown=json.decode(response);
@@ -85,7 +88,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Horse"),),
+        appBar: AppBar(title: Text("Update Income & Expense"),),
         body: ListView(
           children: <Widget>[
             Column(
@@ -98,6 +101,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                         padding: const EdgeInsets.only(top: 16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Horse",
+                          initialValue: expenselist['horseName']['name'] != null ? expenselist['horseName']['name']:"",
                           hint: Text("Horse"),
                           items: horse!=null?horse.map((types)=>DropdownMenuItem(
                             child: Text(types),
@@ -126,6 +130,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                         padding: EdgeInsets.only(top:16,left: 16,right: 16),
                         child:FormBuilderDateTimePicker(
                           attribute: "date",
+                          initialValue: DateTime.parse(expenselist['date'] != null ? expenselist['date']:DateTime.now()),
                           style: Theme.of(context).textTheme.body1,
                           inputType: InputType.date,
                           validators: [FormBuilderValidators.required()],
@@ -166,6 +171,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                           controller: amount,
                           attribute: "Currency",
                           validators: [FormBuilderValidators.required()],
+                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(labelText: "Currency",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
@@ -179,6 +185,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                         padding: const EdgeInsets.only(left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Cuurency",
+                          initialValue: get_currency_by_id(expenselist['currency'])!= null ? get_currency_by_id(expenselist['currency']):null,
                           hint: Text("Currency"),
                           items: currency!=null?currency.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
@@ -199,12 +206,19 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                               selected_currency_id = currency.indexOf(value);
                             });
                           },
+                          onSaved: (value){
+                            setState(() {
+                              this.selected_currency=value;
+                              selected_currency_id = currency.indexOf(value);
+                            });
+                          },
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Category",
+                          initialValue: expenselist['categoryId']!= null ? expenselist['categoryName']['name']:null,
                           hint: Text("Category"),
                           items: category!=null?category.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
@@ -223,7 +237,14 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                             setState(() {
                               this.selected_category=value;
                               selected_category_id = category.indexOf(value);
-                            });                          },
+                            });
+                            },
+                          onSaved: (value){
+                            setState(() {
+                              this.selected_category=value;
+                              selected_category_id = category.indexOf(value);
+                            });
+                          },
                         ),
                       ),
 
@@ -231,6 +252,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "cost Center",
+                          initialValue: get_costcenter_by_id(expenselist['costCenterId'])!= null ?get_costcenter_by_id(expenselist['costCenterId']):null,
                           hint: Text("Cost Center"),
                           items: costcenter!=null?costcenter.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
@@ -249,13 +271,21 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                             setState(() {
                               this.selected_costcenter=value;
                               selected_costcenter_id = costcenter.indexOf(value);
-                            });                          },
+                            });
+                            },
+                          onSaved: (value){
+                            setState(() {
+                              this.selected_costcenter=value;
+                              selected_costcenter_id = costcenter.indexOf(value);
+                            });
+                            },
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 16,left: 16,right: 16,bottom: 16),
                         child: FormBuilderDropdown(
                           attribute: "Contact",
+                          initialValue: get_contact_by_id(expenselist['contactId'])!= null ?get_contact_by_id(expenselist['contactId']):null,
                           validators: [FormBuilderValidators.required()],
                           hint: Text("Contact"),
                           items: contact!=null?contact.map((types)=>DropdownMenuItem(
@@ -279,6 +309,14 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                               selected_contact_id = contact.indexOf(value);
                             });
                           },
+                          onSaved: (value){
+                            setState((){
+
+                              this.selected_contact=value;
+                              print(selected_contact);
+                              selected_contact_id = contact.indexOf(value);
+                            });
+                          },
                         ),
 
                       ),
@@ -286,6 +324,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                         padding: const EdgeInsets.only(left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Account",
+                          initialValue: expenselist['typeGeneralOrBusiness']!= null ? expenselist['typeGeneralOrBusiness']:null,
                           hint: Text(" Account"),
                           items: account!=null?account.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
@@ -301,6 +340,16 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                             ),
                           ),
                           onChanged: (value){
+                            setState((){
+                              if(value == "General") {
+                                print(value);
+                                this.selected_account = "General";
+                              }else{
+                                print(value);
+                                selected_account = 'Bussiness';}
+                            });
+                          },
+                          onSaved: (value){
                             setState((){
                               if(value == "General") {
                                 print(value);
@@ -332,7 +381,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                             print(selected_account);
                             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                             //pd.show();
-                            income_expense_services.income_expenseSave(createdBy,token,expenseid,incomeExpenseDropdown['horseDropDown'][selected_horse_id]['id'], Select_date,
+                            income_expense_services.income_expenseSave(createdBy,token,expenselist['id'],incomeExpenseDropdown['horseDropDown'][selected_horse_id]['id'], Select_date,
                               amount.text,description.text, incomeExpenseDropdown['currencyDropDown'][selected_currency_id]['id'], incomeExpenseDropdown['categoryDropDown'][selected_category_id]['id'],
                               incomeExpenseDropdown['costCenterDropDown'][selected_costcenter_id]['id'], incomeExpenseDropdown['contactsDropDown'][selected_contact_id]['id'],selected_account,).then((response){
                               //pd.dismiss();
@@ -346,7 +395,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
 
                           }
                         },
-                        child:Text("Add Horse",style: TextStyle(color: Colors.white),),
+                        child:Text("Add Data",style: TextStyle(color: Colors.white),),
                       ),
                     )
                 )
@@ -356,5 +405,40 @@ class _state_add_farrier extends State<update_IncomeExpense>{
         )
     );
   }
-
+  String get_currency_by_id(int id){
+    var plan_name;
+    if(expenselist!=null&&incomeExpenseDropdown['currencyDropDown']!=null&&id!=null){
+      for(int i=0;i<currency.length;i++){
+        if(incomeExpenseDropdown['currencyDropDown'][i]['id']==id){
+          plan_name=incomeExpenseDropdown['currencyDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+  String get_costcenter_by_id(int id){
+    var plan_name;
+    if(expenselist!=null&&incomeExpenseDropdown['costCenterDropDown']!=null&&id!=null){
+      for(int i=0;i<costcenter.length;i++){
+        if(incomeExpenseDropdown['costCenterDropDown'][i]['id']==id){
+          plan_name=incomeExpenseDropdown['costCenterDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+  String get_contact_by_id(int id){
+    var plan_name;
+    if(expenselist!=null&&incomeExpenseDropdown['contactsDropDown']!=null&&id!=null){
+      for(int i=0;i<contact.length;i++){
+        if(incomeExpenseDropdown['contactsDropDown'][i]['id']==id){
+          plan_name=incomeExpenseDropdown['contactsDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
 }
