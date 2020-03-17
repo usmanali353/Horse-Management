@@ -210,7 +210,7 @@ class _configuration_Category extends State<configuration_Category>{
                   ),
                   ListTile(
                     title: Text("Scoring"),
-                    subtitle: Text("Add Scoring"),
+                    subtitle: Text("Add Scorings"),
                     leading: Icon(Icons.score,size: 40, color: Colors.blueAccent,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: (){
