@@ -91,7 +91,6 @@ class _add_sire extends State<add_sire>{
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)
                             ),
                           ),
-
                         ),
                       ),
                       MaterialButton(
