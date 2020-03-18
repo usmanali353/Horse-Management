@@ -43,6 +43,7 @@ class addVetVisitsState extends State<addVetVisits>{
           if(response!=null){
             setState(() {
               vetVisitsDropdowns=json.decode(response);
+             print(vetVisitsDropdowns['vetVisitProduct']['inventoryProductsDropDown'].toString());
               if(vetVisitsDropdowns['horseDropDown']!=null&&vetVisitsDropdowns['horseDropDown'].length>0){
                 for(int i=0;i<vetVisitsDropdowns['horseDropDown'].length;i++){
                   horses.add(vetVisitsDropdowns['horseDropDown'][i]['name']);
@@ -193,7 +194,7 @@ class addVetVisitsState extends State<addVetVisits>{
                 onPressed: () async{
                   SharedPreferences prefs= await SharedPreferences.getInstance();
                   if(_fbKey.currentState.validate()){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>addProductsApplied(prefs.getString("token"),date,selected_horse_id,selected_vet_id,selected_type_id)));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>addProductsApplied(prefs.getString("token"),date,selected_horse_id,selected_vet_id,selected_type_id,vetVisitsDropdowns['vetVisitProduct']['inventoryProductsDropDown'])));
                   }
                 },
                 child: Text("Add Products Applied",style: TextStyle(color: Colors.white),),

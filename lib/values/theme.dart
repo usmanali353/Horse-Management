@@ -7,7 +7,7 @@ final darkTheme = ThemeData(
   backgroundColor: const Color(0xFF212121),
   accentColor: Colors.teal,
   accentIconTheme: IconThemeData(color: Colors.black),
-  dividerColor: Colors.black12,
+  dividerColor: const Color(0x1FFFFFFF),
 );
 
 final lightTheme = ThemeData(
@@ -17,5 +17,5 @@ final lightTheme = ThemeData(
   backgroundColor: const Color(0xFFE5E5E5),
   accentColor: Colors.teal,
   accentIconTheme: IconThemeData(color: Colors.teal),
-  dividerColor: Colors.white54,
+  dividerColor: Colors.grey,
 );

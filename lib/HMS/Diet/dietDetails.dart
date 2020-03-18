@@ -95,7 +95,6 @@ class dietDetailsState extends State<dietDetails>{
       ),
         floatingActionButton:
         FloatingActionButton(child: Icon(Icons.done), onPressed:() async{
-          SharedPreferences prefs = await SharedPreferences.getInstance();
           Utils.check_connectivity().then((result){
             if(result){
               ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
