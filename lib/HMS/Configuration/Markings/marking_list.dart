@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Configuration/Markings/add_marking.dart';
 import 'package:horse_management/HMS/Configuration/Markings/marking_json.dart';
 import 'package:horse_management/HMS/Configuration/Markings/update_marking.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'dart:convert';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -53,7 +54,10 @@ class _marking_list extends State<marking_list>{
         onRefresh: (){
           return Utils.check_connectivity().then((result){
             if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
               MarkingServices.getMarkings(token).then((response){
+                pd.dismiss();
                 if(response!=null){
                   setState(() {
                     marking_lists=json.decode(response);

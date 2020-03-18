@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import  'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 import '../../../Utils.dart';
 import 'breeding_sales_json.dart';
@@ -570,18 +571,26 @@ class _breeding_sales_form extends State<breeding_sales_form>{
                   MaterialButton(
                     onPressed: (){
                       if (_fbKey.currentState.validate()) {
-                        BreedingSalesServices.add_breeding_sales(null,token,0,sale_response['horseDropDown'][selected_horse_id]['id'],DateTime.now(), sale_response['customerDropDown'][selected_customer_id]['id'],sale_response['assignedVetDropDown'][selected_vet_id]['id'],Payment_date,payment_reference.text, selected_semen_id,selected_frozen_id,selected_cashpaymemt_id,selected_gift_id,selected_status_id, contract_no.text, report_no.text, comments.text,amount.text, sale_response['currencyDropDown'][selected_currency_id]['id'], sale_response['categoryDropDown'][selected_category_id]['id'], sale_response['costCenterDropDown'][selected_costcenter_id]['id'], sale_response['contactsDropDown'][selected_contact_id]['id'],  ).then((response){
-                          setState(() {
-                            var parsedjson  = jsonDecode(response);
-                            if(parsedjson != null){
-                              if(parsedjson['isSuccess'] == true){
-                                print("Successfully data saved");
-                              }else
-                                print("not saved");
-                            }else
-                              print("json response null");
-                          });
+                        Utils.check_connectivity().then((result){
+                          if(result){
+                            ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                            pd.show();
+                            BreedingSalesServices.add_breeding_sales(null,token,0,sale_response['horseDropDown'][selected_horse_id]['id'],DateTime.now(), sale_response['customerDropDown'][selected_customer_id]['id'],sale_response['assignedVetDropDown'][selected_vet_id]['id'],Payment_date,payment_reference.text, selected_semen_id,selected_frozen_id,selected_cashpaymemt_id,selected_gift_id,selected_status_id, contract_no.text, report_no.text, comments.text,amount.text, sale_response['currencyDropDown'][selected_currency_id]['id'], sale_response['categoryDropDown'][selected_category_id]['id'], sale_response['costCenterDropDown'][selected_costcenter_id]['id'], sale_response['contactsDropDown'][selected_contact_id]['id'],  ).then((response){
+                              pd.dismiss();
+                              setState(() {
+                                var parsedjson  = jsonDecode(response);
+                                if(parsedjson != null){
+                                  if(parsedjson['isSuccess'] == true){
+                                    print("Successfully data saved");
+                                  }else
+                                    print("not saved");
+                                }else
+                                  print("json response null");
+                              });
+                            });
+                          }
                         });
+
                       }
                     },
                     child: Text("Save",style: TextStyle(color: Colors.white),

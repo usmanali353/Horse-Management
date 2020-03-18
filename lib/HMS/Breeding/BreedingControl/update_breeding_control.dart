@@ -1017,10 +1017,10 @@ class update_breeding_control_button extends StatelessWidget {
               _fbKey.currentState.save();
               network_operations.add_breeding_control(token, breeding_control_data['breedingControlId'], breeding_control_list['horseDropDown'][selected_horse_id]['id'], date,hour, selected_check_method_id, breeding_control_list['relatedServiceDropDown'][selected_related_services_id]['id'], empty, pregnancy, abortion, reabsorption, follicle, ovule, twins, volvoplasty,double.parse(amount.text), breeding_control_list['currencyDropDown'][selected_currency_id]['id'],breeding_control_data['createdBy'], comments.text, lo.text, ro.text, uterus.text, vagina.text, cervix.text, breeding_control_list['categoryDropDown'][selected_account_category_id]['id'], breeding_control_list['costCenterDropDown'][selected_costcenter_id]['id'], breeding_control_list['contactsDropDown'][selected_contact_id]['id'],breeding_control_list['vetDropDown'][seleced_vet_id]['id']).then((response){
                 if(response!=null){
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                    content: Text("Breeding Control Updated Sucessfully"),
-                    backgroundColor: Colors.green,
-                  ));
+//                  Scaffold.of(context).showSnackBar(SnackBar(
+//                    content: Text("Breeding Control Updated Sucessfully"),
+//                    backgroundColor: Colors.green,
+//                  ));
                 }else{
                   Scaffold.of(context).showSnackBar(SnackBar(
                     content: Text("Breeding Control not Updated"),

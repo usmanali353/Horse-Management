@@ -7,6 +7,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/Paddock/add_paddock_form.dart';
 import 'package:horse_management/HMS/Paddock/padocks_json.dart';
 import 'package:horse_management/HMS/Paddock/update_paddock.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 import '../../Utils.dart';
 
@@ -56,7 +57,10 @@ class _paddocks_list extends State<paddocks_list>{
         onRefresh: (){
           return Utils.check_connectivity().then((result){
             if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
               PaddockServices.getPaddock(token).then((response){
+                pd.dismiss();
                 if(response!=null){
                   setState(() {
                     paddock_lists=json.decode(response);

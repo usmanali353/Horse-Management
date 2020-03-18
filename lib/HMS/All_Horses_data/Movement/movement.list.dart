@@ -103,12 +103,17 @@ class _Profile_Page_State extends State<movement_list>{
                       });
                     },
                   ),
+                  IconSlideAction(onTap: ()async{
+                    prefs = await SharedPreferences.getInstance();
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_movement(swabbinglist[index],prefs.get('token'))));
+
+                  },color: Colors.blue,icon: Icons.border_color,caption: 'update',)
                 ],
                 child: ListTile(
                   //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                   title: Text(swabbinglist!=null?(swabbinglist[index]['horseName']['name']):'Horse Name'),
-                  subtitle: Text(swabbinglist!=null?(swabbinglist[index]['fromLocationName']['name']):'From not showing'),
-                  trailing: Text(swabbinglist!=null?(swabbinglist[index]['toLocationName']['name']):'tolocation not showing'),
+                  subtitle: Text(swabbinglist!=null?'From location:'+(swabbinglist[index]['fromLocationName']['name']):'From not showing'),
+                  trailing: Text(swabbinglist!=null?'To Location: '+(swabbinglist[index]['toLocationName']['name']):'tolocation not showing'),
                   onTap: ()async{
                     prefs = await SharedPreferences.getInstance();
                     print((swabbinglist[index]));
@@ -116,11 +121,7 @@ class _Profile_Page_State extends State<movement_list>{
                   },
                 ),
                 secondaryActions: <Widget>[
-                  IconSlideAction(onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_movement(swabbinglist[index],prefs.get('token'))));
 
-                  },color: Colors.blue,icon: Icons.border_color,caption: 'update',)
                 ],
 
               ),

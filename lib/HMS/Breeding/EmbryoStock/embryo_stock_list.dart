@@ -6,6 +6,7 @@ import 'package:horse_management/HMS/Breeding/EmbryoStock/update_embryo_stock.da
 
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 import 'add_embryo_stock.dart';
 import 'embryo_stock_json.dart';
@@ -56,7 +57,10 @@ class _embryo_stock_list extends State< embryo_stock_list>{
         onRefresh: (){
           return Utils.check_connectivity().then((result){
             if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
               EmbryoStockServices.get_embryo_stock(token).then((response){
+                pd.dismiss();
                 if(response!=null){
                   setState(() {
                     embryo_list=json.decode(response);
@@ -69,7 +73,7 @@ class _embryo_stock_list extends State< embryo_stock_list>{
                   });
                   Scaffold.of(context).showSnackBar(SnackBar(
                     backgroundColor: Colors.red,
-                    content: Text("videos Not Available"),
+                    content: Text("List Not Available"),
                   ));
                 }
               });

@@ -5,6 +5,7 @@ import 'package:horse_management/HMS/Breeding/Semen_Collection/update_semen_coll
 import 'package:horse_management/HMS/Training/training_detail_page.dart';
 import 'package:horse_management/HMS/Training/update_training.dart';
 import 'package:horse_management/Network_Operations.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 import '../../../Utils.dart';
 import 'add_semen_collection.dart';
@@ -48,7 +49,10 @@ class _semen_collection_list_state extends State<semen_collection_list>{
               onRefresh: (){
                 return  Utils.check_connectivity().then((result){
                   if(result){
+                    ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                    pd.show();
                     network_operations.get_all_semen_collection(token).then((response){
+                      pd.dismiss();
                       if(response!=null){
                         setState(() {
                           isvisible=true;
@@ -122,7 +126,7 @@ class _semen_collection_list_state extends State<semen_collection_list>{
                           title: Text(siemen_col_list!=null?siemen_col_list[index]['horseName']['name']:''),
                           trailing: Text(siemen_col_list!=null?siemen_col_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
                           //subtitle: Text(training_list!=null?get_training_type_by_id(training_list[index]['trainingType']):''),
-                          leading: Image.asset("Assets/horse_icon.png"),
+                          leading: Image.asset("assets/horse_icon.png"),
                           onTap: (){
                            // Navigator.push(context, MaterialPageRoute(builder: (context)=>training_details_page(training_list[index],get_training_type_by_id(training_list[index]['trainingType']))));
                           },

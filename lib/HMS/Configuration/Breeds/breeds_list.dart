@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Configuration/Breeds/add_breed.dart';
 import 'package:horse_management/HMS/Configuration/Breeds/breeds_json.dart';
 import 'package:horse_management/HMS/Configuration/Breeds/update_breed.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'dart:convert';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -53,7 +54,10 @@ class _breeds_list extends State<breeds_list>{
         onRefresh: (){
           return Utils.check_connectivity().then((result){
             if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
               BreedsServices.getBreeds(token).then((response){
+                pd.dismiss();
                 if(response!=null){
                   setState(() {
                     breed_lists=json.decode(response);

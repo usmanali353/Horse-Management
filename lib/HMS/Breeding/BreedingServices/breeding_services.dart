@@ -56,7 +56,10 @@ class _breeding_services_State extends State<breeding_services>{
         onRefresh: (){
           return Utils.check_connectivity().then((result){
             if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
               BreedingServicesJson.get_breeding_services(token).then((response){
+                pd.dismiss();
                 if(response!=null){
                   setState(() {
                     breeding_services_list=json.decode(response);
@@ -69,7 +72,7 @@ class _breeding_services_State extends State<breeding_services>{
                   });
                   Scaffold.of(context).showSnackBar(SnackBar(
                     backgroundColor: Colors.red,
-                    content: Text("videos Not Available"),
+                    content: Text("List Not Available"),
                   ));
                 }
               });

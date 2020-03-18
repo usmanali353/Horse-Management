@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/HMS/Configuration/TestTypes/testtype_json.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+
+import '../../../Utils.dart';
 
 
 
@@ -163,9 +166,29 @@ class _add_testtype extends State<add_testtype>{
                             child: Text("Save",style: TextStyle(color: Colors.white),),
 
                             onPressed: (){
-                              print(validity);
-                              print(showReminders);
-                              TestTypesServices.addTestTypes(token, 0, name.text, validity.text, selected_reminder_id, showReminders.text, null,);
+                              if (_fbKey.currentState.validate()) {
+                                Utils.check_connectivity().then((result){
+                                  if(result){
+                                    ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                    pd.show();
+                                    TestTypesServices.addTestTypes(token, 0, name.text, validity.text, selected_reminder_id, showReminders.text, null,)
+                                        .then((respons){
+                                      pd.dismiss();
+                                      if(respons!=null){
+//                                        Scaffold.of(context).showSnackBar(SnackBar(
+//                                          content: Text("Saved "),
+//                                          backgroundColor: Colors.green,
+//                                        ));
+                                      }else{
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text("Not Saved "),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                      }
+                                    });
+                                  }
+                                });
+                              }
                             },
 
                           )

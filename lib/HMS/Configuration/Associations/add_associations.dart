@@ -3,6 +3,10 @@ import  'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/HMS/Configuration/Associations/associations_json.dart';
 import 'dart:convert';
 
+import 'package:progress_dialog/progress_dialog.dart';
+
+import '../../../Utils.dart';
+
 
 
 
@@ -94,17 +98,25 @@ class _add_associations extends State<add_associations>{
                       MaterialButton(
                         onPressed: (){
                           if (_fbKey.currentState.validate()) {
-                            AssociationServices.addAssociations(token,0,name.text,null).then((response){
-                              setState(() {
-                                var parsedjson  = jsonDecode(response);
-                                if(parsedjson != null){
-                                  if(parsedjson['isSuccess'] == true){
-                                    print("Successfully data saved");
-                                  }else
-                                    print("not saved");
-                                }else
-                                  print("json response null");
-                              });
+                            Utils.check_connectivity().then((result){
+                              if(result){
+                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                pd.show();
+                                AssociationServices.addAssociations(token,0,name.text,null)                                    .then((respons){
+                                  pd.dismiss();
+                                  if(respons!=null){
+//                                    Scaffold.of(context).showSnackBar(SnackBar(
+//                                      content: Text("Saved "),
+//                                      backgroundColor: Colors.green,
+//                                    ));
+                                  }else{
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Not Saved "),
+                                      backgroundColor: Colors.red,
+                                    ));
+                                  }
+                                });
+                              }
                             });
                           }
                         },

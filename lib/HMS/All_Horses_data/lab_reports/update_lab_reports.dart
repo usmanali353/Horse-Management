@@ -9,20 +9,20 @@ import 'package:progress_dialog/progress_dialog.dart';
 
 class update_labTest extends StatefulWidget{
   String token,createdBy;
-  int labtestId;
-  update_labTest (this.labtestId,this.token,this.createdBy);
+  var labtestlist;
+  update_labTest (this.labtestlist,this.token,this.createdBy);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _add_horse_state(labtestId,this.token,createdBy);
+    return _add_horse_state(labtestlist,this.token,createdBy);
   }
 
 }
 class _add_horse_state extends State<update_labTest>{
   String token,createdBy;
-  int labtestId;
-  _add_horse_state (this.labtestId,this.token,this.createdBy);
+  var labtestlist;
+  _add_horse_state (this.labtestlist,this.token,this.createdBy);
   int selected_horse_id,selected_testtype_id,selected_positive_id,selected_responsible_id,selected_currency_id,selected_category_id,selected_costcenter_id,selected_contact_id;
   String selected_horse,selected_testtype,selected_positive,selected_responsible,selected_currency,selected_category,selected_costcenter,selected_contact;
   DateTime Select_date = DateTime.now();
@@ -33,6 +33,7 @@ class _add_horse_state extends State<update_labTest>{
 
   sqlite_helper local_db;
   bool isPositive;
+  var positiveinitial;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
   @override
   void initState() {
@@ -61,6 +62,18 @@ class _add_horse_state extends State<update_labTest>{
           contact.add(labDropdown['contactsDropDown'][i]['name']);
 
       });
+    });
+    setState(() {
+      lab.text = labtestlist['lab']!= null ? labtestlist['lab']:"";
+      result.text = labtestlist['result'];
+      amount.text = labtestlist['amount'].toString();
+
+
+      if(labtestlist['isPositive']!= null ?labtestlist['isPositive'] == true:null)
+        positiveinitial = "Yes";
+      else {
+        positiveinitial = "No";
+      }
     });
 
   }
@@ -93,6 +106,7 @@ class _add_horse_state extends State<update_labTest>{
                         padding: const EdgeInsets.only(left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Horse",
+                          initialValue:  labtestlist['horseName']['name'],
                           hint: Text("Horse"),
                           items: horse!=null?horse.map((types)=>DropdownMenuItem(
                             child: Text(types),
@@ -114,6 +128,13 @@ class _add_horse_state extends State<update_labTest>{
                             });
 
                           },
+                          onSaved: (value){
+                            setState(() {
+                              this.selected_horse=value;
+                              selected_horse_id = horse.indexOf(value);
+                            });
+
+                          },
                         ),
                       ),
 //
@@ -121,6 +142,7 @@ class _add_horse_state extends State<update_labTest>{
                         padding: EdgeInsets.only(top:16,left: 16,right: 16),
                         child:FormBuilderDateTimePicker(
                           attribute: "date",
+                          initialValue: DateTime.parse(labtestlist['date'] != null ? labtestlist['date'].toString().substring(0,10):DateTime.now()),
                           style: Theme.of(context).textTheme.body1,
                           inputType: InputType.date,
                           validators: [FormBuilderValidators.required()],
@@ -131,7 +153,14 @@ class _add_horse_state extends State<update_labTest>{
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)
                             ),),
                           onChanged: (value){
-                            this.Select_date=value;
+                            setState(() {
+                              this.Select_date=value;
+                            });
+                          },
+                          onSaved: (value){
+                            setState(() {
+                              this.Select_date=value;
+                            });
                           },
                         ),
                       ),
@@ -139,6 +168,7 @@ class _add_horse_state extends State<update_labTest>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Test Type",
+                          initialValue: labtestlist['typeTestId'] != null ? labtestlist['testTypes']['name']:null,
                           hint: Text("Test Type"),
                           items: testtype!=null?testtype.map((types)=>DropdownMenuItem(
                             child: Text(types),
@@ -159,12 +189,19 @@ class _add_horse_state extends State<update_labTest>{
                               this.selected_testtype_id = testtype.indexOf(value);
                             });
                           },
+                          onSaved: (value){
+                            setState(() {
+                              this.selected_testtype=value;
+                              this.selected_testtype_id = testtype.indexOf(value);
+                            });
+                          },
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "POsitive",
+                          initialValue: positiveinitial,
                           hint: Text("Positive"),
                           items: positive.map((name) => DropdownMenuItem(
                               value: name,
@@ -185,12 +222,21 @@ class _add_horse_state extends State<update_labTest>{
                                 isPositive = false;
                             });
                           },
+                          onSaved: (value){
+                            setState((){
+                              if(value == "Yes")
+                                this.isPositive=true;
+                              else
+                                isPositive = false;
+                            });
+                          },
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Responsible",
+                          initialValue: labtestlist['responsible'] != null ? labtestlist['responsibleName']['contactName']['name']:null,
                           hint: Text("Responsible"),
                           items: responsible!=null?responsible.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
@@ -210,6 +256,12 @@ class _add_horse_state extends State<update_labTest>{
                               this.selected_responsible=value;
                               selected_responsible_id = responsible.indexOf(value);
                             });                          },
+                          onSaved: (value){
+                            setState(() {
+                              this.selected_responsible=value;
+                              selected_responsible_id = responsible.indexOf(value);
+                            });
+                            },
                         ),
                       ),
 
@@ -249,6 +301,7 @@ class _add_horse_state extends State<update_labTest>{
                           controller: amount,
                           attribute: "Currency",
                           validators: [FormBuilderValidators.required()],
+                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(labelText: "Currency",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
@@ -262,6 +315,7 @@ class _add_horse_state extends State<update_labTest>{
                         padding: const EdgeInsets.only(left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Cuurency",
+                         initialValue: get_currency_by_id(labtestlist['currencyId']),
                           hint: Text("Currency"),
                           items: currency!=null?currency.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
@@ -288,6 +342,7 @@ class _add_horse_state extends State<update_labTest>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Category",
+                          initialValue: get_category_by_id(labtestlist['categoryId']),
                           hint: Text("Category"),
                           items: category!=null?category.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
@@ -314,6 +369,7 @@ class _add_horse_state extends State<update_labTest>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "cost Center",
+                          initialValue: get_costcenter_by_id(labtestlist['costCenterId']),
                           hint: Text("Cost Center"),
                           items: costcenter!=null?costcenter.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
@@ -339,6 +395,7 @@ class _add_horse_state extends State<update_labTest>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "contact",
+                          initialValue: get_contact_by_id(labtestlist['contactId']),
                           hint: Text("Contact"),
                           items: contact!=null?contact.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
@@ -384,7 +441,7 @@ class _add_horse_state extends State<update_labTest>{
                             print(labDropdown['contactsDropDown'][selected_contact_id]['id']);
                             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                             //pd.show();
-                            labtest_services.labTestSave(createdBy,labtestId,token, labDropdown['horseDropDown'][selected_horse_id]['id'], Select_date, labDropdown['testTypesdropDown'][selected_testtype_id]['id'], isPositive, labDropdown['responsibleDropDown'][selected_responsible_id]['id'], lab.text, result.text, amount.text, labDropdown['currencyDropDown'][selected_currency_id]['id'], labDropdown['categoryDropDown'][selected_category_id]['id'], labDropdown['costCenterDropDown'][selected_costcenter_id]['id'], labDropdown['contactsDropDown'][selected_contact_id]['id']).then((response){
+                            labtest_services.labTestSave(labtestlist['createdBy'],labtestlist['id'],token, labDropdown['horseDropDown'][selected_horse_id]['id'], Select_date, labDropdown['testTypesdropDown'][selected_testtype_id]['id'], isPositive, labDropdown['responsibleDropDown'][selected_responsible_id]['id'], lab.text, result.text, amount.text, labDropdown['currencyDropDown'][selected_currency_id]['id'], labDropdown['categoryDropDown'][selected_category_id]['id'], labDropdown['costCenterDropDown'][selected_costcenter_id]['id'], labDropdown['contactsDropDown'][selected_contact_id]['id']).then((response){
                               //pd.dismiss();
                               if(response !=null)
                                 print("Successfully lab test added");
@@ -404,5 +461,52 @@ class _add_horse_state extends State<update_labTest>{
         )
     );
   }
-
+  String get_currency_by_id(int id){
+    var plan_name;
+    if(labtestlist!=null&&labDropdown['currencyDropDown']!=null&&id!=null){
+      for(int i=0;i<currency.length;i++){
+        if(labDropdown['currencyDropDown'][i]['id']==id){
+          plan_name=labDropdown['currencyDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+  String get_category_by_id(int id){
+    var plan_name;
+    if(labtestlist!=null&&labDropdown['categoryDropDown']!=null&&id!=null){
+      for(int i=0;i<category.length;i++){
+        if(labDropdown['categoryDropDown'][i]['id']==id){
+          plan_name=labDropdown['categoryDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+  String get_costcenter_by_id(int id){
+    var plan_name;
+    if(labtestlist!=null&&labDropdown['costCenterDropDown']!=null&&id!=null){
+      for(int i=0;i<costcenter.length;i++){
+        if(labDropdown['costCenterDropDown'][i]['id']==id){
+          plan_name=labDropdown['costCenterDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+  String get_contact_by_id(int id){
+    var plan_name;
+    if(labtestlist!=null&&labDropdown['contactsDropDown']!=null&&id!=null){
+      for(int i=0;i<contact.length;i++){
+        if(labDropdown['contactsDropDown'][i]['id']==id){
+          plan_name=labDropdown['contactsDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
 }

@@ -124,7 +124,7 @@ class _Profile_Page_State extends State<lab_list>{
                     actions: <Widget>[
                       IconSlideAction(onTap: ()async{
                         prefs = await SharedPreferences.getInstance();
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>update_labTest(lablist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>update_labTest(lablist[index],prefs.get('token'),prefs.get('createdBy'))));
 
                       },color: Colors.blue,icon: Icons.border_color,caption: 'update',),
                       IconSlideAction(

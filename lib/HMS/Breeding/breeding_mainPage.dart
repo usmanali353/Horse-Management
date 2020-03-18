@@ -97,7 +97,7 @@ class _Profile_Page_State extends State<breeding_Category>{
                     leading: Icon(Icons.all_inclusive,size: 40,color: Colors.amberAccent,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: (){
-                      //Navigator.push(context,MaterialPageRoute(builder: (context)=>semen_stocks(token)));
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=>semen_stocks(token)));
                     },
                   ),
                   ListTile(

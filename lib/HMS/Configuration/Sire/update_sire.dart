@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import  'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/HMS/Configuration/Sire/sire_json.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'dart:convert';
+
+import '../../../Utils.dart';
 
 
 class update_sire extends StatefulWidget{
@@ -94,17 +97,25 @@ class _update_sire extends State<update_sire>{
                       MaterialButton(
                         onPressed: (){
                           if (_fbKey.currentState.validate()) {
-                            SireServices.addSire(token,specificSire['horseId'],sire.text,specificSire['createdBy']).then((response){
-                              setState(() {
-                                var parsedjson  = jsonDecode(response);
-                                if(parsedjson != null){
-                                  if(parsedjson['isSuccess'] == true){
-                                    print("Successfully data saved");
-                                  }else
-                                    print("not saved");
-                                }else
-                                  print("json response null");
-                              });
+                            Utils.check_connectivity().then((result){
+                              if(result){
+                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                pd.show();
+                                SireServices.addSire(token,specificSire['horseId'],sire.text,specificSire['createdBy']).then((respons){
+                                  pd.dismiss();
+                                  if(respons!=null){
+//                                    Scaffold.of(context).showSnackBar(SnackBar(
+//                                      content: Text("Updated "),
+//                                      backgroundColor: Colors.green,
+//                                    ));
+                                  }else{
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Not Updated "),
+                                      backgroundColor: Colors.red,
+                                    ));
+                                  }
+                                });
+                              }
                             });
                           }
                         },

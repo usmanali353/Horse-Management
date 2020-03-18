@@ -121,7 +121,7 @@ class _Profile_Page_State extends State<weight_hieght_list>{
                   ),
                   IconSlideAction(onTap: ()async{
                     prefs = await SharedPreferences.getInstance();
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_weight_and_height(weightlist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_weight_and_height(weightlist[index],prefs.get('token'))));
 
                   },color: Colors.blue,icon: Icons.border_color,caption: 'update',)
                 ],

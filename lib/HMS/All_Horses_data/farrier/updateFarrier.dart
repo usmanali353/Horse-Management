@@ -7,14 +7,14 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class update_farrier extends StatefulWidget{
-  String token,createdBy;
+  String token;
  var farrierlist;
-  update_farrier (this.farrierlist,this.token,this.createdBy);
+  update_farrier (this.farrierlist,this.token);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _state_add_farrier(farrierlist,token,createdBy);
+    return _state_add_farrier(farrierlist,token);
   }
 
 }
@@ -25,8 +25,8 @@ class _state_add_farrier extends State<update_farrier> {
   String selected_horse,selected_shoeingtype,selected_farrier,selected_costcenter,selected_category,selected_contact,selected_currency;
   String token,createdBy;
   var farrierlist;
-  _state_add_farrier (this.farrierlist,this.token,this.createdBy);
-
+  _state_add_farrier (this.farrierlist,this.token);
+   String shoetypeinitial;
   TextEditingController amount, comment;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
   var farrierdropdown;
@@ -34,6 +34,10 @@ class _state_add_farrier extends State<update_farrier> {
   void initState () {
     amount = TextEditingController();
     comment = TextEditingController();
+    setState(() {
+      amount.text = farrierlist['amount'].toString();
+      comment.text  = farrierlist['comment'].toString();
+    });
 
     farrier_services.farrierDropdown(token).then((response){
       setState(() {
@@ -56,6 +60,34 @@ class _state_add_farrier extends State<update_farrier> {
       });
     });
 
+
+
+    if(farrierlist != null) {
+      if (farrierlist['shoeingType'] == 1) {
+        setState(() {
+          shoetypeinitial = 'Complete';
+        });
+      }
+      else if (farrierlist['shoeingType'] == 2) {
+        setState(() {
+          shoetypeinitial = 'Front shoeing';
+        });
+      }
+      else if (farrierlist['shoeingType'] == 3) {
+        setState(() {
+          shoetypeinitial = 'Back shoeing';
+        });
+      }
+      else if (farrierlist['shoeingType'] == 4) {
+        setState(() {
+          shoetypeinitial = 'Trimming';
+        });
+      }
+    }else{
+      shoetypeinitial = null;
+      print("genderlist null a");
+    }
+
   }
 
   @override
@@ -77,6 +109,7 @@ class _state_add_farrier extends State<update_farrier> {
                           attribute: "Horse",
                           validators: [FormBuilderValidators.required()],
                           hint: Text("Horse"),
+                          initialValue: farrierlist['horseName']['name'],
                           items: horse!=null?horse.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -113,6 +146,7 @@ class _state_add_farrier extends State<update_farrier> {
                             bottom: 16, left: 16, right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Shoe Type",
+                          initialValue: shoetypeinitial,
                           validators: [FormBuilderValidators.required()],
                           hint: Text("Select Shoe Type"),
                           items: shoeingtype.map((name) =>
@@ -147,7 +181,8 @@ class _state_add_farrier extends State<update_farrier> {
                       Padding(
                         padding: const EdgeInsets.only(left: 16,right: 16),
                         child: FormBuilderDropdown(
-                          attribute: "Responsible",
+                          attribute: "farrier",
+                          initialValue: farrierlist['farrierId']!= null ? farrierlist['farrierName']['contactName']['name']:null,
                           validators: [FormBuilderValidators.required()],
                           hint: Text("farrier"),
                           items: farrier!=null?farrier.map((types)=>DropdownMenuItem(
@@ -194,6 +229,7 @@ class _state_add_farrier extends State<update_farrier> {
                             top: 16, left: 16, right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Cost Center",
+                          //initialValue: get_costcenter_by_id(farrierlist['costCenterId'])!= null ? get_costcenter_by_id(farrierlist['costCenterId']):null,
                           validators: [FormBuilderValidators.required()],
                           hint: Text("Select Center"),
                           items: costcenter!=null?costcenter.map((plans)=>DropdownMenuItem(
@@ -404,5 +440,53 @@ class _state_add_farrier extends State<update_farrier> {
           ],
         )
     );
+  }
+  String get_currency_by_id(int id){
+    var plan_name;
+    if(farrierlist!=null&&farrierdropdown['currencyDropDown']!=null&&id!=null){
+      for(int i=0;i<currency.length;i++){
+        if(farrierdropdown['currencyDropDown'][i]['id']==id){
+          plan_name=farrierdropdown['currencyDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+  String get_category_by_id(int id){
+    var plan_name;
+    if(farrierlist!=null&&farrierdropdown['categoryDropDown']!=null&&id!=null){
+      for(int i=0;i<category.length;i++){
+        if(farrierdropdown['categoryDropDown'][i]['id']==id){
+          plan_name=farrierdropdown['categoryDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+  String get_costcenter_by_id(int id){
+    var plan_name;
+    if(farrierlist=null&&farrierdropdown['costCenterDropDown']!=null&&id!=null){
+      for(int i=0;i<costcenter.length;i++){
+        if(farrierdropdown['costCenterDropDown'][i]['id']==id){
+          plan_name=farrierdropdown['costCenterDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+  String get_contact_by_id(int id){
+    var plan_name;
+    if(farrierlist!=null&&farrierdropdown['contactsDropDown']!=null&&id!=null){
+      for(int i=0;i<contact.length;i++){
+        if(farrierdropdown['contactsDropDown'][i]['id']==id){
+          plan_name=farrierdropdown['contactsDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
   }
 }

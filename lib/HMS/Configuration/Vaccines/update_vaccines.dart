@@ -3,6 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:horse_management/HMS/Configuration/Vaccines/vaccines_json.dart';
 import 'dart:convert';
 import  'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+
+import '../../../Utils.dart';
 
 
 class update_vaccines extends StatefulWidget{
@@ -490,20 +493,26 @@ class _update_vaccines extends State<update_vaccines> {
 
                         MaterialButton(
                           onPressed: () {
-                            //_fbKey.currentState.save();
                             if (_fbKey.currentState.validate()) {
-                              print(_fbKey.currentState.value);
-                              VaccinesServices.addVaccines(token, specificvaccine['id'], name.text, comments.text,selected_reminder_id, usage_id, primaryvaccination.text, booster.text, revaccination.text, firstdose.text, seconddose.text, thirddose.text, specificvaccine['createdBy']).then((response) {
-                                setState(() {
-                                  var parsedjson = jsonDecode(response);
-                                  if (parsedjson != null) {
-                                    if (parsedjson['isSuccess'] == true) {
-                                      print("Successfully data saved");
-                                    } else
-                                      print("not saved");
-                                  } else
-                                    print("json response null");
-                                });
+                              Utils.check_connectivity().then((result){
+                                if(result){
+                                  ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                  pd.show();
+                                  VaccinesServices.addVaccines(token, specificvaccine['id'], name.text, comments.text,selected_reminder_id, usage_id, primaryvaccination.text, booster.text, revaccination.text, firstdose.text, seconddose.text, thirddose.text, specificvaccine['createdBy'])                                      .then((respons){
+                                    pd.dismiss();
+                                    if(respons!=null){
+//                                      Scaffold.of(context).showSnackBar(SnackBar(
+//                                        content: Text("Updated "),
+//                                        backgroundColor: Colors.green,
+//                                      ));
+                                    }else{
+                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                        content: Text("Not Updated "),
+                                        backgroundColor: Colors.red,
+                                      ));
+                                    }
+                                  });
+                                }
                               });
                             }
                           },

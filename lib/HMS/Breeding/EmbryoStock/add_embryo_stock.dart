@@ -345,7 +345,28 @@ class _add_embryo_stock extends State<add_embryo_stock>{
                         child: Text("Save",style: TextStyle(color: Colors.white),),
 
                         onPressed: (){
-                          EmbryoStockServices.add_embryo_stock(null, token, 0, stock_response['horseDropDown'][selected_horse_id]['id'], stock_response['tankDropDown'][selected_tank_id]['id'], stock_response['sireDropDown'][selected_sire_id]['id'], selected_gender_id, Collection_date,selected_on_sale_id, price.text, grade.text, stage.text, status.text, comments.text);
+                          if (_fbKey.currentState.validate()) {
+                            Utils.check_connectivity().then((result){
+                              if(result){
+                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                pd.show();
+                                EmbryoStockServices.add_embryo_stock(null, token, 0, stock_response['horseDropDown'][selected_horse_id]['id'], stock_response['tankDropDown'][selected_tank_id]['id'], stock_response['sireDropDown'][selected_sire_id]['id'], selected_gender_id, Collection_date,selected_on_sale_id, price.text, grade.text, stage.text, status.text, comments.text).then((response){
+                                  pd.dismiss();
+                                  setState(() {
+                                    var parsedjson  = jsonDecode(response);
+                                    if(parsedjson != null){
+                                      if(parsedjson['isSuccess'] == true){
+                                        print("Successfully data saved");
+                                      }else
+                                        print("not saved");
+                                    }else
+                                      print("json response null");
+                                  });
+                                });
+                              }
+                            });
+
+                          }
                         },
 
                       )

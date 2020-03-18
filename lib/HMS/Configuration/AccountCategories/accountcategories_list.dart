@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Configuration/AccountCategories/accountcategories_json.dart';
 import 'package:horse_management/HMS/Configuration/AccountCategories/add_accountcategories.dart';
 import 'package:horse_management/HMS/Configuration/AccountCategories/update_accountcategories.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'dart:convert';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -51,9 +52,13 @@ class _accountcategories_list extends State<accountcategories_list>{
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: (){
+
           return Utils.check_connectivity().then((result){
             if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
               AccountCategoriesServices.getAccountCategory(token).then((response){
+                pd.dismiss();
                 if(response!=null){
                   setState(() {
                     category_lists=json.decode(response);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Configuration/Vaccines/add_vaccines.dart';
 import 'package:horse_management/HMS/Configuration/Vaccines/update_vaccines.dart';
 import 'package:horse_management/HMS/Configuration/Vaccines/vaccines_json.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'dart:convert';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -53,7 +54,10 @@ class _vaccines_list extends State<vaccines_list>{
         onRefresh: (){
           return Utils.check_connectivity().then((result){
             if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
               VaccinesServices.getVaccine(token).then((response){
+                pd.dismiss();
                 if(response!=null){
                   setState(() {
                     vaccine_lists=json.decode(response);

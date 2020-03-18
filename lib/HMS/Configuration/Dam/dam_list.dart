@@ -5,6 +5,7 @@ import 'package:horse_management/HMS/Configuration/Breeds/update_breed.dart';
 import 'package:horse_management/HMS/Configuration/Dam/add_dam.dart';
 import 'package:horse_management/HMS/Configuration/Dam/dam_json.dart';
 import 'package:horse_management/HMS/Configuration/Dam/update_dam.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'dart:convert';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -56,7 +57,10 @@ class _dam_list extends State<dam_list>{
         onRefresh: (){
           return Utils.check_connectivity().then((result){
             if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
               DamServices.getDam(token).then((response){
+                pd.dismiss();
                 if(response!=null){
                   setState(() {
                     dam_lists=json.decode(response);

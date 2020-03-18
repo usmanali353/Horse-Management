@@ -3,6 +3,10 @@ import  'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/HMS/Configuration/Sire/sire_json.dart';
 import 'dart:convert';
 
+import 'package:progress_dialog/progress_dialog.dart';
+
+import '../../../Utils.dart';
+
 
 
 class add_sire extends StatefulWidget{
@@ -87,23 +91,31 @@ class _add_sire extends State<add_sire>{
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)
                             ),
                           ),
-
                         ),
                       ),
                       MaterialButton(
                         onPressed: (){
                           if (_fbKey.currentState.validate()) {
-                            SireServices.addSire(token,0,sire.text,null).then((response){
-                              setState(() {
-                                var parsedjson  = jsonDecode(response);
-                                if(parsedjson != null){
-                                  if(parsedjson['isSuccess'] == true){
-                                    print("Successfully data saved");
-                                  }else
-                                    print("not saved");
-                                }else
-                                  print("json response null");
-                              });
+                            Utils.check_connectivity().then((result){
+                              if(result){
+                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                pd.show();
+                                SireServices.addSire(token,0,sire.text,null).then((respons){
+                                  pd.dismiss();
+
+                                  if(respons!=null){
+//                                    Scaffold.of(context).showSnackBar(SnackBar(
+//                                      content: Text("Saved "),
+//                                      backgroundColor: Colors.green,
+//                                    ));
+                                  }else{
+//                                    Scaffold.of(context).showSnackBar(SnackBar(
+//                                      content: Text("Not Saved "),
+//                                      backgroundColor: Colors.red,
+//                                    ));
+                                  }
+                                });
+                              }
                             });
                           }
                         },

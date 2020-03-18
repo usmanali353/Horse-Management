@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/Tanks/tanks_json.dart';
 import 'package:horse_management/HMS/Tanks/update_tanks.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 import '../../Utils.dart';
 import 'add_tanks_form.dart';
@@ -55,7 +56,10 @@ class _tanks_list extends State<tanks_list>{
         onRefresh: (){
           return Utils.check_connectivity().then((result){
             if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
               TanksServices.get_Tanks(token).then((response){
+                pd.dismiss();
                 if(response!=null){
                   setState(() {
                     tanks_list=json.decode(response);
