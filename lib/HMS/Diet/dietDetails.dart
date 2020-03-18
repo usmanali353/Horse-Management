@@ -39,13 +39,22 @@ class dietDetailsState extends State<dietDetails>{
           if(response!=null){
             setState(() {
               dietDropDowns=json.decode(response);
-              print(dietDropDowns);
-             for(int i=0;i<dietDropDowns['dietDetail']['dietTimeDropDown'].length;i++){
-               time.add(dietDropDowns['dietDetail']['dietTimeDropDown'][i]['name']);
+             if(dietDropDowns['dietDetail']['dietTimeDropDown']!=null&&dietDropDowns['dietDetail']['dietTimeDropDown']>0) {
+               for (int i = 0; i <
+                   dietDropDowns['dietDetail']['dietTimeDropDown']
+                       .length; i++) {
+                 time.add(
+                     dietDropDowns['dietDetail']['dietTimeDropDown'][i]['name']);
+               }
              }
-              for(int i=0;i<dietDropDowns['dietDetail']['productTypesDropDown'].length;i++){
-                 products.add(dietDropDowns['dietDetail']['productTypesDropDown'][i]['name']);
-              }
+             if(dietDropDowns['dietDetail']['productTypesDropDown']!=null&&dietDropDowns['dietDetail']['productTypesDropDown'].length>0) {
+               for (int i = 0; i <
+                   dietDropDowns['dietDetail']['productTypesDropDown']
+                       .length; i++) {
+                 products.add(
+                     dietDropDowns['dietDetail']['productTypesDropDown'][i]['name']);
+               }
+             }
               cards.add(createCard());
             });
           }else{
@@ -86,7 +95,6 @@ class dietDetailsState extends State<dietDetails>{
       ),
         floatingActionButton:
         FloatingActionButton(child: Icon(Icons.done), onPressed:() async{
-          SharedPreferences prefs = await SharedPreferences.getInstance();
           Utils.check_connectivity().then((result){
             if(result){
               ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);

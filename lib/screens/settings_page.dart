@@ -1,9 +1,8 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/All_Horses_data/Horse_Videos/video_details.dart';
+import 'package:horse_management/Model/theme_notifier.dart';
 import 'package:horse_management/screens/welcome_screen.dart';
-import 'package:horse_management/util/theme_notifier.dart';
-import 'package:horse_management/values/strings.dart';
-import 'package:horse_management/values/theme.dart';
+import 'package:horse_management/Model/theme.dart';
 import 'package:day_night_switch/day_night_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -24,7 +23,7 @@ class _SettingsPageState extends State<SettingsPage> {
     _darkTheme = (themeNotifier.getTheme() == darkTheme);
     return Scaffold(
       appBar: AppBar(
-        title: Text(Strings.titleSettings),
+        title: Text("Setting"),
       ),
       body: ListView(
         children: <Widget>[

@@ -2,11 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/All_Horses_data/all_horse_data_add.dart';
 import 'package:horse_management/HMS/Breeding/breeding_mainPage.dart';
-import 'package:horse_management/HMS/Configuration/Breeds/breeds_list.dart';
 import 'package:horse_management/HMS/Configuration/configuration_mainpage.dart';
-import 'package:horse_management/HMS/Contacts/contacts_list.dart';
 import 'package:horse_management/HMS/Diet/DietSubCategory.dart';
-import 'package:horse_management/HMS/Diet/dietList.dart';
 import 'package:horse_management/HMS/Inventory/inventory_list.dart';
 import 'package:horse_management/HMS/OperationNotes/operation_notes.dart';
 import 'package:horse_management/HMS/Paddock/paddocks.dart';
@@ -14,13 +11,11 @@ import 'package:horse_management/HMS/Tanks/tanks.dart';
 import 'package:horse_management/HMS/Training/training_list.dart';
 import 'package:horse_management/HMS/Veterinary/vet_mainPage.dart';
 import 'package:horse_management/HMS/my_horses/horses_list.dart';
-import 'package:horse_management/MainScreens/trending.dart';
+import 'package:horse_management/Model/restaurants.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:horse_management/screens/settings_page.dart';
-import 'package:horse_management/util/categories.dart';
-import 'package:horse_management/util/restaurants.dart';
+import 'package:horse_management/Model/categories.dart';
 import 'package:horse_management/widgets/slide_item.dart';
-import 'package:horse_management/widgets/trending_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
@@ -30,8 +25,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home>{ //with AutomaticKeepAliveClientMixin<Home>{
   SharedPreferences prefs;
-  final TextEditingController _searchControl = new TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

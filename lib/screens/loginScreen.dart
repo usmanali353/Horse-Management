@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:horse_management/MainScreens/home.dart';
+import 'package:horse_management/screens/home.dart';
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
-import 'package:horse_management/screens/Home_Page.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class LoginScreen extends StatefulWidget {
