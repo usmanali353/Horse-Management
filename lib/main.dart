@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:horse_management/MainScreens/home.dart';
-import 'package:horse_management/MainScreens/main_screen.dart';
+import 'package:horse_management/Model/theme_notifier.dart';
+import 'package:horse_management/screens/home.dart';
 import 'package:horse_management/Utils.dart';
-import 'package:horse_management/screens/Home_Page.dart';
 import 'package:horse_management/screens/welcome_screen.dart';
-import 'package:horse_management/util/theme_notifier.dart';
-import 'package:horse_management/values/theme.dart';
+import 'package:horse_management/Model/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-
-
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]).then((_) {

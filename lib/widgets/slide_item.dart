@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:horse_management/util/const.dart';
 
 class SlideItem extends StatefulWidget {
 
