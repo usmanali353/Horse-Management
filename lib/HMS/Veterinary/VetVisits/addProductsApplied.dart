@@ -59,21 +59,16 @@ class addProductsAppliedState extends State<addProductsApplied>{
     }
     entries.add(productsApplied(quantity,0,product_id,0,'',DateTime.now()).toJson());
     }
-//    if(vieterniaryServices.addVetVisits(token, 0, horse_id, vet_id, date, type_id, '', entries)!=null){
-//
-//    }else{
-//
-//    }
                ProgressDialog pd=ProgressDialog(context,type:ProgressDialogType.Normal,isDismissible: true,);
                  pd.show();
               vieterniaryServices.addVetVisits(token, 0, horse_id, vet_id, date, type_id, '', entries).then((response){
                  pd.hide();
                 if(response!=null){
-                  print("Vet Visit Inserted Sucessfully");
+
                 }
               });
              }else{
-               print("Vet Visit not Inserted");
+
              }
            });
         },

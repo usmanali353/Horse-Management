@@ -1,6 +1,7 @@
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Veterinary/VetVisits/addVetVisits.dart';
+import 'package:horse_management/HMS/Veterinary/VetVisits/vetVisitsList.dart';
 import 'package:horse_management/HMS/Veterinary/VetVisits/vet_visit.dart';
 import 'package:horse_management/health_record_form.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -62,7 +63,7 @@ class _Profile_Page_State extends State<vet_category>{
                     trailing: Icon(Icons.arrow_right),
                     onTap: ()async{
                       SharedPreferences prefs=await SharedPreferences.getInstance();
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=>addVetVisits(prefs.getString("token"))));
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=>vetVisitList(prefs.getString("token"))));
                     },
                   ),
 

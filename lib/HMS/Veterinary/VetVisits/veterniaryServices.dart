@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:horse_management/Utils.dart';
 import 'package:http/http.dart' as http;
 class vieterniaryServices {
@@ -25,5 +24,22 @@ class vieterniaryServices {
       }else
         return null;
     }
-
+  static Future<String> getVetVisits(String token) async{
+    Map<String,String> headers = {'Authorization':'Bearer '+token};
+    var response =await http.get('http://192.236.147.77:8083/api/Veterinary/GetAllVetVisits',headers: headers);
+    print(response.body);
+    if(response.statusCode==200){
+      return response.body;
+    }else
+      return null;
+  }
+  static Future<String> changeVetVisitsVisibility(String token,int id) async{
+    Map<String,String> headers = {'Authorization':'Bearer '+token};
+    var response =await http.get('http://192.236.147.77:8083/api/Veterinary/VetVisitVisibility/'+id.toString(),headers: headers);
+    if(response.statusCode==200){
+      print(response.body);
+      return response.body;
+    }else
+      return null;
+  }
 }
