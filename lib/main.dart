@@ -44,10 +44,6 @@ class myAppState extends State<MyApp>{
       debugShowCheckedModeBanner: false,
       title: 'Horse Management System',
       theme: themeNotifier.getTheme(),
-//      theme: ThemeData(
-//        primarySwatch: Colors.teal,
-//        brightness: Brightness.dark,
-//      ),
       home: checkLogin(),
     );
   }

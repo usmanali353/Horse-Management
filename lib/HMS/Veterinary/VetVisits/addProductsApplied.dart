@@ -47,22 +47,27 @@ class addProductsAppliedState extends State<addProductsApplied>{
         onPressed: (){
            Utils.check_connectivity().then((result){
              if(result){
-              ProgressDialog pd=ProgressDialog(context,type:ProgressDialogType.Normal,isDismissible: true,);
-              pd.show();
-              List<Map> entries=[];
-              var quantity,product_id;
-              for(int i=0;i<cards.length;i++){
-                if(quantityTECs[i].text!=null) {
-                  quantity = int.parse(quantityTECs[i].text);
-                }
-                if(inventoryProductsDropDown!=null&&inventoryProductsDropDown[selected_product[i]]['id']!=null) {
-                  product_id =
-                  inventoryProductsDropDown[selected_product[i]]['id'];
-                }
-                entries.add(productsApplied(quantity,0,product_id,0,'',DateTime.now()).toJson());
-              }
+    List<Map> entries=[];
+    var quantity,product_id;
+    for(int i=0;i<cards.length;i++){
+    if(quantityTECs[i].text!=null) {
+    quantity = int.parse(quantityTECs[i].text);
+    }
+    if(inventoryProductsDropDown!=null&&inventoryProductsDropDown[selected_product[i]]['id']!=null) {
+    product_id =
+    inventoryProductsDropDown[selected_product[i]]['id'];
+    }
+    entries.add(productsApplied(quantity,0,product_id,0,'',DateTime.now()).toJson());
+    }
+//    if(vieterniaryServices.addVetVisits(token, 0, horse_id, vet_id, date, type_id, '', entries)!=null){
+//
+//    }else{
+//
+//    }
+               ProgressDialog pd=ProgressDialog(context,type:ProgressDialogType.Normal,isDismissible: true,);
+                 pd.show();
               vieterniaryServices.addVetVisits(token, 0, horse_id, vet_id, date, type_id, '', entries).then((response){
-                pd.hide();
+                 pd.hide();
                 if(response!=null){
                   print("Vet Visit Inserted Sucessfully");
                 }
