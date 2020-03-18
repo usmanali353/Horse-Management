@@ -357,17 +357,16 @@ class _update_embryo_stock extends State<update_embryo_stock>{
                                     EmbryoStockServices.add_embryo_stock(stock_data['createdBy'],token, stock_data['id'],stock_response['horseDropDown'][selected_horse_id]['id'], stock_response['tankDropDown'][selected_tank_id]['id'], stock_response['sireDropDown'][selected_sire_id]['id'], selected_gender_id, Collection_date,selected_on_sale_id, price.text, grade.text, stage.text, status.text, comments.text)
                                   .then((response){
                                       pd.dismiss();
-                                      if(response!=null){
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Updated"),
-                                          backgroundColor: Colors.green,
-                                        ));
-                                      }else{
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Not Updated"),
-                                          backgroundColor: Colors.red,
-                                        ));
-                                      }
+                                      setState(() {
+                                        var parsedjson  = jsonDecode(response);
+                                        if(parsedjson != null){
+                                          if(parsedjson['isSuccess'] == true){
+                                            print("Successfully data updated");
+                                          }else
+                                            print("not saved");
+                                        }else
+                                          print("json response null");
+                                      });
                                     });
                                   }
                                 });

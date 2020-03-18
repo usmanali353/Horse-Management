@@ -33,30 +33,86 @@ class _update_currency extends State<update_currency>{
   //var training_types_list=['Simple','Endurance','Customized','Speed'];
 //  bool _isvisible=false;
 //  bool currency_loaded=false;
+  var currency_name;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
   @override
   void initState() {
-    Utils.check_connectivity().then((result){
-      if(result){
-        CurrenciesServices.getCurrency(token).then((response){
-          if(response!=null){
-            print(response);
-            setState(() {
-              currency_response=json.decode(response);
-              for(int i=0;i<currency_response.length;i++)
-                currency.add(currency_response[i]['symbol']);
-
-              // stocks_loaded=true;
-            });
-          }
+    // TODO: implement initState
+    super.initState();
+    CurrenciesServices.getCurrencyDropdown(token).then((response){
+      if(response!=null){
+        setState(() {
+          currency_response=json.decode(response);
+          //currency_loaded=true;
+          for(int i=0;i<currency_response['currencySymbolsDropDown'].length;i++)
+            currency.add(currency_response['currencySymbolsDropDown'][i]['name']);
         });
+
       }else{
-        print("Network Not Available");
       }
     });
-
+  }
+  String get_currency_name(int id){
+    var currency;
+   if(currency_response!=null&&id!=null){
+     for (int i = 0; i < currency_response.length; i++) {
+        if(currency_response['currencySymbolsDropDown'][i]['id']==id) {
+          currency = currency_response['currencySymbolsDropDown'][i]['name'];
+        }
+      }
+     return currency_name;
+   }
+   else
+     return null;
   }
 
+
+//  @override
+//  void initState() {
+//    super.initState();
+//    setState(() {
+//      CurrenciesServices.getCurrency(token).then((response){
+//        if(response!=null){
+//          print(response);
+//          setState(() {
+//            currency_response=json.decode(response);
+//            for(int i=0;i<currency_response['currencySymbolsDropDown'].length;i++)
+//              currency.add(currency_response['currencySymbolsDropDown'][i]['name']);
+//            // stocks_loaded=true;
+//          });
+//        }
+//      });
+//    });
+////    Utils.check_connectivity().then((result){
+////      if(result){
+////        CurrenciesServices.getCurrency(token).then((response){
+////          if(response!=null){
+////            print(response);
+////            setState(() {
+////              currency_response=json.decode(response);
+////              for(int i=0;i<currency_response['currencySymbolsDropDown'].length;i++)
+////                currency.add(currency_response['currencySymbolsDropDown'][i]['name']);
+////              // stocks_loaded=true;
+////            });
+////          }
+////        });
+////      }else{
+////        print("Network Not Available");
+////      }
+////    });
+//
+//  }
+//  String get_currency_name(int id){
+//
+//    if(currency_response!=null&&id!=null) {
+//      for (int i = 0; i < currency_response.length; i++) {
+//        if(currency_response['currencySymbolsDropDown'][i]['id']==id) {
+//          currency_name = currency_response['currencySymbolsDropDown'][i]['name'];
+//        }
+//      }
+//    }
+//    return currency_name;
+//  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -76,6 +132,8 @@ class _update_currency extends State<update_currency>{
                             //visible: stocks_loaded,
                             child: FormBuilderDropdown(
                               attribute: "Currency",
+                              initialValue: get_currency_name(specificcurrency['symbolId']),
+                            //  initialValue: specificcurrency!=null?specificcurrency['id']:null,
                               validators: [FormBuilderValidators.required()],
                               hint: Text("Currency"),
                               items:currency!=null?currency.map((horse)=>DropdownMenuItem(
@@ -118,17 +176,16 @@ class _update_currency extends State<update_currency>{
                                     pd.show();
                                     CurrenciesServices.addCurrency(token, specificcurrency['id'],selected_currency, specificcurrency['createdBy'],).then((respons){
                                       pd.dismiss();
-                                      if(respons!=null){
-//                                        Scaffold.of(context).showSnackBar(SnackBar(
-//                                          content: Text("Updated "),
-//                                          backgroundColor: Colors.green,
-//                                        ));
-                                      }else{
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Not Updated "),
-                                          backgroundColor: Colors.red,
-                                        ));
-                                      }
+                                      setState(() {
+                                        var parsedjson  = jsonDecode(respons);
+                                        if(parsedjson != null){
+                                          if(parsedjson['isSuccess'] == true){
+                                            print("Successfully data updated");
+                                          }else
+                                            print("not saved");
+                                        }else
+                                          print("json response null");
+                                      });
                                     });
                                   }
                                 });

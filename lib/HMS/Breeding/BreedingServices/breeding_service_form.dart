@@ -124,10 +124,10 @@ class _breeding_service_form extends State<breeding_service_form> {
           children: <Widget>[
             FormBuilder(
               key: _fbKey,
-              initialValue: {
-                'date': DateTime.now(),
-                'accept_terms': false,
-              },
+//              initialValue: {
+//                'date': DateTime.now(),
+//                'accept_terms': false,
+//              },
              // autovalidate: true,
               child: Column(
                 children: <Widget>[

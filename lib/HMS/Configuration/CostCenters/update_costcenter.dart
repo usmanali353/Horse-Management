@@ -35,6 +35,14 @@ class _update_costcenter extends State<update_costcenter>{
   void initState() {
     this.costcenter_name=TextEditingController();
     this.description=TextEditingController();
+    setState(() {
+      if(specificCostcenter['name']!=null){
+        costcenter_name.text=specificCostcenter['name'];
+      }
+      if(specificCostcenter['description']!=null){
+        description.text=specificCostcenter['description'];
+      }
+    });
     // local_db=sqlite_helper();
 //    Utils.check_connectivity().then((result){
 //      if(result){
@@ -72,11 +80,7 @@ class _update_costcenter extends State<update_costcenter>{
                 children: <Widget>[
                   FormBuilder(
                     key: _fbKey,
-                    initialValue: {
-                      'date': DateTime.now(),
-                      'accept_terms': false,
-                    },
-                    autovalidate: true,
+                    //autovalidate: true,
                     child: Column(children: <Widget>[
 //
                       Padding(
@@ -121,17 +125,16 @@ class _update_costcenter extends State<update_costcenter>{
                                 pd.show();
                                 CostCenterServices.addCostCenter(token,specificCostcenter['id'],costcenter_name.text,description.text,specificCostcenter['createdBy'],).then((respons){
                                   pd.dismiss();
-                                  if(respons!=null){
-//                                    Scaffold.of(context).showSnackBar(SnackBar(
-//                                      content: Text("Updated "),
-//                                      backgroundColor: Colors.green,
-//                                    ));
-                                  }else{
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Not Updated "),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                  }
+                                  setState(() {
+                                    var parsedjson  = jsonDecode(respons);
+                                    if(parsedjson != null){
+                                      if(parsedjson['isSuccess'] == true){
+                                        print("Successfully data updated");
+                                      }else
+                                        print("not saved");
+                                    }else
+                                      print("json response null");
+                                  });
                                 });
                               }
                             });

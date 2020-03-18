@@ -50,9 +50,10 @@ class _update_vaccines extends State<update_vaccines> {
   bool showSegmentedControl = true;
 
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
-
   @override
   void initState() {
+    // TODO: implement initState
+    super.initState();
     this.name=TextEditingController();
     this.comments=TextEditingController();
     this.primaryvaccination=TextEditingController();
@@ -61,10 +62,59 @@ class _update_vaccines extends State<update_vaccines> {
     this.firstdose=TextEditingController();
     this.seconddose=TextEditingController();
     this.thirddose=TextEditingController();
-    // local_db=sqlite_helper();
-
+    setState(() {
+      if(specificvaccine['name']!=null){
+        name.text=specificvaccine['name'];
+      }
+      if(specificvaccine['comments']!=null){
+        comments.text=specificvaccine['comments'];
+      }
+      if(specificvaccine['primaryVaccination']!=null){
+        primaryvaccination.text=specificvaccine['primaryVaccination'].toString();
+      }
+      if(specificvaccine['booster']!=null){
+        booster.text=specificvaccine['booster'].toString();
+      }
+      if(specificvaccine['revaccination']!=null){
+        revaccination.text=specificvaccine['revaccination'].toString();
+      }
+      if(specificvaccine['doze1MonthNo']!=null){
+        firstdose.text=specificvaccine['doze1MonthNo'].toString();
+      }
+      if(specificvaccine['doze2MonthNo']!=null){
+        seconddose.text=specificvaccine['doze2MonthNo'].toString();
+      }
+      if(specificvaccine['doze3MonthNo']!=null){
+        thirddose.text=specificvaccine['doze3MonthNo'].toString();
+      }
+    });
 
   }
+  String get_yesno(bool b){
+    var yesno;
+    if(b!=null){
+      if(b){
+        yesno="Yes";
+      }else {
+        yesno = "No";
+      }
+    }
+    return yesno;
+  }
+//  @override
+//  void initState() {
+//    this.name=TextEditingController();
+//    this.comments=TextEditingController();
+//    this.primaryvaccination=TextEditingController();
+//    this.booster=TextEditingController();
+//    this.revaccination=TextEditingController();
+//    this.firstdose=TextEditingController();
+//    this.seconddose=TextEditingController();
+//    this.thirddose=TextEditingController();
+//    // local_db=sqlite_helper();
+//
+//
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,11 +126,7 @@ class _update_vaccines extends State<update_vaccines> {
                 children: <Widget>[
                   FormBuilder(
                     key: _fbKey,
-                    initialValue: {
-                      'date': DateTime.now(),
-                      'accept_terms': false,
-                    },
-                    autovalidate: true,
+                   // autovalidate: true,
                     child: Column(
                       children: <Widget>[
                         Padding(
@@ -128,9 +174,10 @@ class _update_vaccines extends State<update_vaccines> {
                           padding: const EdgeInsets.only(
                               top: 16, left: 16, right: 16),
                           child: FormBuilderDropdown(
-                            attribute: "Reminder",
+                            attribute: "Show Reminder",
+                            initialValue: get_yesno(specificvaccine['reminder']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Reminder"),
+                            hint: Text("Show Reminder"),
                             items: is_reminder != null ? is_reminder.map((trainer) =>
                                 DropdownMenuItem(
                                   child: Text(trainer),
@@ -143,19 +190,29 @@ class _update_vaccines extends State<update_vaccines> {
                                 .of(context)
                                 .textTheme
                                 .body1,
-                            decoration: InputDecoration(labelText: "Reminder",
+                            decoration: InputDecoration(labelText: "Show Reminder",
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(9.0),
                                   borderSide: BorderSide(color: Colors.teal,
                                       width: 1.0)
                               ),
                             ),
-                            onChanged: (value) {
+                            onSaved: (value){
                               setState(() {
-                                if (value == "Yes")
-                                  selected_reminder_id = true;
-                                else if (value == "No")
-                                  selected_reminder_id = false;
+                                if(value=="Yes"){
+                                  selected_reminder_id =true;
+                                }else{
+                                  selected_reminder_id=false;
+                                }
+                              });
+                            },
+                            onChanged: (value){
+                              setState(() {
+                                if(value=="Yes"){
+                                  selected_reminder_id=true;
+                                }else{
+                                  selected_reminder_id=false;
+                                }
                               });
                             },
                           ),
@@ -164,6 +221,8 @@ class _update_vaccines extends State<update_vaccines> {
                         Padding(
                           padding: EdgeInsets.only(top: 16, left: 16, right: 16),
                           child: FormBuilderDropdown(
+                              initialValue: specificvaccine['usage']!=null?usage_type[specificvaccine['usage']]:null,
+
                               attribute: "Usage",
                               style: Theme
                                   .of(context)
@@ -500,17 +559,16 @@ class _update_vaccines extends State<update_vaccines> {
                                   pd.show();
                                   VaccinesServices.addVaccines(token, specificvaccine['id'], name.text, comments.text,selected_reminder_id, usage_id, primaryvaccination.text, booster.text, revaccination.text, firstdose.text, seconddose.text, thirddose.text, specificvaccine['createdBy'])                                      .then((respons){
                                     pd.dismiss();
-                                    if(respons!=null){
-//                                      Scaffold.of(context).showSnackBar(SnackBar(
-//                                        content: Text("Updated "),
-//                                        backgroundColor: Colors.green,
-//                                      ));
-                                    }else{
-                                      Scaffold.of(context).showSnackBar(SnackBar(
-                                        content: Text("Not Updated "),
-                                        backgroundColor: Colors.red,
-                                      ));
-                                    }
+                                    setState(() {
+                                      var parsedjson  = jsonDecode(respons);
+                                      if(parsedjson != null){
+                                        if(parsedjson['isSuccess'] == true){
+                                          print("Successfully data updated");
+                                        }else
+                                          print("not saved");
+                                      }else
+                                        print("json response null");
+                                    });
                                   });
                                 }
                               });

@@ -306,17 +306,16 @@ class _add_paddock extends State<add_paddock>{
                                     PaddockServices.addPaddock(token, 0, name.text, mainUse.text, paddock_response['locationDropDown'][selected_location_id]['id'], area.text, selected_hasShade_id, selected_hasWater_id, selected_grass_id,selected_otherAnimals_id, comments.text, null,)
                                         .then((respons){
                                       pd.dismiss();
-                                      if(respons!=null){
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Saved "),
-                                          backgroundColor: Colors.green,
-                                        ));
-                                      }else{
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Not Saved "),
-                                          backgroundColor: Colors.red,
-                                        ));
-                                      }
+                                      setState(() {
+                                        var parsedjson  = jsonDecode(respons);
+                                        if(parsedjson != null){
+                                          if(parsedjson['isSuccess'] == true){
+                                            print("Successfully data updated");
+                                          }else
+                                            print("not saved");
+                                        }else
+                                          print("json response null");
+                                      });
                                     });
                                   }
                                 });

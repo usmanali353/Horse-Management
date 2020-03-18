@@ -71,13 +71,12 @@ class _add_sire extends State<add_sire>{
                 children: <Widget>[
                   FormBuilder(
                     key: _fbKey,
-                    initialValue: {
-                      'date': DateTime.now(),
-                      'accept_terms': false,
-                    },
-                    autovalidate: true,
+//                    initialValue: {
+//                      'date': DateTime.now(),
+//                      'accept_terms': false,
+//                    },
+                    //autovalidate: true,
                     child: Column(children: <Widget>[
-//
                       Padding(
                         padding: EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderTextField(
@@ -102,18 +101,16 @@ class _add_sire extends State<add_sire>{
                                 pd.show();
                                 SireServices.addSire(token,0,sire.text,null).then((respons){
                                   pd.dismiss();
-
-                                  if(respons!=null){
-//                                    Scaffold.of(context).showSnackBar(SnackBar(
-//                                      content: Text("Saved "),
-//                                      backgroundColor: Colors.green,
-//                                    ));
-                                  }else{
-//                                    Scaffold.of(context).showSnackBar(SnackBar(
-//                                      content: Text("Not Saved "),
-//                                      backgroundColor: Colors.red,
-//                                    ));
-                                  }
+                                  setState(() {
+                                    var parsedjson  = jsonDecode(respons);
+                                    if(parsedjson != null){
+                                      if(parsedjson['isSuccess'] == true){
+                                        print("Successfully data updated");
+                                      }else
+                                        print("not saved");
+                                    }else
+                                      print("json response null");
+                                  });
                                 });
                               }
                             });

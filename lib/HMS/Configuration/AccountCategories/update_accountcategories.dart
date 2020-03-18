@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -28,21 +30,51 @@ class _update_accountcategories extends State<update_accountcategories>{
   var specificcategory;
   _update_accountcategories(this.token, this.specificcategory);
   String ddvalue,selected_horse,selected_tank, selected_sire, selected_isIncome, selected_isActive;
-  bool selected_isIncome_id, selected_isActive_id;
+  bool selected_isIncome_id=false, selected_isActive_id=false;
 
   // sqlite_helper local_db;
   List<String>  isIncome=['Yes','No'], isActive=['Yes','No'] ;
   var stock_response;
   //var training_types_list=['Simple','Endurance','Customized','Speed'];
   TextEditingController code,name,description;
-
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
   @override
   void initState() {
+    // TODO: implement initState
+    super.initState();
     this.code=TextEditingController();
     this.name=TextEditingController();
     this.description=TextEditingController();
-    // local_db=sqlite_helper();
+    setState(() {
+      if(specificcategory['code']!=null){
+        code.text=specificcategory['code'];
+      }
+      if(specificcategory['name']!=null){
+        name.text=specificcategory['name'];
+      }
+      if(specificcategory['description']!=null){
+        description.text=specificcategory['description'];
+      }
+    });
+
+  }
+  String get_yesno(bool b){
+    var yesno;
+    if(b!=null){
+      if(b){
+        yesno="Yes";
+      }else {
+        yesno = "No";
+      }
+    }
+    return yesno;
+  }
+//  @override
+//  void initState() {
+//    this.code=TextEditingController();
+//    this.name=TextEditingController();
+//    this.description=TextEditingController();
+//     local_db=sqlite_helper();
 //    Utils.check_connectivity().then((result){
 //      if(result){
 //        AccountCategoriesServices.get_embryo_stock_dropdowns(token).then((response){
@@ -64,8 +96,8 @@ class _update_accountcategories extends State<update_accountcategories>{
 //        print("Network Not Available");
 //      }
 //    });
-
-  }
+//
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,38 +157,78 @@ class _update_accountcategories extends State<update_accountcategories>{
 
                           ),
                         ),
+//                        Padding(
+//                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+//                          child: FormBuilderDropdown(
+//                            attribute: "Is Income",
+//                            initialValue: get_yesno(specificcategory['empty']),
+//                            validators: [FormBuilderValidators.required()],
+//                            hint: Text("Is Income"),
+//                            items: isIncome!=null?isIncome.map((trainer)=>DropdownMenuItem(
+//                              child: Text(trainer),
+//                              value: trainer,
+//                            )).toList():[""].map((name) => DropdownMenuItem(
+//                                value: name, child: Text("$name")))
+//                                .toList(),
+//                            style: Theme.of(context).textTheme.body1,
+//                            decoration: InputDecoration(labelText: "Is Income",
+//                              border: OutlineInputBorder(
+//                                  borderRadius: BorderRadius.circular(9.0),
+//                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+//                              ),
+//                            ),
+//                            onChanged: (value){
+//                              setState(() {
+//                                if(value == "Yes")
+//                                  selected_isIncome_id = true;
+//                                else if(value == "No")
+//                                  selected_isIncome_id = false;
+//                              });
+//                            },
+//                          ),
+//                        ),
                         Padding(
-                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                          padding: const EdgeInsets.only(top: 16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Is Income",
+                            initialValue: get_yesno(specificcategory['isIncome']),
                             validators: [FormBuilderValidators.required()],
                             hint: Text("Is Income"),
-                            items: isIncome!=null?isIncome.map((trainer)=>DropdownMenuItem(
-                              child: Text(trainer),
-                              value: trainer,
-                            )).toList():[""].map((name) => DropdownMenuItem(
+                            items: isIncome.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
+                            onSaved: (value){
+                              setState(() {
+                                if(value=="Yes"){
+                                 selected_isIncome_id =true;
+                                }else{
+                                  selected_isIncome_id=false;
+                                }
+                              });
+                            },
+                            onChanged: (value){
+                              setState(() {
+                                if(value=="Yes"){
+                                  selected_isIncome_id=true;
+                                }else{
+                                  selected_isIncome_id=false;
+                                }
+                              });
+                            },
                             style: Theme.of(context).textTheme.body1,
-                            decoration: InputDecoration(labelText: "Is Income",
+                            decoration: InputDecoration(labelText: "Is InCome",
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(9.0),
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)
                               ),
                             ),
-                            onChanged: (value){
-                              setState(() {
-                                if(value == "Yes")
-                                  selected_isIncome_id = true;
-                                else if(value == "No")
-                                  selected_isIncome_id = false;
-                              });
-                            },
+
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
+                            initialValue: get_yesno(specificcategory['isActive']),
                             attribute: "Is Active",
                             validators: [FormBuilderValidators.required()],
                             hint: Text("Is Active"),
@@ -167,18 +239,28 @@ class _update_accountcategories extends State<update_accountcategories>{
                                 value: name, child: Text("$name")))
                                 .toList(),
                             style: Theme.of(context).textTheme.body1,
-                            decoration: InputDecoration(labelText: "Is Income",
+                            decoration: InputDecoration(labelText: "Is Active",
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(9.0),
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)
                               ),
                             ),
+                            onSaved: (value){
+                              setState(() {
+                                if(value=="Yes"){
+                                  selected_isActive_id =true;
+                                }else{
+                                  selected_isActive_id=false;
+                                }
+                              });
+                            },
                             onChanged: (value){
                               setState(() {
-                                if(value == "Yes")
-                                  selected_isActive_id = true;
-                                else if(value == "No")
-                                  selected_isActive_id = false;
+                                if(value=="Yes"){
+                                  selected_isActive_id=true;
+                                }else{
+                                  selected_isActive_id=false;
+                                }
                               });
                             },
                           ),
@@ -206,17 +288,16 @@ class _update_accountcategories extends State<update_accountcategories>{
                                     AccountCategoriesServices.addAccountCategory(token, specificcategory['id'], code.text, name.text, description.text, specificcategory['createdBy'], selected_isIncome_id, selected_isActive_id)
                                         .then((respons){
                                       pd.dismiss();
-                                      if(respons!=null){
-//                                        Scaffold.of(context).showSnackBar(SnackBar(
-//                                          content: Text("Updated"),
-//                                          backgroundColor: Colors.green,
-//                                        ));
-                                      }else{
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Not Updated"),
-                                          backgroundColor: Colors.red,
-                                        ));
-                                      }
+                                      setState(() {
+                                        var parsedjson  = jsonDecode(respons);
+                                        if(parsedjson != null){
+                                          if(parsedjson['isSuccess'] == true){
+                                            print("Successfully data updated");
+                                          }else
+                                            print("not saved");
+                                        }else
+                                          print("json response null");
+                                      });
                                     });
                                   }
                                 });

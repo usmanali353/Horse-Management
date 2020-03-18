@@ -41,33 +41,73 @@ class _update_tanks_form extends State<update_tanks_form>{
   bool _isvisible=false;
   //bool notes_loaded=false;
   bool update_notes_visibility;
-
-
+  var location_name;
   @override
   void initState() {
+    // TODO: implement initState
+    super.initState();
     this.name=TextEditingController();
     this.capacity=TextEditingController();
     this.policynumber=TextEditingController();
-    // local_db=sqlite_helper();
-    Utils.check_connectivity().then((result){
-      if(result){
-        TanksServices.get_Tanks_dropdowns(token).then((response){
-          if(response!=null){
-            print(response);
-            setState(() {
-              tanks_response=json.decode(response);
-              for(int i=0;i<tanks_response['locationDropDown'].length;i++)
-                tanks.add(tanks_response['locationDropDown'][i]['name']);
-              //notes_loaded=true;
-              update_notes_visibility=true;
-            });
-          }
-        });
-      }else{
-        print("Network Not Available");
+    setState(() {
+      if(specifictank['name']!=null){
+        name.text=specifictank['name'];
+      }
+      if(specifictank['capacity']!=null){
+        capacity.text=specifictank['capacity'].toString();
+      }
+      if(specifictank['insurancePolicy']!=null){
+        policynumber.text=specifictank['insurancePolicy'];
       }
     });
+    TanksServices.get_Tanks_dropdowns(token).then((response){
+      if(response!=null) {
+        setState(() {
+          tanks_response=json.decode(response);
+              for(int i=0;i<tanks_response['locationDropDown'].length;i++) {
+                tanks.add(tanks_response['locationDropDown'][i]['name']);
+              }
+//              //notes_loaded=true;
+//              update_notes_visibility=true;
+        });
+      }});
   }
+  String get_location_name(int id){
+    if(tanks_response!=null&&id!=null) {
+      for (int i = 0; i < tanks_response['locationDropDown'].length; i++) {
+        if(tanks_response['locationDropDown'][i]['id']==id) {
+          location_name = tanks_response['locationDropDown'][i]['name'];
+        }
+      }
+    }
+    return location_name;
+  }
+
+//  @override
+//  void initState() {
+//    this.name=TextEditingController();
+//    this.capacity=TextEditingController();
+//    this.policynumber=TextEditingController();
+//    // local_db=sqlite_helper();
+//    Utils.check_connectivity().then((result){
+//      if(result){
+//        TanksServices.get_Tanks_dropdowns(token).then((response){
+//          if(response!=null){
+//            print(response);
+//            setState(() {
+//              tanks_response=json.decode(response);
+//              for(int i=0;i<tanks_response['locationDropDown'].length;i++)
+//                tanks.add(tanks_response['locationDropDown'][i]['name']);
+//              //notes_loaded=true;
+//              update_notes_visibility=true;
+//            });
+//          }
+//        });
+//      }else{
+//        print("Network Not Available");
+//      }
+//    });
+//  }
 
 
   @override
@@ -82,11 +122,8 @@ class _update_tanks_form extends State<update_tanks_form>{
             children: <Widget>[
               FormBuilder(
                 key: _fbKey,
-                initialValue: {
-                  'date': DateTime.now(),
-                  'accept_terms': false,
-                },
-                autovalidate: true,
+
+               // autovalidate: true,
                 child: Column(children: <Widget>[
                   Padding(
                     padding: EdgeInsets.only(left: 16,right: 16, top:16),
@@ -109,6 +146,7 @@ class _update_tanks_form extends State<update_tanks_form>{
                       //visible: sale_loaded,
                       child: FormBuilderDropdown(
                         attribute: "Location",
+                        initialValue: get_location_name(specifictank['locationId']),
                         validators: [FormBuilderValidators.required()],
                         hint: Text("Location"),
                         items:tanks!=null?tanks.map((horse)=>DropdownMenuItem(
@@ -150,6 +188,7 @@ class _update_tanks_form extends State<update_tanks_form>{
                   ),
                   Padding(padding: const EdgeInsets.only(left: 16,right: 16, top:16),
                     child:  FormBuilderDateTimePicker(
+                      initialValue: specifictank['lastFill']!=null?DateTime.parse(specifictank['lastFill']):null,
                       onChanged: (value){
                         this.lastfill_date=value;
                       },
@@ -167,6 +206,7 @@ class _update_tanks_form extends State<update_tanks_form>{
                   ),
                   Padding(padding: const EdgeInsets.only(left: 16,right: 16, top:16),
                     child:  FormBuilderDateTimePicker(
+                      initialValue: specifictank['nextFill']!=null?DateTime.parse(specifictank['nextFill']):null,
                       onChanged: (value){
                         this.nextfill_date=value;
                       },
@@ -200,6 +240,7 @@ class _update_tanks_form extends State<update_tanks_form>{
                   ),
                   Padding(padding: const EdgeInsets.only(left: 16,right: 16, top:16),
                     child:  FormBuilderDateTimePicker(
+                      initialValue: specifictank['insurancePolicyDueDate']!=null?DateTime.parse(specifictank['insurancePolicyDueDate']):null,
                       onChanged: (value){
                         this.policydue_date=value;
                       },
@@ -222,25 +263,25 @@ class _update_tanks_form extends State<update_tanks_form>{
                           if(result){
                             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                             pd.show();
-                            TanksServices.add_Tanks(specifictank['createdBy'],token,specifictank['id'],name.text,tanks_response['locationDropDown'][selected_tanks_id]['locationId'], capacity.text,lastfill_date,nextfill_date,policynumber.text,policydue_date)                                .then((respons){
+                            TanksServices.add_Tanks(specifictank['createdBy'],token,specifictank['id'],name.text,tanks_response['locationDropDown'][selected_tanks_id]['locationId'], capacity.text,lastfill_date,nextfill_date,policynumber.text,policydue_date)
+                                .then((respons){
                               pd.dismiss();
-                              if(respons!=null){
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text("Updated "),
-                                  backgroundColor: Colors.green,
-                                ));
-                              }else{
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text("Not Updated "),
-                                  backgroundColor: Colors.red,
-                                ));
-                              }
+                              setState(() {
+                                var parsedjson  = jsonDecode(respons);
+                                if(parsedjson != null){
+                                if(parsedjson['isSuccess'] == true){
+                                print("Successfully data updated");
+                                }else
+                                  print("not saved");
+                                }else
+                                  print("json response null");
+                              });
                             });
                           }
                         });
                       }
                     },
-                    child: Text("Save",style: TextStyle(color: Colors.white),
+                    child: Text("Update",style: TextStyle(color: Colors.white),
                     ),
                     color: Colors.teal,
                   ),

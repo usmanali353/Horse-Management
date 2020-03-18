@@ -81,10 +81,7 @@ class _update_breeding extends State<update_breeding> {
           children: <Widget>[
             FormBuilder(
               key: _fbKey,
-              initialValue: {
-                'date': DateTime.now(),
-                'accept_terms': false,
-              },
+
              // autovalidate: true,
               child: Column(
                 children: <Widget>[

@@ -81,7 +81,8 @@ class _SlideItemState extends State<SlideItem> {
                     "${widget.address}",
                     style: TextStyle(
                       fontSize: 15,
-                      fontWeight: FontWeight.w300,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.teal
                     ),
                   ),
                 ),

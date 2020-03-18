@@ -36,6 +36,12 @@ class _update_horsecategory extends State<update_horsecategory>{
   @override
   void initState() {
     this.name=TextEditingController();
+    setState(() {
+      if(specificcategory['name']!=null){
+        name.text=specificcategory['name'];
+      }
+
+    });
     // local_db=sqlite_helper();
 //    Utils.check_connectivity().then((result){
 //      if(result){
@@ -73,11 +79,7 @@ class _update_horsecategory extends State<update_horsecategory>{
                 children: <Widget>[
                   FormBuilder(
                     key: _fbKey,
-                    initialValue: {
-                      'date': DateTime.now(),
-                      'accept_terms': false,
-                    },
-                    autovalidate: true,
+                    //autovalidate: true,
                     child: Column(children: <Widget>[
 //
                       Padding(
@@ -105,17 +107,16 @@ class _update_horsecategory extends State<update_horsecategory>{
                                 pd.show();
                                 HorseCategoryServices.addHorseCategory(token,specificcategory['id'],name.text,specificcategory['createdBy']).then((respons){
                                   pd.dismiss();
-                                  if(respons!=null){
-//                                    Scaffold.of(context).showSnackBar(SnackBar(
-//                                      content: Text("Updated "),
-//                                      backgroundColor: Colors.green,
-//                                    ));
-                                  }else{
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Not Updated "),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                  }
+                                  setState(() {
+                                    var parsedjson  = jsonDecode(respons);
+                                    if(parsedjson != null){
+                                      if(parsedjson['isSuccess'] == true){
+                                        print("Successfully data updated");
+                                      }else
+                                        print("not saved");
+                                    }else
+                                      print("json response null");
+                                  });
                                 });
                               }
                             });

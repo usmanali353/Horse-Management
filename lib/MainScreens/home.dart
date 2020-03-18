@@ -9,6 +9,7 @@ import 'package:horse_management/HMS/Diet/DietSubCategory.dart';
 import 'package:horse_management/HMS/Diet/dietList.dart';
 import 'package:horse_management/HMS/Inventory/inventory_list.dart';
 import 'package:horse_management/HMS/OperationNotes/operation_notes.dart';
+import 'package:horse_management/HMS/Paddock/paddocks.dart';
 import 'package:horse_management/HMS/Tanks/tanks.dart';
 import 'package:horse_management/HMS/Training/training_list.dart';
 import 'package:horse_management/HMS/Veterinary/vet_mainPage.dart';
@@ -197,7 +198,7 @@ class _HomeState extends State<Home>{ //with AutomaticKeepAliveClientMixin<Home>
                             Navigator.push(context, MaterialPageRoute(builder: (context)=> tanks_list(prefs.getString('token')) ));
                           }else if(index == 2){//For Paddock
                             prefs= await SharedPreferences.getInstance();
-                            //Navigator.push(context, MaterialPageRoute(builder: (context)=> tanks_list(prefs.getString('token')) ));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=> paddocks_list(prefs.getString('token')) ));
                           }else if(index == 3){//For Contacts
                             prefs= await SharedPreferences.getInstance();
                            // Navigator.push(context, MaterialPageRoute(builder: (context)=> contacts_list(prefs.getString('token')) ));

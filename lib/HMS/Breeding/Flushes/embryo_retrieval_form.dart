@@ -96,10 +96,7 @@ class _add_flushes extends State<add_flushes>{
                 children: <Widget>[
                   FormBuilder(
                     key: _fbKey,
-                    initialValue: {
-                      'date': DateTime.now(),
-                      'accept_terms': false,
-                    },
+
                     //autovalidate: true,
                     child: Column(children: <Widget>[
 //
@@ -248,17 +245,16 @@ class _add_flushes extends State<add_flushes>{
                                 pd.show();
                                 FlushesServicesJson.add_flushes(null,token,0,flushes_response['horseDropDown'][selected_horse_id]['id'],Select_date, flushes_response['vetDropDown'][selected_vet_id]['id'],selected_success_id,embryos.text, comments.text ).then((response){
                                   pd.dismiss();
-                                  if(response!=null){
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Saved"),
-                                      backgroundColor: Colors.green,
-                                    ));
-                                  }else{
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Not Saved"),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                  }
+                                  setState(() {
+                                    var parsedjson  = jsonDecode(response);
+                                    if(parsedjson != null){
+                                      if(parsedjson['isSuccess'] == true){
+                                        print("Successfully data updated");
+                                      }else
+                                        print("not saved");
+                                    }else
+                                      print("json response null");
+                                  });
                                 });
                               }
                             });
