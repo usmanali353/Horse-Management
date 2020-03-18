@@ -68,7 +68,7 @@ class addProductsAppliedState extends State<addProductsApplied>{
                 }
               });
              }else{
-
+               print("Vet Visit not Inserted");
              }
            });
         },
