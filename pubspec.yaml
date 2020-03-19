@@ -23,6 +23,8 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
+  hive: ^1.0.0
+  hive_flutter: ^0.2.1
   http: ^0.12.0+4
   webview_flutter: ^0.3.19+8
   font_awesome_flutter: ^8.5.0
@@ -46,8 +48,11 @@ dependencies:
   day_night_switch: ^0.0.2+1
 
 dev_dependencies:
+  hive_generator: ^0.5.2
+  build_runner: ^1.7.2
   flutter_test:
     sdk: flutter
+
 
 
 # For information on the generic Dart part of this file, see the

@@ -381,39 +381,6 @@ static Future<String> delete_already_trained_horses(String token,int id) async{
   }else
     return null;
 }
-//Barns
-
-
-
-
-
-  //Vaccines
-  static Future<String> addVaccines(String token,int id,String name,String createdBy) async{
-    Map<String,String> headers = {'Authorization':'Bearer '+token,'Content-Type':'application/json'};
-    final body = jsonEncode({"id":id,"name":name,"createdBy":createdBy,"createdOn":DateTime.now(),"isActive":true},toEncodable: Utils.myEncode);
-    var response= await http.post("http://192.236.147.77:8083/api/configuration/VaccineSave",headers: headers,body: body);
-    print(response.body);
-    if(response.statusCode==200){
-      return response.body;
-    }else
-      return null;
-  }
-  static Future<String> getVaccine(String token) async{
-    Map<String,String> headers = {'Authorization':'Bearer '+token};
-    final response = await http.get('http://192.236.147.77:8083/api/configuration/GetAllVaccines', headers: headers,);
-    if(response.statusCode==200){
-      return response.body;
-    }else
-      return null;
-  }
-  static Future<String> changeVaccinesVisibility(String token,int Id) async{
-    Map<String,String> headers = {'Authorization':'Bearer '+token};
-    final response = await http.get('http://192.236.147.77:8083/api/configuration/VaccineVisibility/'+Id.toString(), headers: headers,);
-    if(response.statusCode==200){
-      return response.body;
-    }else
-      return null;
-  }
   //Training Plan
   static Future<String> addTrainingPlan(String token,int planId,List<Map> planExercises,String name,String createdBy)async{
     Map<String,String> headers = {'Authorization':'Bearer '+token,'Content-Type':'application/json'};

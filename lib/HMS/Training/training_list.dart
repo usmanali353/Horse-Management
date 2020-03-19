@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hive/hive.dart';
 import 'package:horse_management/HMS/Training/training_detail_page.dart';
 import 'package:horse_management/HMS/Training/update_training.dart';
 import 'package:horse_management/Network_Operations.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import '../../Utils.dart';
 import 'Add_training.dart';
@@ -26,6 +28,7 @@ class _training_list_state extends State<training_list>{
    var training_list=[];
    var temp=['',''];
    bool isvisible=false;
+   var trainingListBox;
  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   @override
   Widget build(BuildContext context) {
@@ -54,6 +57,7 @@ class _training_list_state extends State<training_list>{
                         setState(() {
                           isvisible=true;
                           training_list=json.decode(response);
+                          Hive.box("trainingList").put("offline_training_list",training_list);
                           // print('Training list Length'+training_list.length.toString());
                         });
 
@@ -68,10 +72,14 @@ class _training_list_state extends State<training_list>{
                       }
                     });
                   }else{
-                    Scaffold.of(context).showSnackBar(SnackBar(
-                      backgroundColor: Colors.red,
-                      content: Text("Network not Available"),
-                    ));
+                    setState(() {
+                      isvisible=true;
+                      training_list=Hive.box("trainingList").get("offline_training_list");
+                    });
+//                    Scaffold.of(context).showSnackBar(SnackBar(
+//                      backgroundColor: Colors.red,
+//                      content: Text("Network not Available"),
+//                    ));
                   }
                 });
               },
@@ -188,9 +196,12 @@ class _training_list_state extends State<training_list>{
 
  @override
  void initState() {
+    setState(() {
+      Utils.openBox("trainingList");
+    });
+   WidgetsBinding.instance
+       .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
   super.initState();
-  WidgetsBinding.instance
-      .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
  }
 
  _training_list_state(this.token);

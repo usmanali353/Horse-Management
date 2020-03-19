@@ -201,31 +201,16 @@ class scrollview extends StatelessWidget {
                                   pd.show();
                                   network_operations.Sign_Up(name.text, email.text, password.text).then((response) async{
                                     pd.dismiss();
-                                    if(response==null){
+                                    if(response!=null){
                                       Scaffold.of(context).showSnackBar(SnackBar(
-                                        backgroundColor: Colors.red,
-                                        content: Text("Sign Up Failed"),
+                                        content: Text("Sign Up Sucess"),
+                                        backgroundColor: Colors.green,
                                       ));
                                     }else{
-                                      var parsedjson=json.decode(response);
-                                      if(parsedjson['isSuccess']==true){
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Sign up Sucess"),
-                                          backgroundColor: Colors.green,
-                                        ));
-                                      }else{
-                                        if(parsedjson['message']!=null){
-                                          Scaffold.of(context).showSnackBar(SnackBar(
-                                            content: Text(parsedjson['message']),
-                                            backgroundColor: Colors.red,
-                                          ));
-                                        }else{
-                                          Scaffold.of(context).showSnackBar(SnackBar(
-                                            content: Text('Sign Up Failed'),
-                                            backgroundColor: Colors.red,
-                                          ));
-                                        }
-                                      }
+                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                        content: Text("Sign Up Failed"),
+                                        backgroundColor: Colors.red,
+                                      ));
                                     }
                                   });
                                 }else{
