@@ -392,33 +392,53 @@ class add_training_button extends StatelessWidget {
       color: Colors.teal,
       onPressed: () {
         if (_fbKey.currentState.validate()) {
-         Utils.check_connectivity().then((result){
-           if(result){
-             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-             pd.show();
-             network_operations.add_training(0,selected_training_type,Start_date, End_Date,training_response['horses'][selected_horse_id]['id'], training_center.text, target_date, target_competition.text,token,training_response['trainerDropDown'][selected_trainer_id]['id'],selected_horse,training_response['trainingPlans'][selected_excercise_plan]['id']!=null?training_response['trainingPlans'][selected_excercise_plan]['id']:null,selected_trainer!=null?selected_trainer:'',excerciseplan!=null?excerciseplan:null,'').then((response){
-                pd.dismiss();
-               print(response);
-               if(response!=null) {
-                 Scaffold.of(context).showSnackBar(SnackBar(
-                   backgroundColor: Colors.green,
-                   content: Text("Training Added Sucessfully"),
-                 ));
-               }else{
-                 Scaffold.of(context).showSnackBar(SnackBar(
-                   backgroundColor: Colors.red,
-                   content: Text("Training not Added"),
-                 ));
-               }
-             });
-           }else{
-             Scaffold.of(context).showSnackBar(SnackBar(
-               backgroundColor: Colors.red,
-               content: Text("Network not Available"),
-             ));
-             // local_db.create_training(Training(selected_horse,selected_trainer,'',training_center.text,Start_date.toString(),End_Date.toString(),target_date.toString(),excerciseplan,));
-           }
-         });
+          Utils.openBox("AddTrainingData").then((resp){
+            Utils.check_connectivity().then((result){
+              if(result){
+                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                pd.show();
+                if(Hive.box("AddTrainingData").get("addTrainingJson")!=null){
+                  Training tr=Training.fromMap(Hive.box("AddTrainingData").get("addTrainingJson"));
+                  network_operations.add_training(0, tr.training_type_id, DateTime.parse(tr.start_date), DateTime.parse(tr.end_date), tr.horse_id, tr.training_center, DateTime.parse(tr.target_date),tr.target_competition, token, tr.trainer_id, tr.horse_name, tr.excercise_plan_id, tr.trainer_name, tr.excercise_plan, '').then((response){
+                    pd.dismiss();
+                    print(response);
+                    if(response!=null) {
+                      Hive.box("AddTrainingData").delete("addTrainingJson");
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        backgroundColor: Colors.green,
+                        content: Text("Previously Stored Training Added Sucessfully"),
+                      ));
+                    }else{
+                      Hive.box("AddTrainingData").delete("addTrainingJson");
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        backgroundColor: Colors.red,
+                        content: Text("Previously Stored Training not Added"),
+                      ));
+                    }
+                  });
+                }else{
+                  network_operations.add_training(0,selected_training_type,Start_date, End_Date,training_response['horses'][selected_horse_id]['id'], training_center.text, target_date, target_competition.text,token,training_response['trainerDropDown'][selected_trainer_id]['id'],selected_horse,training_response['trainingPlans'][selected_excercise_plan]['id']!=null?training_response['trainingPlans'][selected_excercise_plan]['id']:null,selected_trainer!=null?selected_trainer:'',excerciseplan!=null?excerciseplan:null,'').then((response){
+                    pd.dismiss();
+                    print(response);
+                    if(response!=null) {
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        backgroundColor: Colors.green,
+                        content: Text("Training Added Sucessfully"),
+                      ));
+                    }else{
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        backgroundColor: Colors.red,
+                        content: Text("Training not Added"),
+                      ));
+                    }
+                  });
+                }
+              }else{
+                  Hive.box("AddTrainingData").put("addTrainingJson",Training(selected_horse,selected_trainer,'',training_center.text,Start_date.toString(),End_Date.toString(),target_date.toString(),'',selected_horse_id,selected_trainer_id,selected_training_type,selected_excercise_plan,target_competition.text).toMap());
+              }
+            });
+          });
+
 
         }
       },
