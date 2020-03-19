@@ -9,7 +9,8 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]).then((_) {
+//  SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values)
+  SystemChrome.setEnabledSystemUIOverlays((SystemUiOverlay.values)).then((_) {
     SharedPreferences.getInstance().then((prefs) {
       var darkModeOn = prefs.getBool('darkMode') ?? true;
       runApp(

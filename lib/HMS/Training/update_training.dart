@@ -106,7 +106,7 @@ class _update_training extends State<update_training>{
           });
         }else{
           setState(() {
-            training_response=Hive.box("UpdateTrainingDropDowns").get("offline_update_training_dropdowns");
+            training_response=Hive.box("UpdateTrainingDropDowns").get("offline_Update_training_dropdowns");
             if(training_response!=null){
               if(training_response['horses']!=null&&training_response['horses'].length>0){
                 for(int i=0;i<training_response['horses'].length;i++)
@@ -431,17 +431,15 @@ class _update_training extends State<update_training>{
   }
  String get_traininer_by_id(int id){
     var trainer_name='';
-    if(training_response!=null){
-      if(training_response['trainerDropDown']!=null&&id!=null){
-        for(int i=0;i<trainers.length;i++){
-          if(training_response['trainerDropDown'][i]['id']==id){
-            trainer_name=training_response['trainerDropDown'][i]['name'];
-          }
+    if(training_response!=null&&training_response['trainerDropDown']!=null&&id!=null){
+      for(int i=0;i<trainers.length;i++){
+        if(training_response['trainerDropDown'][i]['id']==id){
+          trainer_name=training_response['trainerDropDown'][i]['name'];
         }
-        return trainer_name;
-      }else
-        return null;
-    }
+      }
+      return trainer_name;
+    }else
+      return null;
 
 
 
