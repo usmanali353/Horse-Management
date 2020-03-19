@@ -47,40 +47,42 @@ class _training_list_state extends State<training_list>{
         body: RefreshIndicator(
               key: _refreshIndicatorKey,
               onRefresh: (){
-                return  Utils.check_connectivity().then((result){
-                  if(result){
-                    ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                    pd.show();
-                    network_operations.get_training(token).then((response){
-                      pd.dismiss();
-                      if(response!=null){
-                        setState(() {
-                          isvisible=true;
-                          training_list=json.decode(response);
-                          Hive.box("trainingList").put("offline_training_list",training_list);
-                          // print('Training list Length'+training_list.length.toString());
-                        });
+                return  Utils.openBox('trainingList').then((response){
+                  Utils.check_connectivity().then((result){
+                    if(result){
+                      ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                      pd.show();
+                      network_operations.get_training(token).then((response){
+                        pd.dismiss();
+                        if(response!=null){
+                          setState(() {
+                            isvisible=true;
+                            training_list=json.decode(response);
+                            Hive.box("trainingList").put("offline_training_list",training_list);
+                            // print('Training list Length'+training_list.length.toString());
+                          });
 
-                      }else{
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                          backgroundColor: Colors.red,
-                          content: Text("Training List Not Found"),
-                        ));
-                        setState(() {
-                          isvisible=false;
-                        });
-                      }
-                    });
-                  }else{
-                    setState(() {
-                      isvisible=true;
-                      training_list=Hive.box("trainingList").get("offline_training_list");
-                    });
+                        }else{
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Text("Training List Not Found"),
+                          ));
+                          setState(() {
+                            isvisible=false;
+                          });
+                        }
+                      });
+                    }else{
+                      setState(() {
+                        isvisible=true;
+                        training_list=Hive.box("trainingList").get("offline_training_list");
+                      });
 //                    Scaffold.of(context).showSnackBar(SnackBar(
 //                      backgroundColor: Colors.red,
 //                      content: Text("Network not Available"),
 //                    ));
-                  }
+                    }
+                  });
                 });
               },
               child: Visibility(
@@ -196,9 +198,6 @@ class _training_list_state extends State<training_list>{
 
  @override
  void initState() {
-    setState(() {
-      Utils.openBox("trainingList");
-    });
    WidgetsBinding.instance
        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
   super.initState();
