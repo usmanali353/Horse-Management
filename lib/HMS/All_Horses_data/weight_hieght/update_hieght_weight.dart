@@ -242,11 +242,11 @@ class addWeightButton extends StatelessWidget {
         if (_fbKey.currentState.validate()) {
           print(_fbKey.currentState.value);
           ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-          //pd.show();
+          pd.show();
 
           weight_hieght_services.weight_hieghtSave(createdBy,token, whid,weightHieghtdropdown['horseDropDown'][selected_horse_id]['id'], Select_date,
               weight.text,height.toString(),bodyindex.text,comment.text).then((response){
-            //pd.dismiss();
+            pd.dismiss();
             if(response !=null){
               Scaffold.of(context).showSnackBar(SnackBar(
                 backgroundColor: Colors.green,

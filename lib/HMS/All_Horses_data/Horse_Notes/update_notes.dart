@@ -5,6 +5,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:intl/intl.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 
 class update_notes extends StatefulWidget{
@@ -185,7 +186,10 @@ class update_note_button extends StatelessWidget {
             if(result){
               if(_fbKey.currentState.validate()){
                 _fbKey.currentState.save();
+                ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                pd.show();
                 network_operations.add_notes(token, notes_data['NoteId'], notes_dropdowns['horseDropDown'][selected_horse_id]['id'], description.text, date,notes_data['CreatedBy'],selected_horse).then((response){
+                  pd.dismiss();
                   if(response!=null){
                     Scaffold.of(context).showSnackBar(SnackBar(
                       backgroundColor: Colors.green,

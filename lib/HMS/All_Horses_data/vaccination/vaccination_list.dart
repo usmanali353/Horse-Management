@@ -100,6 +100,11 @@ class _Profile_Page_State extends State<vaccination_list>{
                 actionPane: SlidableDrawerActionPane(),
                 actionExtentRatio: 0.20,
                 actions: <Widget>[
+                  IconSlideAction(onTap: ()async{
+                    prefs = await SharedPreferences.getInstance();
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_vaccination(vaccinationlist[index],prefs.get('token'),prefs.get('createdBy'))));
+
+                  },color: Colors.blue,icon: Icons.mode_edit,caption: 'update',),
                   IconSlideAction(
                     icon: Icons.visibility_off,
                     color: Colors.red,
@@ -127,17 +132,13 @@ class _Profile_Page_State extends State<vaccination_list>{
                       });
                     },
                   ),
-                  IconSlideAction(onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_vaccination(vaccinationlist[index],prefs.get('token'),prefs.get('createdBy'))));
 
-                  },color: Colors.blue,icon: Icons.mode_edit,caption: 'update',)
                 ],
                 child: ListTile(
                   //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                   title: Text(vaccinationlist!=null?(vaccinationlist[index]['horseName']['name']):' '),
-                  subtitle: Text(vaccinationlist!=null?'Vaccine'+(vaccinationlist[index]['vaccineName']['name']):'farrier name not showing'),
-                  trailing: Text(vaccinationlist!=null?'Vet'+(vaccinationlist[index]['vetName']['contactName']['name']):'Vet name empty'),
+                  subtitle: Text(vaccinationlist!=null?'Vaccine: '+(vaccinationlist[index]['vaccineName']['name']):'farrier name not showing'),
+                  trailing: Text(vaccinationlist[index]['vetId']!=null?'Vet: '+(vaccinationlist[index]['vetName']['contactName']['name']):'Vet name empty'),
                   onTap: ()async{
                     prefs = await SharedPreferences.getInstance();
                     print((vaccinationlist[index]));

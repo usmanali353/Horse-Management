@@ -410,9 +410,9 @@ class _state_add_farrier extends State<add_vaccination>{
                             print(vaccinationdropdown['costCenterDropDown'][selected_costcenter_id]['id']);
 
                             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                            //pd.show();
+                            pd.show();
                             vaccination_services.vaccinationSave(null,token,0, vaccinationdropdown['horseDropDown'][selected_horse_id]['id'],Start_date,End_Date, vaccinationdropdown['vaccinationTypeDropDown'][selected_vaccinationtype_id]['id'],vaccinationdropdown['vaccineDropDown'][selected_vaccine_id]['id'],vaccinationdropdown['vetDropDown'][selected_vet_id]['id'],dose.text,amount.text, vaccinationdropdown['currencyDropDown'][selected_currency_id]['id'], vaccinationdropdown['categoryDropDown'][selected_category_id]['id'], vaccinationdropdown['costCenterDropDown'][selected_costcenter_id]['id'],).then((response){
-                              //pd.dismiss();
+                              pd.dismiss();
                               if(response !=null)
                                 print("Successfully lab test added");
                               else{

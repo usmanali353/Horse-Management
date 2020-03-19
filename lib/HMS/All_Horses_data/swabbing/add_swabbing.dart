@@ -7,14 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
-
-
-
-
-
-
-
-
 class MainPageState extends StatelessWidget {
   BuildContext scaffoldContext;
 
@@ -116,7 +108,7 @@ class _state_add_farrier extends State<add_swabbing>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Horse"),),
+        appBar: AppBar(title: Text("Add Swabbing"),),
         body: ListView(
           children: <Widget>[
             Column(
@@ -278,10 +270,10 @@ class _state_add_farrier extends State<add_swabbing>{
                             print(comment.text);
                             print(int.parse(amount.text));
                             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                            //pd.show();
+                            pd.show();
                             swabbing_services.swabbingSave(null,token,0, swabbingdropdown['horseDropDown'][selected_horse_id]['id'],swabbing_date,treatment_date,antibiotic.text,result.text,amount.text,comment.text).then((response){
 
-                              //pd.dismiss();
+                              pd.dismiss();
                               if(response !=null)
                                 print(response);
 

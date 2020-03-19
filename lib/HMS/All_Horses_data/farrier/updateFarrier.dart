@@ -229,7 +229,7 @@ class _state_add_farrier extends State<update_farrier> {
                             top: 16, left: 16, right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Cost Center",
-                          //initialValue: get_costcenter_by_id(farrierlist['costCenterId'])!= null ? get_costcenter_by_id(farrierlist['costCenterId']):null,
+                          //initialValue: get_costcenter_by_id(farrierlist['costCenterId']),
                           validators: [FormBuilderValidators.required()],
                           hint: Text("Select Center"),
                           items: costcenter!=null?costcenter.map((plans)=>DropdownMenuItem(
@@ -268,6 +268,7 @@ class _state_add_farrier extends State<update_farrier> {
                             top: 16, left: 16, right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Account Category",
+                          initialValue: get_category_by_id(farrierlist['categoryId']),
                           validators: [FormBuilderValidators.required()],
                           hint: Text("Select Category"),
                           items:  category!=null?category.map((plans)=>DropdownMenuItem(
@@ -306,6 +307,7 @@ class _state_add_farrier extends State<update_farrier> {
                             top: 16, left: 16, right: 16),
                         child: FormBuilderDropdown(
                           attribute: "currency",
+                          initialValue: get_currency_by_id(farrierlist['currencyId']),
                           validators: [FormBuilderValidators.required()],
                           hint: Text("Select Currency"),
                           items:  currency!=null?currency.map((plans)=>DropdownMenuItem(
@@ -344,6 +346,7 @@ class _state_add_farrier extends State<update_farrier> {
                             top: 16, left: 16, right: 16),
                         child: FormBuilderDropdown(
                           attribute: "contact",
+                          initialValue: get_contact_by_id(farrierlist['contactId']),
                           validators: [FormBuilderValidators.required()],
                           hint: Text("Select Contact"),
                           items:contact!=null?contact.map((plans)=>DropdownMenuItem(
@@ -402,8 +405,10 @@ class _state_add_farrier extends State<update_farrier> {
                       child: MaterialButton(
                         color: Colors.teal,
                         onPressed: () {
+                          print(get_category_by_id(6)+"abcccccc");
                           if (_fbKey.currentState.validate()) {
                             print(_fbKey.currentState.value);
+                            _fbKey.currentState.save();
 
                             print(farrierlist['id']);
                             print(token);print(createdBy);print(farrierdropdown['horseDropDown'][selected_horse_id]['id']);print(selected_shoeingtype_id);
@@ -415,9 +420,9 @@ class _state_add_farrier extends State<update_farrier> {
                             print(farrierdropdown['costCenterDropDown'][selected_costcenter_id]['id']);
                             print(farrierdropdown['contactsDropDown'][selected_contact_id]['id']);
                             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                            //pd.show();
+                            pd.show();
                             farrier_services.farrierSave(createdBy,farrierlist['id'],token, farrierdropdown['horseDropDown'][selected_horse_id]['id'], farrierdropdown['farrierDropDown'][selected_farrier_id]['id'],selected_shoeingtype_id, comment.text,amount.text, farrierdropdown['currencyDropDown'][selected_currency_id]['id'], farrierdropdown['categoryDropDown'][selected_category_id]['id'], farrierdropdown['costCenterDropDown'][selected_costcenter_id]['id'], farrierdropdown['contactsDropDown'][selected_contact_id]['id']).then((response){
-                              //pd.dismiss();
+                              pd.dismiss();
                               if(response !=null)
                                 print("Successfully lab test added");
                               else{
@@ -467,7 +472,7 @@ class _state_add_farrier extends State<update_farrier> {
   }
   String get_costcenter_by_id(int id){
     var plan_name;
-    if(farrierlist=null&&farrierdropdown['costCenterDropDown']!=null&&id!=null){
+    if(farrierlist=null&&farrierdropdown['costCenterDropDown']!=null && id!=null){
       for(int i=0;i<costcenter.length;i++){
         if(farrierdropdown['costCenterDropDown'][i]['id']==id){
           plan_name=farrierdropdown['costCenterDropDown'][i]['name'];

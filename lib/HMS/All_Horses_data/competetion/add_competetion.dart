@@ -270,9 +270,9 @@ class _state_add_farrier extends State<add_competetion>{
                             print(comment.text);
                             print(int.parse(judges.text));
                             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                            //pd.show();
+                            pd.show();
                             competetion_services.competetionSave(null,token,0, competetiondropdown['horseDropDown'][selected_horse_id]['id'],select_date, competetiondropdown['performanceTypeDropDown'][selected_performance_id]['id'],eventName.text,city.text,category.text,result.text,rider.text,int.parse(judges.text),comment.text).then((response){
-                              //pd.dismiss();
+                              pd.dismiss();
                               if(response !=null)
                                 print("Successfully lab test added");
                               else{

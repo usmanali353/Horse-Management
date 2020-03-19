@@ -39,7 +39,15 @@ class _state_add_farrier extends State<update_competetion>{
     rider= TextEditingController();judges= TextEditingController();
     comment= TextEditingController();
 
-
+    setState(() {
+      eventName.text = competetionlist['eventName'].toString();
+      city.text = competetionlist['city'].toString();
+      category.text = competetionlist['category'].toString();
+      result.text = competetionlist['result'].toString();
+      rider.text = competetionlist['rider'].toString();
+      judges.text = competetionlist['judges'].toString();
+      comment.text = competetionlist['comment'].toString();
+    });
     competetion_services.competetionDropdown(token).then((response){
       setState(() {
         print(response);
@@ -58,7 +66,7 @@ class _state_add_farrier extends State<update_competetion>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Horse"),),
+        appBar: AppBar(title: Text("Update Competetion"),),
         body: ListView(
           children: <Widget>[
             Column(
@@ -71,7 +79,7 @@ class _state_add_farrier extends State<update_competetion>{
                         padding: const EdgeInsets.all(16),
                         child: FormBuilderDropdown(
                           attribute: "Horse",
-                          //initialValue: 'abc',
+                          initialValue: competetionlist['horseName']['name'],
                           validators: [FormBuilderValidators.required()],
                           hint: Text("Horse"),
                           items: horse!=null?horse.map((plans)=>DropdownMenuItem(
@@ -109,6 +117,7 @@ class _state_add_farrier extends State<update_competetion>{
                         padding: EdgeInsets.only(left: 16,right: 16),
                         child:FormBuilderDateTimePicker(
                           attribute: "date",
+                          initialValue: DateTime.parse(competetionlist['date']!= null ? competetionlist['date']:DateTime.now()),
                           style: Theme.of(context).textTheme.body1,
                           inputType: InputType.date,
                           validators: [FormBuilderValidators.required()],
@@ -127,7 +136,8 @@ class _state_add_farrier extends State<update_competetion>{
                       Padding(
                         padding: const EdgeInsets.only(top: 16,left: 16,right: 16),
                         child: FormBuilderDropdown(
-                          attribute: "vaccination",
+                          attribute: "perform",
+                          initialValue: competetionlist['performanceId']!=null ? competetionlist['performanceTypeName']['name']:null,
                           validators: [FormBuilderValidators.required()],
                           hint: Text("performance"),
                           items: performance!=null?performance.map((types)=>DropdownMenuItem(
@@ -144,6 +154,13 @@ class _state_add_farrier extends State<update_competetion>{
                             ),
                           ),
                           onChanged: (value){
+                            setState((){
+                              this.selected_performance=value;
+                              selected_performance_id=performance.indexOf(value);
+
+                            });
+                          },
+                          onSaved: (value){
                             setState((){
                               this.selected_performance=value;
                               selected_performance_id=performance.indexOf(value);
@@ -266,16 +283,19 @@ class _state_add_farrier extends State<update_competetion>{
                         onPressed: (){
                           if (_fbKey.currentState.validate()) {
                             print(_fbKey.currentState.value);
+                            _fbKey.currentState.save();
 
 
                             print(token);print(competetiondropdown['horseDropDown'][selected_horse_id]['id']);
                             print(comment.text);
-
+                             print(judges.text);
+                             print( competetiondropdown['performanceTypeDropDown'][selected_performance_id]['id']);
+                             print(4);
 
                             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                            //pd.show();
-                            competetion_services.competetionSave(competetionlist['createdBy'],token,competetionlist['competitionId'], competetiondropdown['horseDropDown'][selected_horse_id]['id'],select_date, competetiondropdown['performanceTypeDropDown'][selected_performance_id]['id'],eventName.text,city.text,category.text,result.text,rider.text,int.parse(judges.text),comment.text).then((response){
-                              //pd.dismiss();
+                            pd.show();
+                            competetion_services.competetionSave(competetionlist['createdBy'],token,competetionlist['competitionId'], competetiondropdown['horseDropDown'][selected_horse_id]['id'],select_date, competetiondropdown['performanceTypeDropDown'][selected_performance_id]['id'],eventName.text,city.text,category.text,result.text,rider.text,1,comment.text).then((response){
+                              pd.dismiss();
                               if(response !=null)
                                 print("Successfully lab test added");
                               else{

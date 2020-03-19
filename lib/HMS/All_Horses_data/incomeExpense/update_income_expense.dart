@@ -374,17 +374,18 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                         color: Colors.teal,
                         onPressed: (){
                           if (_fbKey.currentState.validate()) {
+                            _fbKey.currentState.save();
                             print(_fbKey.currentState.value);
                             print(token);print(Select_date);print(amount.text);print(description.text);print(incomeExpenseDropdown['currencyDropDown'][selected_currency_id]['id']);
                             print(incomeExpenseDropdown['categoryDropDown'][selected_category_id]['id']);print(incomeExpenseDropdown['costCenterDropDown'][selected_costcenter_id]['id']);print(incomeExpenseDropdown['contactsDropDown'][selected_contact_id]['id']);
                             print(incomeExpenseDropdown['horseDropDown'][selected_horse_id]['id']);
                             print(selected_account);
                             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                            //pd.show();
+                            pd.show();
                             income_expense_services.income_expenseSave(createdBy,token,expenselist['id'],incomeExpenseDropdown['horseDropDown'][selected_horse_id]['id'], Select_date,
                               amount.text,description.text, incomeExpenseDropdown['currencyDropDown'][selected_currency_id]['id'], incomeExpenseDropdown['categoryDropDown'][selected_category_id]['id'],
                               incomeExpenseDropdown['costCenterDropDown'][selected_costcenter_id]['id'], incomeExpenseDropdown['contactsDropDown'][selected_contact_id]['id'],selected_account,).then((response){
-                              //pd.dismiss();
+                              pd.dismiss();
                               if(response !=null)
                                 print("Successfully income  added");
                               else{

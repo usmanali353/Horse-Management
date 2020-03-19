@@ -37,8 +37,7 @@ class _Profile_Page_State extends State<movement_list>{
 
     Utils.check_connectivity().then((result){
       if(result) {
-        ProgressDialog pd = ProgressDialog(
-            context, isDismissible: true, type: ProgressDialogType.Normal);
+        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
         pd.show();
         movement_services.movement_list(token).then((response) {
           pd.dismiss();
