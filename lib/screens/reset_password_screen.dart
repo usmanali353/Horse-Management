@@ -178,30 +178,18 @@ class scrollview extends StatelessWidget {
                                 var pd= ProgressDialog(context, type: ProgressDialogType.Normal);
                                 pd.show();
                                 network_operations.Reset_Password(Email,token,password.text).then((response_json)async{
-                                  if(response_json==null){
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      backgroundColor: Colors.red,
-                                      content: Text("Failed to Reset Password"),
-                                    ));
-                                  }else{
-                                    var parsedJson = json.decode(response_json);
-                                    if(parsedJson['isSuccess']==true){
-                                      pd.dismiss();
-                                      Scaffold.of(context).showSnackBar(SnackBar(
-                                        backgroundColor: Colors.green,
-                                        content: Text("Your Password is Changed"),
-                                      ));
-                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>LoginScreen()),(Route<dynamic> route) => false);
-                                    }else{
-                                      pd.dismiss();
-                                      Scaffold.of(context).showSnackBar(SnackBar(
-                                        backgroundColor: Colors.red,
-                                        content: Text("Failed to Reset Password"),
-                                      ));
-                                    }
-                                  }
-                                }).catchError((error){
-                                  print(error);
+                                   if(response_json!=null){
+                                     Scaffold.of(context).showSnackBar(SnackBar(
+                                       content: Text("Password Reset Sucessfully"),
+                                       backgroundColor: Colors.green,
+                                     ));
+                                     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>LoginScreen()),(Route<dynamic> route) => false);
+                                   }else{
+                                     Scaffold.of(context).showSnackBar(SnackBar(
+                                       content: Text("Password Reset Failed"),
+                                       backgroundColor: Colors.red,
+                                     ));
+                                   }
                                 });
                               }else{
                                 Scaffold.of(context).showSnackBar(SnackBar(

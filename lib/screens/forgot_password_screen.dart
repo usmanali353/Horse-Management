@@ -133,25 +133,16 @@ class scrollview extends StatelessWidget {
                                  pd.show();
                                  network_operations.Forgot_Password(email.text).then((response){
                                    pd.dismiss();
-                                   if(response==null){
+                                   if(response!=null){
                                      Scaffold.of(context).showSnackBar(SnackBar(
-                                       content: Text("Email Does not Exist in our Record"),
-                                       backgroundColor: Colors.red,
+                                       backgroundColor: Colors.green,
+                                       content: Text("Email is Verified"),
                                      ));
                                    }else{
-                                     var parsedjson=json.decode(response);
-                                     if(parsedjson['isSuccess']==true){
-                                       Scaffold.of(context).showSnackBar(SnackBar(
-                                         content: Text("Your Email is Verified"),
-                                         backgroundColor: Colors.green,
-                                       ));
-                                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>reset_password_screen(email.text,parsedjson['result']['token'])),(Route<dynamic> route) => false);
-                                     }else{
-                                       Scaffold.of(context).showSnackBar(SnackBar(
-                                         content: Text("Email Does not Exist in our Record"),
-                                         backgroundColor: Colors.red,
-                                       ));
-                                     }
+                                     Scaffold.of(context).showSnackBar(SnackBar(
+                                       backgroundColor: Colors.red,
+                                       content: Text("Email is not Verified"),
+                                     ));
                                    }
 
                                  });
