@@ -106,11 +106,8 @@ class _add_vaccines extends State<add_vaccines> {
           children: <Widget>[
             FormBuilder(
               key: _fbKey,
-              initialValue: {
-                'date': DateTime.now(),
-                'accept_terms': false,
-              },
-              autovalidate: true,
+
+             // autovalidate: true,
               child: Column(
                 children: <Widget>[
                   Padding(
@@ -530,17 +527,16 @@ class _add_vaccines extends State<add_vaccines> {
                       pd.show();
                       VaccinesServices.addVaccines(token, 0, name.text, comments.text,selected_reminder_id, usage_id, primaryvaccination.text, booster.text, revaccination.text, firstdose.text, seconddose.text, thirddose.text, null)                                      .then((respons){
                         pd.dismiss();
-                        if(respons!=null){
-//                          Scaffold.of(context).showSnackBar(SnackBar(
-//                            content: Text("Saved "),
-//                            backgroundColor: Colors.green,
-//                          ));
-                        }else{
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text("Not Saved "),
-                            backgroundColor: Colors.red,
-                          ));
-                        }
+                        setState(() {
+                          var parsedjson  = jsonDecode(respons);
+                          if(parsedjson != null){
+                            if(parsedjson['isSuccess'] == true){
+                              print("Successfully data updated");
+                            }else
+                              print("not saved");
+                          }else
+                            print("json response null");
+                        });
                       });
                     }
                   });

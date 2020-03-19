@@ -46,34 +46,92 @@ class _update_dam extends State<update_dam>{
   bool dam_loaded=false;
 
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
+  var breed_name,color_name;
   @override
   void initState() {
+    // TODO: implement initState
+    super.initState();
     this.name=TextEditingController();
     this.number=TextEditingController();
     this.microchip=TextEditingController();
-
-    // local_db=sqlite_helper();
-    Utils.check_connectivity().then((result){
-      if(result){
-        DamServices.get_Dam_dropdowns(token).then((response){
-          if(response!=null){
-            print(response);
-            setState(() {
-              dam_response=json.decode(response);
-              for(int i=0;i<dam_response['breedDropDown'].length;i++)
-                breed.add(dam_response['breedDropDown'][i]['name']);
-              for(int i=0;i<dam_response['colorDropDown'].length;i++)
-                color.add(dam_response['colorDropDown'][i]['name']);
-              dam_loaded=true;
-            });
+    setState(() {
+      if(specificdam['name']!=null){
+        name.text=specificdam['name'];
+      }
+      if(specificdam['number']!=null){
+        number.text=specificdam['number'];
+      }
+      if(specificdam['microchipNo']!=null){
+        microchip.text=specificdam['microchipNo'];
+      }
+    });
+    DamServices.get_Dam_dropdowns(token).then((response){
+      if(response!=null){
+        setState(() {
+          dam_response=json.decode(response);
+          for(int i=0;i<dam_response['breedDropDown'].length;i++) {
+            breed.add(dam_response['breedDropDown'][i]['name']);
+          }
+          for(int i=0;i<dam_response['colorDropDown'].length;i++) {
+            color.add(dam_response['colorDropDown'][i]['name']);
           }
         });
       }else{
-        print("Network Not Available");
+
       }
     });
-
   }
+  String get_breed_name(int id){
+    if(dam_response!=null&&id!=null) {
+      for (int i = 0; i < dam_response['breedDropDown'].length; i++) {
+        if(dam_response['breedDropDown'][i]['id']==id) {
+          breed_name = dam_response['breedDropDown'][i]['name'];
+        }
+      }
+    }
+    return breed_name;
+  }
+  String get_color_name(int id){
+    if(dam_response!=null&&id!=null) {
+      for (int i = 0; i < dam_response['colorDropDown'].length; i++) {
+        if(dam_response['colorDropDown'][i]['id']==id) {
+          color_name = dam_response['colorDropDown'][i]['name'];
+        }
+      }
+    }
+    return color_name;
+  }
+
+
+//  @override
+//  void initState() {
+//    super.initState();
+//    this.name=TextEditingController();
+//    this.number=TextEditingController();
+//    this.microchip=TextEditingController();
+//
+//    // local_db=sqlite_helper();
+//    Utils.check_connectivity().then((result){
+//      if(result){
+//        DamServices.get_Dam_dropdowns(token).then((response){
+//          if(response!=null){
+//            print(response);
+//            setState(() {
+//              dam_response=json.decode(response);
+//              for(int i=0;i<dam_response['breedDropDown'].length;i++)
+//                breed.add(dam_response['breedDropDown'][i]['name']);
+//              for(int i=0;i<dam_response['colorDropDown'].length;i++)
+//                color.add(dam_response['colorDropDown'][i]['name']);
+//              dam_loaded=true;
+//            });
+//          }
+//        });
+//      }else{
+//        print("Network Not Available");
+//      }
+//    });
+//
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,6 +168,8 @@ class _update_dam extends State<update_dam>{
                             //  visible: sale_loaded,
                             child: FormBuilderDropdown(
                               attribute: "Breed",
+                             // initialValue: specificdam!=null?specificdam['name']:null,
+                              initialValue: get_breed_name(specificdam['breedId']),
                               validators: [FormBuilderValidators.required()],
                               hint: Text("Breed"),
                               items:breed!=null?breed.map((horse)=>DropdownMenuItem(
@@ -140,6 +200,8 @@ class _update_dam extends State<update_dam>{
                             //  visible: sale_loaded,
                             child: FormBuilderDropdown(
                               attribute: "Color",
+                             // initialValue: specificdam!=null?specificdam['name']:null,
+                              initialValue: get_color_name(specificdam['colorId']),
                               validators: [FormBuilderValidators.required()],
                               hint: Text("Color"),
                               items:breed!=null?breed.map((horse)=>DropdownMenuItem(
@@ -232,17 +294,16 @@ class _update_dam extends State<update_dam>{
                                     pd.show();
                                     DamServices.addDam(token, specificdam['horseId'], name.text, selected_breed_id, selected_color_id, select_DOB, number.text, microchip.text, specificdam['createdBy']).then((respons){
                                       pd.dismiss();
-                                      if(respons!=null){
-//                                        Scaffold.of(context).showSnackBar(SnackBar(
-//                                          content: Text("Updated "),
-//                                          backgroundColor: Colors.green,
-//                                        ));
-                                      }else{
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Not Updated "),
-                                          backgroundColor: Colors.red,
-                                        ));
-                                      }
+                                      setState(() {
+                                        var parsedjson  = jsonDecode(respons);
+                                        if(parsedjson != null){
+                                          if(parsedjson['isSuccess'] == true){
+                                            print("Successfully data updated");
+                                          }else
+                                            print("not saved");
+                                        }else
+                                          print("json response null");
+                                      });
                                     });
                                   }
                                 });

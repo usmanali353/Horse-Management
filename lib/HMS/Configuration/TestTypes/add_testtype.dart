@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -174,17 +176,16 @@ class _add_testtype extends State<add_testtype>{
                                     TestTypesServices.addTestTypes(token, 0, name.text, validity.text, selected_reminder_id, showReminders.text, null,)
                                         .then((respons){
                                       pd.dismiss();
-                                      if(respons!=null){
-//                                        Scaffold.of(context).showSnackBar(SnackBar(
-//                                          content: Text("Saved "),
-//                                          backgroundColor: Colors.green,
-//                                        ));
-                                      }else{
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Not Saved "),
-                                          backgroundColor: Colors.red,
-                                        ));
-                                      }
+                                      setState(() {
+                                        var parsedjson  = jsonDecode(respons);
+                                        if(parsedjson != null){
+                                          if(parsedjson['isSuccess'] == true){
+                                            print("Successfully data updated");
+                                          }else
+                                            print("not saved");
+                                        }else
+                                          print("json response null");
+                                      });
                                     });
                                   }
                                 });

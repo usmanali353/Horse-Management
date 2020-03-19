@@ -342,17 +342,16 @@ class _semen_stock_form extends State<semen_stock_form>{
                                         SemenStockServices.add_semen_dose(token, 0, dose_response['horseDropDown'][selected_horse_id]['id'], dose_response['tankDropDown'][selected_tank_id]['id'], DateTime.now(), DateTime.now(), quantity.text, cannister.text, price.text, serial_number.text, batch_number.text, selected_was_bought_id, selected_on_sale_id,null)
                                        .then((respons){
                                           pd.dismiss();
-                                          if(respons!=null){
-                                            Scaffold.of(context).showSnackBar(SnackBar(
-                                              content: Text("Saved "),
-                                              backgroundColor: Colors.green,
-                                            ));
-                                          }else{
-                                            Scaffold.of(context).showSnackBar(SnackBar(
-                                              content: Text("Not Saved "),
-                                              backgroundColor: Colors.red,
-                                            ));
-                                          }
+                                          setState(() {
+                                            var parsedjson  = jsonDecode(respons);
+                                            if(parsedjson != null){
+                                              if(parsedjson['isSuccess'] == true){
+                                                print("Successfully data updated");
+                                              }else
+                                                print("not saved");
+                                            }else
+                                              print("json response null");
+                                          });
                                         });
                                       }
                                     });

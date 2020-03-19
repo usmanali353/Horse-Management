@@ -78,11 +78,7 @@ class _add_new_opertation_note extends State<add_new_opertation_note>{
             children: <Widget>[
               FormBuilder(
                 key: _fbKey,
-                initialValue: {
-                  'date': DateTime.now(),
-                  'accept_terms': false,
-                },
-                autovalidate: true,
+                //autovalidate: true,
                 child: Column(children: <Widget>[
                   Padding(padding: const EdgeInsets.only(left: 16,right: 16, top:16),
                     child:  FormBuilderDateTimePicker(
@@ -157,17 +153,16 @@ class _add_new_opertation_note extends State<add_new_opertation_note>{
                             pd.show();
                             OperationNotesServices.add_Operation_Notes(null,token,0,DateTime.now(),notes_response['generalCategoeyDropDown'][selected_notes_id]['id'], details.text)                                .then((respons){
                               pd.dismiss();
-                              if(respons!=null){
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text("Saved "),
-                                  backgroundColor: Colors.green,
-                                ));
-                              }else{
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text("Not Saved "),
-                                  backgroundColor: Colors.red,
-                                ));
-                              }
+                              setState(() {
+                                var parsedjson  = jsonDecode(respons);
+                                if(parsedjson != null){
+                                  if(parsedjson['isSuccess'] == true){
+                                    print("Successfully data updated");
+                                  }else
+                                    print("not saved");
+                                }else
+                                  print("json response null");
+                              });
                             });
                           }
                         });

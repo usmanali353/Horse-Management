@@ -42,31 +42,63 @@ class _update_opertation_note extends State<update_opertation_note>{
   bool _isvisible=false;
   //bool notes_loaded=false;
   bool update_notes_visibility;
-
-
+  var notes_name;
   @override
   void initState() {
+    // TODO: implement initState
+    super.initState();
     this.details=TextEditingController();
-    // local_db=sqlite_helper();
-    Utils.check_connectivity().then((result){
-      if(result){
-        OperationNotesServices.get_Operation_Notes_dropdowns(token).then((response){
-          if(response!=null){
-            print(response);
-            setState(() {
-              notes_response=json.decode(response);
-              for(int i=0;i<notes_response['generalCategoeyDropDown'].length;i++)
-                notes.add(notes_response['generalCategoeyDropDown'][i]['name']);
-              //notes_loaded=true;
-              update_notes_visibility=true;
-            });
-          }
-        });
-      }else{
-        print("Network Not Available");
+    setState(() {
+      if(specificnote['details']!=null){
+        details.text=specificnote['details'];
       }
     });
+    OperationNotesServices.get_Operation_Notes_dropdowns(token).then((response){
+      if(response!=null) {
+        setState(() {
+          notes_response=json.decode(response);
+              for(int i=0;i<notes_response['generalCategoeyDropDown'].length;i++) {
+                notes.add(notes_response['generalCategoeyDropDown'][i]['name']);
+              }
+              //notes_loaded=true;
+             // update_notes_visibility=true;
+        });
+      }});
   }
+  String get_category_name(int id){
+    if(notes_response!=null&&id!=null) {
+      for (int i = 0; i < notes_response['generalCategoeyDropDown'].length; i++) {
+        if(notes_response['generalCategoeyDropDown'][i]['id']==id) {
+          notes_name = notes_response['generalCategoeyDropDown'][i]['name'];
+        }
+      }
+    }
+    return notes_name;
+  }
+
+//  @override
+//  void initState() {
+//    this.details=TextEditingController();
+//    // local_db=sqlite_helper();
+//    Utils.check_connectivity().then((result){
+//      if(result){
+//        OperationNotesServices.get_Operation_Notes_dropdowns(token).then((response){
+//          if(response!=null){
+//            print(response);
+//            setState(() {
+//              notes_response=json.decode(response);
+//              for(int i=0;i<notes_response['generalCategoeyDropDown'].length;i++)
+//                notes.add(notes_response['generalCategoeyDropDown'][i]['name']);
+//              //notes_loaded=true;
+//              update_notes_visibility=true;
+//            });
+//          }
+//        });
+//      }else{
+//        print("Network Not Available");
+//      }
+//    });
+//  }
 
 
   @override
@@ -81,14 +113,12 @@ class _update_opertation_note extends State<update_opertation_note>{
             children: <Widget>[
               FormBuilder(
                 key: _fbKey,
-                initialValue: {
-                  'date': DateTime.now(),
-                  'accept_terms': false,
-                },
-                autovalidate: true,
+
+               // autovalidate: true,
                 child: Column(children: <Widget>[
                   Padding(padding: const EdgeInsets.only(left: 16,right: 16, top:16),
                     child:  FormBuilderDateTimePicker(
+                      initialValue: specificnote['date']!=null?DateTime.parse(specificnote['date']):null,
                       onChanged: (value){
                         this.select_date=value;
                       },
@@ -110,6 +140,7 @@ class _update_opertation_note extends State<update_opertation_note>{
                       //visible: sale_loaded,
                       child: FormBuilderDropdown(
                         attribute: "General Category",
+                        initialValue: get_category_name(specificnote['generalCategoryId']),
                         validators: [FormBuilderValidators.required()],
                         hint: Text("General Category"),
                         items:notes!=null?notes.map((horse)=>DropdownMenuItem(
@@ -161,17 +192,16 @@ class _update_opertation_note extends State<update_opertation_note>{
                             OperationNotesServices.add_Operation_Notes(specificnote['createdBy'],token,specificnote['operationNoteId'],DateTime.now(),notes_response['generalCategoeyDropDown'][selected_notes_id]['id'], details.text)
                                 .then((respons){
                               pd.dismiss();
-                              if(respons!=null){
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text("Updated "),
-                                  backgroundColor: Colors.green,
-                                ));
-                              }else{
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text("Not Updated "),
-                                  backgroundColor: Colors.red,
-                                ));
-                              }
+                              setState(() {
+                                var parsedjson  = jsonDecode(respons);
+                                if(parsedjson != null){
+                                  if(parsedjson['isSuccess'] == true){
+                                    print("Successfully data updated");
+                                  }else
+                                    print("not saved");
+                                }else
+                                  print("json response null");
+                              });
                             });
                           }
                         });

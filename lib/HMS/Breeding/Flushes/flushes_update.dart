@@ -78,10 +78,6 @@ class _flushes_update extends State<flushes_update>{
                 children: <Widget>[
                   FormBuilder(
                     key: _fbKey,
-                    initialValue: {
-                      'date': DateTime.now(),
-                      'accept_terms': false,
-                    },
                    // autovalidate: true,
                     child: Column(children: <Widget>[
 //
@@ -228,19 +224,19 @@ class _flushes_update extends State<flushes_update>{
                               if(result){
                                 ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                                 pd.show();
-                                FlushesServicesJson.add_flushes(specificflushing['createdBy'],token,specificflushing['id'],flushes_response['horseDropDown'][selected_horse_id]['id'],Select_date, flushes_response['vetDropDown'][selected_vet_id]['id'],selected_success_id,embryos.text, comments.text ).then((response){
+                                FlushesServicesJson.add_flushes(specificflushing['createdBy'],token,specificflushing['id'],flushes_response['horseDropDown'][selected_horse_id]['id'],Select_date, flushes_response['vetDropDown'][selected_vet_id]['id'],selected_success_id,embryos.text, comments.text )
+                                    .then((response){
                                  pd.dismiss();
-                                 if(response!=null){
-                                   Scaffold.of(context).showSnackBar(SnackBar(
-                                     content: Text("Updated"),
-                                     backgroundColor: Colors.green,
-                                   ));
-                                 }else{
-                                   Scaffold.of(context).showSnackBar(SnackBar(
-                                     content: Text("Not Updated"),
-                                     backgroundColor: Colors.red,
-                                   ));
-                                 }
+                                 setState(() {
+                                   var parsedjson  = jsonDecode(response);
+                                   if(parsedjson != null){
+                                     if(parsedjson['isSuccess'] == true){
+                                       print("Successfully data updated");
+                                     }else
+                                       print("not saved");
+                                   }else
+                                     print("json response null");
+                                 });
                                 });
                               }
                             });

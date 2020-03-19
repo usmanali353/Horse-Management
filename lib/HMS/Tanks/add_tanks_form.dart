@@ -80,10 +80,6 @@ class _add_tanks_form extends State<add_tanks_form>{
             children: <Widget>[
               FormBuilder(
                 key: _fbKey,
-                initialValue: {
-                  'date': DateTime.now(),
-                  'accept_terms': false,
-                },
                 child: Column(children: <Widget>[
                   Padding(
                     padding: EdgeInsets.only(left: 16,right: 16, top:16),
@@ -221,17 +217,16 @@ class _add_tanks_form extends State<add_tanks_form>{
                             pd.show();
                             TanksServices.add_Tanks(null,token,0,name.text,tanks_response['locationDropDown'][selected_tanks_id]['locationId'], capacity.text,lastfill_date,nextfill_date,policynumber.text,policydue_date)                                .then((respons){
                               pd.dismiss();
-                              if(respons!=null){
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text("Saved "),
-                                  backgroundColor: Colors.green,
-                                ));
-                              }else{
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text("Not Saved "),
-                                  backgroundColor: Colors.red,
-                                ));
-                              }
+                              setState(() {
+                                var parsedjson  = jsonDecode(respons);
+                                if(parsedjson != null){
+                                  if(parsedjson['isSuccess'] == true){
+                                    print("Successfully data updated");
+                                  }else
+                                    print("not saved");
+                                }else
+                                  print("json response null");
+                              });
                             });
                           }
                         });

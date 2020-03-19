@@ -66,13 +66,12 @@ class _update_breeding_control_state extends State<update_breeding_control>{
       if(response!=null){
         setState(() {
           breeding_control_list=json.decode(response);
-          currency_loaded=true;
+          //currency_loaded=true;
           account_category_loaded=true;
           horses_loaded=true;
           vets_loaded=true;
           related_services_loaded=true;
           for(int i=0;i<breeding_control_list['currencyDropDown'].length;i++){
-
             currency.add(breeding_control_list['currencyDropDown'][i]['name']);
           }
           for(int i=0;i<breeding_control_list['costCenterDropDown'].length;i++){
@@ -798,7 +797,7 @@ class _update_breeding_control_state extends State<update_breeding_control>{
                     Padding(
                       padding: const EdgeInsets.only(top: 16,left: 16,right: 16),
                       child: Visibility(
-                        visible: currency_loaded,
+                        //visible: currency_loaded,
                         child: FormBuilderDropdown(
                           attribute: "Currency",
                           initialValue: get_currency_name(breeding_control_data['currency']),

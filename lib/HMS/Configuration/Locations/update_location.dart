@@ -37,6 +37,14 @@ class _update_location extends State<update_location>{
   void initState() {
     this.location_name=TextEditingController();
     this.description=TextEditingController();
+    setState(() {
+      if(specificlocation['name']!=null){
+        location_name.text=specificlocation['name'];
+      }
+      if(specificlocation['description']!=null){
+        description.text=specificlocation['description'];
+      }
+    });
     // local_db=sqlite_helper();
 //    Utils.check_connectivity().then((result){
 //      if(result){
@@ -74,11 +82,7 @@ class _update_location extends State<update_location>{
                 children: <Widget>[
                   FormBuilder(
                     key: _fbKey,
-                    initialValue: {
-                      'date': DateTime.now(),
-                      'accept_terms': false,
-                    },
-                    autovalidate: true,
+                   // autovalidate: true,
                     child: Column(children: <Widget>[
 //
                       Padding(
@@ -122,17 +126,16 @@ class _update_location extends State<update_location>{
                                 pd.show();
                                 LocationServices.addLocation(token,specificlocation['id'],location_name.text,description.text,specificlocation['createdBy']).then((respons){
                                   pd.dismiss();
-                                  if(respons!=null){
-//                                    Scaffold.of(context).showSnackBar(SnackBar(
-//                                      content: Text("Updated "),
-//                                      backgroundColor: Colors.green,
-//                                    ));
-                                  }else{
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Not Updated "),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                  }
+                                  setState(() {
+                                    var parsedjson  = jsonDecode(respons);
+                                    if(parsedjson != null){
+                                      if(parsedjson['isSuccess'] == true){
+                                        print("Successfully data updated");
+                                      }else
+                                        print("not saved");
+                                    }else
+                                      print("json response null");
+                                  });
                                 });
                               }
                             });

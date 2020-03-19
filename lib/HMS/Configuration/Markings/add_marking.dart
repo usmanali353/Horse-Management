@@ -151,17 +151,16 @@ class _add_marking extends State<add_marking>{
                                     MarkingServices.addMarkings(token, 0,name.text,abbreviation.text, null,selected_marking_id)
                                         .then((respons){
                                       pd.dismiss();
-                                      if(respons!=null){
-//                                        Scaffold.of(context).showSnackBar(SnackBar(
-//                                          content: Text("Saved "),
-//                                          backgroundColor: Colors.green,
-//                                        ));
-                                      }else{
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Not Saved "),
-                                          backgroundColor: Colors.red,
-                                        ));
-                                      }
+                                      setState(() {
+                                        var parsedjson  = jsonDecode(respons);
+                                        if(parsedjson != null){
+                                          if(parsedjson['isSuccess'] == true){
+                                            print("Successfully data updated");
+                                          }else
+                                            print("not saved");
+                                        }else
+                                          print("json response null");
+                                      });
                                     });
                                   }
                                 });

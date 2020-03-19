@@ -28,12 +28,25 @@ class _currency_list extends State<currency_list>{
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   var currency_lists;
-
+  var currency_response;
+  List<String> currency=[];
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+
+    CurrenciesServices.getCurrencyDropdown(token).then((response){
+      if(response!=null){
+        setState(() {
+          currency_response=json.decode(response);
+          //currency_loaded=true;
+          for(int i=0;i<currency_response['currencySymbolsDropDown'].length;i++)
+            currency.add(currency_response['currencySymbolsDropDown'][i]['name']);
+        });
+
+      }
+    });
   }
 
   @override
@@ -129,7 +142,7 @@ class _currency_list extends State<currency_list>{
                       ),
                     ],
                     child: ListTile(
-                      title: Text(currency_lists!=null?currency_lists[index]['name']:''),
+                      title: Text(currency_lists!=null?currency_lists[index]['id'].toString():''),
                       // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
                       //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
 //                      onTap: (){

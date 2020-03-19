@@ -36,6 +36,14 @@ class _update_color extends State<update_color>{
   void initState() {
     this.color_name=TextEditingController();
     this.abbreviation=TextEditingController();
+    setState(() {
+      if(specificColor['name']!=null){
+        color_name.text=specificColor['name'];
+      }
+      if(specificColor['abbrivation']!=null){
+        abbreviation.text=specificColor['abbrivation'];
+      }
+    });
     // local_db=sqlite_helper();
 //    Utils.check_connectivity().then((result){
 //      if(result){
@@ -73,11 +81,7 @@ class _update_color extends State<update_color>{
                 children: <Widget>[
                   FormBuilder(
                     key: _fbKey,
-                    initialValue: {
-                      'date': DateTime.now(),
-                      'accept_terms': false,
-                    },
-                    autovalidate: true,
+                    //autovalidate: true,
                     child: Column(children: <Widget>[
 //
                       Padding(
@@ -122,17 +126,16 @@ class _update_color extends State<update_color>{
                                 pd.show();
                                 ColorsServices.addColor(token,specificColor['id'],color_name.text,abbreviation.text,specificColor['createdBy'],).then((respons){
                                   pd.dismiss();
-                                  if(respons!=null){
-//                                    Scaffold.of(context).showSnackBar(SnackBar(
-//                                      content: Text("Updated "),
-//                                      backgroundColor: Colors.green,
-//                                    ));
-                                  }else{
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Not Updated "),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                  }
+                                  setState(() {
+                                    var parsedjson  = jsonDecode(respons);
+                                    if(parsedjson != null){
+                                      if(parsedjson['isSuccess'] == true){
+                                        print("Successfully data updated");
+                                      }else
+                                        print("not saved");
+                                    }else
+                                      print("json response null");
+                                  });
                                 });
                               }
                             });

@@ -1,12 +1,7 @@
-import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
-import 'package:horse_management/HMS/Veterinary/VetVisits/vet_visit.dart';
-import 'package:horse_management/health_record_form.dart';
-
+import 'package:horse_management/HMS/Veterinary/VetVisits/vetVisitsList.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Confirmation/confirmation.dart';
-
-
-
 class vet_category extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -58,8 +53,9 @@ class _Profile_Page_State extends State<vet_category>{
                     subtitle: Text("Add Vet Visit"),
                     leading: Icon(Icons.speaker_notes,size: 40,),
                     trailing: Icon(Icons.arrow_right),
-                    onTap: (){
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=>vet_visit()));
+                    onTap: ()async{
+                      SharedPreferences prefs=await SharedPreferences.getInstance();
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=>vetVisitList(prefs.getString("token"))));
                     },
                   ),
 

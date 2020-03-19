@@ -80,7 +80,7 @@ class _training_list_state extends State<horse_list>{
                   ),
                 ],
                 child: ListTile(
-                  leading: Image.asset("Assets/horse_icon.png", fit: BoxFit.cover),
+                  leading: Image.asset("assets/horse_icon.png", fit: BoxFit.cover),
                   title: Text(horse_list!=null?(horse_list[index]['name']):''),
                   subtitle: Text(horse_list!=null?horse_list[index]['dateOfBirth'].toString():''),
                   //leading: Image.asset("Assets/horses_icon.png"),

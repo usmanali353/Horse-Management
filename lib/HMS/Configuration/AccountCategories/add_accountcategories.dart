@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -205,17 +207,16 @@ class _add_accountcategories extends State<add_accountcategories>{
                                     AccountCategoriesServices.addAccountCategory(token, 0, code.text, name.text, description.text, null, selected_isIncome_id, selected_isActive_id)
                                         .then((respons){
                                       pd.dismiss();
-                                      if(respons!=null){
-//                                        Scaffold.of(context).showSnackBar(SnackBar(
-//                                          content: Text("Saved "),
-//                                          backgroundColor: Colors.green,
-//                                        ));
-                                      }else{
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Not Saved "),
-                                          backgroundColor: Colors.red,
-                                        ));
-                                      }
+                                      setState(() {
+                                        var parsedjson  = jsonDecode(respons);
+                                        if(parsedjson != null){
+                                          if(parsedjson['isSuccess'] == true){
+                                            print("Successfully data updated");
+                                          }else
+                                            print("not saved");
+                                        }else
+                                          print("json response null");
+                                      });
                                     });
                                   }
                                 });

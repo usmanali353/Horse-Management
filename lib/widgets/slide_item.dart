@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:horse_management/util/const.dart';
 
 class SlideItem extends StatefulWidget {
 
@@ -81,7 +80,8 @@ class _SlideItemState extends State<SlideItem> {
                     "${widget.address}",
                     style: TextStyle(
                       fontSize: 15,
-                      fontWeight: FontWeight.w300,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.teal
                     ),
                   ),
                 ),

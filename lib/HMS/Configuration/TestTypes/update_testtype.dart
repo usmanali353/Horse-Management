@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -32,6 +34,7 @@ class _update_testtype extends State<update_testtype>{
 
   // sqlite_helper local_db;
   List<String>  reminder=['Yes','No'] ;
+
   // var stock_response;
   //var training_types_list=['Simple','Endurance','Customized','Speed'];
   TextEditingController name,validity,showReminders;
@@ -39,10 +42,41 @@ class _update_testtype extends State<update_testtype>{
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
   @override
   void initState() {
+    // TODO: implement initState
+    super.initState();
     this.name=TextEditingController();
     this.validity=TextEditingController();
     this.showReminders=TextEditingController();
-    // local_db=sqlite_helper();
+    setState(() {
+      if(specifictype['name']!=null){
+        name.text=specifictype['name'];
+      }
+      if(specifictype['validity']!=null){
+        validity.text=specifictype['validity'].toString();
+      }
+      if(specifictype['reminderBeforeDays']!=null){
+        showReminders.text=specifictype['reminderBeforeDays'].toString();
+      }
+    });
+
+  }
+  String get_yesno(bool b){
+    var yesno;
+    if(b!=null){
+      if(b){
+        yesno="Yes";
+      }else {
+        yesno = "No";
+      }
+    }
+    return yesno;
+  }
+//  @override
+//  void initState() {
+//    this.name=TextEditingController();
+//    this.validity=TextEditingController();
+//    this.showReminders=TextEditingController();
+//     local_db=sqlite_helper();
 //    Utils.check_connectivity().then((result){
 //      if(result){
 //        AccountCategoriesServices.get_embryo_stock_dropdowns(token).then((response){
@@ -64,8 +98,8 @@ class _update_testtype extends State<update_testtype>{
 //        print("Network Not Available");
 //      }
 //    });
-
-  }
+//
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +150,7 @@ class _update_testtype extends State<update_testtype>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Reminder",
+                            initialValue: get_yesno(specifictype['reminder']),
                             validators: [FormBuilderValidators.required()],
                             hint: Text("Reminder"),
                             items: reminder!=null?reminder.map((trainer)=>DropdownMenuItem(
@@ -125,18 +160,28 @@ class _update_testtype extends State<update_testtype>{
                                 value: name, child: Text("$name")))
                                 .toList(),
                             style: Theme.of(context).textTheme.body1,
-                            decoration: InputDecoration(labelText: "Is Income",
+                            decoration: InputDecoration(labelText: "Reminder",
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(9.0),
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)
                               ),
                             ),
+                            onSaved: (value){
+                              setState(() {
+                                if(value=="Yes"){
+                                  selected_reminder_id =true;
+                                }else{
+                                  selected_reminder_id=false;
+                                }
+                              });
+                            },
                             onChanged: (value){
                               setState(() {
-                                if(value == "Yes")
-                                  selected_reminder_id = true;
-                                else if(value == "No")
-                                  selected_reminder_id = false;
+                                if(value=="Yes"){
+                                  selected_reminder_id=true;
+                                }else{
+                                  selected_reminder_id=false;
+                                }
                               });
                             },
                           ),
@@ -176,17 +221,16 @@ class _update_testtype extends State<update_testtype>{
                                     TestTypesServices.addTestTypes(token, specifictype['id'], name.text, validity.text, selected_reminder_id, showReminders.text, specifictype['createdBy'],)
                                         .then((respons){
                                       pd.dismiss();
-                                      if(respons!=null){
-//                                        Scaffold.of(context).showSnackBar(SnackBar(
-//                                          content: Text("Updated "),
-//                                          backgroundColor: Colors.green,
-//                                        ));
-                                      }else{
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Not Updated "),
-                                          backgroundColor: Colors.red,
-                                        ));
-                                      }
+                                      setState(() {
+                                        var parsedjson  = jsonDecode(respons);
+                                        if(parsedjson != null){
+                                          if(parsedjson['isSuccess'] == true){
+                                            print("Successfully data updated");
+                                          }else
+                                            print("not saved");
+                                        }else
+                                          print("json response null");
+                                      });
                                     });
                                   }
                                 });

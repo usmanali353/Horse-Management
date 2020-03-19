@@ -96,10 +96,6 @@ class _breeding_sales_form extends State<breeding_sales_form>{
             children: <Widget>[
               FormBuilder(
                 key: _fbKey,
-                initialValue: {
-                  'date': DateTime.now(),
-                  'accept_terms': false,
-                },
                 //autovalidate: true,
                 child: Column(children: <Widget>[
 

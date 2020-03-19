@@ -37,8 +37,26 @@ class _update_marking extends State<update_marking>{
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
   @override
   void initState() {
-    this.name=TextEditingController();
-    this.abbreviation=TextEditingController();
+    // TODO: implement initState
+    super.initState();
+    name=TextEditingController();
+    abbreviation=TextEditingController();
+
+    setState(() {
+      if(specificmarking['name']!=null){
+        name.text=specificmarking['name'];
+      }
+      if(specificmarking['abbreviation']!=null){
+        abbreviation.text=specificmarking['abbreviation'];
+      }
+
+    });
+  }
+
+//  @override
+//  void initState() {
+//    this.name=TextEditingController();
+//    this.abbreviation=TextEditingController();
 //    Utils.check_connectivity().then((result){
 //      if(result){
 //        CurrenciesServices.getCurrencyDropdown(token).then((response){
@@ -57,8 +75,8 @@ class _update_marking extends State<update_marking>{
 //        print("Network Not Available");
 //      }
 //    });
-
-  }
+//
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +96,7 @@ class _update_marking extends State<update_marking>{
                           child: Visibility(
                             //visible: stocks_loaded,
                             child: FormBuilderDropdown(
+                              initialValue: specificmarking['type']!=null?marking_type[specificmarking['type']]:null,
                               attribute: "Marking Type",
                               validators: [FormBuilderValidators.required()],
                               hint: Text("Marking Type"),
@@ -151,17 +170,16 @@ class _update_marking extends State<update_marking>{
                                     pd.show();
                                     MarkingServices.addMarkings(token, specificmarking['id'],name.text,abbreviation.text, specificmarking['createdBy'],selected_marking_id).then((respons){
                                       pd.dismiss();
-                                      if(respons!=null){
-//                                        Scaffold.of(context).showSnackBar(SnackBar(
-//                                          content: Text("Updated "),
-//                                          backgroundColor: Colors.green,
-//                                        ));
-                                      }else{
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Not Updated "),
-                                          backgroundColor: Colors.red,
-                                        ));
-                                      }
+                                      setState(() {
+                                        var parsedjson  = jsonDecode(respons);
+                                        if(parsedjson != null){
+                                          if(parsedjson['isSuccess'] == true){
+                                            print("Successfully data updated");
+                                          }else
+                                            print("not saved");
+                                        }else
+                                          print("json response null");
+                                      });
                                     });
                                   }
                                 });

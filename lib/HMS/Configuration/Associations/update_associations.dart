@@ -35,6 +35,11 @@ class _update_associations extends State<update_associations>{
   @override
   void initState() {
     this.name=TextEditingController();
+    setState(() {
+      if(specificname['name']!=null){
+        name.text=specificname['name'];
+      }
+    });
     // local_db=sqlite_helper();
 //    Utils.check_connectivity().then((result){
 //      if(result){
@@ -72,11 +77,7 @@ class _update_associations extends State<update_associations>{
                 children: <Widget>[
                   FormBuilder(
                     key: _fbKey,
-                    initialValue: {
-                      'date': DateTime.now(),
-                      'accept_terms': false,
-                    },
-                    autovalidate: true,
+                    //autovalidate: true,
                     child: Column(children: <Widget>[
 //
                       Padding(
@@ -104,17 +105,16 @@ class _update_associations extends State<update_associations>{
                                 pd.show();
                                 AssociationServices.addAssociations(token,specificname['id'],name.text,specificname['createdBy']).then((respons){
                                   pd.dismiss();
-                                  if(respons!=null){
-//                                    Scaffold.of(context).showSnackBar(SnackBar(
-//                                      content: Text("Updated "),
-//                                      backgroundColor: Colors.green,
-//                                    ));
-                                  }else{
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Not Updated "),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                  }
+                                  setState(() {
+                                    var parsedjson  = jsonDecode(respons);
+                                    if(parsedjson != null){
+                                      if(parsedjson['isSuccess'] == true){
+                                        print("Successfully data updated");
+                                      }else
+                                        print("not saved");
+                                    }else
+                                      print("json response null");
+                                  });
                                 });
                               }
                             });

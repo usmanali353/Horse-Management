@@ -39,32 +39,89 @@ class _update_paddock extends State<update_paddock>{
   bool paddock_loaded=false;
 
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
+  var location_name;
   @override
   void initState() {
+    // TODO: implement initState
+    super.initState();
     this.name=TextEditingController();
     this.mainUse=TextEditingController();
     this.area=TextEditingController();
     this.comments=TextEditingController();
-    // local_db=sqlite_helper();
-    Utils.check_connectivity().then((result){
-      if(result){
-        PaddockServices.get_Paddock_dropdowns(token).then((response){
-          if(response!=null){
-            print(response);
-            setState(() {
-              paddock_response=json.decode(response);
-              for(int i=0;i<paddock_response['locationDropDown'].length;i++)
-                location.add(paddock_response['locationDropDown'][i]['name']);
-              paddock_loaded=true;
-            });
+    setState(() {
+      if(specificpaddock['name']!=null){
+        name.text=specificpaddock['name'];
+      }
+      if(specificpaddock['mainUse']!=null){
+        mainUse.text=specificpaddock['mainUse'];
+      }
+      if(specificpaddock['area']!=null){
+        area.text=specificpaddock['area'];
+      }
+      if(specificpaddock['comments']!=null){
+        comments.text=specificpaddock['comments'];
+      }
+
+    });
+    PaddockServices.get_Paddock_dropdowns(token).then((response){
+      if(response!=null) {
+        setState(() {
+          paddock_response = json.decode(response);
+          //currency_loaded=true;
+          for (int i = 0; i <
+              paddock_response['locationDropDown'].length; i++) {
+            location.add(paddock_response['locationDropDown'][i]['name']);
           }
         });
-      }else{
-        print("Network Not Available");
-      }
-    });
-
+      }});
   }
+  String get_location_name(int id){
+    if(paddock_response!=null&&id!=null) {
+      for (int i = 0; i < paddock_response['locationDropDown'].length; i++) {
+        if(paddock_response['locationDropDown'][i]['id']==id) {
+          location_name = paddock_response['locationDropDown'][i]['name'];
+        }
+      }
+    }
+    return location_name;
+  }
+  String get_yesno(bool b){
+    var yesno;
+    if(b!=null){
+      if(b){
+        yesno="Yes";
+      }else {
+        yesno = "No";
+      }
+    }
+    return yesno;
+  }
+//  @override
+//  void initState() {
+//    this.name=TextEditingController();
+//    this.mainUse=TextEditingController();
+//    this.area=TextEditingController();
+//    this.comments=TextEditingController();
+//    // local_db=sqlite_helper();
+//    Utils.check_connectivity().then((result){
+//      if(result){
+//        PaddockServices.get_Paddock_dropdowns(token).then((response){
+//          if(response!=null){
+//            print(response);
+//            setState(() {
+//              paddock_response=json.decode(response);
+//              for(int i=0;i<paddock_response['locationDropDown'].length;i++)
+//                location.add(paddock_response['locationDropDown'][i]['name']);
+//              paddock_loaded=true;
+//            });
+//          }
+//        });
+//      }else{
+//        print("Network Not Available");
+//      }
+//    });
+//
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,8 +172,9 @@ class _update_paddock extends State<update_paddock>{
                             //  visible: sale_loaded,
                             child: FormBuilderDropdown(
                               attribute: "Location",
+                                initialValue: get_location_name(specificpaddock['locationId']),
                               validators: [FormBuilderValidators.required()],
-                              hint: Text("Horse"),
+                              hint: Text("Location"),
                               items:location!=null?location.map((horse)=>DropdownMenuItem(
                                 child: Text(horse),
                                 value: horse,
@@ -159,6 +217,7 @@ class _update_paddock extends State<update_paddock>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Has Shade",
+                            initialValue: get_yesno(specificpaddock['hasShade']),
                             validators: [FormBuilderValidators.required()],
                             hint: Text("Has Shade"),
                             items: hasShade!=null?hasShade.map((trainer)=>DropdownMenuItem(
@@ -174,12 +233,22 @@ class _update_paddock extends State<update_paddock>{
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)
                               ),
                             ),
+                            onSaved: (value){
+                              setState(() {
+                                if(value=="Yes"){
+                                  selected_hasShade_id=true;
+                                }else{
+                                  selected_hasShade_id=false;
+                                }
+                              });
+                            },
                             onChanged: (value){
                               setState(() {
-                                if(value == "Yes")
-                                  selected_hasShade_id = true;
-                                else if(value == "No")
-                                  selected_hasShade_id = false;
+                                if(value=="Yes"){
+                                  selected_hasShade_id=true;
+                                }else{
+                                  selected_hasShade_id=false;
+                                }
                               });
                             },
                           ),
@@ -188,6 +257,7 @@ class _update_paddock extends State<update_paddock>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Has Water",
+                            initialValue: get_yesno(specificpaddock['hasWater']),
                             validators: [FormBuilderValidators.required()],
                             hint: Text("Has Water"),
                             items: hasWater!=null?hasWater.map((trainer)=>DropdownMenuItem(
@@ -203,12 +273,22 @@ class _update_paddock extends State<update_paddock>{
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)
                               ),
                             ),
+                            onSaved: (value){
+                              setState(() {
+                                if(value=="Yes"){
+                                  selected_hasWater_id=true;
+                                }else{
+                                  selected_hasWater_id=false;
+                                }
+                              });
+                            },
                             onChanged: (value){
                               setState(() {
-                                if(value == "Yes")
-                                  selected_hasWater_id = true;
-                                else if(value == "No")
-                                  selected_hasWater_id = false;
+                                if(value=="Yes"){
+                                  selected_hasWater_id=true;
+                                }else{
+                                  selected_hasWater_id=false;
+                                }
                               });
                             },
                           ),
@@ -217,6 +297,7 @@ class _update_paddock extends State<update_paddock>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Grass",
+                            initialValue: get_yesno(specificpaddock['grass']),
                             validators: [FormBuilderValidators.required()],
                             hint: Text("Grass"),
                             items: hasShade!=null?hasShade.map((trainer)=>DropdownMenuItem(
@@ -232,12 +313,22 @@ class _update_paddock extends State<update_paddock>{
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)
                               ),
                             ),
+                            onSaved: (value){
+                              setState(() {
+                                if(value=="Yes"){
+                                  selected_grass_id=true;
+                                }else{
+                                  selected_grass_id=false;
+                                }
+                              });
+                            },
                             onChanged: (value){
                               setState(() {
-                                if(value == "Yes")
-                                  selected_grass_id = true;
-                                else if(value == "No")
-                                  selected_grass_id = false;
+                                if(value=="Yes"){
+                                  selected_grass_id=true;
+                                }else{
+                                  selected_grass_id=false;
+                                }
                               });
                             },
                           ),
@@ -246,6 +337,7 @@ class _update_paddock extends State<update_paddock>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Other Animals",
+                            initialValue: get_yesno(specificpaddock['otherAnimals']),
                             validators: [FormBuilderValidators.required()],
                             hint: Text("Other Animals"),
                             items: otherAnimals!=null?otherAnimals.map((trainer)=>DropdownMenuItem(
@@ -261,12 +353,22 @@ class _update_paddock extends State<update_paddock>{
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)
                               ),
                             ),
+                            onSaved: (value){
+                              setState(() {
+                                if(value=="Yes"){
+                                  selected_otherAnimals_id=true;
+                                }else{
+                                  selected_otherAnimals_id=false;
+                                }
+                              });
+                            },
                             onChanged: (value){
                               setState(() {
-                                if(value == "Yes")
-                                  selected_otherAnimals_id = true;
-                                else if(value == "No")
-                                  selected_otherAnimals_id = false;
+                                if(value=="Yes"){
+                                  selected_otherAnimals_id=true;
+                                }else{
+                                  selected_otherAnimals_id=false;
+                                }
                               });
                             },
                           ),
@@ -305,17 +407,16 @@ class _update_paddock extends State<update_paddock>{
                                     PaddockServices.addPaddock(token, specificpaddock['id'], name.text, mainUse.text, paddock_response['locationDropDown'][selected_location_id]['id'], area.text, selected_hasShade_id, selected_hasWater_id, selected_grass_id,selected_otherAnimals_id, comments.text, specificpaddock['createdBy'],)
                                         .then((respons){
                                       pd.dismiss();
-                                      if(respons!=null){
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Updated "),
-                                          backgroundColor: Colors.green,
-                                        ));
-                                      }else{
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Not Updated "),
-                                          backgroundColor: Colors.red,
-                                        ));
-                                      }
+                                      setState(() {
+                                        var parsedjson  = jsonDecode(respons);
+                                        if(parsedjson != null){
+                                          if(parsedjson['isSuccess'] == true){
+                                            print("Successfully data updated");
+                                          }else
+                                            print("not saved");
+                                        }else
+                                          print("json response null");
+                                      });
                                     });
                                   }
                                 });
