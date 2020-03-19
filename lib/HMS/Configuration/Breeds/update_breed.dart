@@ -100,6 +100,7 @@ class _update_breed extends State<update_breed>{
                       MaterialButton(
                         onPressed: (){
                           if (_fbKey.currentState.validate()) {
+                            _fbKey.currentState.save();
                             Utils.check_connectivity().then((result){
                               if(result){
                                 ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);

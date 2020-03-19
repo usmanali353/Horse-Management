@@ -99,6 +99,7 @@ class _update_associations extends State<update_associations>{
                       MaterialButton(
                         onPressed: (){
                           if (_fbKey.currentState.validate()) {
+                            _fbKey.currentState.save();
                             Utils.check_connectivity().then((result){
                               if(result){
                                 ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);

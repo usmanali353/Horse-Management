@@ -39,7 +39,7 @@ class _update_paddock extends State<update_paddock>{
   bool paddock_loaded=false;
 
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
-  var location_name;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -75,15 +75,17 @@ class _update_paddock extends State<update_paddock>{
         });
       }});
   }
-  String get_location_name(int id){
-    if(paddock_response!=null&&id!=null) {
-      for (int i = 0; i < paddock_response['locationDropDown'].length; i++) {
-        if(paddock_response['locationDropDown'][i]['id']==id) {
-          location_name = paddock_response['locationDropDown'][i]['name'];
+  String get_location_by_id(int id){
+    var location_name;
+    if(specificpaddock!=null&&paddock_response['locationDropDown']!=null&&id!=null){
+      for(int i=0;i<location.length;i++){
+        if(paddock_response['locationDropDown'][i]['id']==id){
+          location_name=paddock_response['locationDropDown'][i]['name'];
         }
       }
-    }
-    return location_name;
+      return location_name;
+    }else
+      return null;
   }
   String get_yesno(bool b){
     var yesno;
@@ -172,7 +174,7 @@ class _update_paddock extends State<update_paddock>{
                             //  visible: sale_loaded,
                             child: FormBuilderDropdown(
                               attribute: "Location",
-                                initialValue: get_location_name(specificpaddock['locationId']),
+                              initialValue: get_location_by_id(specificpaddock['locationId'])!= null ?get_location_by_id(specificpaddock['locationId']):null,
                               validators: [FormBuilderValidators.required()],
                               hint: Text("Location"),
                               items:location!=null?location.map((horse)=>DropdownMenuItem(
@@ -400,6 +402,7 @@ class _update_paddock extends State<update_paddock>{
                             child: Text("Save",style: TextStyle(color: Colors.white),),
                             onPressed: (){
                               if (_fbKey.currentState.validate()) {
+                                _fbKey.currentState.save();
                                 Utils.check_connectivity().then((result){
                                   if(result){
                                     ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);

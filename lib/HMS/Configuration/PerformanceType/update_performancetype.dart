@@ -102,6 +102,7 @@ class _update_performancetype extends State<update_performancetype>{
                       MaterialButton(
                         onPressed: (){
                           if (_fbKey.currentState.validate()) {
+                            _fbKey.currentState.save();
                             Utils.check_connectivity().then((result){
                               if(result){
                                 ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);

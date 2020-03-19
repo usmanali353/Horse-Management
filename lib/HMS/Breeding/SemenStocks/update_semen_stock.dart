@@ -45,33 +45,84 @@ class _update_semen_stock_form extends State<update_semen_stock_form>{
   bool dose_loaded=false;
   @override
   void initState() {
+    // TODO: implement initState
+    super.initState();
+    this.price=TextEditingController();
     this.quantity=TextEditingController();
     this.cannister=TextEditingController();
-    this.price=TextEditingController();
     this.serial_number=TextEditingController();
     this.batch_number=TextEditingController();
-    // local_db=sqlite_helper();
-    Utils.check_connectivity().then((result){
-      if(result){
-        SemenStockServices.get_semen_dose_dropdowns(token).then((response){
-          if(response!=null){
-            print(response);
-            setState(() {
-              dose_response=json.decode(response);
+    setState(() {
+      if(dose_data['price']!=null){
+        price.text=dose_data['price'].toString();
+      }
+      if(dose_data['quantity']!=null){
+        quantity.text=dose_data['quantity'].toString();
+      }
+      if(dose_data['canister']!=null){
+        cannister.text=dose_data['canister'];
+      }
+      if(dose_data['serialNumber']!=null){
+        serial_number.text=dose_data['serialNumber'].toString();
+      }
+      if(dose_data['batchNumber']!=null){
+        batch_number.text=dose_data['batchNumber'].toString();
+      }
+
+    });
+    SemenStockServices.get_semen_dose_dropdowns(token).then((response){
+      if(response!=null){
+        setState(() {
+          dose_response=json.decode(response);
               for(int i=0;i<dose_response['horseDropDown'].length;i++)
                 horses.add(dose_response['horseDropDown'][i]['name']);
               for(int i=0;i<dose_response['tankDropDown'].length;i++)
-                tanks.add(dose_response['tankDropDown'][i]['name']);
-
-              dose_loaded=true;
-            });
-          }
+                 tanks.add(dose_response['tankDropDown'][i]['name']);
         });
-      }else{
-        print("Network Not Available");
       }
     });
   }
+  String get_yesno(bool b){
+    var yesno;
+    if(b!=null){
+      if(b){
+        yesno="Yes";
+      }else {
+        yesno = "No";
+      }
+    }
+    return yesno;
+  }
+
+//  @override
+//  void initState() {
+//    this.quantity=TextEditingController();
+//    this.cannister=TextEditingController();
+//    this.price=TextEditingController();
+//    this.serial_number=TextEditingController();
+//    this.batch_number=TextEditingController();
+//    // local_db=sqlite_helper();
+//    Utils.check_connectivity().then((result){
+//      if(result){
+//        SemenStockServices.get_semen_dose_dropdowns(token).then((response){
+//          if(response!=null){
+//            print(response);
+//            setState(() {
+//              dose_response=json.decode(response);
+//              for(int i=0;i<dose_response['horseDropDown'].length;i++)
+//                horses.add(dose_response['horseDropDown'][i]['name']);
+//              for(int i=0;i<dose_response['tankDropDown'].length;i++)
+//                tanks.add(dose_response['tankDropDown'][i]['name']);
+//
+//              dose_loaded=true;
+//            });
+//          }
+//        });
+//      }else{
+//        print("Network Not Available");
+//      }
+//    });
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +143,7 @@ class _update_semen_stock_form extends State<update_semen_stock_form>{
                             visible: dose_loaded,
                             child: FormBuilderDropdown(
                               attribute: "Horse",
+                              initialValue: dose_data['horseName']['name'],
                               validators: [FormBuilderValidators.required()],
                               hint: Text("Horse"),
                               items:horses!=null?horses.map((horse)=>DropdownMenuItem(
@@ -113,6 +165,12 @@ class _update_semen_stock_form extends State<update_semen_stock_form>{
                                   this.selected_horse_id=horses.indexOf(value);
                                 });
                               },
+                              onSaved: (value){
+                                setState(() {
+                                  this.selected_horse=value;
+                                  this.selected_horse_id=horses.indexOf(value);
+                                });
+                              },
                             ),
                           ),
                         ),
@@ -120,6 +178,7 @@ class _update_semen_stock_form extends State<update_semen_stock_form>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Tanks",
+                            initialValue: dose_data['tankName']['name'],
                             validators: [FormBuilderValidators.required()],
                             hint: Text("Tanks"),
                             items: tanks!=null?tanks.map((trainer)=>DropdownMenuItem(
@@ -141,6 +200,12 @@ class _update_semen_stock_form extends State<update_semen_stock_form>{
                                 this.selected_tank_id=tanks.indexOf(value);
                               });
                             },
+                            onSaved: (value){
+                              setState(() {
+                                this.selected_tank=value;
+                                this.selected_tank_id=tanks.indexOf(value);
+                              });
+                            },
                           ),
                         ),
 
@@ -148,6 +213,7 @@ class _update_semen_stock_form extends State<update_semen_stock_form>{
                           padding: EdgeInsets.only(top:16,left: 16,right: 16),
                           child:FormBuilderDateTimePicker(
                             attribute: "Entry Date",
+                            initialValue: dose_data['enterDate']!=null?DateTime.parse(dose_data['enterDate']):null,
                             style: Theme.of(context).textTheme.body1,
                             inputType: InputType.date,
                             validators: [FormBuilderValidators.required()],
@@ -162,6 +228,11 @@ class _update_semen_stock_form extends State<update_semen_stock_form>{
                                 this.Entry_date=value;
                               });
                             },
+                            onSaved: (value){
+                              setState(() {
+                                this.Entry_date=value;
+                              });
+                            },
                           ),
                         ),
 
@@ -170,6 +241,7 @@ class _update_semen_stock_form extends State<update_semen_stock_form>{
                           padding: EdgeInsets.only(top:16,left: 16,right: 16),
                           child:FormBuilderDateTimePicker(
                             attribute: "Collection Date",
+                            initialValue: dose_data['collectionDate']!=null?DateTime.parse(dose_data['collectionDate']):null,
                             style: Theme.of(context).textTheme.body1,
                             inputType: InputType.date,
                             validators: [FormBuilderValidators.required()],
@@ -180,6 +252,11 @@ class _update_semen_stock_form extends State<update_semen_stock_form>{
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)
                               ),),
                             onChanged: (value){
+                              setState(() {
+                                this.Collection_date=value;
+                              });
+                            },
+                            onSaved: (value){
                               setState(() {
                                 this.Collection_date=value;
                               });
@@ -274,6 +351,7 @@ class _update_semen_stock_form extends State<update_semen_stock_form>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Was Bought",
+                            initialValue: get_yesno(dose_data['isbrought']),
                             validators: [FormBuilderValidators.required()],
                             hint: Text("Was Bought"),
                             items: was_bought!=null?was_bought.map((trainer)=>DropdownMenuItem(
@@ -297,6 +375,14 @@ class _update_semen_stock_form extends State<update_semen_stock_form>{
                                   selected_was_bought_id = false;
                               });
                             },
+                            onSaved: (value){
+                              setState(() {
+                                if(value == "Yes")
+                                  selected_was_bought_id = true;
+                                else if(value == "No")
+                                  selected_was_bought_id = false;
+                              });
+                            },
                           ),
                         ),
 
@@ -304,6 +390,7 @@ class _update_semen_stock_form extends State<update_semen_stock_form>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "On Sale",
+                            initialValue: get_yesno(dose_data['onSale']),
                             validators: [FormBuilderValidators.required()],
                             hint: Text("On Sale"),
                             items: on_sale!=null?on_sale.map((trainer)=>DropdownMenuItem(
@@ -327,6 +414,14 @@ class _update_semen_stock_form extends State<update_semen_stock_form>{
                                   selected_on_sale_id = false;
                               });
                             },
+                            onSaved:  (value){
+                              setState(() {
+                                if(value == "Yes")
+                                  selected_on_sale_id = true;
+                                else if(value == "No")
+                                  selected_on_sale_id = false;
+                              });
+                            },
                           ),
                         ),
 
@@ -343,6 +438,7 @@ class _update_semen_stock_form extends State<update_semen_stock_form>{
 
                             onPressed: (){
                               if (_fbKey.currentState.validate()) {
+                                _fbKey.currentState.save();
                                 Utils.check_connectivity().then((result){
                                   if(result){
                                     ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);

@@ -48,36 +48,89 @@ class _update_embryo_stock extends State<update_embryo_stock>{
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
   @override
   void initState() {
+    // TODO: implement initState
+    super.initState();
     this.price=TextEditingController();
     this.grade=TextEditingController();
     this.stage=TextEditingController();
     this.status=TextEditingController();
     this.comments=TextEditingController();
-    // local_db=sqlite_helper();
-    Utils.check_connectivity().then((result){
-      if(result){
-        EmbryoStockServices.get_embryo_stock_dropdowns(token).then((response){
-          if(response!=null){
-            print(response);
-            setState(() {
-              stock_response=json.decode(response);
+    setState(() {
+      if(stock_data['price']!=null){
+        price.text=stock_data['price'].toString();
+      }
+      if(stock_data['grade']!=null){
+        grade.text=stock_data['grade'];
+      }
+      if(stock_data['stage']!=null){
+        stage.text=stock_data['stage'];
+      }
+      if(stock_data['status']!=null){
+        status.text=stock_data['status'];
+      }
+      if(stock_data['comments']!=null){
+        comments.text=stock_data['comments'];
+      }
+
+    });
+    EmbryoStockServices.get_embryo_stock_dropdowns(token).then((response){
+      if(response!=null){
+        setState(() {
+          stock_response=json.decode(response);
               for(int i=0;i<stock_response['horseDropDown'].length;i++)
                 horses.add(stock_response['horseDropDown'][i]['name']);
               for(int i=0;i<stock_response['tankDropDown'].length;i++)
                 tanks.add(stock_response['tankDropDown'][i]['name']);
               for(int i=0;i<stock_response['sireDropDown'].length;i++)
                 sire.add(stock_response['sireDropDown'][i]['name']);
-              stocks_loaded=true;
-              update_stock_visibility=true;
-            });
-          }
         });
-      }else{
-        print("Network Not Available");
       }
     });
-
   }
+  String get_yesno(bool b){
+    var yesno;
+    if(b!=null){
+      if(b){
+        yesno="Yes";
+      }else {
+        yesno = "No";
+      }
+    }
+    return yesno;
+  }
+
+//  @override
+//  void initState() {
+//    this.price=TextEditingController();
+//    this.grade=TextEditingController();
+//    this.stage=TextEditingController();
+//    this.status=TextEditingController();
+//    this.comments=TextEditingController();
+//    // local_db=sqlite_helper();
+//    Utils.check_connectivity().then((result){
+//      if(result){
+//        EmbryoStockServices.get_embryo_stock_dropdowns(token).then((response){
+//          if(response!=null){
+//            print(response);
+//            setState(() {
+//              stock_response=json.decode(response);
+//              for(int i=0;i<stock_response['horseDropDown'].length;i++)
+//                horses.add(stock_response['horseDropDown'][i]['name']);
+//              for(int i=0;i<stock_response['tankDropDown'].length;i++)
+//                tanks.add(stock_response['tankDropDown'][i]['name']);
+//              for(int i=0;i<stock_response['sireDropDown'].length;i++)
+//                sire.add(stock_response['sireDropDown'][i]['name']);
+//              stocks_loaded=true;
+//              update_stock_visibility=true;
+//            });
+//          }
+//        });
+//      }else{
+//        print("Network Not Available");
+//      }
+//    });
+//
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,9 +148,10 @@ class _update_embryo_stock extends State<update_embryo_stock>{
                         Padding(
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: Visibility(
-                            visible: stocks_loaded,
+                           // visible: stocks_loaded,
                             child: FormBuilderDropdown(
                               attribute: "Horse",
+                              initialValue: stock_data['horseName']['name'],
                               validators: [FormBuilderValidators.required()],
                               hint: Text("Horse"),
                               items:horses!=null?horses.map((horse)=>DropdownMenuItem(
@@ -119,6 +173,12 @@ class _update_embryo_stock extends State<update_embryo_stock>{
                                   this.selected_horse_id=horses.indexOf(value);
                                 });
                               },
+                              onSaved: (value){
+                                setState(() {
+                                  this.selected_horse=value;
+                                  this.selected_horse_id=horses.indexOf(value);
+                                });
+                              },
                             ),
                           ),
                         ),
@@ -126,6 +186,7 @@ class _update_embryo_stock extends State<update_embryo_stock>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Tanks",
+                            initialValue: stock_data['tankName']['name'],
                             validators: [FormBuilderValidators.required()],
                             hint: Text("Tanks"),
                             items: tanks!=null?tanks.map((trainer)=>DropdownMenuItem(
@@ -147,12 +208,19 @@ class _update_embryo_stock extends State<update_embryo_stock>{
                                 this.selected_tank_id=tanks.indexOf(value);
                               });
                             },
+                            onSaved: (value){
+                              setState(() {
+                                this.selected_tank=value;
+                                this.selected_tank_id=tanks.indexOf(value);
+                              });
+                            },
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Sire",
+                            initialValue: stock_data['sireName']['name'],
                             validators: [FormBuilderValidators.required()],
                             hint: Text("Sire"),
                             items: sire!=null?sire.map((trainer)=>DropdownMenuItem(
@@ -180,6 +248,7 @@ class _update_embryo_stock extends State<update_embryo_stock>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Gender",
+                            initialValue: stock_data['genderId']!=null?gender[stock_data['genderId']]:null,
                             validators: [FormBuilderValidators.required()],
                             hint: Text("Gender"),
                             items: gender!=null?gender.map((trainer)=>DropdownMenuItem(
@@ -205,12 +274,23 @@ class _update_embryo_stock extends State<update_embryo_stock>{
                                   selected_gender_id = 3;
                               });
                             },
+                            onSaved: (value){
+                              setState(() {
+                                if(value == "Male")
+                                  selected_gender_id = 1;
+                                else if(value == "Female")
+                                  selected_gender_id = 2;
+                                else if(value == "Geilding")
+                                  selected_gender_id = 3;
+                              });
+                            },
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.only(top:16,left: 16,right: 16),
                           child:FormBuilderDateTimePicker(
                             attribute: "Collection Date",
+                            initialValue: stock_data['collectionDate']!=null?DateTime.parse(stock_data['collectionDate']):null,
                             style: Theme.of(context).textTheme.body1,
                             inputType: InputType.date,
                             validators: [FormBuilderValidators.required()],
@@ -225,6 +305,11 @@ class _update_embryo_stock extends State<update_embryo_stock>{
                                 this.Collection_date=value;
                               });
                             },
+                            onSaved: (value){
+                              setState(() {
+                                this.Collection_date=value;
+                              });
+                            },
                           ),
                         ),
 
@@ -233,8 +318,9 @@ class _update_embryo_stock extends State<update_embryo_stock>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "On Sale",
+                            initialValue: get_yesno(stock_data['onScale']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("On Sale"),
+                            hint: Text("onScale"),
                             items: on_sale!=null?on_sale.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,
@@ -249,6 +335,14 @@ class _update_embryo_stock extends State<update_embryo_stock>{
                               ),
                             ),
                             onChanged: (value){
+                              setState(() {
+                                if(value == "Yes")
+                                  selected_on_sale_id = true;
+                                else if(value == "No")
+                                  selected_on_sale_id = false;
+                              });
+                            },
+                            onSaved: (value){
                               setState(() {
                                 if(value == "Yes")
                                   selected_on_sale_id = true;
@@ -350,6 +444,7 @@ class _update_embryo_stock extends State<update_embryo_stock>{
                             child: Text("Update",style: TextStyle(color: Colors.white),),
                             onPressed: (){
                               if (_fbKey.currentState.validate()) {
+                                _fbKey.currentState.save();
                                 Utils.check_connectivity().then((result){
                                   if(result){
                                     ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
