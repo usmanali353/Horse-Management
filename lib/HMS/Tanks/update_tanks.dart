@@ -72,15 +72,17 @@ class _update_tanks_form extends State<update_tanks_form>{
         });
       }});
   }
-  String get_location_name(int id){
-    if(tanks_response!=null&&id!=null) {
-      for (int i = 0; i < tanks_response['locationDropDown'].length; i++) {
-        if(tanks_response['locationDropDown'][i]['id']==id) {
-          location_name = tanks_response['locationDropDown'][i]['name'];
+  String get_location_by_id(int id){
+    var location_name;
+    if(specifictank!=null&&tanks_response['locationDropDown']!=null&&id!=null){
+      for(int i=0;i<tanks.length;i++){
+        if(tanks_response['locationDropDown'][i]['id']==id){
+          location_name=tanks_response['locationDropDown'][i]['name'];
         }
       }
-    }
-    return location_name;
+      return location_name;
+    }else
+      return null;
   }
 
 //  @override
@@ -146,7 +148,7 @@ class _update_tanks_form extends State<update_tanks_form>{
                       //visible: sale_loaded,
                       child: FormBuilderDropdown(
                         attribute: "Location",
-                        initialValue: get_location_name(specifictank['locationId']),
+                        initialValue: get_location_by_id(specifictank['locationId'])!= null ?get_location_by_id(specifictank['locationId']):null,
                         validators: [FormBuilderValidators.required()],
                         hint: Text("Location"),
                         items:tanks!=null?tanks.map((horse)=>DropdownMenuItem(
@@ -259,6 +261,7 @@ class _update_tanks_form extends State<update_tanks_form>{
                   MaterialButton(
                     onPressed: (){
                       if (_fbKey.currentState.validate()) {
+                        _fbKey.currentState.save();
                         Utils.check_connectivity().then((result){
                           if(result){
                             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);

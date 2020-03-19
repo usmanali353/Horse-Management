@@ -139,6 +139,7 @@ class add_picture_button extends StatelessWidget {
               Utils.check_connectivity().then((result){
                 if(result){
                   if (_fbKey.currentState.validate()) {
+                    _fbKey.currentState.save();
                     ProgressDialog pd=ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                     pd.show();
                     IronBrandServices.addIronBrand(token,picture_data['brandId'],title.text,picture_data['createdBy'],picked_image).then((response){

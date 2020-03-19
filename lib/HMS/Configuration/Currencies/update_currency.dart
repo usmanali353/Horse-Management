@@ -52,18 +52,17 @@ class _update_currency extends State<update_currency>{
       }
     });
   }
-  String get_currency_name(int id){
-    var currency;
-   if(currency_response!=null&&id!=null){
-     for (int i = 0; i < currency_response.length; i++) {
-        if(currency_response['currencySymbolsDropDown'][i]['id']==id) {
-          currency = currency_response['currencySymbolsDropDown'][i]['name'];
+  String get_currency_by_id(int id){
+    var currency_name;
+    if(specificcurrency!=null&&currency_response['currencySymbolsDropDown']!=null&&id!=null){
+      for(int i=0;i<currency.length;i++){
+        if(currency_response['currencySymbolsDropDown'][i]['id']==id){
+          currency_name=currency_name['currencySymbolsDropDown'][i]['name'];
         }
       }
-     return currency_name;
-   }
-   else
-     return null;
+      return currency_name;
+    }else
+      return null;
   }
 
 
@@ -132,7 +131,7 @@ class _update_currency extends State<update_currency>{
                             //visible: stocks_loaded,
                             child: FormBuilderDropdown(
                               attribute: "Currency",
-                              initialValue: get_currency_name(specificcurrency['symbolId']),
+                              initialValue: get_currency_by_id(specificcurrency['symbolId'])!= null ?get_currency_by_id(specificcurrency['symbolId']):null,
                             //  initialValue: specificcurrency!=null?specificcurrency['id']:null,
                               validators: [FormBuilderValidators.required()],
                               hint: Text("Currency"),
@@ -155,6 +154,12 @@ class _update_currency extends State<update_currency>{
                                   this.selected_currency_id=currency.indexOf(value);
                                 });
                               },
+                              onSaved:  (value){
+                                setState(() {
+                                  this.selected_currency=value;
+                                  this.selected_currency_id=currency.indexOf(value);
+                                });
+                              },
                             ),
                           ),
                         ),
@@ -170,6 +175,7 @@ class _update_currency extends State<update_currency>{
 
                             onPressed: (){
                               if (_fbKey.currentState.validate()) {
+                                _fbKey.currentState.save();
                                 Utils.check_connectivity().then((result){
                                   if(result){
                                     ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);

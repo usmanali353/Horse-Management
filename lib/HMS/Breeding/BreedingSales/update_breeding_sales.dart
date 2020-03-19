@@ -42,24 +42,39 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
   bool _isvisible=false;
   bool sale_loaded=false;
   bool update_sales_visibility;
-
-
+ // var vet_name,costcenter_name,contact_name,accountcategory_name;
   @override
   void initState() {
+    // TODO: implement initState
+    super.initState();
     this.payment_reference=TextEditingController();
     this.contract_no=TextEditingController();
     this.report_no=TextEditingController();
     this.comments=TextEditingController();
     this.amount=TextEditingController();
-    // local_db=sqlite_helper();
-    Utils.check_connectivity().then((result){
-      if(result){
-        BreedingSalesServices.get_breeding_sales_dropdowns(token).then((response){
-          if(response!=null){
-            print(response);
-            setState(() {
-              sale_response=json.decode(response);
-              for(int i=0;i<sale_response['horseDropDown'].length;i++)
+    setState(() {
+      if(specificsales['paymentReference']!=null){
+        payment_reference.text=specificsales['paymentReference'];
+      }
+      if(specificsales['contractNo']!=null){
+        contract_no.text=specificsales['contractNo'].toString();
+      }
+      if(specificsales['breedingReportNo']!=null){
+        report_no.text=specificsales['breedingReportNo'].toString();
+      }
+      if(specificsales['comments']!=null){
+        comments.text=specificsales['comments'];
+      }
+      if(specificsales['amount']!=null){
+        amount.text=specificsales['amount'].toString();
+      }
+    });
+    BreedingSalesServices.get_breeding_sales_dropdowns(token).then((response){
+      if(response!=null){
+        setState(() {
+          sale_response=json.decode(response);
+          //currency_loaded=true;
+          for(int i=0;i<sale_response['horseDropDown'].length;i++)
                 horses.add(sale_response['horseDropDown'][i]['name']);
               for(int i=0;i<sale_response['customerDropDown'].length;i++)
                 customer.add(sale_response['customerDropDown'][i]['name']);
@@ -73,23 +88,116 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                 costcenter.add(sale_response['costCenterDropDown'][i]['name']);
               for(int i=0;i<sale_response['contactsDropDown'].length;i++)
                 contact.add(sale_response['contactsDropDown'][i]['name']);
-              sale_loaded=true;
-              update_sales_visibility=true;
-            });
-          }
         });
-      }else{
-        print("Network Not Available");
       }
     });
   }
+  String get_currency_by_id(int id){
+    var currency_name;
+    if(specificsales!=null&&sale_response['currencyDropDown']!=null&&id!=null){
+      for(int i=0;i<currency.length;i++){
+        if(sale_response['currencyDropDown'][i]['id']==id){
+          currency_name=sale_response['currencyDropDown'][i]['name'];
+        }
+      }
+      return currency_name;
+    }else
+      return null;
+  }
+  String get_category_by_id(int id){
+    var category_name;
+    if(specificsales!=null&&sale_response['categoryDropDown']!=null&&id!=null){
+      for(int i=0;i<category.length;i++){
+        if(sale_response['categoryDropDown'][i]['id']==id){
+          category_name=sale_response['categoryDropDown'][i]['name'];
+        }
+      }
+      return category_name;
+    }else
+      return null;
+  }
+  String get_costcenter_by_id(int id){
+    var costcenter_name;
+    if(specificsales!=null&&sale_response['costCenterDropDown']!=null&&id!=null){
+      for(int i=0;i<costcenter.length;i++){
+        if(sale_response['costCenterDropDown'][i]['id']==id){
+          costcenter_name=sale_response['costCenterDropDown'][i]['name'];
+        }
+      }
+      return costcenter_name;
+    }else
+      return null;
+  }
+  String get_contact_by_id(int id){
+    var contact_name;
+    if(specificsales!=null&&sale_response['contactsDropDown']!=null&&id!=null){
+      for(int i=0;i<contact.length;i++){
+        if(sale_response['contactsDropDown'][i]['id']==id){
+          contact_name=sale_response['contactsDropDown'][i]['name'];
+        }
+      }
+      return contact_name;
+    }else
+      return null;
+  }
+  String get_yesno(bool b){
+    var yesno;
+    if(b!=null){
+      if(b){
+        yesno="Yes";
+      }else {
+        yesno = "No";
+      }
+    }
+    return yesno;
+  }
+
+//  @override
+//  void initState() {
+//    this.payment_reference=TextEditingController();
+//    this.contract_no=TextEditingController();
+//    this.report_no=TextEditingController();
+//    this.comments=TextEditingController();
+//    this.amount=TextEditingController();
+//    // local_db=sqlite_helper();
+//    Utils.check_connectivity().then((result){
+//      if(result){
+//        BreedingSalesServices.get_breeding_sales_dropdowns(token).then((response){
+//          if(response!=null){
+//            print(response);
+//            setState(() {
+//              sale_response=json.decode(response);
+//              for(int i=0;i<sale_response['horseDropDown'].length;i++)
+//                horses.add(sale_response['horseDropDown'][i]['name']);
+//              for(int i=0;i<sale_response['customerDropDown'].length;i++)
+//                customer.add(sale_response['customerDropDown'][i]['name']);
+//              for(int i=0;i<sale_response['assignedVetDropDown'].length;i++)
+//                vet.add(sale_response['assignedVetDropDown'][i]['name']);
+//              for(int i=0;i<sale_response['currencyDropDown'].length;i++)
+//                currency.add(sale_response['currencyDropDown'][i]['name']);
+//              for(int i=0;i<sale_response['categoryDropDown'].length;i++)
+//                category.add(sale_response['categoryDropDown'][i]['name']);
+//              for(int i=0;i<sale_response['costCenterDropDown'].length;i++)
+//                costcenter.add(sale_response['costCenterDropDown'][i]['name']);
+//              for(int i=0;i<sale_response['contactsDropDown'].length;i++)
+//                contact.add(sale_response['contactsDropDown'][i]['name']);
+//              sale_loaded=true;
+//              update_sales_visibility=true;
+//            });
+//          }
+//        });
+//      }else{
+//        print("Network Not Available");
+//      }
+//    });
+//  }
 
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(title: Text("Update Breeding Sales Form"),),
+      appBar: AppBar(title: Text("Update Breeding Sales"),),
       body:  Padding(
         padding: EdgeInsets.all(10),
         child: SingleChildScrollView(
@@ -104,8 +212,9 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                   Padding(
                     padding: const EdgeInsets.only(left: 16,right: 16, top:16),
                     child: Visibility(
-                      visible: sale_loaded,
+                      //visible: sale_loaded,
                       child: FormBuilderDropdown(
+                        initialValue: specificsales['horseName']['name'],
                         attribute: "Horse",
                         validators: [FormBuilderValidators.required()],
                         hint: Text("Horse"),
@@ -122,6 +231,12 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                               borderSide: BorderSide(color: Colors.teal, width: 1.0)
                           ),
                         ),
+                        onSaved: (value){
+                          setState(() {
+                            this.selected_horse=value;
+                            this.selected_horse_id=horses.indexOf(value);
+                          });
+                        },
                         onChanged: (value){
                           setState(() {
                             this.selected_horse=value;
@@ -133,9 +248,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                   ),
                   Padding(padding: const EdgeInsets.only(left: 16,right: 16, top:16),
                     child:  FormBuilderDateTimePicker(
-                      onChanged: (value){
-                        this.select_date=value;
-                      },
+                      initialValue: specificsales['date']!=null?DateTime.parse(specificsales['date']):null,
                       attribute: "date",
                       style: Theme.of(context).textTheme.body1,
                       inputType: InputType.date,
@@ -146,6 +259,16 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                             borderRadius: BorderRadius.circular(9.0),
                             borderSide: BorderSide(color: Colors.teal, width: 1.0)
                         ),),
+                      onSaved: (value){
+                        setState(() {
+                          this.select_date=value;
+                        });
+                      },
+                      onChanged: (value){
+                        setState(() {
+                          this.select_date=value;
+                        });
+                      },
                     ),
                   ),
                   Padding(
@@ -153,6 +276,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                     child: Visibility(
                       visible: sale_loaded,
                       child: FormBuilderDropdown(
+                        initialValue: specificsales['customerId'] != null ? specificsales['customerName']['contactName']['name']:null,
                         attribute: "Customer",
                         validators: [FormBuilderValidators.required()],
                         hint: Text("Customer"),
@@ -169,6 +293,12 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                               borderSide: BorderSide(color: Colors.teal, width: 1.0)
                           ),
                         ),
+                        onSaved: (value){
+                          setState(() {
+                            this.selected_customer=value;
+                            this.selected_customer_id=customer.indexOf(value);
+                          });
+                        },
                         onChanged: (value){
                           setState(() {
                             this.selected_customer=value;
@@ -182,6 +312,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                     padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                     child: FormBuilderDropdown(
                       attribute: "Assigned Vet",
+                      initialValue: specificsales['assignedVetId'] != null ? specificsales['assignedVetName']['contactName']['name']:null,
                       validators: [FormBuilderValidators.required()],
                       hint: Text("Assigned Vet"),
                       items: vet!=null?vet.map((trainer)=>DropdownMenuItem(
@@ -209,16 +340,22 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                     padding: EdgeInsets.only(top:16,left: 16,right: 16),
                     child:FormBuilderDateTimePicker(
                       attribute: "Payment Date",
+                      initialValue: specificsales['paymentDate']!=null?DateTime.parse(specificsales['paymentDate']):null,
                       style: Theme.of(context).textTheme.body1,
                       inputType: InputType.date,
                       validators: [FormBuilderValidators.required()],
                       format: DateFormat("MM-dd-yyyy"),
-                      decoration: InputDecoration(labelText: "Collection Date",
+                      decoration: InputDecoration(labelText: "Payment Date",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(9.0),
                             borderSide: BorderSide(color: Colors.teal, width: 1.0)
                         ),),
                       onChanged: (value){
+                        setState(() {
+                          this.Payment_date=value;
+                        });
+                      },
+                      onSaved: (value){
                         setState(() {
                           this.Payment_date=value;
                         });
@@ -245,6 +382,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                     padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                     child: FormBuilderDropdown(
                       attribute: "Semen",
+                      initialValue: get_yesno(specificsales['isSemen']),
                       validators: [FormBuilderValidators.required()],
                       hint: Text("Semen"),
                       items: semen!=null?semen.map((trainer)=>DropdownMenuItem(
@@ -260,12 +398,22 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                             borderSide: BorderSide(color: Colors.teal, width: 1.0)
                         ),
                       ),
+                      onSaved: (value){
+                        setState(() {
+                          if(value=="Yes"){
+                            selected_semen_id=true;
+                          }else{
+                            selected_semen_id=false;
+                          }
+                        });
+                      },
                       onChanged: (value){
                         setState(() {
-                          if(value == "Yes")
-                            selected_semen_id = true;
-                          else if(value == "No")
-                            selected_semen_id = false;
+                          if(value=="Yes"){
+                            selected_semen_id=true;
+                          }else{
+                            selected_semen_id=false;
+                          }
                         });
                       },
                     ),
@@ -274,6 +422,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                     padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                     child: FormBuilderDropdown(
                       attribute: "Frozen",
+                      initialValue: get_yesno(specificsales['isFrozen']),
                       validators: [FormBuilderValidators.required()],
                       hint: Text("Frozen"),
                       items: frozen!=null?frozen.map((trainer)=>DropdownMenuItem(
@@ -289,12 +438,23 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                             borderSide: BorderSide(color: Colors.teal, width: 1.0)
                         ),
                       ),
+//
+                      onSaved: (value){
+                        setState(() {
+                          if(value=="Yes"){
+                            selected_frozen_id=true;
+                          }else{
+                            selected_frozen_id=false;
+                          }
+                        });
+                      },
                       onChanged: (value){
                         setState(() {
-                          if(value == "Yes")
-                            selected_frozen_id = true;
-                          else if(value == "No")
-                            selected_frozen_id = false;
+                          if(value=="Yes"){
+                            selected_frozen_id=true;
+                          }else{
+                            selected_frozen_id=false;
+                          }
                         });
                       },
                     ),
@@ -303,6 +463,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                     padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                     child: FormBuilderDropdown(
                       attribute: "Cash Payment",
+                      initialValue: get_yesno(specificsales['isCashPayment']),
                       validators: [FormBuilderValidators.required()],
                       hint: Text("Cash Paymment"),
                       items: cashpayment!=null?cashpayment.map((trainer)=>DropdownMenuItem(
@@ -318,12 +479,22 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                             borderSide: BorderSide(color: Colors.teal, width: 1.0)
                         ),
                       ),
+                      onSaved: (value){
+                        setState(() {
+                          if(value=="Yes"){
+                            selected_cashpaymemt_id=true;
+                          }else{
+                            selected_cashpaymemt_id=false;
+                          }
+                        });
+                      },
                       onChanged: (value){
                         setState(() {
-                          if(value == "Yes")
-                            selected_cashpaymemt_id = true;
-                          else if(value == "No")
-                            selected_cashpaymemt_id = false;
+                          if(value=="Yes"){
+                            selected_cashpaymemt_id=true;
+                          }else{
+                            selected_cashpaymemt_id=false;
+                          }
                         });
                       },
                     ),
@@ -332,6 +503,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                     padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                     child: FormBuilderDropdown(
                       attribute: "Gift",
+                      initialValue: get_yesno(specificsales['isGift']),
                       validators: [FormBuilderValidators.required()],
                       hint: Text("Gift"),
                       items: gift!=null?gift.map((trainer)=>DropdownMenuItem(
@@ -355,14 +527,24 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                             selected_gift_id = false;
                         });
                       },
+                      onSaved: (value){
+                        setState(() {
+                          if(value == "Yes")
+                            selected_gift_id = true;
+                          else if(value == "No")
+                            selected_gift_id = false;
+                        });
+                      },
+
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                     child: FormBuilderDropdown(
                       attribute: "Status",
+                      initialValue: specificsales['status']!=null?status[specificsales['status']]:null,
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("Gender"),
+                      hint: Text("Status"),
                       items: status!=null?status.map((trainer)=>DropdownMenuItem(
                         child: Text(trainer),
                         value: trainer,
@@ -378,6 +560,20 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                       ),
 
                       onChanged: (value){
+                        setState(() {
+                          if(value == "Sold")
+                            selected_status_id = 1;
+                          else if(value == "Shipped")
+                            selected_status_id = 2;
+                          else if(value == "Delivered")
+                            selected_status_id = 3;
+                          else if(value == "Pregnant")
+                            selected_status_id = 4;
+                          else if(value == "Breeding Report")
+                            selected_status_id = 5;
+                        });
+                      },
+                      onSaved: (value){
                         setState(() {
                           if(value == "Sold")
                             selected_status_id = 1;
@@ -458,6 +654,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                     padding: const EdgeInsets.only(top:12,left: 16,right: 16),
                     child: FormBuilderDropdown(
                       attribute: "Currency",
+                      initialValue: get_currency_by_id(specificsales['currency'])!= null ?get_currency_by_id(specificsales['currency']):null,
                       validators: [FormBuilderValidators.required()],
                       hint: Text("Currency"),
                       items: currency!=null?currency.map((trainer)=>DropdownMenuItem(
@@ -479,6 +676,12 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                           this.selected_currency_id=currency.indexOf(value);
                         });
                       },
+                      onSaved: (value){
+                        setState(() {
+                          this.selected_currency=value;
+                          this.selected_currency_id=currency.indexOf(value);
+                        });
+                      },
                     ),
                   ),
 
@@ -486,6 +689,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                     padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                     child: FormBuilderDropdown(
                       attribute: "Account Category",
+                      initialValue: get_category_by_id(specificsales['categoryId']),
                       validators: [FormBuilderValidators.required()],
                       hint: Text("Account Category"),
                       items: category!=null?category.map((trainer)=>DropdownMenuItem(
@@ -502,6 +706,12 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                         ),
                       ),
                       onChanged: (value){
+                      setState(() {
+                        this.selected_category=value;
+                        this.selected_category_id=category.indexOf(value);
+                      });
+                    },
+                      onSaved: (value){
                         setState(() {
                           this.selected_category=value;
                           this.selected_category_id=category.indexOf(value);
@@ -515,6 +725,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                     padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                     child: FormBuilderDropdown(
                       attribute: "Cost Center",
+                      initialValue: get_costcenter_by_id(specificsales['costCenterId']),
                       validators: [FormBuilderValidators.required()],
                       hint: Text("Cost Center"),
                       items: costcenter!=null?costcenter.map((trainer)=>DropdownMenuItem(
@@ -531,6 +742,12 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                         ),
                       ),
                       onChanged: (value){
+                      setState(() {
+                        this.selected_costcenter=value;
+                        this.selected_costcenter_id=costcenter.indexOf(value);
+                      });
+                    },
+                      onSaved: (value){
                         setState(() {
                           this.selected_costcenter=value;
                           this.selected_costcenter_id=costcenter.indexOf(value);
@@ -542,6 +759,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                     padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                     child: FormBuilderDropdown(
                       attribute: "Contact",
+                      initialValue: get_contact_by_id(specificsales['contactId']),
                       validators: [FormBuilderValidators.required()],
                       hint: Text("Contact"),
                       items: contact!=null?contact.map((trainer)=>DropdownMenuItem(
@@ -563,12 +781,19 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                           this.selected_contact_id=contact.indexOf(value);
                         });
                       },
+                      onSaved: (value){
+                        setState(() {
+                          this.selected_contact=value;
+                          this.selected_contact_id=contact.indexOf(value);
+                        });
+                      },
                     ),
                   ),
 
                   MaterialButton(
                     onPressed: (){
                       if (_fbKey.currentState.validate()) {
+                         _fbKey.currentState.save();
                         Utils.check_connectivity().then((result){
                           if(result){
                             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);

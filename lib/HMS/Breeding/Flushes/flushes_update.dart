@@ -36,34 +36,83 @@ class _flushes_update extends State<flushes_update>{
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
   bool flushes_loaded=false;
   bool update_flushes_visibility;
-
   @override
   void initState() {
+    // TODO: implement initState
+    super.initState();
     this.embryos=TextEditingController();
     this.comments=TextEditingController();
-    // local_db=sqlite_helper();
-    Utils.check_connectivity().then((result){
-      if(result){
-        FlushesServicesJson.flushesdropdowns(token).then((response){
-          if(response!=null){
-            print(response);
-            setState(() {
-              flushes_response=json.decode(response);
+    setState(() {
+      if(specificflushing['embryos']!=null){
+        embryos.text=specificflushing['embryos'].toString();
+      }
+      if(specificflushing['comments']!=null){
+        comments.text=specificflushing['comments'];
+      }
+
+    });
+    FlushesServicesJson.flushesdropdowns(token).then((response){
+      if(response!=null){
+        setState(() {
+          flushes_response=json.decode(response);
               for(int i=0;i<flushes_response['horseDropDown'].length;i++)
                 horse_name.add(flushes_response['horseDropDown'][i]['name']);
               for(int i=0;i<flushes_response['vetDropDown'].length;i++)
                 vet.add(flushes_response['vetDropDown'][i]['name']);
-              flushes_loaded=true;
-              update_flushes_visibility=true;
-            });
-          }
         });
-      }else{
-        print("Network Not Available");
       }
     });
-
   }
+//  String get_vet_by_id(int id){
+//    var vet_name;
+//    if(specificflushing!=null&&flushes_response['vetDropDown']!=null&&id!=null){
+//      for(int i=0;i<vet.length;i++){
+//        if(breeddropdown['damDropDown'][i]['id']==id){
+//          vet_name=breeddropdown['damDropDown'][i]['name'];
+//        }
+//      }
+//      return vet_name;
+//    }else
+//      return null;
+//  }
+  String get_yesno(bool b){
+    var yesno;
+    if(b!=null){
+      if(b){
+        yesno="Yes";
+      }else {
+        yesno = "No";
+      }
+    }
+    return yesno;
+  }
+//  @override
+//  void initState() {
+//    this.embryos=TextEditingController();
+//    this.comments=TextEditingController();
+//    // local_db=sqlite_helper();
+//    Utils.check_connectivity().then((result){
+//      if(result){
+//        FlushesServicesJson.flushesdropdowns(token).then((response){
+//          if(response!=null){
+//            print(response);
+//            setState(() {
+//              flushes_response=json.decode(response);
+//              for(int i=0;i<flushes_response['horseDropDown'].length;i++)
+//                horse_name.add(flushes_response['horseDropDown'][i]['name']);
+//              for(int i=0;i<flushes_response['vetDropDown'].length;i++)
+//                vet.add(flushes_response['vetDropDown'][i]['name']);
+//              flushes_loaded=true;
+//              update_flushes_visibility=true;
+//            });
+//          }
+//        });
+//      }else{
+//        print("Network Not Available");
+//      }
+//    });
+//
+//  }
 
   
   @override
@@ -84,8 +133,9 @@ class _flushes_update extends State<flushes_update>{
                       Padding(
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: Visibility(
-                          visible: flushes_loaded,
+                         // visible: flushes_loaded,
                           child: FormBuilderDropdown(
+                            initialValue: specificflushing['horseName']['name'],
                             attribute: "Horse",
                             validators: [FormBuilderValidators.required()],
                             hint: Text("Horse"),
@@ -108,13 +158,27 @@ class _flushes_update extends State<flushes_update>{
                                 this.selected_horse_id=horse_name.indexOf(value);
                               });
                             },
+                            onSaved: (value){
+                              setState(() {
+                                this.selected_horse=value;
+                                this.selected_horse_id=horse_name.indexOf(value);
+                              });
+                            },
                           ),
                         ),
                       ),
                       Padding(padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child:  FormBuilderDateTimePicker(
+                          initialValue: specificflushing['date']!=null?DateTime.parse(specificflushing['date']):null,
                           onChanged: (value){
-                            this.Select_date=value;
+                            setState(() {
+                              this.Select_date=value;
+                            });
+                          },
+                          onSaved: (value){
+                            setState(() {
+                              this.Select_date=value;
+                            });
                           },
                           attribute: "date",
                           style: Theme.of(context).textTheme.body1,
@@ -132,6 +196,7 @@ class _flushes_update extends State<flushes_update>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Vet",
+                          initialValue: specificflushing['vetName']['contactName']['name'],
                           validators: [FormBuilderValidators.required()],
                           hint: Text("Vet"),
                           items: vet!=null?vet.map((trainer)=>DropdownMenuItem(
@@ -153,12 +218,19 @@ class _flushes_update extends State<flushes_update>{
                               this.selected_vet_id=vet.indexOf(value);
                             });
                           },
+                          onSaved: (value){
+                            setState(() {
+                              this.selected_vet=value;
+                              this.selected_vet_id=vet.indexOf(value);
+                            });
+                          },
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Success?",
+                          initialValue: get_yesno(specificflushing['isSuccess']),
                           validators: [FormBuilderValidators.required()],
                           hint: Text("Success?"),
                           items: success!=null?success.map((trainer)=>DropdownMenuItem(
@@ -175,6 +247,14 @@ class _flushes_update extends State<flushes_update>{
                             ),
                           ),
                           onChanged: (value){
+                            setState(() {
+                              if(value == "Yes")
+                                selected_success_id = true;
+                              else if(value == "No")
+                                selected_success_id = false;
+                            });
+                          },
+                          onSaved: (value){
                             setState(() {
                               if(value == "Yes")
                                 selected_success_id = true;
@@ -220,6 +300,7 @@ class _flushes_update extends State<flushes_update>{
                       MaterialButton(
                         onPressed: (){
                           if (_fbKey.currentState.validate()) {
+                            _fbKey.currentState.save();
                             Utils.check_connectivity().then((result){
                               if(result){
                                 ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);

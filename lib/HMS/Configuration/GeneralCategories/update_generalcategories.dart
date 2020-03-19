@@ -120,6 +120,7 @@ class _update_generalcategory extends State<update_generalcategory>{
                       MaterialButton(
                         onPressed: (){
                           if (_fbKey.currentState.validate()) {
+                            _fbKey.currentState.save();
                             Utils.check_connectivity().then((result){
                               if(result){
                                 ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);

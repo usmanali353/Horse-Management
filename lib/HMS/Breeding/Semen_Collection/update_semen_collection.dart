@@ -107,7 +107,7 @@ class _update_semen_collection_state extends State<update_semen_collection>{
                     Padding(
                       padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                       child: Visibility(
-                        visible: horses_loaded,
+                       // visible: horses_loaded,
                         child: FormBuilderDropdown(
                           attribute: "Horse",
                           initialValue: semen_collection_data['horseName']['name'],
@@ -171,6 +171,7 @@ class _update_semen_collection_state extends State<update_semen_collection>{
                       padding: EdgeInsets.only(top:16,left: 16,right: 16),
                       child:FormBuilderDateTimePicker(
                         attribute: "Hour",
+                       // initialValue: semen_collection_data['hour']!=null?DateTime.parse(semen_collection_data['hour']):null,
                         style: Theme.of(context).textTheme.body1,
                         inputType: InputType.time,
                         validators: [FormBuilderValidators.required()],
@@ -236,10 +237,11 @@ class _update_semen_collection_state extends State<update_semen_collection>{
                     Padding(
                       padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                       child: Visibility(
-                        visible: incharge_loaded,
+                        //visible: incharge_loaded,
                         child: FormBuilderDropdown(
                           attribute: "Incharge",
-                          initialValue: semen_collection_data['contactName']!=null?semen_collection_data['contactName']['name']:null,
+                          initialValue: semen_collection_data['inChargeName']['contactName']['name'],
+                         // initialValue: semen_collection_data['contactName']!=null?semen_collection_data['contactName']['name']:null,
                           validators: [FormBuilderValidators.required()],
                           hint: Text("Incharge"),
                           items:incharge!=null?incharge.map((horse)=>DropdownMenuItem(
@@ -416,6 +418,7 @@ class update_semen_stock_button extends StatelessWidget {
       color: Colors.teal,
       onPressed: (){
         if (_fbKey.currentState.validate()) {
+          _fbKey.currentState.save();
           Utils.check_connectivity().then((result){
             if(result){
               ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);

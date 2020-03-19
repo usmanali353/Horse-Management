@@ -140,7 +140,8 @@ class _update_opertation_note extends State<update_opertation_note>{
                       //visible: sale_loaded,
                       child: FormBuilderDropdown(
                         attribute: "General Category",
-                        initialValue: get_category_name(specificnote['generalCategoryId']),
+                        initialValue: specificnote['generalCategoryName']['name'],
+                       // initialValue: get_category_name(specificnote['generalCategoryId']),
                         validators: [FormBuilderValidators.required()],
                         hint: Text("General Category"),
                         items:notes!=null?notes.map((horse)=>DropdownMenuItem(
@@ -185,6 +186,7 @@ class _update_opertation_note extends State<update_opertation_note>{
                   MaterialButton(
                     onPressed: (){
                       if (_fbKey.currentState.validate()) {
+                        _fbKey.currentState.save();
                         Utils.check_connectivity().then((result){
                           if(result){
                             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
