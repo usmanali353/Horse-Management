@@ -338,11 +338,11 @@ class _state_add_farrier extends State<add_IncomeExpense>{
                             print(incomeExpenseDropdown['horseDropDown'][selected_horse_id]['id']);
                             print(selected_account);
                             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                            //pd.show();
+                            pd.show();
                             income_expense_services.income_expenseSave(null,token, 0,incomeExpenseDropdown['horseDropDown'][selected_horse_id]['id'], Select_date,
                                  amount.text,description.text, incomeExpenseDropdown['currencyDropDown'][selected_currency_id]['id'], incomeExpenseDropdown['categoryDropDown'][selected_category_id]['id'],
                                 incomeExpenseDropdown['costCenterDropDown'][selected_costcenter_id]['id'], incomeExpenseDropdown['contactsDropDown'][selected_contact_id]['id'],selected_account,).then((response){
-                              //pd.dismiss();
+                              pd.dismiss();
                               if(response !=null)
                                 print("Successfully income  added");
                               else{

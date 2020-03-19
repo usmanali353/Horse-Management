@@ -91,6 +91,11 @@ class _Profile_Page_State extends State<farrier_list>{
                 actionPane: SlidableDrawerActionPane(),
                 actionExtentRatio: 0.20,
                 actions: <Widget>[
+                  IconSlideAction(onTap: ()async{
+                    prefs = await SharedPreferences.getInstance();
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_farrier(farrierlist[index],token)));
+
+                  },color: Colors.blue,icon: Icons.border_color,caption: 'update',),
                   IconSlideAction(
                     icon: Icons.visibility_off,
                     color: Colors.red,
@@ -115,11 +120,7 @@ class _Profile_Page_State extends State<farrier_list>{
                       });
                     },
                   ),
-                  IconSlideAction(onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_farrier(farrierlist[index],token)));
 
-                  },color: Colors.blue,icon: Icons.border_color,caption: 'update',)
                 ],
                 child: ListTile(
                   //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''

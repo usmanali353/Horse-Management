@@ -415,6 +415,8 @@ class _health_record_form extends State<update_health>{
                       padding: const EdgeInsets.only(bottom: 16),
                       child: MaterialButton(
                         onPressed: (){
+                          if(_fbKey.currentState.validate()) {
+                            _fbKey.currentState.save();
 //                      local_db.create_health_record(new Health_Record(selected_amount,selected_quantity,selected_horse,selected_health_record_type,selected_responsible,product.text,comment.text,selected_currency,selected_category,selected_cost_center,selected_contact)).then((value){
 ////                        if(value>0){
 ////                              print("health record inserted Sucessfully");
@@ -422,21 +424,46 @@ class _health_record_form extends State<update_health>{
 ////                              print("health record insertion Failed");
 ////                        }
 ////                      });
-                          print(token);print(healthdropdown['horseDropDown'][selected_horse_id]['id']);print(selected_health_record_type_id);
-                          print(healthdropdown['responsibleDropDown'][selected_responsible_id]['id']);print( selected_quantity);
-                          print(healthdropdown['costCenterDropDown'][selected_cost_center_id]['id']);
-                          print(selected_contact_id);
-                          print(amount.text);
-                          print(healthdropdown['contactsDropDown'][0]['id']);
-                          ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                          //pd.show();
-                          healthServices.healthRecordSave(healthrecordlist['createdBy'],healthrecordlist['horseId'],token, healthdropdown['horseDropDown'][selected_horse_id]['id'], healthdropdown['responsibleDropDown'][selected_responsible_id]['id'],selected_health_record_type_id, product.text, selected_quantity, comment.text,amount.text, healthdropdown['currencyDropDown'][selected_currency_id]['id'], healthdropdown['categoryDropDown'][selected_category_id]['id'], healthdropdown['costCenterDropDown'][selected_cost_center_id]['id'], healthdropdown['contactsDropDown'][selected_contact_id]['id']).then((response){
-                            //pd.dismiss();
-                            if(response !=null)
-                              print("Successfully lab test added");
-                            else{
-                              print("data not added");}
-                          });
+                            print(token);
+                            print(
+                                healthdropdown['horseDropDown'][selected_horse_id]['id']);
+                            print(selected_health_record_type_id);
+                            print(
+                                healthdropdown['responsibleDropDown'][selected_responsible_id]['id']);
+                            print(selected_quantity);
+                            print(
+                                healthdropdown['costCenterDropDown'][selected_cost_center_id]['id']);
+                            print(selected_contact_id);
+                            print(amount.text);
+                            print(healthdropdown['contactsDropDown'][0]['id']);
+                            ProgressDialog pd = ProgressDialog(
+                                context, isDismissible: true,
+                                type: ProgressDialogType.Normal);
+                            pd.show();
+                            healthServices.healthRecordSave(
+                                healthrecordlist['createdBy'],
+                                healthrecordlist['horseId'],
+                                token,
+                                healthdropdown['horseDropDown'][selected_horse_id]['id'],
+                                healthdropdown['responsibleDropDown'][selected_responsible_id]['id'],
+                                selected_health_record_type_id,
+                                product.text,
+                                selected_quantity,
+                                comment.text,
+                                amount.text,
+                                healthdropdown['currencyDropDown'][selected_currency_id]['id'],
+                                healthdropdown['categoryDropDown'][selected_category_id]['id'],
+                                healthdropdown['costCenterDropDown'][selected_cost_center_id]['id'],
+                                healthdropdown['contactsDropDown'][selected_contact_id]['id'])
+                                .then((response) {
+                              pd.dismiss();
+                              if (response != null)
+                                print("Successfully  added");
+                              else {
+                                print("data not added");
+                              }
+                            });
+                          }
                         },
                         child: Text("Add Health Record",style: TextStyle(color: Colors.white),),
                         color: Colors.teal,

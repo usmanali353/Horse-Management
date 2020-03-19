@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
+import '../../../Utils.dart';
+
 class update_swabbing extends StatefulWidget{
   String token;
   var swabinglist;
@@ -39,25 +41,27 @@ class _state_add_farrier extends State<update_swabbing>{
     result= TextEditingController();
     amount= TextEditingController();
     comment= TextEditingController();
-
-
-    swabbing_services.swabbing_Dropdown(token).then((response){
-      setState(() {
-        print(response);
-        swabbingdropdown=json.decode(response);
-        for(int i=0;i<swabbingdropdown['horseDropDown'].length;i++)
-          horse.add(swabbingdropdown['horseDropDown'][i]['name']);
-
-      });
-    });
-
-
+   setState(() {
+     antibiotic.text =swabinglist['antibiotic'];
+     result.text = swabinglist['result'].toString();
+     amount.text = swabinglist['amount'].toString();
+     comment.text = swabinglist['comments'].toString();
+   });
+        swabbing_services.swabbing_Dropdown(token).then((response){
+          setState(() {
+            print(response);
+            swabbingdropdown=json.decode(response);
+            for(int i=0;i<swabbingdropdown['horsesDropDown'].length;i++)
+              horse.add(swabbingdropdown['horsesDropDown'][i]['name']);
+          });
+        });
+        print(horse.length.toString());
   }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Horse"),),
+        appBar: AppBar(title: Text("Update Swabbing"),),
         body: ListView(
           children: <Widget>[
             Column(
@@ -70,6 +74,7 @@ class _state_add_farrier extends State<update_swabbing>{
                         padding: const EdgeInsets.all(16),
                         child: FormBuilderDropdown(
                           attribute: "Horse",
+                          initialValue: swabinglist['horseId']!= null?swabinglist['horseName']['name']:null,
                           validators: [FormBuilderValidators.required()],
                           hint: Text("Horse"),
                           items: horse!=null?horse.map((plans)=>DropdownMenuItem(
@@ -78,10 +83,7 @@ class _state_add_farrier extends State<update_swabbing>{
                           )).toList():[""].map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .body1,
+                          style: Theme.of(context).textTheme.body1,
                           decoration: InputDecoration(labelText: "Horse",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
@@ -107,16 +109,20 @@ class _state_add_farrier extends State<update_swabbing>{
                         padding: EdgeInsets.only(left: 16,right: 16),
                         child:FormBuilderDateTimePicker(
                           attribute: "date",
+                          initialValue: DateTime.parse(swabinglist['swabbingDate']!= null ? swabinglist['swabbingDate']:DateTime.now()),
                           style: Theme.of(context).textTheme.body1,
                           inputType: InputType.date,
                           validators: [FormBuilderValidators.required()],
                           format: DateFormat("MM-dd-yyyy"),
-                          decoration: InputDecoration(labelText: "Start Date",
+                          decoration: InputDecoration(labelText: "Swabbing Date",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)
                             ),),
                           onChanged: (value){
+                            this.swabbing_date=value;
+                          },
+                          onSaved: (value){
                             this.swabbing_date=value;
                           },
                         ),
@@ -125,16 +131,20 @@ class _state_add_farrier extends State<update_swabbing>{
                         padding: EdgeInsets.only(left: 16,right: 16),
                         child:FormBuilderDateTimePicker(
                           attribute: "date",
+                          initialValue: DateTime.parse(swabinglist['dateOfTreatment']!= null ? swabinglist['dateOfTreatment']:DateTime.now()),
                           style: Theme.of(context).textTheme.body1,
                           inputType: InputType.date,
                           validators: [FormBuilderValidators.required()],
                           format: DateFormat("MM-dd-yyyy"),
-                          decoration: InputDecoration(labelText: "Start Date",
+                          decoration: InputDecoration(labelText: "Treatment Date",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)
                             ),),
                           onChanged: (value){
+                            this.treatment_date=value;
+                          },
+                          onSaved: (value){
                             this.treatment_date=value;
                           },
                         ),
@@ -211,34 +221,29 @@ class _state_add_farrier extends State<update_swabbing>{
                       child: MaterialButton(
                         color: Colors.teal,
                         onPressed: (){
+                          print(swabbingdropdown['horsesDropDown']);
+                          print(horse);
                           if (_fbKey.currentState.validate()) {
                             print(_fbKey.currentState.value);
+                            _fbKey.currentState.save();
 
 
-                            print(token);print(swabbingdropdown['horseDropDown'][selected_horse_id]['id']);
+                            print(token);print(swabbingdropdown['horsesDropDown'][selected_horse_id]['id']);
                             print(comment.text);
                             print(int.parse(amount.text));
                             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                            //pd.show();
+                            pd.show();
                             swabbing_services.swabbingSave(swabinglist['createdBy'],token,swabinglist['swabbingId'], swabbingdropdown['horseDropDown'][selected_horse_id]['id'],swabbing_date,treatment_date,antibiotic.text,result.text,amount.text,comment.text).then((response){
 
-                              //pd.dismiss();
+                              pd.dismiss();
                               if(response !=null)
-                                print("Successfully lab test added");
+                                print("Successfully  added");
                               else{
                                 print("data not added");}
                             });
-
-
-
-
-
-
-
-
                           }
                         },
-                        child:Text("Add Horse",style: TextStyle(color: Colors.white),),
+                        child:Text("Update",style: TextStyle(color: Colors.white),),
                       ),
                     )
                 )

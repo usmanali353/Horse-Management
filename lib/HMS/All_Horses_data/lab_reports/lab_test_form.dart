@@ -384,9 +384,9 @@ class _add_horse_state extends State<add_labTest>{
                             print(labDropdown['costCenterDropDown'][selected_costcenter_id]['id']);
                             print(labDropdown['contactsDropDown'][selected_contact_id]['id']);
                             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                            //pd.show();
+                            pd.show();
                             labtest_services.labTestSave(null,0,token, labDropdown['horseDropDown'][selected_horse_id]['id'], Select_date, labDropdown['testTypesdropDown'][selected_testtype_id]['id'], isPositive, labDropdown['responsibleDropDown'][selected_responsible_id]['id'], lab.text, result.text, amount.text, labDropdown['currencyDropDown'][selected_currency_id]['id'], labDropdown['categoryDropDown'][selected_category_id]['id'], labDropdown['costCenterDropDown'][selected_costcenter_id]['id'], labDropdown['contactsDropDown'][selected_contact_id]['id']).then((response){
-                            //pd.dismiss();
+                            pd.dismiss();
                             if(response !=null)
                             print("Successfully lab test added");
                             else{

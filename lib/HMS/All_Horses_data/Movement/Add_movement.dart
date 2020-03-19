@@ -486,7 +486,7 @@ class _state_add_farrier extends State<add_movement>{
                             print(movementDropdown['horseDropDown'][selected_horse_id]['id']);
 
                             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                            //pd.show();
+                            pd.show();
                             movement_services.movementSave(null, token, 0, movementDropdown['horseDropDown'][selected_horse_id]['id'], departure_date, return_date, isroundtrip, selected_transport_id, selected_reason_id,movementDropdown['fromLocation'][select_fromlocation_id]['id'], movementDropdown['toLocation'][select_tolocation_id]['id'], amount.text, responsible.text, description.text, movementDropdown['category'][selected_category_id]['id'] ,  movementDropdown['currency'][selected_currency_id]['id'],  movementDropdown['costCenter'][selected_costcenter_id]['id']).then((response){
 
                               pd.dismiss();

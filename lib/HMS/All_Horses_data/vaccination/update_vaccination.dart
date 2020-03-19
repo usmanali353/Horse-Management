@@ -38,6 +38,10 @@ class _state_add_farrier extends State<update_vaccination>{
   void initState() {
     amount= TextEditingController();
     dose= TextEditingController();
+    setState(() {
+      amount.text = vaccinationlist['amount'].toString();
+      dose.text = vaccinationlist['noOfDoses'].toString();
+    });
 
     vaccination_services.vaccinationDropdown(token).then((response){
       setState(() {
@@ -71,7 +75,7 @@ class _state_add_farrier extends State<update_vaccination>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Horse"),),
+        appBar: AppBar(title: Text("Update Vaccination"),),
         body: ListView(
           children: <Widget>[
             Column(
@@ -86,6 +90,7 @@ class _state_add_farrier extends State<update_vaccination>{
                           attribute: "Horse",
                           validators: [FormBuilderValidators.required()],
                           hint: Text("Horse"),
+                          initialValue: vaccinationlist['horseName']['name'],
                           items: horse!=null?horse.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -121,6 +126,7 @@ class _state_add_farrier extends State<update_vaccination>{
                         padding: EdgeInsets.only(left: 16,right: 16),
                         child:FormBuilderDateTimePicker(
                           attribute: "date",
+                          initialValue: DateTime.parse(vaccinationlist['startDate']!= null ? vaccinationlist['startDate']:DateTime.now()),
                           style: Theme.of(context).textTheme.body1,
                           inputType: InputType.date,
                           validators: [FormBuilderValidators.required()],
@@ -133,12 +139,16 @@ class _state_add_farrier extends State<update_vaccination>{
                           onChanged: (value){
                             this.Start_date=value;
                           },
+                          onSaved: (value){
+                            this.Start_date=value;
+                          },
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top:16,left: 16,right: 16),
                         child:FormBuilderDateTimePicker(
                           attribute: "date",
+                          initialValue: DateTime.parse(vaccinationlist['endDate']!= null ? vaccinationlist['endDate']:DateTime.now()),
                           style: Theme.of(context).textTheme.body1,
                           inputType: InputType.date,
                           validators: [FormBuilderValidators.required()],
@@ -151,12 +161,16 @@ class _state_add_farrier extends State<update_vaccination>{
                           onChanged: (value){
                             this.End_Date=value;
                           },
+                          onSaved: (value){
+                            this.End_Date=value;
+                          },
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "vaccination",
+                          initialValue: vaccinationlist['vaccinationTypeId']!= null ? vaccinationlist['vaccinationTypeName']['vaccinationType']:null,
                           validators: [FormBuilderValidators.required()],
                           hint: Text("Vaccination"),
                           items: vaccinationtype!=null?vaccinationtype.map((types)=>DropdownMenuItem(
@@ -178,6 +192,12 @@ class _state_add_farrier extends State<update_vaccination>{
                               selected_vaccinationtype_id = vaccinationtype.indexOf(value);
                             });
                           },
+                          onSaved: (value){
+                            setState((){
+                              this.selected_vaccinationtype=value;
+                              selected_vaccinationtype_id = vaccinationtype.indexOf(value);
+                            });
+                          },
                         ),
 
                       ),
@@ -187,6 +207,7 @@ class _state_add_farrier extends State<update_vaccination>{
                           attribute: "vaccine",
                           validators: [FormBuilderValidators.required()],
                           hint: Text("Vaccine"),
+                          initialValue: vaccinationlist['vaccineId']!= null ? vaccinationlist['vaccineName']['name']:null,
                           items: vaccine!=null?vaccine.map((types)=>DropdownMenuItem(
                             child: Text(types),
                             value: types,
@@ -201,6 +222,12 @@ class _state_add_farrier extends State<update_vaccination>{
                             ),
                           ),
                           onChanged: (value){
+                            setState((){
+                              this.selected_vaccine=value;
+                              selected_vaccine_id = vaccine.indexOf(value);
+                            });
+                          },
+                          onSaved: (value){
                             setState((){
                               this.selected_vaccine=value;
                               selected_vaccine_id = vaccine.indexOf(value);
@@ -228,6 +255,7 @@ class _state_add_farrier extends State<update_vaccination>{
                         padding: const EdgeInsets.only(top: 16, left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "vet",
+                          initialValue: vaccinationlist['vetId']!= null ? vaccinationlist['vetName']['contactName']['name']:null,
                           validators: [FormBuilderValidators.required()],
                           hint: Text("Vet"),
                           items: vet!=null?vet.map((plans)=>DropdownMenuItem(
@@ -276,22 +304,17 @@ class _state_add_farrier extends State<update_vaccination>{
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(
-                            top: 16, left: 16, right: 16),
+                        padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Cost Center",
                           validators: [FormBuilderValidators.required()],
                           hint: Text("Select Center"),
+                          initialValue: get_costcenter_by_id(vaccinationlist['costCenterId']),
                           items: costcenter!=null?costcenter.map((plans)=>DropdownMenuItem(
-                            child: Text(plans),
-                            value: plans,
+                            child: Text(plans), value: plans,
                           )).toList():[""].map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
-                              .toList(),
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .body1,
+                              .toList(), style: Theme.of(context).textTheme.body1,
                           decoration: InputDecoration(labelText: "Cost Center",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
@@ -318,6 +341,7 @@ class _state_add_farrier extends State<update_vaccination>{
                             top: 16, left: 16, right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Account Category",
+                          initialValue: get_category_by_id(vaccinationlist['categoryId']),
                           validators: [FormBuilderValidators.required()],
                           hint: Text("Select Category"),
                           items:  category!=null?category.map((plans)=>DropdownMenuItem(
@@ -356,6 +380,7 @@ class _state_add_farrier extends State<update_vaccination>{
                             top: 16, left: 16, right: 16),
                         child: FormBuilderDropdown(
                           attribute: "currency",
+                          initialValue: get_currency_by_id(vaccinationlist['currencyId']),
                           validators: [FormBuilderValidators.required()],
                           hint: Text("Select Currency"),
                           items:  currency!=null?currency.map((plans)=>DropdownMenuItem(
@@ -401,6 +426,7 @@ class _state_add_farrier extends State<update_vaccination>{
                         onPressed: (){
                           if (_fbKey.currentState.validate()) {
                             print(_fbKey.currentState.value);
+                            _fbKey.currentState.save();
 
                             print(createdBy);
                             print(vaccinationlist['vaccinationId']);
@@ -412,9 +438,9 @@ class _state_add_farrier extends State<update_vaccination>{
                             print(vaccinationdropdown['costCenterDropDown'][selected_costcenter_id]['id']);
 
                             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                            //pd.show();
-                            vaccination_services.vaccinationSave(createdBy,token,vaccinationlist['vaccinationId'], vaccinationdropdown['horseDropDown'][selected_horse_id]['id'],Start_date,End_Date, vaccinationdropdown['vaccinationTypeDropDown'][selected_vaccinationtype_id]['id'],vaccinationdropdown['vaccineDropDown'][selected_vaccine_id]['id'],vaccinationdropdown['vetDropDown'][selected_vet_id]['id'],dose.text,amount.text, vaccinationdropdown['currencyDropDown'][selected_currency_id]['id'], vaccinationdropdown['categoryDropDown'][selected_category_id]['id'], vaccinationdropdown['costCenterDropDown'][selected_costcenter_id]['id'],).then((response){
-                              //pd.dismiss();
+                            pd.show();
+                            vaccination_services.vaccinationSave(vaccinationlist['createdBy'],token,vaccinationlist['vaccinationId'], vaccinationdropdown['horseDropDown'][selected_horse_id]['id'],Start_date,End_Date, vaccinationdropdown['vaccinationTypeDropDown'][selected_vaccinationtype_id]['id'],vaccinationdropdown['vaccineDropDown'][selected_vaccine_id]['id'],vaccinationdropdown['vetDropDown'][selected_vet_id]['id'],dose.text,amount.text, vaccinationdropdown['currencyDropDown'][selected_currency_id]['id'], vaccinationdropdown['categoryDropDown'][selected_category_id]['id'], vaccinationdropdown['costCenterDropDown'][selected_costcenter_id]['id'],).then((response){
+                              pd.dismiss();
                               if(response !=null)
                                 print("Successfully updated");
                               else{
@@ -433,5 +459,52 @@ class _state_add_farrier extends State<update_vaccination>{
         )
     );
   }
-
+  String get_currency_by_id(int id){
+    var plan_name;
+    if(vaccinationlist!=null&&vaccinationdropdown['currencyDropDown']!=null&&id!=null){
+      for(int i=0;i<currency.length;i++){
+        if(vaccinationdropdown['currencyDropDown'][i]['id']==id){
+          plan_name=vaccinationdropdown['currencyDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+  String get_category_by_id(int id){
+    var plan_name;
+    if(vaccinationlist!=null&&vaccinationdropdown['categoryDropDown']!=null&&id!=null){
+      for(int i=0;i<category.length;i++){
+        if(vaccinationdropdown['categoryDropDown'][i]['id']==id){
+          plan_name=vaccinationdropdown['categoryDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+  String get_costcenter_by_id(int id){
+    var plan_name;
+    if(vaccinationlist!=null&&vaccinationdropdown['costCenterDropDown']!=null&&id!=null){
+      for(int i=0;i<costcenter.length;i++){
+        if(vaccinationdropdown['costCenterDropDown'][i]['id']==id){
+          plan_name=vaccinationdropdown['costCenterDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+  String get_contact_by_id(int id){
+    var plan_name;
+    if(vaccinationlist!=null&&vaccinationdropdown['contactsDropDown']!=null&&id!=null){
+      for(int i=0;i<contact.length;i++){
+        if(vaccinationdropdown['contactsDropDown'][i]['id']==id){
+          plan_name=vaccinationdropdown['contactsDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
 }

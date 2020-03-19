@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -33,6 +32,7 @@ class _state_add_farrier extends State<update_movement>{
   DateTime return_date = DateTime.now();
   TextEditingController amount,responsible,description;
   String token;
+  String transportinitial,reasoninitial;
   var movementDropdown,movementlist;
 
   _state_add_farrier (this.movementlist,this.token);
@@ -43,14 +43,15 @@ class _state_add_farrier extends State<update_movement>{
     amount= TextEditingController();
     description= TextEditingController();
     responsible= TextEditingController();
+    setState(() {
+      amount.text = movementlist['amount'].toString();
+      description.text = movementlist['comments'].toString();
+      responsible.text = movementlist['responsible'].toString();
+    });
 
     movement_services.movement_Dropdown(token).then((response){
       setState(() {
-        print(token);
         movementDropdown=json.decode(response);
-
-        print(movementDropdown['horseDropDown']);
-        print("abc");
         for(int i=0;i<movementDropdown['horseDropDown'].length;i++)
           horse.add(movementDropdown['horseDropDown'][i]['name']);
         for(int i=0;i<movementDropdown['fromLocation'].length;i++)
@@ -67,9 +68,113 @@ class _state_add_farrier extends State<update_movement>{
       });
     });
 
+    if(movementlist != null) {
+      if (movementlist['transportType'] == 1) {
+        setState(() {
+          transportinitial = 'Truck';
+        });
+      }
+      else if (movementlist['transportType'] == 2) {
+        setState(() {
+          transportinitial = 'Trailer';
+        });
+      }
+      else if (movementlist['transportType'] == 3) {
+        setState(() {
+          transportinitial = 'ByFoot';
+        });
+      }
+      else if (movementlist['transportType'] == 4) {
+        setState(() {
+          transportinitial = 'Plan';
+        });
+      }
+      else if (movementlist['transportType'] == 5) {
+        setState(() {
+          transportinitial = 'Ship';
+        });
+      }
+      else if (movementlist['transportType'] ==6) {
+        setState(() {
+          transportinitial = 'Train';
+        });
+      }
+    }else{
+      print("genderlist null a");
+    }
 
 
 
+
+    if(movementlist != null) {
+      if (movementlist['reason'] == 1) {
+        setState(() {
+          reasoninitial = 'Breeding';
+        });
+      }
+      else if (movementlist['reason'] == 2) {
+        setState(() {
+          reasoninitial = 'Competetion';
+        });
+      }
+      else if (movementlist['reason'] == 3) {
+        setState(() {
+          reasoninitial = 'Loan';
+        });
+      }
+      else if (movementlist['reason'] == 4) {
+        setState(() {
+          reasoninitial = 'purchase';
+        });
+      }
+      else if (movementlist['reason'] == 5) {
+        setState(() {
+          reasoninitial = 'Relocation';
+        });
+      }
+      else if (movementlist['reason'] ==6) {
+        setState(() {
+          reasoninitial = 'Rental';
+        });
+      }
+    else if (movementlist['reason'] == 7) {
+    setState(() {
+      reasoninitial = 'Riding';
+    });
+    }
+    else if (movementlist['reason'] == 8) {
+    setState(() {
+      reasoninitial = 'Sale';
+    });
+    }
+    else if (movementlist['reason'] == 9) {
+    setState(() {
+      reasoninitial = 'Surgery';
+    });
+    }
+    else if (movementlist['reason'] == 10) {
+    setState(() {
+      reasoninitial = 'Tame';
+    });
+    }
+    else if (movementlist['reason'] == 11) {
+    setState(() {
+      reasoninitial = 'Training';
+    });
+    }
+    else if (movementlist['reason'] ==12) {
+    setState(() {
+      reasoninitial = 'Treatmant';
+    });
+    }
+    else if (movementlist['reason'] ==13) {
+    setState(() {
+      reasoninitial = 'Others';
+    });
+    }
+    }else{
+      print("genderlist null a");
+    }
 //    income_expense_services.income_expensedropdown(token).then((response){
 //      setState(() {
 //        print(response);
@@ -96,7 +201,7 @@ class _state_add_farrier extends State<update_movement>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Horse"),),
+        appBar: AppBar(title: Text("Update Movement"),),
         body: ListView(
           children: <Widget>[
             Column(
@@ -109,6 +214,7 @@ class _state_add_farrier extends State<update_movement>{
                         padding: const EdgeInsets.only(top: 16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Horse",
+                          initialValue: movementlist['horseName']['name'],
                           hint: Text("Horse"),
                           items: horse!=null?horse.map((types)=>DropdownMenuItem(
                             child: Text(types),
@@ -130,6 +236,13 @@ class _state_add_farrier extends State<update_movement>{
                             });
 
                           },
+                          onSaved: (value){
+                            setState(() {
+                              this.selected_horse=value;
+                              selected_horse_id = horse.indexOf(value);
+                            });
+
+                          },
                         ),
                       ),
 //
@@ -137,6 +250,7 @@ class _state_add_farrier extends State<update_movement>{
                         padding: EdgeInsets.only(top:16,left: 16,right: 16),
                         child:FormBuilderDateTimePicker(
                           attribute: "ddate",
+                          initialValue: DateTime.parse(movementlist['departureDate'] != null ? movementlist['departureDate']:DateTime.now()),
                           style: Theme.of(context).textTheme.body1,
                           inputType: InputType.date,
                           validators: [FormBuilderValidators.required()],
@@ -149,12 +263,16 @@ class _state_add_farrier extends State<update_movement>{
                           onChanged: (value){
                             this.departure_date=value;
                           },
+                          onSaved: (value){
+                            this.departure_date=value;
+                          },
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top:16,left: 16,right: 16),
                         child:FormBuilderDateTimePicker(
                           attribute: "rdate",
+                          initialValue: DateTime.parse(movementlist['returnDate']!= null? movementlist['returnDate']:DateTime.now()),
                           style: Theme.of(context).textTheme.body1,
                           inputType: InputType.date,
                           validators: [FormBuilderValidators.required()],
@@ -173,6 +291,7 @@ class _state_add_farrier extends State<update_movement>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "transporttype",
+                          initialValue: transportinitial,
                           hint: Text("transportType"),
                           items: transporttype!=null?transporttype.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
@@ -190,13 +309,13 @@ class _state_add_farrier extends State<update_movement>{
                           onChanged: (value){
                             setState(() {
                               this.selected_transport=value;
-                              selected_transport_id = transporttype.indexOf(value);
+                              selected_transport_id = transporttype.indexOf(value)+1;
                             });
                           },
                           onSaved: (value){
                             setState(() {
                               this.selected_transport=value;
-                              selected_transport_id = transporttype.indexOf(value);
+                              selected_transport_id = transporttype.indexOf(value)+1;
                             });
                           },
                         ),
@@ -205,6 +324,7 @@ class _state_add_farrier extends State<update_movement>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "reason",
+                          initialValue: reasoninitial!= null? reasoninitial:null,
                           hint: Text("reason"),
                           items: reason!=null?reason.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
@@ -222,13 +342,13 @@ class _state_add_farrier extends State<update_movement>{
                           onChanged: (value){
                             setState(() {
                               this.selected_reason=value;
-                              selected_reason_id = reason.indexOf(value);
+                              selected_reason_id = reason.indexOf(value)+1;
                             });
                           },
                           onSaved: (value){
                             setState(() {
                               this.selected_reason=value;
-                              selected_reason_id = reason.indexOf(value);
+                              selected_reason_id = reason.indexOf(value)+1;
                             });
                           },
                         ),
@@ -237,6 +357,7 @@ class _state_add_farrier extends State<update_movement>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "reason",
+                          initialValue: "No",
                           hint: Text(" RoundTrip"),
                           items: roundtrip!=null?roundtrip.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
@@ -262,8 +383,11 @@ class _state_add_farrier extends State<update_movement>{
                           },
                           onSaved: (value){
                             setState(() {
-                              this.selected_costcenter=value;
-                              selected_costcenter_id = costcenter.indexOf(value);
+                              if(value == "Yes")
+                                isroundtrip = true;
+                              else
+                                isroundtrip = false;
+
                             });
                           },
                         ),
@@ -272,6 +396,7 @@ class _state_add_farrier extends State<update_movement>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "fromlocation",
+                          initialValue: movementlist['fromLocationName']['name'],
                           hint: Text("From Location"),
                           items: fromlocation!=null?fromlocation.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
@@ -304,6 +429,7 @@ class _state_add_farrier extends State<update_movement>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "to location",
+                          initialValue: movementlist['toLocationName']['name'],
                           hint: Text("Tolocation"),
                           items: tolocation!=null?tolocation.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
@@ -386,6 +512,7 @@ class _state_add_farrier extends State<update_movement>{
                         padding: const EdgeInsets.only(left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Cuurency",
+                          initialValue: get_currency_by_id(movementlist['currencyId']),
                           hint: Text("Currency"),
                           items: currency!=null?currency.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
@@ -406,12 +533,19 @@ class _state_add_farrier extends State<update_movement>{
                               selected_currency_id = currency.indexOf(value);
                             });
                           },
+                          onSaved: (value){
+                            setState(() {
+                              this.selected_currency=value;
+                              selected_currency_id = currency.indexOf(value);
+                            });
+                          },
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Category",
+                          initialValue: get_category_by_id(movementlist['categoryId']),
                           hint: Text("Category"),
                           items: category!=null?category.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
@@ -431,12 +565,19 @@ class _state_add_farrier extends State<update_movement>{
                               this.selected_category=value;
                               selected_category_id = category.indexOf(value);
                             });                          },
+                          onSaved: (value){
+                            setState(() {
+                              this.selected_category=value;
+                              selected_category_id = category.indexOf(value);
+                            });
+                            },
                         ),
                       ),
 
                       Padding(
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
+                          initialValue: get_costcenter_by_id(movementlist['costCenterId']),
                           attribute: "cost Center",
                           hint: Text("Cost Center"),
                           items: costcenter!=null?costcenter.map((plans)=>DropdownMenuItem(
@@ -480,14 +621,16 @@ class _state_add_farrier extends State<update_movement>{
                       child: MaterialButton(
                         color: Colors.teal,
                         onPressed: (){
+                          print(movementlist['fromLocation']) ;
                           if (_fbKey.currentState.validate()) {
                             print(_fbKey.currentState.value);
-                            print(token);print(amount.text);print(description.text);print(movementDropdown['currency'][selected_currency_id]['id']);
-                            print(movementDropdown['category'][selected_category_id]['id']);print(movementDropdown['costCenter'][selected_costcenter_id]['id']);print( movementDropdown['toLocation'][select_tolocation_id]['id']);
-                            print(movementDropdown['horseDropDown'][selected_horse_id]['id']);
+                            _fbKey.currentState.save();
+//                            print(token);print(amount.text);print(description.text);print(movementDropdown['currency'][selected_currency_id]['id']);
+//                            print(movementDropdown['category'][selected_category_id]['id']);print(movementDropdown['costCenter'][selected_costcenter_id]['id']);print( movementDropdown['toLocation'][select_tolocation_id]['id']);
+//                            print(movementDropdown['horseDropDown'][selected_horse_id]['id']);
 
                             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                            //pd.show();
+                            pd.show();
                             movement_services.movementSave(movementlist['createdBy'], token, movementlist['movementId'], movementDropdown['horseDropDown'][selected_horse_id]['id'], departure_date, return_date, isroundtrip, selected_transport_id, selected_reason_id,movementDropdown['fromLocation'][select_fromlocation_id]['id'], movementDropdown['toLocation'][select_tolocation_id]['id'], amount.text, responsible.text, description.text, movementDropdown['category'][selected_category_id]['id'] ,  movementDropdown['currency'][selected_currency_id]['id'],  movementDropdown['costCenter'][selected_costcenter_id]['id']).then((response){
 
                               pd.dismiss();
@@ -498,7 +641,7 @@ class _state_add_farrier extends State<update_movement>{
                             });
                           }
                         },
-                        child:Text("Add Horse",style: TextStyle(color: Colors.white),),
+                        child:Text("Update",style: TextStyle(color: Colors.white),),
                       ),
                     )
                 )
@@ -508,5 +651,41 @@ class _state_add_farrier extends State<update_movement>{
         )
     );
   }
-
+  String get_currency_by_id(int id){
+    var plan_name;
+    if(movementlist!=null&&movementDropdown['currency']!=null&&id!=null){
+      for(int i=0;i<currency.length;i++){
+        if(movementDropdown['currency'][i]['id']==id){
+          plan_name=movementDropdown['currency'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+  String get_category_by_id(int id){
+    var plan_name;
+    if(movementlist!=null&&movementDropdown['category']!=null&&id!=null){
+      for(int i=0;i<category.length;i++){
+        if(movementDropdown['category'][i]['id']==id){
+          plan_name=movementDropdown['category'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+  String get_costcenter_by_id(int id){
+    var plan_name;
+    if(movementlist!=null&&movementDropdown['costCenter']!=null&&id!=null){
+      for(int i=0;i<costcenter.length;i++){
+        if(movementDropdown['costCenter'][i]['id']==id){
+          plan_name=movementDropdown['costCenter'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+  
 }

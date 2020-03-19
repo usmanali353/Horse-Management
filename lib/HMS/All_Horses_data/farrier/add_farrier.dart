@@ -378,9 +378,9 @@ class _state_add_farrier extends State<add_farrier> {
                             print(farrierdropdown['costCenterDropDown'][selected_costcenter_id]['id']);
                             print(farrierdropdown['contactsDropDown'][selected_contact_id]['id']);
                             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                            //pd.show();
+                            pd.show();
                             farrier_services.farrierSave(null,0,token, farrierdropdown['horseDropDown'][selected_horse_id]['id'], farrierdropdown['farrierDropDown'][selected_farrier_id]['id'],selected_shoeingtype_id, comment.text,amount.text, farrierdropdown['currencyDropDown'][selected_currency_id]['id'], farrierdropdown['categoryDropDown'][selected_category_id]['id'], farrierdropdown['costCenterDropDown'][selected_costcenter_id]['id'], farrierdropdown['contactsDropDown'][selected_contact_id]['id']).then((response){
-                              //pd.dismiss();
+                              pd.dismiss();
                               if(response !=null)
                                 print("Successfully lab test added");
                               else{
