@@ -124,7 +124,7 @@ class _training_list_state extends State<horse_list>{
             });
 
           }else{
-            Scaffold.of(context).showSnackBar(SnackBar(content: Text("hoser list empty"),backgroundColor: Colors.red,));
+            Scaffold.of(context).showSnackBar(SnackBar(content: Text("hoserlist empty"),backgroundColor: Colors.red,));
           }
         });
       }else
