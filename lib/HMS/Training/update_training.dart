@@ -431,7 +431,7 @@ class _update_training extends State<update_training>{
   }
  String get_traininer_by_id(int id){
     var trainer_name='';
-    if(training_response!=null&&training_response['trainerDropDown']!=null&&id!=null){
+    if(training_response['trainerDropDown']!=null&&id!=null){
       for(int i=0;i<trainers.length;i++){
         if(training_response['trainerDropDown'][i]['id']==id){
           trainer_name=training_response['trainerDropDown'][i]['name'];
@@ -440,9 +440,6 @@ class _update_training extends State<update_training>{
       return trainer_name;
     }else
       return null;
-
-
-
   }
   String get_plan_by_id(int id){
     var plan_name;
