@@ -3,6 +3,7 @@ import 'package:horse_management/HMS/Configuration/Colors/colors_json.dart';
 import 'package:horse_management/HMS/Configuration/VaccinationTypes/add_vaccinationtypes.dart';
 import 'package:horse_management/HMS/Configuration/VaccinationTypes/update_vaccinationtypes.dart';
 import 'package:horse_management/HMS/Configuration/VaccinationTypes/vaccinationtypes_json.dart';
+import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'dart:convert';
@@ -129,13 +130,15 @@ class _vaccinationtypes_list extends State<vaccinationtypes_list>{
                         },
                       ),
                     ],
-                    child: ListTile(
-                      title: Text(types_lists!=null?types_lists[index]['vaccinationType']:''),
-                      // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
-                      //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
-                      onTap: (){
-                        // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
-                      },
+                    child: FadeAnimation(2.0,
+                      ListTile(
+                        title: Text(types_lists!=null?types_lists[index]['vaccinationType']:''),
+                        // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
+                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                        onTap: (){
+                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                        },
+                      ),
                     )
                 ),
                 Divider(),

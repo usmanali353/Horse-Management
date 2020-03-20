@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Breeding/BreedingServices/update_breeding_services.dart';
 import 'package:horse_management/HMS/my_horses/services/add_horse_services.dart';
+import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -129,13 +130,15 @@ class _breeding_services_State extends State<breeding_services>{
                         },
                       ),
                     ],
-                    child: ListTile(
-                      title: Text(breeding_services_list!=null?breeding_services_list[index]['horseName']['name']:''),
-                      subtitle: Text(breeding_services_list!=null?breeding_services_list[index]['serviceType'].toString():''),
-                      trailing: Text(breeding_services_list!=null?breeding_services_list[index]['serviceDate'].toString().replaceAll("T00:00:00", ''):'') ,
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>update_breeding(token,breeding_services_list[index])));
-                      },
+                    child: FadeAnimation(2.0,
+                       ListTile(
+                        title: Text(breeding_services_list!=null?breeding_services_list[index]['horseName']['name']:''),
+                        subtitle: Text(breeding_services_list!=null?breeding_services_list[index]['serviceType'].toString():''),
+                        trailing: Text(breeding_services_list!=null?breeding_services_list[index]['serviceDate'].toString().replaceAll("T00:00:00", ''):'') ,
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>update_breeding(token,breeding_services_list[index])));
+                        },
+                      ),
                     )
                 ),
                 Divider(),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Configuration/Breeds/add_breed.dart';
 import 'package:horse_management/HMS/Configuration/Breeds/breeds_json.dart';
 import 'package:horse_management/HMS/Configuration/Breeds/update_breed.dart';
+import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'dart:convert';
@@ -128,13 +129,15 @@ class _breeds_list extends State<breeds_list>{
                         },
                       ),
                     ],
-                    child: ListTile(
-                      title: Text(breed_lists!=null?breed_lists[index]['name']:''),
-                      // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
-                      //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
-                      onTap: (){
-                        // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
-                      },
+                    child: FadeAnimation(2.4,
+                      ListTile(
+                        title: Text(breed_lists!=null?breed_lists[index]['name']:''),
+                        // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
+                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                        onTap: (){
+                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                        },
+                      ),
                     )
                 ),
                 Divider(),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Configuration/HorseCategories/add_horsecategory.dart';
 import 'package:horse_management/HMS/Configuration/HorseCategories/horsecategory_json.dart';
 import 'package:horse_management/HMS/Configuration/HorseCategories/update_horsecategory.dart';
+import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'dart:convert';
@@ -127,13 +128,15 @@ class _horsecategory_list extends State<horsecategory_list>{
                         },
                       ),
                     ],
-                    child: ListTile(
-                      title: Text(category_lists!=null?category_lists[index]['name']:''),
-                      // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
-                      //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
-                      onTap: (){
-                        // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
-                      },
+                    child: FadeAnimation(2.0,
+                       ListTile(
+                        title: Text(category_lists!=null?category_lists[index]['name']:''),
+                        // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
+                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                        onTap: (){
+                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                        },
+                      ),
                     )
                 ),
                 Divider(),

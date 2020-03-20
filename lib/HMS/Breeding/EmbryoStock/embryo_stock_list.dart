@@ -6,6 +6,7 @@ import 'package:horse_management/HMS/Breeding/EmbryoStock/update_embryo_stock.da
 
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
+import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 import 'add_embryo_stock.dart';
@@ -130,13 +131,15 @@ class _embryo_stock_list extends State< embryo_stock_list>{
                         },
                       ),
                     ],
-                    child: ListTile(
-                      title: Text(embryo_list!=null?embryo_list[index]['horseName']['name']:''),
-                      subtitle: Text(embryo_list!=null?embryo_list[index]['sireName']['name']:''),
-                      //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>update_embryo_stock(token,embryo_list[index])));
-                      },
+                    child: FadeAnimation(2.0,
+                      ListTile(
+                        title: Text(embryo_list!=null?embryo_list[index]['horseName']['name']:''),
+                        subtitle: Text(embryo_list!=null?embryo_list[index]['sireName']['name']:''),
+                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>update_embryo_stock(token,embryo_list[index])));
+                        },
+                      ),
                     )
                 ),
                 Divider(),

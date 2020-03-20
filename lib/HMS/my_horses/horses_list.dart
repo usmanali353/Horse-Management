@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/my_horses/add_horse/add_horse_new.dart';
 import 'package:horse_management/HMS/my_horses/services/add_horse_services.dart';
 import 'package:horse_management/Utils.dart';
+import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'horse_detail_page.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -79,15 +80,17 @@ class _training_list_state extends State<horse_list>{
                     },
                   ),
                 ],
-                child: ListTile(
-                  leading: Image.asset("assets/horse_icon.png", fit: BoxFit.cover),
-                  title: Text(horse_list!=null?(horse_list[index]['name']):''),
-                  subtitle: Text(horse_list!=null?horse_list[index]['dateOfBirth'].toString():''),
-                  //leading: Image.asset("Assets/horses_icon.png"),
-                  onTap: (){
-                    print((horse_list[index]));
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>horse_detail(horse_list[index])));
-                  },
+                child: FadeAnimation(2.0,
+                  ListTile(
+                    leading: Image.asset("assets/horse_icon.png", fit: BoxFit.cover),
+                    title: Text(horse_list!=null?(horse_list[index]['name']):''),
+                    subtitle: Text(horse_list!=null?horse_list[index]['dateOfBirth'].toString():''),
+                    //leading: Image.asset("Assets/horses_icon.png"),
+                    onTap: (){
+                      print((horse_list[index]));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>horse_detail(horse_list[index])));
+                    },
+                  ),
                 ),
 
 

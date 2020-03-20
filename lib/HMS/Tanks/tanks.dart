@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/Tanks/tanks_json.dart';
 import 'package:horse_management/HMS/Tanks/update_tanks.dart';
+import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 import '../../Utils.dart';
@@ -129,13 +130,15 @@ class _tanks_list extends State<tanks_list>{
                         },
                       ),
                     ],
-                    child: ListTile(
-                      title: Text(tanks_list!=null?tanks_list[index]['name']:''),
-                      // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
-                      //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
-                      onTap: (){
-                        // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_breeding_sales_form(token,sales_list[index])));
-                      },
+                    child: FadeAnimation(2.0,
+                      ListTile(
+                        title: Text(tanks_list!=null?tanks_list[index]['name']:''),
+                        // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
+                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                        onTap: (){
+                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_breeding_sales_form(token,sales_list[index])));
+                        },
+                      ),
                     )
                 ),
                 Divider(),

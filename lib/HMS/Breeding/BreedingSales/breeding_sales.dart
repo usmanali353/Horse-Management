@@ -5,6 +5,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/Breeding/BreedingSales/breeding_sales_json.dart';
 import 'package:horse_management/HMS/Breeding/BreedingSales/update_breeding_sales.dart';
 import 'package:horse_management/HMS/Breeding/BreedingServices/breeding_service_form.dart';
+import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 import '../../../Utils.dart';
@@ -130,13 +131,15 @@ class _breeding_sales extends State<breeding_sales>{
                         },
                       ),
                     ],
-                    child: ListTile(
-                      title: Text(sales_list!=null?sales_list[index]['horseName']['name']:''),
-                      // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
-                      //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                    child: FadeAnimation(2.0,
+                       ListTile(
+                        title: Text(sales_list!=null?sales_list[index]['horseName']['name']:''),
+                        // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
+                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
 //                      onTap: (){
 //                        Navigator.push(context, MaterialPageRoute(builder: (context)=>update_breeding_sales_form(token,sales_list[index])));
 //                      },
+                      ),
                     )
                 ),
                 Divider(),

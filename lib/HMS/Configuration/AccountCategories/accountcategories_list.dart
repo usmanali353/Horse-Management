@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Configuration/AccountCategories/accountcategories_json.dart';
 import 'package:horse_management/HMS/Configuration/AccountCategories/add_accountcategories.dart';
 import 'package:horse_management/HMS/Configuration/AccountCategories/update_accountcategories.dart';
+import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'dart:convert';
@@ -129,13 +130,15 @@ class _accountcategories_list extends State<accountcategories_list>{
                         },
                       ),
                     ],
-                    child: ListTile(
-                      title: Text(category_lists!=null?category_lists[index]['name']:''),
-                      //subtitle: Text(category_lists!=null?category_lists[index]['description']:''),
-                      //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
-                      onTap: (){
-                        // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
-                      },
+                    child: FadeAnimation(2.0,
+                      ListTile(
+                        title: Text(category_lists!=null?category_lists[index]['name']:''),
+                        //subtitle: Text(category_lists!=null?category_lists[index]['description']:''),
+                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                        onTap: (){
+                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                        },
+                      ),
                     )
                 ),
                 Divider(),

@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/OperationNotes/add_new_operation_note.dart';
 import 'package:horse_management/HMS/OperationNotes/operation_notes_json.dart';
 import 'package:horse_management/HMS/OperationNotes/update_operation_note.dart';
+import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:horse_management/screens/loginScreen.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -132,13 +133,15 @@ class _operational_noteList extends State<operational_noteList>{
                         },
                       ),
                     ],
-                    child: ListTile(
-                      title: Text(notes_list!=null?notes_list[index]['generalCategoryName']['name']:''),
-                      // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
-                      //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
-                      onTap: (){
-                       // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_breeding_sales_form(token,sales_list[index])));
-                      },
+                    child: FadeAnimation(2.0,
+                       ListTile(
+                        title: Text(notes_list!=null?notes_list[index]['generalCategoryName']['name']:''),
+                        // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
+                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                        onTap: (){
+                         // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_breeding_sales_form(token,sales_list[index])));
+                        },
+                      ),
                     )
                 ),
                 Divider(),

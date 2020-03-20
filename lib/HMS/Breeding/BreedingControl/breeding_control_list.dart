@@ -8,6 +8,7 @@ import 'package:horse_management/HMS/Breeding/EmbryoStock/update_embryo_stock.da
 
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
+import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 
@@ -140,14 +141,16 @@ class _breeding_control_list extends State< breeding_control_list>{
                         },
                       ),
                     ],
-                    child: ListTile(
-                      trailing:Text(control_list!=null?control_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
-                      title: Text(control_list!=null?control_list[index]['horseName']['name']:''),
-                      subtitle: Text(control_list!=null?get_check_method_by_id(control_list[index]['check_Method']):''),
-                      leading: Icon(Icons.pets,size: 40,color: Colors.teal,),
-                      onTap: (){
-                       // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_embryo_stock(token,embryo_list[index])));
-                      },
+                    child: FadeAnimation(2.0,
+                      ListTile(
+                        trailing:Text(control_list!=null?control_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
+                        title: Text(control_list!=null?control_list[index]['horseName']['name']:''),
+                        subtitle: Text(control_list!=null?get_check_method_by_id(control_list[index]['check_Method']):''),
+                        leading: Icon(Icons.pets,size: 40,color: Colors.teal,),
+                        onTap: (){
+                         // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_embryo_stock(token,embryo_list[index])));
+                        },
+                      ),
                     )
                 ),
                 Divider(),

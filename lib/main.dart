@@ -9,8 +9,16 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
 //  SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values)
   SystemChrome.setEnabledSystemUIOverlays((SystemUiOverlay.values)).then((_) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown
+    ]);
     SharedPreferences.getInstance().then((prefs) {
       var darkModeOn = prefs.getBool('darkMode') ?? true;
       runApp(
