@@ -2,9 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:hive/hive.dart';
 import 'package:horse_management/Model/sqlite_helper.dart';
+import 'package:horse_management/Utils.dart';
 import 'package:intl/intl.dart';
 import 'package:horse_management/HMS/my_horses/services/add_horse_services.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 
 
@@ -65,269 +68,125 @@ class _add_horse_state extends State<add_newHorse>{
 //        print("No Training Found");
 //      }
     });
-    Add_horse_services.horsesdropdown(token).then((response){
-      setState(() {
-        //genderlist  = jsonDecode(response);
-        print(response);
+    Utils.openBox("AddHorseDropDown").then((resp){
+      Utils.check_connectivity().then((result) {
+        if (result) {
+          ProgressDialog pd = ProgressDialog(
+              context, type: ProgressDialogType.Normal, isDismissible: true);
+          pd.show();
+          Add_horse_services.horsesdropdown(token).then((response){
+            pd.dismiss();
+            setState(() {
+              //genderlist  = jsonDecode(response);
+              print(response);
+               print("online");
 
-
-          getHorses=json.decode(response);
-          for(int i=0;i<getHorses['damDropDown'].length;i++)
-            dam.add(getHorses['damDropDown'][i]['name']);
-          for(int i=0;i<getHorses['sireDropDown'].length;i++)
-            sire.add(getHorses['sireDropDown'][i]['name']);
-          for(int i=0;i<getHorses['ironBrandDropDown'].length;i++)
-            ironbrand.add(getHorses['ironBrandDropDown'][i]['name']);
-          for(int i=0;i<getHorses['barnDropDown'].length;i++)
-            barn.add(getHorses['barnDropDown'][i]['name']);
-          for(int i=0;i<getHorses['breederDropDown'].length;i++)
-            breeder.add(getHorses['breederDropDown'][i]['name']);
-          for(int i=0;i<getHorses['vetDropDown'].length;i++)
-            vet.add(getHorses['vetDropDown'][i]['name']);
-          for(int i=0;i<getHorses['associationDropDown'].length;i++)
-            association.add(getHorses['associationDropDown'][i]['name']);
-          for(int i=0;i<getHorses['locationDropDown'].length;i++)
-            location.add(getHorses['locationDropDown'][i]['name']);
-          for(int i=0;i<getHorses['riderDropDown'].length;i++)
-            rider.add(getHorses['riderDropDown'][i]['name']);
-          for(int i=0;i<getHorses['inchargeDropDown'].length;i++)
-            incharge.add(getHorses['inchargeDropDown'][i]['name']);
-          for(int i=0;i<getHorses['colorDropDown'].length;i++)
-            colors.add(getHorses['colorDropDown'][i]['name']);
-          for(int i=0;i<getHorses['breedDropDown'].length;i++)
-            breeding.add(getHorses['breedDropDown'][i]['name']);
-          for(int i=0;i<getHorses['dietDropDown'].length;i++)
-            diet.add(getHorses['dietDropDown'][i]['name']);
-          for(int i=0;i<getHorses['horseCategoryDropDown'].length;i++)
-            category.add(getHorses['horseCategoryDropDown'][i]['name']);
-          for(int i=0;i<getHorses['headMarkingsDropDown'].length;i++)
-            headmark.add(getHorses['headMarkingsDropDown'][i]['name']);
-          for(int i=0;i<getHorses['bodyMarkingsDropDown'].length;i++)
-            bodymark.add(getHorses['bodyMarkingsDropDown'][i]['name']);
-          for(int i=0;i<getHorses['legMarkingsDropDown'].length;i++)
-            legmark.add(getHorses['legMarkingsDropDown'][i]['name']);
+              getHorses=json.decode(response);
+              Hive.box("AddHorseDropDown").put("offline_horse_dropdowns", getHorses);
+              for(int i=0;i<getHorses['damDropDown'].length;i++)
+                dam.add(getHorses['damDropDown'][i]['name']);
+              for(int i=0;i<getHorses['sireDropDown'].length;i++)
+                sire.add(getHorses['sireDropDown'][i]['name']);
+              for(int i=0;i<getHorses['ironBrandDropDown'].length;i++)
+                ironbrand.add(getHorses['ironBrandDropDown'][i]['name']);
+              for(int i=0;i<getHorses['barnDropDown'].length;i++)
+                barn.add(getHorses['barnDropDown'][i]['name']);
+              for(int i=0;i<getHorses['breederDropDown'].length;i++)
+                breeder.add(getHorses['breederDropDown'][i]['name']);
+              for(int i=0;i<getHorses['vetDropDown'].length;i++)
+                vet.add(getHorses['vetDropDown'][i]['name']);
+              for(int i=0;i<getHorses['associationDropDown'].length;i++)
+                association.add(getHorses['associationDropDown'][i]['name']);
+              for(int i=0;i<getHorses['locationDropDown'].length;i++)
+                location.add(getHorses['locationDropDown'][i]['name']);
+              for(int i=0;i<getHorses['riderDropDown'].length;i++)
+                rider.add(getHorses['riderDropDown'][i]['name']);
+              for(int i=0;i<getHorses['inchargeDropDown'].length;i++)
+                incharge.add(getHorses['inchargeDropDown'][i]['name']);
+              for(int i=0;i<getHorses['colorDropDown'].length;i++)
+                colors.add(getHorses['colorDropDown'][i]['name']);
+              for(int i=0;i<getHorses['breedDropDown'].length;i++)
+                breeding.add(getHorses['breedDropDown'][i]['name']);
+              for(int i=0;i<getHorses['dietDropDown'].length;i++)
+                diet.add(getHorses['dietDropDown'][i]['name']);
+              for(int i=0;i<getHorses['horseCategoryDropDown'].length;i++)
+                category.add(getHorses['horseCategoryDropDown'][i]['name']);
+              for(int i=0;i<getHorses['headMarkingsDropDown'].length;i++)
+                headmark.add(getHorses['headMarkingsDropDown'][i]['name']);
+              for(int i=0;i<getHorses['bodyMarkingsDropDown'].length;i++)
+                bodymark.add(getHorses['bodyMarkingsDropDown'][i]['name']);
+              for(int i=0;i<getHorses['legMarkingsDropDown'].length;i++)
+                legmark.add(getHorses['legMarkingsDropDown'][i]['name']);
 //        for(int i=0;i<getHorses['locationDropDown'].length;i++)
 //          location.add(getHorses['locationDropDown'][i]['name']);
 
 //        print(gender.length.toString());
+            });
+          });
+
+          Add_horse_services.gender(token).then((response){
+            setState(() {
+              genderlist  = jsonDecode(response);
+              Hive.box("AddHorseDropDown").put("offline_gender_dropdowns", genderlist);
+
+              print(response);
+
+              for(int i=0;i<genderlist.length;i++){
+                gender.add(genderlist[i]['name']);
+              }
+              print(gender.length.toString());
+            });
+          });
+
+        }else{
+          setState(() {
+            print("offline");
+            genderlist = Hive.box("AddHorseDropDown").get("offline_gender_dropdowns");
+            getHorses = Hive.box("AddHorseDropDown").get("offline_horse_dropdowns");
+            for(int i=0;i<getHorses['damDropDown'].length;i++)
+              dam.add(getHorses['damDropDown'][i]['name']);
+            for(int i=0;i<getHorses['sireDropDown'].length;i++)
+              sire.add(getHorses['sireDropDown'][i]['name']);
+            for(int i=0;i<getHorses['ironBrandDropDown'].length;i++)
+              ironbrand.add(getHorses['ironBrandDropDown'][i]['name']);
+            for(int i=0;i<getHorses['barnDropDown'].length;i++)
+              barn.add(getHorses['barnDropDown'][i]['name']);
+            for(int i=0;i<getHorses['breederDropDown'].length;i++)
+              breeder.add(getHorses['breederDropDown'][i]['name']);
+            for(int i=0;i<getHorses['vetDropDown'].length;i++)
+              vet.add(getHorses['vetDropDown'][i]['name']);
+            for(int i=0;i<getHorses['associationDropDown'].length;i++)
+              association.add(getHorses['associationDropDown'][i]['name']);
+            for(int i=0;i<getHorses['locationDropDown'].length;i++)
+              location.add(getHorses['locationDropDown'][i]['name']);
+            for(int i=0;i<getHorses['riderDropDown'].length;i++)
+              rider.add(getHorses['riderDropDown'][i]['name']);
+            for(int i=0;i<getHorses['inchargeDropDown'].length;i++)
+              incharge.add(getHorses['inchargeDropDown'][i]['name']);
+            for(int i=0;i<getHorses['colorDropDown'].length;i++)
+              colors.add(getHorses['colorDropDown'][i]['name']);
+            for(int i=0;i<getHorses['breedDropDown'].length;i++)
+              breeding.add(getHorses['breedDropDown'][i]['name']);
+            for(int i=0;i<getHorses['dietDropDown'].length;i++)
+              diet.add(getHorses['dietDropDown'][i]['name']);
+            for(int i=0;i<getHorses['horseCategoryDropDown'].length;i++)
+              category.add(getHorses['horseCategoryDropDown'][i]['name']);
+            for(int i=0;i<getHorses['headMarkingsDropDown'].length;i++)
+              headmark.add(getHorses['headMarkingsDropDown'][i]['name']);
+            for(int i=0;i<getHorses['bodyMarkingsDropDown'].length;i++)
+              bodymark.add(getHorses['bodyMarkingsDropDown'][i]['name']);
+            for(int i=0;i<getHorses['legMarkingsDropDown'].length;i++)
+              legmark.add(getHorses['legMarkingsDropDown'][i]['name']);
+            for(int i=0;i<genderlist.length;i++) {
+              gender.add(genderlist[i]['name']);
+            }
+            print("offline");
+          });
+        }
       });
-    });
+      });
 
-    Add_horse_services.gender(token).then((response){
-     setState(() {
-      genderlist  = jsonDecode(response);
-      print(response);
 
-      for(int i=0;i<genderlist.length;i++){
-       gender.add(genderlist[i]['name']);
-      }
-      print(gender.length.toString());
-     });
-    });
-//    Add_horse_services.colors(token).then((response){
-//      // print(response.length.toString());
-//      setState(() {
-//        //var parsedjson = jsonDecode(response);
-//        colorlist  = jsonDecode(response);
-//        print(response);
-//
-//        for(int i=0;i<colorlist.length;i++)
-//          colors.add(colorlist[i]['name']);
-//        print(colors.length.toString());
-//      });
-//    });
-//    Add_horse_services.barns(token).then((response){
-//      // print(response.length.toString());
-//      setState(() {
-//        //var parsedjson = jsonDecode(response);
-//        barnlist  = jsonDecode(response);
-//        print(response);
-//
-//        for(int i=0;i<barnlist.length;i++)
-//          barn.add(barnlist[i]['name']);
-//        print(barn.length.toString());
-//      });
-//    });
-//    Add_horse_services.sire(token).then((response){
-//      // print(response.length.toString());
-//      setState(() {
-//        //var parsedjson = jsonDecode(response);
-//        sirelist  = jsonDecode(response);
-//        print(response);
-//
-//        for(int i=0;i<sirelist.length;i++)
-//          sire.add(sirelist[i]['name']);
-//        print(sire.length.toString());
-//      });
-//    });
-//    Add_horse_services.dam(token).then((response){
-//      // print(response.length.toString());
-//      setState(() {
-//        //var parsedjson = jsonDecode(response);
-//        damlist  = jsonDecode(response);
-//        print(response);
-//
-//        for(int i=0;i<damlist.length;i++)
-//          dam.add(damlist[i]['name']);
-//        print(dam.length.toString());
-//      });
-//    });
-//    Add_horse_services.diet(token).then((response){
-//      // print(response.length.toString());
-//      setState(() {
-//        //var parsedjson = jsonDecode(response);
-//        dietlist  = jsonDecode(response);
-//        print(response);
-//
-//        for(int i=0;i<dietlist.length;i++)
-//          diet.add(dietlist[i]['name']);
-//        print(diet.length.toString());
-//      });
-//    });
-//    Add_horse_services.breed(token).then((response){
-//      // print(response.length.toString());
-//      setState(() {
-//        //var parsedjson = jsonDecode(response);
-//        breedlist  = jsonDecode(response);
-//        print(response);
-//
-//        for(int i=0;i<breedlist.length;i++)
-//          breeding.add(breedlist[i]['name']);
-//        print(colors.length.toString());
-//      });
-//    });
-//    Add_horse_services.headmarking(token).then((response){
-//      // print(response.length.toString());
-//      setState(() {
-//        //var parsedjson = jsonDecode(response);
-//        headmarklist  = jsonDecode(response);
-//        print(response);
-//
-//        for(int i=0;i<headmarklist.length;i++)
-//          headmark.add(headmarklist[i]['name']);
-//        print(headmark.length.toString());
-//      });
-//    });
-//    Add_horse_services.bodymarking(token).then((response){
-//      // print(response.length.toString());
-//      setState(() {
-//        //var parsedjson = jsonDecode(response);
-//        bodymarklist  = jsonDecode(response);
-//        print(response);
-//
-//        for(int i=0;i<bodymarklist.length;i++)
-//          bodymark.add(bodymarklist[i]['name']);
-//        print(colors.length.toString());
-//      });
-//    });
-//    Add_horse_services.legmarking(token).then((response){
-//      // print(response.length.toString());
-//      setState(() {
-//        //var parsedjson = jsonDecode(response);
-//        legmarklist  = jsonDecode(response);
-//        print(response);
-//
-//        for(int i=0;i<legmarklist.length;i++)
-//          legmark.add(legmarklist[i]['name']);
-//        print(legmark.length.toString());
-//      });
-//    });
-//    Add_horse_services.ironbrand(token).then((response){
-//      // print(response.length.toString());
-//      setState(() {
-//        //var parsedjson = jsonDecode(response);
-//        ironbrandlist  = jsonDecode(response);
-//        print(response);
-//
-//        for(int i=0;i<ironbrandlist.length;i++)
-//          ironbrand.add(ironbrandlist[i]['name']);
-//        print(ironbrand.length.toString());
-//      });
-//    });
-//    Add_horse_services.breeder(token).then((response){
-//      // print(response.length.toString());
-//      setState(() {
-//        //var parsedjson = jsonDecode(response);
-//        breederlist  = jsonDecode(response);
-//        print(response);
-//
-//        for(int i=0;i<breederlist.length;i++)
-//          breeder.add(breederlist[i]['name']);
-//        print(breeder.length.toString());
-//      });
-//    });
-//    Add_horse_services.vet(token).then((response){
-//      // print(response.length.toString());
-//      setState(() {
-//        //var parsedjson = jsonDecode(response);
-//        vetlist  = jsonDecode(response);
-//        print(response);
-//
-//        for(int i=0;i<vetlist.length;i++)
-//          vet.add(vetlist[i]['name']);
-//        print(vet.length.toString());
-//      });
-//    });
-//    Add_horse_services.rider(token).then((response){
-//      // print(response.length.toString());
-//      setState(() {
-//        //var parsedjson = jsonDecode(response);
-//        riderlist  = jsonDecode(response);
-//        print(response);
-//
-//        for(int i=0;i<riderlist.length;i++)
-//          rider.add(riderlist[i]['name']);
-//        print(rider.length.toString());
-//      });
-//    });
-//    Add_horse_services.location(token).then((response){
-//      // print(response.length.toString());
-//      setState(() {
-//        //var parsedjson = jsonDecode(response);
-//        locationlist  = jsonDecode(response);
-//        print(response);
-//
-//        for(int i=0;i<locationlist.length;i++)
-//          location.add(locationlist[i]['name']);
-//        print(location.length.toString());
-//      });
-//    });
-//    Add_horse_services.incharge(token).then((response){
-//      // print(response.length.toString());
-//      setState(() {
-//        //var parsedjson = jsonDecode(response);
-//        inchargelist  = jsonDecode(response);
-//        print(response);
-//
-//        for(int i=0;i<inchargelist.length;i++)
-//          incharge.add(inchargelist[i]['name']);
-//        print(incharge.length.toString());
-//      });
-//    });
-//    Add_horse_services.association(token).then((response){
-//      // print(response.length.toString());
-//      setState(() {
-//        //var parsedjson = jsonDecode(response);
-//        associationlist  = jsonDecode(response);
-//        print(response);
-//
-//        for(int i=0;i<associationlist.length;i++)
-//          association.add(associationlist[i]['name']);
-//        print(association.length.toString());
-//      });
-//    });
-//    Add_horse_services.horsecategory(token).then((response){
-//      // print(response.length.toString());
-//      setState(() {
-//        //var parsedjson = jsonDecode(response);
-//        categorylist  = jsonDecode(response);
-//        print(response);
-//
-//        for(int i=0;i<categorylist.length;i++)
-//          category.add(categorylist[i]['name']);
-//        print(category.length.toString());
-//      });
-//    });
   }
 
   @override
@@ -487,7 +346,7 @@ class _add_horse_state extends State<add_newHorse>{
                           attribute: "Barn",
                           hint: Text("Barn"),
                           items: barn.map((name) => DropdownMenuItem(
-                              value: name, child: Text("name")))
+                              value: name, child: Text("$name")))
                               .toList(),
                           style: Theme.of(context).textTheme.body1,
                           decoration: InputDecoration(labelText: "Barn",

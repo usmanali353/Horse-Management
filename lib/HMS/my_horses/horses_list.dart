@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:horse_management/HMS/my_horses/add_horse/add_horse_new.dart';
 import 'package:horse_management/HMS/my_horses/services/add_horse_services.dart';
 import 'package:horse_management/Utils.dart';
@@ -47,57 +48,88 @@ class _training_list_state extends State<horse_list>{
             },
           )
         ],),
-        body:ListView.builder(itemCount:horse_list!=null?horse_list.length:temp.length,itemBuilder: (context,int index){
-          return Column(
-            children: <Widget>[
-              Slidable(
-                actionPane: SlidableDrawerActionPane(),
-                actionExtentRatio: 0.20,
-                actions: <Widget>[
-                  IconSlideAction(
-                    icon: Icons.visibility_off,
-                    color: Colors.red,
-                    caption: 'Hide',
-                    onTap: () async {
-                      Add_horse_services.horsevisibilty(token, horse_list[index]['horseId']).then((response){
-                        //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
-                        print(response);
-                        if(response!=null){
+        body:RefreshIndicator(
+          onRefresh: (){
+            return Utils.openBox('horseList').then((resp) {
+            Utils.check_connectivity().then((result) {
+                if (result) {
+                  Add_horse_services.horselist(token).then((response) {
+                    // print(response.length.toString());
+                    if (response != null) {
+                      setState(() {
+                        //var parsedjson = jsonDecode(response);
+                        horse_list = jsonDecode(response);
 
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            backgroundColor:Colors.green ,
-                            content: Text('Visibility Changed'),
-                          ));
+                          Hive.box("horseList").put("offline_horse_list",horse_list);
 
-                        }else{
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            backgroundColor:Colors.red ,
-                            content: Text('Failed'),
-                          ));
-                        }
+
+                        print(horse_list);
+                        //print(horse_list['createdBy']);
                       });
+                    }
+                  });
+
+                } else {
+                  setState(() {
+                    horse_list=Hive.box("horseList").get("offline_horse_list");
+                  });
+                }
+              });
+            print(resp);
+            });
+          },
+          child: ListView.builder(itemCount:horse_list!=null?horse_list.length:temp.length,itemBuilder: (context,int index){
+            return Column(
+              children: <Widget>[
+                Slidable(
+                  actionPane: SlidableDrawerActionPane(),
+                  actionExtentRatio: 0.20,
+                  actions: <Widget>[
+                    IconSlideAction(
+                      icon: Icons.visibility_off,
+                      color: Colors.red,
+                      caption: 'Hide',
+                      onTap: () async {
+                        Add_horse_services.horsevisibilty(token, horse_list[index]['horseId']).then((response){
+                          //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
+                          print(response);
+                          if(response!=null){
+
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              backgroundColor:Colors.green ,
+                              content: Text('Visibility Changed'),
+                            ));
+
+                          }else{
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              backgroundColor:Colors.red ,
+                              content: Text('Failed'),
+                            ));
+                          }
+                        });
+                      },
+                    ),
+                  ],
+                  child: ListTile(
+                    leading: Image.asset("assets/horse_icon.png", fit: BoxFit.cover),
+                    title: Text(horse_list!=null?(horse_list[index]['name']):''),
+                    subtitle: Text(horse_list!=null?horse_list[index]['dateOfBirth'].toString():''),
+                    //leading: Image.asset("Assets/horses_icon.png"),
+                    onTap: (){
+                      print((horse_list[index]));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>horse_detail(horse_list[index])));
                     },
                   ),
-                ],
-                child: ListTile(
-                  leading: Image.asset("assets/horse_icon.png", fit: BoxFit.cover),
-                  title: Text(horse_list!=null?(horse_list[index]['name']):''),
-                  subtitle: Text(horse_list!=null?horse_list[index]['dateOfBirth'].toString():''),
-                  //leading: Image.asset("Assets/horses_icon.png"),
-                  onTap: (){
-                    print((horse_list[index]));
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>horse_detail(horse_list[index])));
-                  },
+
+
                 ),
+                Divider(),
+              ],
 
+            );
 
-              ),
-              Divider(),
-            ],
-
-          );
-
-        })
+          }),
+        )
 
     );
   }
@@ -106,7 +138,7 @@ class _training_list_state extends State<horse_list>{
   void initState() {
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-
+    Utils.openBox('horseList').then((response) {
     Utils.check_connectivity().then((result){
       if(result) {
         ProgressDialog pd = ProgressDialog(
@@ -120,6 +152,10 @@ class _training_list_state extends State<horse_list>{
               //var parsedjson = jsonDecode(response);
               horse_list  = jsonDecode(response);
               print(horse_list);
+
+                Hive.box("horseList").put("offline_horse_list",horse_list);
+
+
               //print(horse_list['createdBy']);
             });
 
@@ -128,10 +164,15 @@ class _training_list_state extends State<horse_list>{
           }
         });
       }else
+        setState(() {
+          horse_list=Hive.box("horseList").get("offline_horse_list");
+
+        });
         Scaffold.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.red,
             content: Text("Network Error")
         ));
+    });
     });
 
 

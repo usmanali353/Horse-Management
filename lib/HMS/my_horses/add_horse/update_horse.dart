@@ -444,7 +444,7 @@ class _update_horse_state extends State<update_horse>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Category",
-                            initialValue: horsedata['horseCategoryId'] != null ? getinfo['categoryName']['name']:null,
+                            initialValue: getinfo['categoryName']['name']!= null?getinfo['categoryName']['name']:null,
                             hint: Text("Category"),
                             items: category.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
@@ -668,7 +668,7 @@ class _update_horse_state extends State<update_horse>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Breeder",
-                            //initialValue: getinfo['horseDetails']['breederId'] != null ? getinfo['horseDetail']['breederName']['contactName']['name']:null,
+                            initialValue: getinfo['horseDetails']['breederId'] != null ? getinfo['horseDetail']['breederName']['contactName']['name']:null,
                             hint: Text("Breeder"),
                             items: breeder.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
@@ -900,7 +900,7 @@ class _update_horse_state extends State<update_horse>{
         )
     );
   }
-//
+
   String get_gender_info_by_id(int genderid){
     var gender_name;
     for(int i=0;i<genderlist.length;i++){
