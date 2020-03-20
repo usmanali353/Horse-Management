@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/Breeding/SemenStocks/semen_stock_json.dart';
+import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 import '../../../Utils.dart';
@@ -129,13 +130,15 @@ class _semen_stocks extends State<semen_stocks>{
                         },
                       ),
                     ],
-                    child: ListTile(
-                      title: Text(semen_stock_list!=null?semen_stock_list[index]['horseName']['name']:''),
-                     subtitle: Text(semen_stock_list!=null?semen_stock_list[index]['tankName']['name']:''),
-                      //trailing: Text(semen_stock_list!=null?semen_stock_list[index]['enterDate']:''),
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>update_semen_stock_form(token,semen_stock_list[index])));
-                      },
+                    child: FadeAnimation(2.0,
+                       ListTile(
+                        title: Text(semen_stock_list!=null?semen_stock_list[index]['horseName']['name']:''),
+                       subtitle: Text(semen_stock_list!=null?semen_stock_list[index]['tankName']['name']:''),
+                        //trailing: Text(semen_stock_list!=null?semen_stock_list[index]['enterDate']:''),
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>update_semen_stock_form(token,semen_stock_list[index])));
+                        },
+                      ),
                     )
                 ),
                 Divider(),

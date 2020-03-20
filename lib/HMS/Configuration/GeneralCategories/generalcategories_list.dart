@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Configuration/GeneralCategories/add_generalcategories.dart';
 import 'package:horse_management/HMS/Configuration/GeneralCategories/generalcategories_json.dart';
 import 'package:horse_management/HMS/Configuration/GeneralCategories/update_generalcategories.dart';
+import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'dart:convert';
@@ -128,13 +129,15 @@ class _generalcategory_list extends State<generalcategory_list>{
                         },
                       ),
                     ],
-                    child: ListTile(
-                      title: Text(generalcategory_lists!=null?generalcategory_lists[index]['name']:''),
-                       //subtitle: Text(generalcategory_lists!=null?generalcategory_lists[index]['description']:''),
-                      //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
-                      onTap: (){
-                        // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
-                      },
+                    child: FadeAnimation(2.0,
+                      ListTile(
+                        title: Text(generalcategory_lists!=null?generalcategory_lists[index]['name']:''),
+                         //subtitle: Text(generalcategory_lists!=null?generalcategory_lists[index]['description']:''),
+                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                        onTap: (){
+                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                        },
+                      ),
                     )
                 ),
                 Divider(),

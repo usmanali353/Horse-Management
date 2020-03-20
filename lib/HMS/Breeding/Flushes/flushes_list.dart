@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'embryo_retrieval_form.dart';
@@ -56,34 +58,41 @@ class _flushes_list extends State<flushes_list>{
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: (){
-          return Utils.check_connectivity().then((result){
-            if(result){
-              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-              pd.show();
-              FlushesServicesJson.flusheslist(token).then((response){
-                pd.dismiss();
-                if(response!=null){
-                  setState(() {
-                    flushes_list=json.decode(response);
-                    isVisible=true;
-                  });
+          return Utils.openBox("FlushesList").then((response){
+            Utils.check_connectivity().then((result){
+              if(result){
+                ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                pd.show();
+                FlushesServicesJson.flusheslist(token).then((response){
+                  pd.dismiss();
+                  if(response!=null){
+                    setState(() {
+                      isVisible=true;
+                      flushes_list=json.decode(response);
+                      Hive.box("FlushesList").put("offline_flushes_list",flushes_list);
+                    });
 
-                }else{
-                  setState(() {
-                    isVisible=false;
-                  });
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                    backgroundColor: Colors.red,
-                    content: Text("List Not Available"),
-                  ));
-                }
-              });
-            }else{
-              Scaffold.of(context).showSnackBar(SnackBar(
-                backgroundColor: Colors.red,
-                content: Text("Network Not Available"),
-              ));
-            }
+                  }else{
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                      backgroundColor: Colors.red,
+                      content: Text("List Not Available"),
+                    ));
+                    setState(() {
+                      isVisible=false;
+                    });
+                  }
+                });
+              }else{
+                setState(() {
+                  isVisible=true;
+                  flushes_list=Hive.box("FlushesList").get("offline_flushes_list");
+                });
+//                    Scaffold.of(context).showSnackBar(SnackBar(
+//                      backgroundColor: Colors.red,
+//                      content: Text("Network not Available"),
+//                    ));
+              }
+            });
           });
         },
         child: Visibility(
@@ -131,13 +140,15 @@ class _flushes_list extends State<flushes_list>{
                         },
                       ),
                     ],
-                    child: ListTile(
-                      title: Text(flushes_list!=null?flushes_list[index]['horseName']['name']:''),
-                    // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
-                      //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>flushes_update(token,flushes_list[index])));
-                      },
+                    child: FadeAnimation(2.0,
+                       ListTile(
+                        title: Text(flushes_list!=null?flushes_list[index]['horseName']['name']:''),
+                      // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
+                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>flushes_update(token,flushes_list[index])));
+                        },
+                      ),
                     )
                 ),
                 Divider(),

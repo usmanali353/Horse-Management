@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Configuration/Locations/add_location.dart';
 import 'package:horse_management/HMS/Configuration/Locations/location_json.dart';
 import 'package:horse_management/HMS/Configuration/Locations/update_location.dart';
+import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'dart:convert';
@@ -128,13 +129,15 @@ class _location_list extends State<location_list>{
                         },
                       ),
                     ],
-                    child: ListTile(
-                      title: Text(location_lists!=null?location_lists[index]['name']:''),
-                      // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
-                      //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
-                      onTap: (){
-                        // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
-                      },
+                    child: FadeAnimation(2.0,
+                       ListTile(
+                        title: Text(location_lists!=null?location_lists[index]['name']:''),
+                        // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
+                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                        onTap: (){
+                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                        },
+                      ),
                     )
                 ),
                 Divider(),

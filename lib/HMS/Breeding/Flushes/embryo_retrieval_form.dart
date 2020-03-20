@@ -1,27 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import  'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-
 import 'dart:convert';
-import 'package:horse_management/HMS/Training/training_detail_page.dart';
-import 'package:horse_management/HMS/Training/update_training.dart';
-import 'package:horse_management/Network_Operations.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'dart:async';
-import 'package:circular_profile_avatar/circular_profile_avatar.dart';
-import 'package:flutter/material.dart';
-import 'package:horse_management/HMS/my_horses/services/add_horse_services.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:horse_management/HMS/Training/training_detail_page.dart';
-import 'package:horse_management/Network_Operations.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../Utils.dart';
 import 'utils/flushes_services_json.dart';
 
@@ -59,27 +42,73 @@ class _add_flushes extends State<add_flushes>{
   void initState() {
     this.embryos=TextEditingController();
     this.comments=TextEditingController();
-    // local_db=sqlite_helper();
-    Utils.check_connectivity().then((result){
-      if(result){
-        FlushesServicesJson.flushesdropdowns(token).then((response){
-          if(response!=null){
-            print(response);
-            setState(() {
-              flushes_response=json.decode(response);
-              for(int i=0;i<flushes_response['horseDropDown'].length;i++)
-                horse_name.add(flushes_response['horseDropDown'][i]['name']);
-              for(int i=0;i<flushes_response['vetDropDown'].length;i++)
-                vet.add(flushes_response['vetDropDown'][i]['name']);
-              flushes_loaded=true;
-              update_flushes_visibility=true;
-            });
-          }
-        });
-      }else{
-        print("Network Not Available");
-      }
+    Utils.openBox("AddFlushesDropDowns").then((resp){
+      Utils.check_connectivity().then((result){
+        if(result){
+          ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+          pd.show();
+          FlushesServicesJson.flushesdropdowns(token).then((response){
+            pd.dismiss();
+            if(response!=null){
+              setState(() {
+                flushes_response=json.decode(response);
+                Hive.box("AddFlushesDropDowns").put("offline_flushes_dropdowns", flushes_response);
+                if(flushes_response!=null){
+                  if(flushes_response['horseDropDown']!=null&&flushes_response['horseDropDown'].length>0){
+                    for(int i=0;i<flushes_response['horseDropDown'].length;i++)
+                    horse_name.add(flushes_response['horseDropDown'][i]['name']);
+                    flushes_loaded=true;
+                  }
+                  if(flushes_response['vetDropDown']!=null&&flushes_response['vetDropDown'].length>0){
+                    for(int i=0;i<flushes_response['vetDropDown'].length;i++)
+                    vet.add(flushes_response['vetDropDown'][i]['name']);
+                    flushes_loaded=true;
+                  }
+                }
+              });
+            }
+          });
+        }else{
+          setState(() {
+            flushes_response=Hive.box("AddFlushesDropDowns").get("offline_flushes_dropdowns");
+            if(flushes_response!=null){
+              if(flushes_response['horseDropDown']!=null&&flushes_response['horseDropDown'].length>0){
+                for(int i=0;i<flushes_response['horseDropDown'].length;i++)
+                  horse_name.add(flushes_response['horseDropDown'][i]['name']);
+                flushes_loaded=true;
+              }
+              if(flushes_response['vetDropDown']!=null&&flushes_response['vetDropDown'].length>0){
+                for(int i=0;i<flushes_response['vetDropDown'].length;i++)
+                  vet.add(flushes_response['vetDropDown'][i]['name']);
+                flushes_loaded=true;
+              }
+            }
+          });
+        }
+      });
     });
+
+    // local_db=sqlite_helper();
+//    Utils.check_connectivity().then((result){
+//      if(result){
+//        FlushesServicesJson.flushesdropdowns(token).then((response){
+//          if(response!=null){
+//            print(response);
+//            setState(() {
+//              flushes_response=json.decode(response);
+//              for(int i=0;i<flushes_response['horseDropDown'].length;i++)
+//                horse_name.add(flushes_response['horseDropDown'][i]['name']);
+//              for(int i=0;i<flushes_response['vetDropDown'].length;i++)
+//                vet.add(flushes_response['vetDropDown'][i]['name']);
+//              flushes_loaded=true;
+//              update_flushes_visibility=true;
+//            });
+//          }
+//        });
+//      }else{
+//        print("Network Not Available");
+//      }
+//    });
 
   }
 
@@ -103,7 +132,7 @@ class _add_flushes extends State<add_flushes>{
                       Padding(
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: Visibility(
-                          visible: flushes_loaded,
+                         // visible: flushes_loaded,
                           child: FormBuilderDropdown(
                             attribute: "Horse",
                             validators: [FormBuilderValidators.required()],

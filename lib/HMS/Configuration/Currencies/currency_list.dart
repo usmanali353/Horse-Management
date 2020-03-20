@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Configuration/Currencies/update_currency.dart';
+import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'dart:convert';
@@ -141,13 +142,15 @@ class _currency_list extends State<currency_list>{
                         },
                       ),
                     ],
-                    child: ListTile(
-                      title: Text(currency_lists!=null?currency_lists[index]['id'].toString():''),
-                      // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
-                      //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                    child: FadeAnimation(2.0,
+                      ListTile(
+                        title: Text(currency_lists!=null?currency_lists[index]['id'].toString():''),
+                        // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
+                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
 //                      onTap: (){
 //                       // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
 //                      },
+                      ),
                     )
                 ),
                 Divider(),

@@ -6,6 +6,7 @@ import 'package:horse_management/HMS/Diet/diet_services.dart';
 import 'package:horse_management/HMS/Training/training_plans.dart';
 import 'package:horse_management/HMS/Training/update_training.dart';
 import 'package:horse_management/Network_Operations.dart';
+import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import '../../Utils.dart';
 class dietList extends StatefulWidget{
@@ -127,11 +128,13 @@ class dietListState extends State<dietList>{
                       },
                     ),
                   ],
-                  child: ListTile(
-                    title: Text(diet_list!=null?diet_list[index]['name']:''),
-                    leading: Icon(Icons.fastfood,size: 40,color: Colors.teal,),
-                    onTap: (){
-                    },
+                  child: FadeAnimation(2.0,
+                     ListTile(
+                      title: Text(diet_list!=null?diet_list[index]['name']:''),
+                      leading: Icon(Icons.fastfood,size: 40,color: Colors.teal,),
+                      onTap: (){
+                      },
+                    ),
                   ),
 
 

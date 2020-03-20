@@ -3,6 +3,7 @@ import 'package:horse_management/HMS/Configuration/Locations/location_json.dart'
 import 'package:horse_management/HMS/Configuration/PerformanceType/add_performancetype.dart';
 import 'package:horse_management/HMS/Configuration/PerformanceType/performancetype_json.dart';
 import 'package:horse_management/HMS/Configuration/PerformanceType/update_performancetype.dart';
+import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'dart:convert';
@@ -130,13 +131,15 @@ class _performancetype_list extends State<performancetype_list>{
                         },
                       ),
                     ],
-                    child: ListTile(
-                      title: Text(type_lists!=null?type_lists[index]['name']:''),
-                      // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
-                      //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
-                      onTap: (){
-                        // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
-                      },
+                    child: FadeAnimation(2.0,
+                       ListTile(
+                        title: Text(type_lists!=null?type_lists[index]['name']:''),
+                        // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
+                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                        onTap: (){
+                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                        },
+                      ),
                     )
                 ),
                 Divider(),

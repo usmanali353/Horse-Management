@@ -171,6 +171,7 @@ class _update_vaccinationtypes extends State<update_vaccinationtypes>{
 
                             onPressed: (){
                               if (_fbKey.currentState.validate()) {
+                                _fbKey.currentState.save();
                                 Utils.check_connectivity().then((result){
                                   if(result){
                                     ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);

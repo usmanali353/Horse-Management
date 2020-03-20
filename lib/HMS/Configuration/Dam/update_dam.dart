@@ -38,7 +38,7 @@ class _update_dam extends State<update_dam>{
   String selected_breed, selected_color;
   int selected_breed_id=0, selected_color_id=0;
   // sqlite_helper local_db;
-  List<String> breed=[],  color=[];
+  List<String> breed=[],  color=[], dam=[];
   DateTime select_DOB;
   var dam_response;
   //var training_types_list=['Simple','Endurance','Customized','Speed'];
@@ -75,31 +75,37 @@ class _update_dam extends State<update_dam>{
           for(int i=0;i<dam_response['colorDropDown'].length;i++) {
             color.add(dam_response['colorDropDown'][i]['name']);
           }
+//          for(int i=0;i<dam_response['damDropDown'].length;i++)
+//            dam.add(dam_response['damDropDown'][i]['name']);
         });
       }else{
 
       }
     });
   }
-  String get_breed_name(int id){
-    if(dam_response!=null&&id!=null) {
-      for (int i = 0; i < dam_response['breedDropDown'].length; i++) {
-        if(dam_response['breedDropDown'][i]['id']==id) {
-          breed_name = dam_response['breedDropDown'][i]['name'];
+  String get_breed_by_id(int id){
+    var breed_name;
+    if(specificdam!=null&&dam_response['breedDropDown']!=null&&id!=null){
+      for(int i=0;i<breed.length;i++){
+        if(dam_response['breedDropDown'][i]['id']==id){
+          breed_name=dam_response['breedDropDown'][i]['name'];
         }
       }
-    }
-    return breed_name;
+      return breed_name;
+    }else
+      return null;
   }
-  String get_color_name(int id){
-    if(dam_response!=null&&id!=null) {
-      for (int i = 0; i < dam_response['colorDropDown'].length; i++) {
-        if(dam_response['colorDropDown'][i]['id']==id) {
-          color_name = dam_response['colorDropDown'][i]['name'];
+  String get_color_by_id(int id){
+    var color_name;
+    if(specificdam!=null&&dam_response['colorDropDown']!=null&&id!=null){
+      for(int i=0;i<color.length;i++){
+        if(dam_response['colorDropDown'][i]['id']==id){
+          color_name=dam_response['colorDropDown'][i]['name'];
         }
       }
-    }
-    return color_name;
+      return color_name;
+    }else
+      return null;
   }
 
 
@@ -137,7 +143,7 @@ class _update_dam extends State<update_dam>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Dam"),),
+        appBar: AppBar(title: Text("Update Dam"),),
         body: ListView(
             children: <Widget>[
               Column(
@@ -169,7 +175,7 @@ class _update_dam extends State<update_dam>{
                             child: FormBuilderDropdown(
                               attribute: "Breed",
                              // initialValue: specificdam!=null?specificdam['name']:null,
-                              initialValue: get_breed_name(specificdam['breedId']),
+                              initialValue: get_breed_by_id(specificdam['breedId'])!= null ?get_breed_by_id(specificdam['breedId']):null,
                               validators: [FormBuilderValidators.required()],
                               hint: Text("Breed"),
                               items:breed!=null?breed.map((horse)=>DropdownMenuItem(
@@ -191,6 +197,12 @@ class _update_dam extends State<update_dam>{
                                   this.selected_breed_id=breed.indexOf(value);
                                 });
                               },
+                              onSaved: (value){
+                                setState(() {
+                                  this.selected_breed=value;
+                                  this.selected_breed_id=breed.indexOf(value);
+                                });
+                              },
                             ),
                           ),
                         ),
@@ -201,7 +213,7 @@ class _update_dam extends State<update_dam>{
                             child: FormBuilderDropdown(
                               attribute: "Color",
                              // initialValue: specificdam!=null?specificdam['name']:null,
-                              initialValue: get_color_name(specificdam['colorId']),
+                              initialValue: get_color_by_id(specificdam['colorId'])!= null ?get_color_by_id(specificdam['colorId']):null,
                               validators: [FormBuilderValidators.required()],
                               hint: Text("Color"),
                               items:breed!=null?breed.map((horse)=>DropdownMenuItem(
@@ -223,12 +235,19 @@ class _update_dam extends State<update_dam>{
                                   this.selected_color_id=color.indexOf(value);
                                 });
                               },
+                              onSaved: (value){
+                                setState(() {
+                                  this.selected_color=value;
+                                  this.selected_color_id=color.indexOf(value);
+                                });
+                              },
                             ),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.only(left: 16,right: 16,top:16),
                           child:FormBuilderDateTimePicker(
+                            initialValue: specificdam['dateOfBirth']!=null?DateTime.parse(specificdam['dateOfBirth']):null,
                             attribute: "DOB",
                             style: Theme.of(context).textTheme.body1,
                             inputType: InputType.date,
@@ -240,6 +259,11 @@ class _update_dam extends State<update_dam>{
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)
                               ),),
                             onChanged: (value){
+                              setState(() {
+                                this.select_DOB=value;
+                              });
+                            },
+                            onSaved: (value){
                               setState(() {
                                 this.select_DOB=value;
                               });
@@ -288,6 +312,7 @@ class _update_dam extends State<update_dam>{
                             child: Text("Update",style: TextStyle(color: Colors.white),),
                             onPressed: (){
                               if (_fbKey.currentState.validate()) {
+                                _fbKey.currentState.save();
                                 Utils.check_connectivity().then((result){
                                   if(result){
                                     ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);

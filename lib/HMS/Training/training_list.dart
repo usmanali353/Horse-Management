@@ -6,6 +6,7 @@ import 'package:hive/hive.dart';
 import 'package:horse_management/HMS/Training/training_detail_page.dart';
 import 'package:horse_management/HMS/Training/update_training.dart';
 import 'package:horse_management/Network_Operations.dart';
+import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import '../../Utils.dart';
@@ -173,14 +174,16 @@ class _training_list_state extends State<training_list>{
                             },
                           ),
                         ],
-                        child: ListTile(
-                          title: Text(training_list!=null?training_list[index]['horseName']['name']:''),
-                          trailing: Text(training_list!=null?training_list[index]['startDate'].toString().replaceAll("T00:00:00",''):''),
-                          subtitle: Text(training_list!=null?get_training_type_by_id(training_list[index]['trainingType']):''),
-                          leading: Icon(Icons.fitness_center,size: 40,color: Colors.teal,),
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>training_details_page(training_list[index],get_training_type_by_id(training_list[index]['trainingType']))));
-                          },
+                        child: FadeAnimation(2.0,
+                           ListTile(
+                            title: Text(training_list!=null?training_list[index]['horseName']['name']:''),
+                            trailing: Text(training_list!=null?training_list[index]['startDate'].toString().replaceAll("T00:00:00",''):''),
+                            subtitle: Text(training_list!=null?get_training_type_by_id(training_list[index]['trainingType']):''),
+                            leading: Icon(Icons.fitness_center,size: 40,color: Colors.teal,),
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>training_details_page(training_list[index],get_training_type_by_id(training_list[index]['trainingType']))));
+                            },
+                          ),
                         ),
 
 
