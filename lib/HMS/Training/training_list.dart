@@ -7,7 +7,7 @@ import 'package:horse_management/HMS/Training/training_detail_page.dart';
 import 'package:horse_management/HMS/Training/update_training.dart';
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:intl/intl.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import '../../Utils.dart';
 import 'Add_training.dart';
@@ -26,7 +26,7 @@ training_list(this.token);
 class _training_list_state extends State<training_list>{
  String token;
    var horse_list;
-   var training_list=[];
+   var training_list=[],today_training_list=[];
    var temp=['',''];
    bool isvisible=false;
    var trainingListBox;
@@ -34,7 +34,6 @@ class _training_list_state extends State<training_list>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Trainings")),
         floatingActionButton: FloatingActionButton(
           child: Icon(
             Icons.add,
@@ -59,6 +58,11 @@ class _training_list_state extends State<training_list>{
                           setState(() {
                             isvisible=true;
                             training_list=json.decode(response);
+                            for(int i=0;i<training_list.length;i++){
+                              if(DateTime.parse(training_list[i]['startDate'])==DateTime.now()){
+                                today_training_list.add(training_list[i]);
+                              }
+                            }
                             Hive.box("trainingList").put("offline_training_list",training_list);
                             // print('Training list Length'+training_list.length.toString());
                           });
@@ -89,110 +93,141 @@ class _training_list_state extends State<training_list>{
               child: Visibility(
                 visible: isvisible,
                 child: ListView.builder(itemCount:training_list!=null?training_list.length:temp.length,itemBuilder: (context,int index){
-                  return Column(
-                    children: <Widget>[
-                      Slidable(
-                        actionPane: SlidableDrawerActionPane(),
-                        actionExtentRatio: 0.20,
-                        actions: <Widget>[
-                          IconSlideAction(
-                            icon: Icons.visibility_off,
-                            color: Colors.red,
-                            caption: 'Hide',
-                            onTap: () async {
-                              Utils.check_connectivity().then((result){
-                                if(result){
-                                  ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                                  pd.show();
-                                  network_operations.change_training_visibility(token, training_list[index]['trainingId']).then((response){
-                                    pd.dismiss();
-                                    if(response!=null){
-                                      Scaffold.of(context).showSnackBar(SnackBar(
-                                        backgroundColor:Colors.green ,
-                                        content: Text('Visibility Changed'),
-                                      ));
-                                      setState(() {
-                                        training_list.removeAt(index);
-                                      });
-                                    }else{
-                                      Scaffold.of(context).showSnackBar(SnackBar(
-                                        backgroundColor:Colors.red ,
-                                        content: Text('Failed'),
-                                      ));
-                                    }
-                                  });
-                                }else{
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    content: Text("Network not Available"),
-                                    backgroundColor: Colors.red,
-                                  ));
-                                }
-                              });
+                return  Column(
+                      children: <Widget>[
+                        Slidable(
+                          actionPane: SlidableDrawerActionPane(),
+                          actionExtentRatio: 0.20,
+                          actions: <Widget>[
+                            IconSlideAction(
+                              icon: Icons.visibility_off,
+                              color: Colors.red,
+                              caption: 'Hide',
+                              onTap: () async {
+                                Utils.check_connectivity().then((result) {
+                                  if (result) {
+                                    ProgressDialog pd = ProgressDialog(context,
+                                        type: ProgressDialogType.Normal,
+                                        isDismissible: true);
+                                    pd.show();
+                                    network_operations
+                                        .change_training_visibility(token,
+                                        training_list[index]['trainingId'])
+                                        .then((response) {
+                                      pd.dismiss();
+                                      if (response != null) {
+                                        Scaffold.of(context).showSnackBar(
+                                            SnackBar(
+                                              backgroundColor: Colors.green,
+                                              content: Text(
+                                                  'Visibility Changed'),
+                                            ));
+                                        setState(() {
+                                          training_list.removeAt(index);
+                                        });
+                                      } else {
+                                        Scaffold.of(context).showSnackBar(
+                                            SnackBar(
+                                              backgroundColor: Colors.red,
+                                              content: Text('Failed'),
+                                            ));
+                                      }
+                                    });
+                                  } else {
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Network not Available"),
+                                      backgroundColor: Colors.red,
+                                    ));
+                                  }
+                                });
+                              },
+                            ),
+                            IconSlideAction(
+                              color: Colors.green,
+                              caption: "End Training",
+                              icon: FontAwesomeIcons.check,
+                              onTap: () async {
+                                Utils.check_connectivity().then((result) {
+                                  if (result) {
+                                    var pd = ProgressDialog(context,
+                                        type: ProgressDialogType.Normal,
+                                        isDismissible: true);
+                                    pd.show();
+                                    network_operations.end_training(token,
+                                        training_list[index]['trainingId'])
+                                        .then((response) {
+                                      pd.dismiss();
+                                      if (response != null) {
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback((_) =>
+                                            _refreshIndicatorKey.currentState
+                                                .show());
+                                        Scaffold.of(context).showSnackBar(
+                                            SnackBar(
+                                              content: Text("Training Ended"),
+                                              backgroundColor: Colors.green,
+                                            ));
+                                      } else {
+                                        Scaffold.of(context).showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                  "Training not Ended"),
+                                              backgroundColor: Colors.red,
+                                            ));
+                                      }
+                                    });
+                                  } else {
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Network not Available"),
+                                      backgroundColor: Colors.red,
+                                    ));
+                                  }
+                                });
+                              },
+                            ),
+                            IconSlideAction(
+                              icon: Icons.edit,
+                              color: Colors.blue,
+                              caption: 'Update',
+                              onTap: () async {
+                                Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) => update_training(
+                                        token, training_list[index])));
+                              },
+                            ),
+                          ],
+                          child: FadeAnimation(2.0,
+                            ListTile(
+                              title: Text(training_list != null
+                                  ? training_list[index]['horseName']['name']
+                                  : ''),
+                              trailing: Text(training_list != null
+                                  ? training_list[index]['startDate']
+                                  .toString()
+                                  .replaceAll("T00:00:00", '')
+                                  : ''),
+                              subtitle: Text(training_list != null
+                                  ? get_training_type_by_id(
+                                  training_list[index]['trainingType'])
+                                  : ''),
+                              leading: Icon(Icons.fitness_center, size: 40,
+                                color: Colors.teal,),
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) => training_details_page(
+                                        training_list[index],
+                                        get_training_type_by_id(
+                                            training_list[index]['trainingType']))));
+                              },
+                            ),
+                          ),
 
-                            },
-                          ),
-                          IconSlideAction(
-                            color: Colors.green,
-                            caption: "End Training",
-                            icon: FontAwesomeIcons.check,
-                            onTap: () async{
-                              Utils.check_connectivity().then((result){
-                                if(result){
-                                  var pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                                  pd.show();
-                                  network_operations.end_training(token,training_list[index]['trainingId']).then((response){
-                                    pd.dismiss();
-                                    if(response!=null){
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-                                      Scaffold.of(context).showSnackBar(SnackBar(
-                                        content: Text("Training Ended"),
-                                        backgroundColor: Colors.green,
-                                      ));
-                                    }else{
-                                      Scaffold.of(context).showSnackBar(SnackBar(
-                                        content: Text("Training not Ended"),
-                                        backgroundColor: Colors.red,
-                                      ));
-                                    }
-                                  });
-                                }else{
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    content: Text("Network not Available"),
-                                    backgroundColor: Colors.red,
-                                  ));
-                                }
-                              });
-                            },
-                          ),
-                          IconSlideAction(
-                            icon: Icons.edit,
-                            color: Colors.blue,
-                            caption: 'Update',
-                            onTap: () async {
-                              Navigator.push(context,MaterialPageRoute(builder: (context)=>update_training(token,training_list[index])));
-                            },
-                          ),
-                        ],
-                        child: FadeAnimation(2.0,
-                           ListTile(
-                            title: Text(training_list!=null?training_list[index]['horseName']['name']:''),
-                            trailing: Text(training_list!=null?training_list[index]['startDate'].toString().replaceAll("T00:00:00",''):''),
-                            subtitle: Text(training_list!=null?get_training_type_by_id(training_list[index]['trainingType']):''),
-                            leading: Icon(Icons.fitness_center,size: 40,color: Colors.teal,),
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>training_details_page(training_list[index],get_training_type_by_id(training_list[index]['trainingType']))));
-                            },
-                          ),
+
                         ),
+                        Divider(),
+                      ],
 
-
-                      ),
-                      Divider(),
-                    ],
-
-                  );
-
+                    );
                 }),
               ),
             ),

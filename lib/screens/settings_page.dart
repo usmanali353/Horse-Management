@@ -23,7 +23,7 @@ class _SettingsPageState extends State<SettingsPage> {
     _darkTheme = (themeNotifier.getTheme() == darkTheme);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Setting"),
+        title: Text("Settings"),
       ),
       body: ListView(
         children: <Widget>[
