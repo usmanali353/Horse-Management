@@ -45,7 +45,7 @@ class _breeding_control_details_page extends State<breeding_control_details_page
               ),
               ListTile(
                 title: Text("Related Service Date"),
-                trailing: Text(breeding_control_data['relatedServiceDate']['serviceDate']!=null?breeding_control_data['relatedServiceDate'].toString():''),
+                trailing: Text(breeding_control_data['relatedServiceDate']['serviceDate']!=null?breeding_control_data['relatedServiceDate']['serviceDate']:''),
               ),
               Divider(),
               ListTile(
