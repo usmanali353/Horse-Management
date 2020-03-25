@@ -43,22 +43,22 @@ class _breeding_control_details_page extends State<breeding_control_details_page
                 title: Text("Time"),
                 trailing: Text(breeding_control_data['hour'].toString()!=null?breeding_control_data['hour'].toString():''),
               ),
-//              ListTile(
-//                title: Text("Related Service Date"),
-//                trailing: Text(breeding_control_data['relatedServiceDate'].toString()!=null?breeding_control_data['relatedServiceDate'].toString():''),
-//              ),
+              ListTile(
+                title: Text("Related Service Date"),
+                trailing: Text(breeding_control_data['relatedServiceDate']['serviceDate']!=null?breeding_control_data['relatedServiceDate'].toString():''),
+              ),
               Divider(),
               ListTile(
-                title: Text("RO"),
-                trailing: Text(training_type_name!=null?training_type_name:''),
+                title: Text("LO"),
+                trailing: Text(breeding_control_data['lo']!=null?breeding_control_data['lo']:''),
               ),
               ListTile(
                 title: Text("RO"),
-                trailing: Text(training_type_name!=null?training_type_name:''),
+                trailing: Text(breeding_control_data['ro']!=null?breeding_control_data['ro']:''),
               ),
               ListTile(
-                title: Text("Ammount"),
-                trailing: Text(training_type_name!=null?training_type_name:''),
+                title: Text("Amount"),
+                trailing: Text(breeding_control_data['amount']!=null?breeding_control_data['amount']:''),
               ),
               Divider(),
               ListTile(
