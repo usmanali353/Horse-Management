@@ -33,20 +33,20 @@ class _breeding_control_details_page extends State<breeding_control_details_page
               Divider(),
               ListTile(
                 title: Text("Horse ID: "),
-                trailing: Text(breeding_control_data['horseId']!=null?breeding_control_data['horseId']:''),
+                trailing: Text(breeding_control_data['horseId'].toString()!=null?breeding_control_data['horseId'].toString():''),
               ),
               ListTile(
                 title: Text("Date"),
-                trailing: Text(breeding_control_data['date']!=null?breeding_control_data['date']:''),
+                trailing: Text(breeding_control_data['date'].toString()!=null?breeding_control_data['date'].toString():''),
               ),
               ListTile(
                 title: Text("Time"),
-                trailing: Text(breeding_control_data['hour']!=null?breeding_control_data['hour']:''),
+                trailing: Text(breeding_control_data['hour'].toString()!=null?breeding_control_data['hour'].toString():''),
               ),
-              ListTile(
-                title: Text("Related Service Date"),
-                trailing: Text(breeding_control_data['relatedServiceDate']!=null?breeding_control_data['relatedServiceDate']:''),
-              ),
+//              ListTile(
+//                title: Text("Related Service Date"),
+//                trailing: Text(breeding_control_data['relatedServiceDate'].toString()!=null?breeding_control_data['relatedServiceDate'].toString():''),
+//              ),
               Divider(),
               ListTile(
                 title: Text("RO"),
@@ -63,7 +63,7 @@ class _breeding_control_details_page extends State<breeding_control_details_page
               Divider(),
               ListTile(
                 title: Text("Next Check"),
-                trailing: Text(breeding_control_data['nextCheckDate']!=null?breeding_control_data['nextCheckDate']:''),
+                trailing: Text(breeding_control_data['nextCheckDate'].toString()!=null?breeding_control_data['nextCheckDate'].toString():''),
               ),
               Divider(),
             ],

@@ -213,11 +213,7 @@ class _training_list_state extends State<training_list>{
                               leading: Icon(Icons.fitness_center, size: 40,
                                 color: Colors.teal,),
                               onTap: () {
-                                Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) => training_details_page(
-                                        training_list[index],
-                                        get_training_type_by_id(
-                                            training_list[index]['trainingType']))));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => training_details_page(training_list[index], get_training_type_by_id(training_list[index]['trainingType']))));
                               },
                             ),
                           ),

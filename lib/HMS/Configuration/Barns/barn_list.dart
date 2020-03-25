@@ -49,6 +49,12 @@ class _barn_list extends State<barn_list>{
       ),
       appBar: AppBar(
         title: Text("Barn List"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.picture_as_pdf),
+           // onPressed: () => _generatePdfAndView(context),
+          ),
+        ],
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
