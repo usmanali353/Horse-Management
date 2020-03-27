@@ -61,9 +61,9 @@ class PaddockServices{
     }else
       return null;
   }
-  static Future<String> getPaddockDetails(String token) async{
+  static Future<String> getPaddockDetails(String token,int id) async{
     Map<String,String> headers = {'Authorization':'Bearer '+token};
-    final response = await http.get('http://192.236.147.77:8083/api/Paddock/GetAllPaddockDetails', headers: headers,);
+    final response = await http.get('http://192.236.147.77:8083/api/Paddock/GetAllPaddockDetails/'+id.toString(), headers: headers,);
     if(response.statusCode==200){
       return response.body;
     }else

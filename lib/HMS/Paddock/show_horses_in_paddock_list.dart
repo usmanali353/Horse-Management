@@ -39,7 +39,7 @@ class _show_horses_in_paddock extends State<show_horses_in_paddock>{
             if(result){
               ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
               pd.show();
-              PaddockServices.getPaddockDetails(token).then((response){
+              PaddockServices.getPaddockDetails(token,horse_list[index]['trainingId']).then((response){
                 pd.dismiss();
                 if(response!=null){
                   print(response);

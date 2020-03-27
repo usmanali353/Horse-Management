@@ -117,7 +117,7 @@ class _paddocks_list extends State<paddocks_list>{
                       ),
                       IconSlideAction(
                         icon: Icons.account_balance,
-                        color: Colors.deepPurple,
+                        color: Colors.deepOrangeAccent,
                         caption: 'Show Horses',
                         onTap: () async {
                           print(paddock_lists[index]);
