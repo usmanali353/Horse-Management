@@ -58,7 +58,7 @@ class _breeding_control_details_page extends State<breeding_control_details_page
               ),
               ListTile(
                 title: Text("Amount"),
-                trailing: Text(breeding_control_data['amount']!=null?breeding_control_data['amount']:''),
+                trailing: Text(breeding_control_data['amount'].toString()!=null?breeding_control_data['amount'].toString():''),
               ),
               Divider(),
               ListTile(

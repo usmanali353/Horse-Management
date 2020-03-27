@@ -6,11 +6,13 @@ import 'dart:convert';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/Paddock/add_paddock_form.dart';
 import 'package:horse_management/HMS/Paddock/padocks_json.dart';
+import 'package:horse_management/HMS/Paddock/show_horses_in_paddock_list.dart';
 import 'package:horse_management/HMS/Paddock/update_paddock.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 import '../../Utils.dart';
+import 'add_horse_to_paddock.dart';
 
 
 class paddocks_list extends StatefulWidget{
@@ -104,6 +106,24 @@ class _paddocks_list extends State<paddocks_list>{
                           Navigator.push(context,MaterialPageRoute(builder: (context)=>update_paddock(token,paddock_lists[index])));
                         },
                       ),
+                      IconSlideAction(
+                        icon: Icons.add,
+                        color: Colors.deepPurple,
+                        caption: 'Add Horse',
+                        onTap: () async {
+                          print(paddock_lists[index]);
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>add_horse_to_paddock(token,paddock_lists[index]['id'])));
+                        },
+                      ),
+                      IconSlideAction(
+                        icon: Icons.account_balance,
+                        color: Colors.deepPurple,
+                        caption: 'Show Horses',
+                        onTap: () async {
+                          print(paddock_lists[index]);
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>show_horses_in_paddock(token)));
+                        },
+                      ),
                     ],
                     actions: <Widget>[
                       IconSlideAction(
@@ -111,7 +131,7 @@ class _paddocks_list extends State<paddocks_list>{
                         color: Colors.red,
                         caption: 'Hide',
                         onTap: () async {
-                          SireServices.changeSireVisibility(token, paddock_lists[index]['Id']).then((response){
+                          SireServices.changeSireVisibility(token, paddock_lists[index]['id']).then((response){
                             print(response);
                             if(response!=null){
                               Scaffold.of(context).showSnackBar(SnackBar(
