@@ -45,7 +45,7 @@ class _show_horses_in_paddock extends State<show_horses_in_paddock>{
                   print(response);
                   setState(() {
                     isvisible=true;
-                    already_trained_list=json.decode(response);
+                    horse_list=json.decode(response);
                   });
 
                 }else{
@@ -59,7 +59,7 @@ class _show_horses_in_paddock extends State<show_horses_in_paddock>{
         },
         child: Visibility(
           visible: isvisible,
-          child: ListView.builder(itemCount:already_trained_list!=null?already_trained_list.length:temp.length,itemBuilder: (context,int index){
+          child: ListView.builder(itemCount:horse_list!=null?horse_list.length:temp.length,itemBuilder: (context,int index){
             return Column(
               children: <Widget>[
                 Slidable(
@@ -75,7 +75,7 @@ class _show_horses_in_paddock extends State<show_horses_in_paddock>{
                           if(result){
                             ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
                             pd.show();
-                            PaddockServices.delete_horses_from_paddock(token, already_trained_list[index]['paddockId']).then((response){
+                            PaddockServices.delete_horses_from_paddock(token, horse_list[index]['horseId']).then((response){
                               pd.dismiss();
                               if(response!=null){
 //
@@ -94,7 +94,7 @@ class _show_horses_in_paddock extends State<show_horses_in_paddock>{
                     ),
                   ],
                   child: ListTile(
-                    title: Text(already_trained_list!=null?already_trained_list[index]['horseName']['name']:''),
+                    title: Text(horse_list!=null?horse_list[index]['horseName']['name']:''),
 //                    trailing: Text(already_trained_list!=null?already_trained_list[index]['startDate'].replaceAll("T00:00:00",''):''),
 //                    subtitle: Text(already_trained_list!=null?get_training_type_by_id(already_trained_list[index]['trainingType']):''),
                     leading: Image.asset("assets/horse_icon.png"),
