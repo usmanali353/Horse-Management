@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:horse_management/HMS/Breeding/BreedingServices/breeding_services_details.dart';
 import 'package:horse_management/HMS/Breeding/BreedingServices/update_breeding_services.dart';
 import 'package:horse_management/HMS/my_horses/services/add_horse_services.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
@@ -136,7 +137,8 @@ class _breeding_services_State extends State<breeding_services>{
                         subtitle: Text(breeding_services_list!=null?breeding_services_list[index]['serviceType'].toString():''),
                         trailing: Text(breeding_services_list!=null?breeding_services_list[index]['serviceDate'].toString().replaceAll("T00:00:00", ''):'') ,
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>update_breeding(token,breeding_services_list[index])));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => breeding_services_details_page(breeding_services_list[index], get_check_service_by_id(breeding_services_list[index]['serviceType']))));
+//                          Navigator.push(context, MaterialPageRoute(builder: (context)=>update_breeding(token,breeding_services_list[index])));
                         },
                       ),
                     )
@@ -150,5 +152,20 @@ class _breeding_services_State extends State<breeding_services>{
     );
   }
 
+  String get_check_service_by_id(int id){
+    var service_type;
+    if(breeding_services_list!=null&&id!=null){
+      if(id==1){
+        service_type="Direct Service";
+      }else if(id==2){
+        service_type="Assisted Service";
+      }else if(id==3){
+        service_type="Artificial Insemination";
+      }else{
+        service_type="Embryo Transfer";
+      }
+    }
+    return service_type;
+  }
 }
 

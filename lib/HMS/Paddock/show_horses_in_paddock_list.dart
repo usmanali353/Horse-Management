@@ -8,18 +8,19 @@ import 'package:progress_dialog/progress_dialog.dart';
 import '../../Utils.dart';
 class show_horses_in_paddock extends StatefulWidget{
   String token;
-
-  show_horses_in_paddock(this.token);
+  var paddock_data;
+  show_horses_in_paddock(this.token,this.paddock_data);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _show_horses_in_paddock(token);
+    return _show_horses_in_paddock(token,paddock_data);
   }
 
 }
 class _show_horses_in_paddock extends State<show_horses_in_paddock>{
   String token;
+  var paddock_data;
   var horse_list;
   var already_trained_list=[];
   var temp=['',''];
@@ -39,7 +40,7 @@ class _show_horses_in_paddock extends State<show_horses_in_paddock>{
             if(result){
               ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
               pd.show();
-              PaddockServices.getPaddockDetails(token,horse_list[index]['trainingId']).then((response){
+              PaddockServices.getPaddockDetails(token,paddock_data['id']).then((response){
                 pd.dismiss();
                 if(response!=null){
                   print(response);
@@ -75,7 +76,7 @@ class _show_horses_in_paddock extends State<show_horses_in_paddock>{
                           if(result){
                             ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
                             pd.show();
-                            PaddockServices.delete_horses_from_paddock(token, horse_list[index]['horseId']).then((response){
+                            PaddockServices.delete_horses_from_paddock(token, horse_list[index]['paddockId']).then((response){
                               pd.dismiss();
                               if(response!=null){
 //
@@ -123,7 +124,7 @@ class _show_horses_in_paddock extends State<show_horses_in_paddock>{
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
   }
 
-  _show_horses_in_paddock(this.token);
+  _show_horses_in_paddock(this.token,this.paddock_data);
 //  String get_training_type_by_id(int id){
 //    var training_type_name;
 //    for (int i=0;i<already_trained_list.length;i++){

@@ -32,8 +32,8 @@ class _breeding_control_details_page extends State<breeding_control_details_page
               ),
               Divider(),
               ListTile(
-                title: Text("Horse ID: "),
-                trailing: Text(breeding_control_data['horseId'].toString()!=null?breeding_control_data['horseId'].toString():''),
+                title: Text("Horse: "),
+                trailing: Text(breeding_control_data['horseName']['name'].toString()!=null?breeding_control_data['horseName']['name'].toString():''),
               ),
               ListTile(
                 title: Text("Date"),

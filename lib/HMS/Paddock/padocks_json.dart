@@ -45,7 +45,7 @@ class PaddockServices{
 
   static Future<String> get_add_horses_to_paddock_dropdowns(String token) async{
     Map<String,String> headers = {"Authorization":"Bearer "+token};
-    var response=await http.get("http://192.236.147.77:8083/api/Paddock/GetHorsesDropdownForPaddock/1",headers: headers);
+    var response=await http.get("http://192.236.147.77:8083/api/Paddock/GetHorsesDropdownForPaddock/",headers: headers);
     if(response.statusCode==200){
       return response.body;
     }else

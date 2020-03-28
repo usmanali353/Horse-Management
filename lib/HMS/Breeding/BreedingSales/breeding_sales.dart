@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:horse_management/HMS/Breeding/BreedingSales/breeding_sales_details.dart';
 import 'package:horse_management/HMS/Breeding/BreedingSales/breeding_sales_json.dart';
 import 'package:horse_management/HMS/Breeding/BreedingSales/update_breeding_sales.dart';
 import 'package:horse_management/HMS/Breeding/BreedingServices/breeding_service_form.dart';
@@ -136,9 +137,10 @@ class _breeding_sales extends State<breeding_sales>{
                         title: Text(sales_list!=null?sales_list[index]['horseName']['name']:''),
                         // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
                         //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
-//                      onTap: (){
-//                        Navigator.push(context, MaterialPageRoute(builder: (context)=>update_breeding_sales_form(token,sales_list[index])));
-//                      },
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => breeding_sales_details_page(sales_list[index], get_status_by_id(sales_list[index]['status']))));
+
+                      },
                       ),
                     )
                 ),
@@ -151,6 +153,24 @@ class _breeding_sales extends State<breeding_sales>{
     );
   }
 
-
+  String get_status_by_id(int id){
+    var status_type;
+    if(sales_list!=null&&id!=null){
+      if(id==1){
+        status_type="Sold";
+      }else if(id==2){
+        status_type="Shipped";
+      }else if(id==3){
+        status_type="Delivered";
+      }else if(id==4){
+        status_type="Pregnant";
+      }else if(id==5){
+        status_type="Empty";
+      }else{
+        status_type="Bleeding Report";
+      }
+    }
+    return status_type;
+  }
 }
 

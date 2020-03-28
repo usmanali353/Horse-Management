@@ -121,7 +121,7 @@ class _paddocks_list extends State<paddocks_list>{
                         caption: 'Show Horses',
                         onTap: () async {
                           print(paddock_lists[index]);
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>show_horses_in_paddock(token)));
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>show_horses_in_paddock(token,paddock_lists[index])));
                         },
                       ),
                     ],
