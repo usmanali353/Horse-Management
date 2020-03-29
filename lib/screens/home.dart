@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/All_Horses_data/all_horse_data_add.dart';
 import 'package:horse_management/HMS/Breeding/breeding_mainPage.dart';
 import 'package:horse_management/HMS/Configuration/configuration_mainpage.dart';
-import 'package:horse_management/HMS/Dashboard/AuditLog.dart';
+import 'package:horse_management/HMS/Dashboard/AuditLog/AuditLog.dart';
 import 'package:horse_management/HMS/Diet/DietSubCategory.dart';
 import 'package:horse_management/HMS/Inventory/inventory_list.dart';
 import 'package:horse_management/HMS/OperationNotes/operation_notes.dart';
