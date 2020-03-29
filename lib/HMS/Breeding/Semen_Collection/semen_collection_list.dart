@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:horse_management/HMS/Breeding/Semen_Collection/semen_collection_details.dart';
 import 'package:horse_management/HMS/Breeding/Semen_Collection/update_semen_collection.dart';
 import 'package:horse_management/HMS/Training/training_detail_page.dart';
 import 'package:horse_management/HMS/Training/update_training.dart';
@@ -130,7 +131,8 @@ class _semen_collection_list_state extends State<semen_collection_list>{
                             //subtitle: Text(training_list!=null?get_training_type_by_id(training_list[index]['trainingType']):''),
                             leading: Image.asset("assets/horse_icon.png"),
                             onTap: (){
-                             // Navigator.push(context, MaterialPageRoute(builder: (context)=>training_details_page(training_list[index],get_training_type_by_id(training_list[index]['trainingType']))));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => semen_collection_details_page(siemen_col_list[index])));
+
                             },
                           ),
                         ),
