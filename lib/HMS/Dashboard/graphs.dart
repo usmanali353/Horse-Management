@@ -42,6 +42,7 @@ class graphsState extends State<graphs>{
           if(response!=null){
             setState(() {
               dashboard_data=json.decode(response);
+
               dataMap.putIfAbsent("Males", () => dashboard_data['males']!=null?double.parse(dashboard_data['males'].toString()):0);
               dataMap.putIfAbsent("Females", () => dashboard_data['females']!=null?double.parse(dashboard_data['females'].toString()):0);
               dataMap.putIfAbsent("Gieldings", () => dashboard_data['gieldings']!=null?double.parse(dashboard_data['gieldings'].toString()):0);
