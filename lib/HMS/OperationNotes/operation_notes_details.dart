@@ -32,7 +32,7 @@ class _operation_notes_details_page extends State<operation_notes_details_page>{
               ),
               Divider(),
               ListTile(
-                title: Text("Date"),
+                title: Text("Date:"),
                 trailing: Text(notes_data['date'].toString()!=null?notes_data['date'].toString():''),
               ),
               ListTile(

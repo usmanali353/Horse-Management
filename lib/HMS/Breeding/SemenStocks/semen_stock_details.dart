@@ -40,15 +40,15 @@ class _semen_stock_details_page extends State<semen_stock_details_page>{
                 trailing: Text(semen_stock_data['tankName']['name'].toString()!=null?semen_stock_data['tankName']['name'].toString():''),
               ),
               ListTile(
-                title: Text("Enter Date"),
+                title: Text("Enter Date:"),
                 trailing: Text(semen_stock_data['enterDate'].toString()!=null?semen_stock_data['enterDate'].toString():''),
               ),
               ListTile(
-                title: Text("Serial Number"),
+                title: Text("Serial Number:"),
                 trailing: Text(semen_stock_data['serialNumber'].toString()!=null?semen_stock_data['serialNumber'].toString():''),
               ),
               ListTile(
-                title: Text("Collection Date"),
+                title: Text("Collection Date:"),
                 trailing: Text(semen_stock_data['collectionDate'].toString()!=null?semen_stock_data['collectionDate'].toString():''),
               ),
 //              ListTile(
