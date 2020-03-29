@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Configuration/Barns/barn_json.dart';
 import 'package:horse_management/HMS/Configuration/Barns/update_barn.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
-import 'package:horse_management/dashboard_services/user_dashboard_json.dart';
+import 'package:horse_management/HMS/Dashboard/user_dashboard_json.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'dart:convert';
 import 'package:flutter_slidable/flutter_slidable.dart';
