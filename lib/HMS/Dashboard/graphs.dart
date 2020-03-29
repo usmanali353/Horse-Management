@@ -47,7 +47,6 @@ class graphsState extends State<graphs>{
               dataMap.putIfAbsent("Gieldings", () => dashboard_data['gieldings']!=null?double.parse(dashboard_data['gieldings'].toString()):0);
               isVisible=true;
             });
-
           }
         });
       }
