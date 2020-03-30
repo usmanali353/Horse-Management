@@ -1,5 +1,11 @@
 List restaurants = [
   {
+    "img": "assets/dashbaord.jpg",
+    "title": "Dashboard",
+    "address": "Check for the status and logs",
+
+  },
+  {
     "img": "assets/horse.png",
     "title": "My Horses",
     "address": "Add horses and its corresponding settings",

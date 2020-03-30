@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:horse_management/HMS/Breeding/Flushes/flushes_details.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
@@ -146,7 +147,8 @@ class _flushes_list extends State<flushes_list>{
                       // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
                         //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>flushes_update(token,flushes_list[index])));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => flushes_details_page(flushes_list[index])));
+
                         },
                       ),
                     )

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/OperationNotes/add_new_operation_note.dart';
+import 'package:horse_management/HMS/OperationNotes/operation_notes_details.dart';
 import 'package:horse_management/HMS/OperationNotes/operation_notes_json.dart';
 import 'package:horse_management/HMS/OperationNotes/update_operation_note.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
@@ -139,7 +140,7 @@ class _operational_noteList extends State<operational_noteList>{
                         // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
                         //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
                         onTap: (){
-                         // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_breeding_sales_form(token,sales_list[index])));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => operation_notes_details_page(notes_list[index])));
                         },
                       ),
                     )

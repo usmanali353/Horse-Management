@@ -2,9 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
-
 import 'Utils.dart';
-
 class network_operations{
 
 static Future<String> Sign_In(String email,String password) async{

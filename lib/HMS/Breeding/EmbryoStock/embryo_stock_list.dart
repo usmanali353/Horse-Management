@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:horse_management/HMS/Breeding/EmbryoStock/embryo_stock_details.dart';
 import 'package:horse_management/HMS/Breeding/EmbryoStock/update_embryo_stock.dart';
 
 import 'package:horse_management/Network_Operations.dart';
@@ -137,7 +138,7 @@ class _embryo_stock_list extends State< embryo_stock_list>{
                         subtitle: Text(embryo_list!=null?embryo_list[index]['sireName']['name']:''),
                         //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>update_embryo_stock(token,embryo_list[index])));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => embryo_stock_details_page(embryo_list[index])));
                         },
                       ),
                     )

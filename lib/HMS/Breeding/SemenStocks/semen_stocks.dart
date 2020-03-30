@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:horse_management/HMS/Breeding/SemenStocks/semen_stock_details.dart';
 import 'package:horse_management/HMS/Breeding/SemenStocks/semen_stock_json.dart';
+import 'package:horse_management/HMS/Breeding/Semen_Collection/semen_collection_details.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
@@ -136,7 +138,7 @@ class _semen_stocks extends State<semen_stocks>{
                        subtitle: Text(semen_stock_list!=null?semen_stock_list[index]['tankName']['name']:''),
                         //trailing: Text(semen_stock_list!=null?semen_stock_list[index]['enterDate']:''),
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>update_semen_stock_form(token,semen_stock_list[index])));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => semen_stock_details_page(semen_stock_list[index])));
                         },
                       ),
                     )

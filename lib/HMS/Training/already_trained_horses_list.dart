@@ -27,7 +27,6 @@ class _already_trained_horses_list_state extends State<already_trained_horses_li
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Already Trained Horses")),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: (){
@@ -111,7 +110,7 @@ class _already_trained_horses_list_state extends State<already_trained_horses_li
                     title: Text(already_trained_list!=null?already_trained_list[index]['horseName']['name']:''),
                     trailing: Text(already_trained_list!=null?already_trained_list[index]['startDate'].replaceAll("T00:00:00",''):''),
                     subtitle: Text(already_trained_list!=null?get_training_type_by_id(already_trained_list[index]['trainingType']):''),
-                    leading: Image.asset("Assets/horse_icon.png"),
+                    leading: Image.asset("assets/horse_icon.png"),
                     onTap: (){
                      Navigator.push(context, MaterialPageRoute(builder: (context)=>training_details_page(already_trained_list[index],'')));
                     },
