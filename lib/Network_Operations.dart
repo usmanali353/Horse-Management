@@ -406,5 +406,14 @@ static Future<String> delete_already_trained_horses(String token,int id) async{
     }else
       return null;
   }
+static Future<String> getUserDashboardData(String token) async{
+  Map<String,String> headers = {'Authorization':'Bearer '+token};
+  final response = await http.get('http://192.236.147.77:8083/api/Dashboard/GetUserDashboardData', headers: headers,);
+  print(response.body);
+  if(response.statusCode==200){
+    return response.body;
+  }else
+    return null;
+}
 
 }

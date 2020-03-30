@@ -126,7 +126,7 @@ class _HomeState extends State<Home>{ //with AutomaticKeepAliveClientMixin<Home>
                         print(index.toString());
                         if(index == 0){
                           SharedPreferences prefs=await SharedPreferences.getInstance();
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=> graphs(prefs.getString("token")) ));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> graphs(prefs.getString("token"),prefs.getBool("darkMode")) ));
                         }else if(index == 1){
                           prefs= await SharedPreferences.getInstance();
                           Navigator.push(context, MaterialPageRoute(builder: (context)=> horse_list(prefs.getString('token')) ));
