@@ -145,7 +145,6 @@ class graphsState extends State<graphs>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Dashboard"),),
       body: ListView(
         children: <Widget>[
           Column(

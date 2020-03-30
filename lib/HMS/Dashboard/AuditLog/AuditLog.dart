@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Configuration/Barns/barn_json.dart';
 import 'package:horse_management/HMS/Configuration/Barns/update_barn.dart';
+import 'package:horse_management/HMS/Dashboard/AuditLog/audit_log_details.dart';
 import 'package:horse_management/HMS/Dashboard/dashboard_services/user_dashboard_json.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -40,15 +41,6 @@ class _audit_log extends State<audit_log>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Audit Log"),
-//        actions: <Widget>[
-//          IconButton(
-//            icon: Icon(Icons.picture_as_pdf),
-//            // onPressed: () => _generatePdfAndView(context),
-//          ),
-//        ],
-      ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: (){
@@ -135,7 +127,7 @@ class _audit_log extends State<audit_log>{
                         subtitle: Text(auditLogs!=null?auditLogs[index]['action']:''),
 //                        trailing: Text(auditLogs!=null?auditLogs[index]['createdOn']:''),
                         onTap: (){
-                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                           Navigator.push(context, MaterialPageRoute(builder: (context)=>audit_log_details_page(auditLogs[index])));
                         },
                       ),
                     )
