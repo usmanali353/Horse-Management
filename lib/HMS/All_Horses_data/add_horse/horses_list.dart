@@ -185,7 +185,7 @@ class _training_list_state extends State<horse_list>{
 
 
 
-  }
+}
 
 
 

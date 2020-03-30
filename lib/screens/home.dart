@@ -4,6 +4,9 @@ import 'package:horse_management/HMS/All_Horses_data/all_horse_data_add.dart';
 import 'package:horse_management/HMS/Breeding/breeding_mainPage.dart';
 import 'package:horse_management/HMS/Configuration/configuration_mainpage.dart';
 import 'package:horse_management/HMS/Diet/DietSubCategory.dart';
+import 'package:horse_management/HMS/HorseGroups/add_group_form.dart';
+import 'package:horse_management/HMS/HorseGroups/horseGroup_list.dart';
+import 'package:horse_management/HMS/HorseGroups/horse_groups.dart';
 import 'package:horse_management/HMS/Inventory/inventory_list.dart';
 import 'package:horse_management/HMS/OperationNotes/operation_notes.dart';
 import 'package:horse_management/HMS/Paddock/paddocks.dart';
@@ -197,9 +200,13 @@ class _HomeState extends State<Home>{ //with AutomaticKeepAliveClientMixin<Home>
                            // Navigator.push(context, MaterialPageRoute(builder: (context)=> contacts_list(prefs.getString('token')) ));
                           }else if(index == 4){
                             prefs= await SharedPreferences.getInstance();
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=> operational_noteList(prefs.getString('token')) ));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=> horseGroup_list(prefs.getString('token')) ));
                           }
                           else if(index == 5){
+                            prefs= await SharedPreferences.getInstance();
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=> operational_noteList(prefs.getString('token')) ));
+                          }
+                          else if(index == 6){
                             prefs= await SharedPreferences.getInstance();
                             Navigator.push(context, MaterialPageRoute(builder: (context)=> SettingsPage()));
                           }

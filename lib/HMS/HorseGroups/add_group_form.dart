@@ -27,7 +27,7 @@ class GroupDetailState extends State<GroupDetail> {
 
   DatabaseHelper helper = DatabaseHelper();
   var data;
-  bool autoValidate = true;
+  //bool autoValidate = true;
   bool readOnly = false;
   bool showSegmentedControl = true;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
