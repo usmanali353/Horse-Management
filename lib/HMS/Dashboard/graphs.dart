@@ -1,31 +1,27 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:horse_management/HMS/Dashboard/dashboard_services/user_dashboard_json.dart';
 import 'package:horse_management/Model/breedingControlStatus.dart';
 import 'package:horse_management/Model/trainingStatus.dart';
-import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 class graphs extends StatefulWidget{
   String token;
-  bool darkMode;
-  graphs(this.token,this.darkMode);
+  graphs(this.token);
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return graphsState(token,this.darkMode);
+    return graphsState(token);
   }
 
 }
 class graphsState extends State<graphs>{
   String token;
   var dashboard_data;
-  bool darkMode;
-  graphsState(this.token,this.darkMode);
+  graphsState(this.token);
   List<charts.Series> seriesList,seriesList2;
   List<charts.Series<trainingStatus, String>> trainingStatusData;
   List<charts.Series<breedingControlStatus,String>> breedingControlStatusData;
@@ -43,7 +39,7 @@ class graphsState extends State<graphs>{
       if(result){
         ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
         pd.show();
-        network_operations.getUserDashboardData(token).then((response){
+        DashboardServices.getUserDashboardData(token).then((response){
           pd.dismiss();
           if(response!=null){
             setState(() {
@@ -87,6 +83,7 @@ class graphsState extends State<graphs>{
                 )
               ];
               seriesList=trainingStatusData;
+              seriesList2=breedingControlStatusData;
             });
           }
         });
@@ -199,7 +196,7 @@ class graphsState extends State<graphs>{
                         ),
                         Expanded(
                             child: charts.BarChart(
-                              seriesList,
+                              seriesList2,
                               animate: true,
                               vertical: true,
                               domainAxis:  charts.OrdinalAxisSpec(

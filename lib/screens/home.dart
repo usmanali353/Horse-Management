@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/All_Horses_data/all_horse_data_add.dart';
 import 'package:horse_management/HMS/Breeding/breeding_mainPage.dart';
 import 'package:horse_management/HMS/Configuration/configuration_mainpage.dart';
-import 'package:horse_management/HMS/Dashboard/AuditLog.dart';
+import 'package:horse_management/HMS/Dashboard/graphs.dart';
 import 'package:horse_management/HMS/Diet/DietSubCategory.dart';
 import 'package:horse_management/HMS/Inventory/inventory_list.dart';
 import 'package:horse_management/HMS/OperationNotes/operation_notes.dart';
@@ -125,7 +125,7 @@ class _HomeState extends State<Home>{ //with AutomaticKeepAliveClientMixin<Home>
                         print(index.toString());
                         if(index == 0){
                           SharedPreferences prefs=await SharedPreferences.getInstance();
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=> audit_log(prefs.getString("token")) ));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> graphs(prefs.getString("token")) ));
                         }else if(index == 1){
                           prefs= await SharedPreferences.getInstance();
                           Navigator.push(context, MaterialPageRoute(builder: (context)=> horse_list(prefs.getString('token')) ));
