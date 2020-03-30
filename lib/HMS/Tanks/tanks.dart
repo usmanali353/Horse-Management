@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:horse_management/HMS/Tanks/tanks_details.dart';
 import 'package:horse_management/HMS/Tanks/tanks_json.dart';
 import 'package:horse_management/HMS/Tanks/update_tanks.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
@@ -136,7 +137,7 @@ class _tanks_list extends State<tanks_list>{
                         // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
                         //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
                         onTap: (){
-                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_breeding_sales_form(token,sales_list[index])));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => tanks_details_page(tanks_list[index])));
                         },
                       ),
                     )

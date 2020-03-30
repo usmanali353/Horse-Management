@@ -36,20 +36,19 @@ class _breeding_services_details_page extends State<breeding_services_details_pa
                 trailing: Text(breeding_services_data['horseName']['name']!=null?breeding_services_data['horseName']['name']:''),
               ),
               ListTile(
-                title: Text("Date"),
+                title: Text("Date:"),
                 trailing: Text(breeding_services_data['serviceDate'].toString()!=null?breeding_services_data['serviceDate'].toString():''),
               ),
               ListTile(
-                title: Text("Sire"),
+                title: Text("Sire:"),
                 trailing: Text(breeding_services_data['sireName']['name']!=null?breeding_services_data['sireName']['name']:''),
               ),
               ListTile(
-                title: Text("Donor"),
+                title: Text("Donor:"),
                 trailing: Text(breeding_services_data['donorName']['name']!=null?breeding_services_data['donorName']['name']:''),
               ),
-              Divider(),
               ListTile(
-                title: Text("Service Type"),
+                title: Text("Service Type:"),
                 trailing: Text(breeding_type_name!=null?breeding_type_name:''),
               ),
 //              ListTile(

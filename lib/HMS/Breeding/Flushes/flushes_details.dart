@@ -36,28 +36,21 @@ class _flushes_details_page extends State<flushes_details_page>{
                 trailing: Text(flushes_data['horseName']['name'].toString()!=null?flushes_data['horseName']['name'].toString():''),
               ),
               ListTile(
-                title: Text("Date"),
+                title: Text("Date:"),
                 trailing: Text(flushes_data['date'].toString()!=null?flushes_data['date'].toString():''),
               ),
               ListTile(
-                title: Text("Vet"),
+                title: Text("Vet:"),
                 trailing: Text(flushes_data['vetName']['contactName']['name']!=null?flushes_data['vetName']['contactName']['name']:''),
               ),
-              Divider(),
               ListTile(
-                title: Text("Comments"),
+                title: Text("Comments:"),
                 trailing: Text(flushes_data['comments']!=null?flushes_data['comments']:''),
               ),
               ListTile(
-                title: Text("Embryos"),
+                title: Text("Embryos:"),
                 trailing: Text(flushes_data['embryos'].toString()!=null?flushes_data['embryos'].toString():''),
               ),
-
-              Divider(),
-//              ListTile(
-//                title: Text("Price"),
-//                trailing: Text(flushes_data['price'].toString()!=null?flushes_data['price'].toString():''),
-//              ),
               Divider(),
             ],
           ),

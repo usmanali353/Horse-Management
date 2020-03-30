@@ -36,31 +36,26 @@ class _breeding_sales_details_page extends State<breeding_sales_details_page>{
                 trailing: Text(breeding_sales_data['horseName']['name'].toString()!=null?breeding_sales_data['horseName']['name'].toString():''),
               ),
               ListTile(
-                title: Text("Date"),
+                title: Text("Date:"),
                 trailing: Text(breeding_sales_data['date'].toString()!=null?breeding_sales_data['date'].toString():''),
               ),
               ListTile(
-                title: Text("Customer"),
+                title: Text("Customer:"),
                 trailing: Text(breeding_sales_data['customerName']['contactName']['name']!=null?breeding_sales_data['customerName']['contactName']['name']:''),
               ),
               Divider(),
               ListTile(
-                title: Text("Contract #"),
+                title: Text("Contract #:"),
                 trailing: Text(breeding_sales_data['contractNo'].toString()!=null?breeding_sales_data['contractNo'].toString():''),
               ),
               ListTile(
-                title: Text("Status"),
+                title: Text("Status:"),
                 trailing: Text(status_type_name!=null?status_type_name:''),
               ),
               ListTile(
-                title: Text("Assigned Vet"),
+                title: Text("Assigned Vet:"),
                 trailing: Text(breeding_sales_data['assignedVetName']['contactName']['name']!=null?breeding_sales_data['assignedVetName']['contactName']['name']:''),
               ),
-              Divider(),
-//              ListTile(
-//                title: Text("Next Check"),
-//                trailing: Text(breeding_sales_data['nextCheckDate'].toString()!=null?breeding_sales_data['nextCheckDate'].toString():''),
-//              ),
               Divider(),
             ],
           ),

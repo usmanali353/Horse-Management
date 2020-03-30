@@ -40,22 +40,19 @@ class _embryo_stock_details_page extends State<embryo_stock_details_page>{
                 trailing: Text(embryo_stock_data['sireName']['name'].toString()!=null?embryo_stock_data['sireName']['name'].toString():''),
               ),
               ListTile(
-                title: Text("Collection Date"),
+                title: Text("Collection Date:"),
                 trailing: Text(embryo_stock_data['collectionDate'].toString()!=null?embryo_stock_data['collectionDate'].toString():''),
               ),
               ListTile(
-                title: Text("Stage"),
+                title: Text("Stage:"),
                 trailing: Text(embryo_stock_data['stage']!=null?embryo_stock_data['stage']:''),
               ),
-              Divider(),
               ListTile(
-                title: Text("Tank"),
+                title: Text("Tank:"),
                 trailing: Text(embryo_stock_data['tankName']['name']!=null?embryo_stock_data['tankName']['name']:''),
               ),
-
-              Divider(),
              ListTile(
-                title: Text("Price"),
+                title: Text("Price:"),
                 trailing: Text(embryo_stock_data['price'].toString()!=null?embryo_stock_data['price'].toString():''),
               ),
               Divider(),

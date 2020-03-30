@@ -36,33 +36,31 @@ class _breeding_control_details_page extends State<breeding_control_details_page
                 trailing: Text(breeding_control_data['horseName']['name'].toString()!=null?breeding_control_data['horseName']['name'].toString():''),
               ),
               ListTile(
-                title: Text("Date"),
+                title: Text("Date:"),
                 trailing: Text(breeding_control_data['date'].toString()!=null?breeding_control_data['date'].toString():''),
               ),
               ListTile(
-                title: Text("Time"),
+                title: Text("Time:"),
                 trailing: Text(breeding_control_data['hour'].toString()!=null?breeding_control_data['hour'].toString():''),
               ),
               ListTile(
-                title: Text("Related Service Date"),
+                title: Text("Related Service Date:"),
                 trailing: Text(breeding_control_data['relatedServiceDate']['serviceDate']!=null?breeding_control_data['relatedServiceDate']['serviceDate']:''),
               ),
-              Divider(),
               ListTile(
-                title: Text("LO"),
+                title: Text("LO:"),
                 trailing: Text(breeding_control_data['lo']!=null?breeding_control_data['lo']:''),
               ),
               ListTile(
-                title: Text("RO"),
+                title: Text("RO:"),
                 trailing: Text(breeding_control_data['ro']!=null?breeding_control_data['ro']:''),
               ),
               ListTile(
-                title: Text("Amount"),
+                title: Text("Amount:"),
                 trailing: Text(breeding_control_data['amount'].toString()!=null?breeding_control_data['amount'].toString():''),
               ),
-              Divider(),
               ListTile(
-                title: Text("Next Check"),
+                title: Text("Next Check:"),
                 trailing: Text(breeding_control_data['nextCheckDate'].toString()!=null?breeding_control_data['nextCheckDate'].toString():''),
               ),
               Divider(),
