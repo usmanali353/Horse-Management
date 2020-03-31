@@ -82,17 +82,17 @@ class _currency_list extends State<currency_list>{
                   setState(() {
                     isVisible=false;
                   });
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                    backgroundColor: Colors.red,
-                    content: Text("List Not Available"),
-                  ));
+//                  Scaffold.of(context).showSnackBar(SnackBar(
+//                    backgroundColor: Colors.red,
+//                    content: Text("List Not Available"),
+//                  ));
                 }
               });
             }else{
-              Scaffold.of(context).showSnackBar(SnackBar(
-                backgroundColor: Colors.red,
-                content: Text("Network Not Available"),
-              ));
+//              Scaffold.of(context).showSnackBar(SnackBar(
+//                backgroundColor: Colors.red,
+//                content: Text("Network Not Available"),
+//              ));
             }
           });
         },
@@ -144,8 +144,8 @@ class _currency_list extends State<currency_list>{
                     ],
                     child: FadeAnimation(2.0,
                       ListTile(
-                        title: Text(currency_lists!=null?currency_lists[index]['id'].toString():''),
-                        // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
+                       title: Text(currency_lists!=null?currency_lists[index]['name'].toString():''),
+                        // subtitle: Text(currency_lists!=null?currency_lists[index]['symbol'].toString():''),
                         //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
 //                      onTap: (){
 //                       // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
