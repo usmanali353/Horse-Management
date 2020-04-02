@@ -110,7 +110,7 @@ class _breeding_control_list extends State< breeding_control_list>{
                         caption: 'Next Check',
                         onTap: () async {
                           print(control_list[index]);
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>next_breeding_check(token)));
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>next_breeding_check(token, control_list[index]['breedingControlId'])));
                         },
                       ),
                     ],
