@@ -407,4 +407,27 @@ static Future<String> delete_already_trained_horses(String token,int id) async{
       return null;
   }
 
+static Future<String> save_next_breeding_check(String token, int id, bool nextCheck, DateTime date, int next_check_reason, String comments, String Createdby) async{
+  Map<String,String> headers = {
+    HttpHeaders.contentTypeHeader: 'application/json',
+    HttpHeaders.authorizationHeader : 'Bearer '+token
+  };
+  final body = jsonEncode({
+    "breedingControlId": id,
+    "NextCheck": nextCheck,
+    "nextCheckDate": date,
+    "nextCheckReason": next_check_reason,
+    "nextCheckComments": comments,
+    "createdBy": Createdby,
+    "createdOn": DateTime.now(),
+//    "updatedBy": "ce84c3c9-c8b3-464f-8516-49aae24af9ea",
+//    "updatedOn": "2020-03-06T02:21:50.338155-08:00",
+    "isActive": true,},toEncodable: Utils.myEncode);
+  final response = await http.post('http://192.236.147.77:8083/api/breed/NextBreedingCheckSave', headers: headers, body: body);
+  if(response.statusCode==200){
+    return response.body;
+  }else
+    return null;
+}
+
 }

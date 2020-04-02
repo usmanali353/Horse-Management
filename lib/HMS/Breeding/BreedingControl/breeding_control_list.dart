@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/breeding_control_details.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/breeding_control_form.dart';
+import 'package:horse_management/HMS/Breeding/BreedingControl/next_breeding_check.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/update_breeding_control.dart';
 import 'package:horse_management/HMS/Breeding/EmbryoStock/update_embryo_stock.dart';
 
@@ -101,6 +102,15 @@ class _breeding_control_list extends State< breeding_control_list>{
                         caption: 'Update',
                         onTap: () async {
                           Navigator.push(context,MaterialPageRoute(builder: (context)=>update_breeding_control(token,control_list[index])));
+                        },
+                      ),
+                      IconSlideAction(
+                        icon: Icons.access_time,
+                        color: Colors.deepPurple,
+                        caption: 'Next Check',
+                        onTap: () async {
+                          print(control_list[index]);
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>next_breeding_check(token)));
                         },
                       ),
                     ],
