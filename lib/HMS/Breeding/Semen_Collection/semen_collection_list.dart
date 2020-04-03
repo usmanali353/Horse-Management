@@ -36,16 +36,34 @@ class _semen_collection_list_state extends State<semen_collection_list>{
 
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Semen Collections")),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
-          onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>add_semen_collection(token)));
-          },
+        appBar: AppBar(title: Text("Semen Collections"),
+          actions: <Widget>[
+            Center(child: Text("Add New",textScaleFactor: 1.3,)),
+            IconButton(
+
+              icon: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => add_semen_collection(token)),);
+              },
+            )
+//          IconButton(
+//            icon: Icon(Icons.picture_as_pdf),
+//           // onPressed: () => _generatePdfAndView(context),
+//          ),
+          ],
         ),
+//        floatingActionButton: FloatingActionButton(
+//          child: Icon(
+//            Icons.add,
+//            color: Colors.white,
+//          ),
+//          onPressed: (){
+//            Navigator.push(context, MaterialPageRoute(builder: (context)=>add_semen_collection(token)));
+//          },
+//        ),
         body: RefreshIndicator(
               key: _refreshIndicatorKey,
               onRefresh: (){

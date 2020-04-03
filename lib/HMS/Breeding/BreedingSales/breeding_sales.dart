@@ -45,14 +45,31 @@ class _breeding_sales extends State<breeding_sales>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>breeding_sales_form(token)));
-        },
-        child: Icon(Icons.add),
-      ),
+//      floatingActionButton: FloatingActionButton(
+//        onPressed: (){
+//          Navigator.push(context, MaterialPageRoute(builder: (context)=>breeding_sales_form(token)));
+//        },
+//        child: Icon(Icons.add),
+//      ),
       appBar: AppBar(
         title: Text("Breeding Sales"),
+        actions: <Widget>[
+          Center(child: Text("Add New",textScaleFactor: 1.3,)),
+          IconButton(
+
+            icon: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => breeding_sales_form(token)),);
+            },
+          )
+//          IconButton(
+//            icon: Icon(Icons.picture_as_pdf),
+//           // onPressed: () => _generatePdfAndView(context),
+//          ),
+        ],
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,

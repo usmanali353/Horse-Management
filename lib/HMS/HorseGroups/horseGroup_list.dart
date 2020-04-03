@@ -74,7 +74,8 @@ class _training_list_state extends State<horseGroup_list>{
 
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text(" Horses Group"),actions: <Widget>[
+        appBar: AppBar(title: Text(" Horses Group"),
+          actions: <Widget>[
           Center(child: Text("Add New",textScaleFactor: 1.3,)),
           IconButton(
 
@@ -86,7 +87,8 @@ class _training_list_state extends State<horseGroup_list>{
               Navigator.push(context, MaterialPageRoute(builder: (context) => add_HorseGroup(token)),);
             },
           )
-        ],),
+        ],
+        ),
         body:RefreshIndicator(
           key: _refreshIndicatorKey,
           onRefresh: (){

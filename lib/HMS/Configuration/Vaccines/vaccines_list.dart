@@ -41,14 +41,30 @@ class _vaccines_list extends State<vaccines_list>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_vaccines(token)));
-        },
-        child: Icon(Icons.add),
-      ),
+//      floatingActionButton: FloatingActionButton(
+//        onPressed: (){
+//          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_vaccines(token)));
+//        },
+//        child: Icon(Icons.add),
+//      ),
       appBar: AppBar(
         title: Text("Vaccines"),
+        actions: <Widget>[
+          Center(child: Text("Add New",textScaleFactor: 1.3,)),
+          IconButton(
+            icon: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => add_vaccines(token)),);
+            },
+          )
+//          IconButton(
+//            icon: Icon(Icons.picture_as_pdf),
+//           // onPressed: () => _generatePdfAndView(context),
+//          ),
+        ],
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,

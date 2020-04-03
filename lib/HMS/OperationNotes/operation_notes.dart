@@ -47,14 +47,31 @@ class _operational_noteList extends State<operational_noteList>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_new_opertation_note(token)));
-        },
-        child: Icon(Icons.add),
-      ),
+//      floatingActionButton: FloatingActionButton(
+//        onPressed: (){
+//          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_new_opertation_note(token)));
+//        },
+//        child: Icon(Icons.add),
+//      ),
       appBar: AppBar(
         title: Text("Operation Notes"),
+        actions: <Widget>[
+          Center(child: Text("Add New",textScaleFactor: 1.3,)),
+          IconButton(
+
+            icon: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => add_new_opertation_note(token)),);
+            },
+          )
+//          IconButton(
+//            icon: Icon(Icons.picture_as_pdf),
+//           // onPressed: () => _generatePdfAndView(context),
+//          ),
+        ],
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
