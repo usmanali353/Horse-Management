@@ -152,8 +152,9 @@ class _breeding_sales extends State<breeding_sales>{
                     child: FadeAnimation(2.0,
                        ListTile(
                         title: Text(sales_list!=null?sales_list[index]['horseName']['name']:''),
-                        // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
-                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                         //subtitle: Text(sales_list!=null?sales_list[index]['status'].toString():''),
+                        subtitle: Text(sales_list!=null?sales_list[index]['assignedVetName']['contactName']['name']:''),
+                        trailing: Text(sales_list!=null?sales_list[index]['date']:''),
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context) => breeding_sales_details_page(sales_list[index], get_status_by_id(sales_list[index]['status']))));
 

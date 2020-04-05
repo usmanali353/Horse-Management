@@ -172,8 +172,8 @@ class _paddocks_list extends State<paddocks_list>{
                     child: FadeAnimation(2.0,
                        ListTile(
                         title: Text(paddock_lists!=null?paddock_lists[index]['name']:''),
-                        // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
-                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                        subtitle: Text(paddock_lists!=null?"Area: "+paddock_lists[index]['area'].toString():''),
+                        trailing: Text(paddock_lists[index]['hasShade'] == true ?"Has Shade: "+"Yes":"No"),
                         onTap: (){
                           // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
                         },

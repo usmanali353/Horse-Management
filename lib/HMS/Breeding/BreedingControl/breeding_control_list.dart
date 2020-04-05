@@ -171,10 +171,10 @@ class _breeding_control_list extends State< breeding_control_list>{
                     ],
                     child: FadeAnimation(2.0,
                       ListTile(
-                        trailing:Text(control_list!=null?control_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
+                        trailing:Text(control_list!=null?control_list[index]['date']:''),
                         title: Text(control_list!=null?control_list[index]['horseName']['name']:''),
                         subtitle: Text(control_list!=null?get_check_method_by_id(control_list[index]['check_Method']):''),
-                        leading: Icon(Icons.pets,size: 40,color: Colors.teal,),
+                        //leading: Icon(Icons.pets,size: 40,color: Colors.teal,),
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context) => breeding_control_details_page(control_list[index], get_check_method_by_id(control_list[index]['check_Method']))));
                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>breeding_control_details_page(token,control_list[index])));

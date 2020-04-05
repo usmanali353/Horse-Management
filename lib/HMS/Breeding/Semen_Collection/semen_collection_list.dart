@@ -146,8 +146,8 @@ class _semen_collection_list_state extends State<semen_collection_list>{
                         ListTile(
                             title: Text(siemen_col_list!=null?siemen_col_list[index]['horseName']['name']:''),
                             trailing: Text(siemen_col_list!=null?siemen_col_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
-                            //subtitle: Text(training_list!=null?get_training_type_by_id(training_list[index]['trainingType']):''),
-                            leading: Image.asset("assets/horse_icon.png"),
+                            subtitle: Text(siemen_col_list!=null?siemen_col_list[index]['inChargeName']['contactName']['name']:''),
+                            //leading: Image.asset("assets/horse_icon.png"),
                             onTap: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context) => semen_collection_details_page(siemen_col_list[index])));
 

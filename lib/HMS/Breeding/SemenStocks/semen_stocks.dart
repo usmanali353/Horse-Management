@@ -153,7 +153,7 @@ class _semen_stocks extends State<semen_stocks>{
                        ListTile(
                         title: Text(semen_stock_list!=null?semen_stock_list[index]['horseName']['name']:''),
                        subtitle: Text(semen_stock_list!=null?semen_stock_list[index]['tankName']['name']:''),
-                        //trailing: Text(semen_stock_list!=null?semen_stock_list[index]['enterDate']:''),
+                        trailing: Text(semen_stock_list!=null?semen_stock_list[index]['enterDate']:''),
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context) => semen_stock_details_page(semen_stock_list[index])));
                         },

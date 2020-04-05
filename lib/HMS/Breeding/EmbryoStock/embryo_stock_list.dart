@@ -153,7 +153,7 @@ class _embryo_stock_list extends State< embryo_stock_list>{
                       ListTile(
                         title: Text(embryo_list!=null?embryo_list[index]['horseName']['name']:''),
                         subtitle: Text(embryo_list!=null?embryo_list[index]['sireName']['name']:''),
-                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                        trailing: Text(embryo_list!=null?embryo_list[index]['collectionDate']:''),
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context) => embryo_stock_details_page(embryo_list[index])));
                         },

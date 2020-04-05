@@ -157,8 +157,8 @@ class _flushes_list extends State<flushes_list>{
                     child: FadeAnimation(2.0,
                        ListTile(
                         title: Text(flushes_list!=null?flushes_list[index]['horseName']['name']:''),
-                      // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
-                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                        subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
+                        trailing: Text(flushes_list!=null?flushes_list[index]['date']:''),
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context) => flushes_details_page(flushes_list[index])));
 

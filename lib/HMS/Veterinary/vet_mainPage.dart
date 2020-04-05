@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Veterinary/VetVisits/vetVisitsList.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'Confirmation/add_confirmation_form.dart';
 import 'Confirmation/confirmation.dart';
 class vet_category extends StatefulWidget{
   @override
@@ -44,8 +45,9 @@ class _Profile_Page_State extends State<vet_category>{
                     subtitle: Text("Add Confirmation"),
                     leading: Icon(Icons.account_balance_wallet,size: 40,),
                     trailing: Icon(Icons.arrow_right),
-                    onTap: (){
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=>confirmartion()));
+                    onTap: ()async{
+                      SharedPreferences prefs=await SharedPreferences.getInstance();
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=>add_confirmation("token")));
                     },
                   ),
                   ListTile(

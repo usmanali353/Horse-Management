@@ -151,7 +151,7 @@ class _breeding_services_State extends State<breeding_services>{
                     child: FadeAnimation(2.0,
                        ListTile(
                         title: Text(breeding_services_list!=null?breeding_services_list[index]['horseName']['name']:''),
-                        subtitle: Text(breeding_services_list!=null?breeding_services_list[index]['serviceType'].toString():''),
+                        subtitle: Text(breeding_services_list!=null?breeding_services_list[index]['sireName']['name'].toString():''),
                         trailing: Text(breeding_services_list!=null?breeding_services_list[index]['serviceDate'].toString().replaceAll("T00:00:00", ''):'') ,
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context) => breeding_services_details_page(breeding_services_list[index], get_check_service_by_id(breeding_services_list[index]['serviceType']))));
