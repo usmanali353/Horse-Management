@@ -5,15 +5,12 @@ import 'package:http/http.dart' as http;
 
 class ConfirmationServices {
 
-  static Future<String> confirmationdropdowns(String token) async {
-    Map<String, String> headers = {'Authorization': 'Bearer ' + token};
-    final response = await http.get(
-      'http://192.236.147.77:8083/api/Veterinary/GetConformationById',
-      headers: headers,
-    );
-    if (response.statusCode == 200) {
+  static Future<String> get_conformations_dropdowns(String token) async{
+    Map<String,String> headers = {"Authorization":"Bearer "+token};
+    var response=await http.get("http://192.236.147.77:8083/api/Veterinary/GetConformationById/",headers: headers);
+    if(response.statusCode==200){
       return response.body;
-    } else
+    }else
       return null;
   }
 

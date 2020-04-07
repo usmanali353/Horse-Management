@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/HMS/Veterinary/Confirmation/confirmation_json.dart';
 import 'package:horse_management/HMS/Veterinary/VetVisits/addProductsApplied.dart';
-import 'package:horse_management/HMS/Veterinary/VetVisits/veterniaryServices.dart';
 import 'package:intl/intl.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,7 +29,7 @@ class add_confirmationState extends State<add_confirmation>{
   bool horses_loaded=false,vet_loaded=false;
   List<String> horses=[],vet=[],opinion=['Well','Appropriate','Deficient'];
   String selected_horse,selected_vet,selected_opinion;
-  int selected_horse_id,selected_vet_id,selected_opinion_id;
+  int selected_horse_id=0,selected_vet_id=0,selected_opinion_id;
   TextEditingController comments;
   var confirmationDropdowns;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
@@ -41,24 +40,16 @@ class add_confirmationState extends State<add_confirmation>{
       if(result){
         ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
         pd.show();
-        ConfirmationServices.confirmationdropdowns(token).then((response){
+        ConfirmationServices.get_conformations_dropdowns(token).then((response){
           pd.hide();
           if(response!=null){
             setState(() {
               confirmationDropdowns=json.decode(response);
-              //print(confirmationDropdowns['vetVisitProduct']['inventoryProductsDropDown'].toString());
-              if(confirmationDropdowns['horseDropDown']!=null&&confirmationDropdowns['horseDropDown'].length>0){
-                for(int i=0;i<confirmationDropdowns['horseDropDown'].length;i++){
-                  horses.add(confirmationDropdowns['horseDropDown'][i]['name']);
-                }
-               // horses_loaded=true;
-              }
-              if(confirmationDropdowns['vetDropDown']!=null&&confirmationDropdowns['vetDropDown'].length>0){
-                for(int i=0;i<confirmationDropdowns['vetDropDown'].length;i++){
-                  vet.add(confirmationDropdowns['vetDropDown'][i]['name']);
-                }
-               // vet_loaded=true;
-              }
+              print(confirmationDropdowns['conformationDetails']['foreLimbJointDropDown'].toString());
+              for(int i=0;i<confirmationDropdowns['horseDropDown'].length;i++)
+                horses.add(confirmationDropdowns['horseDropDown'][i]['name']);
+              for(int i=0;i<confirmationDropdowns['vetDropDown'].length;i++)
+                vet.add(confirmationDropdowns['vetDropDown'][i]['name']);
             });
 
           }

@@ -154,8 +154,8 @@ class _operational_noteList extends State<operational_noteList>{
                     child: FadeAnimation(2.0,
                        ListTile(
                         title: Text(notes_list!=null?notes_list[index]['generalCategoryName']['name']:''),
-                        // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
-                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                         subtitle: Text(notes_list!=null?notes_list[index]['details']:''),
+                        trailing: Text(notes_list!=null?notes_list[index]['date'].toString():''),
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context) => operation_notes_details_page(notes_list[index])));
                         },
