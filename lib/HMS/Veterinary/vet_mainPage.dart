@@ -47,7 +47,7 @@ class _Profile_Page_State extends State<vet_category>{
                     trailing: Icon(Icons.arrow_right),
                     onTap: ()async{
                       SharedPreferences prefs=await SharedPreferences.getInstance();
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=>confirmation_list("token")));
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=>confirmation_list(prefs.getString("token"))));
                     },
                   ),
                   ListTile(

@@ -45,23 +45,23 @@ class add_confirmationState extends State<add_confirmation>{
           if(response!=null){
             setState(() {
               confirmationDropdowns=json.decode(response);
-              print(confirmationDropdowns['conformationDetails']['foreLimbJointDropDown'].toString());
-              if(confirmationDropdowns['horseDropDown']!=null&&confirmationDropdowns['horseDropDown'].length>0){
-                for(int i=0;i<confirmationDropdowns['horseDropDown'].length;i++){
-                  horses.add(confirmationDropdowns['horseDropDown'][i]['name']);
-                }
-                horses_loaded=true;
-              }
-              if(confirmationDropdowns['vetDropDown']!=null&&confirmationDropdowns['vetDropDown'].length>0){
-                for(int i=0;i<confirmationDropdowns['vetDropDown'].length;i++){
-                  vet.add(confirmationDropdowns['vetDropDown'][i]['name']);
-                }
-                vet_loaded=true;
-              }
-//              for(int i=0;i<confirmationDropdowns['horseDropDown'].length;i++)
-//                horses.add(confirmationDropdowns['horseDropDown'][i]['name']);
-//              for(int i=0;i<confirmationDropdowns['vetDropDown'].length;i++)
-//                vet.add(confirmationDropdowns['vetDropDown'][i]['name']);
+              print(confirmationDropdowns['conformationDetail']['foreLimbJointDropDown'].toString());
+//              if(confirmationDropdowns['horseDropDown']!=null&&confirmationDropdowns['horseDropDown'].length>0){
+//                for(int i=0;i<confirmationDropdowns['horseDropDown'].length;i++){
+//                  horses.add(confirmationDropdowns['horseDropDown'][i]['name']);
+//                }
+//                horses_loaded=true;
+//              }
+//              if(confirmationDropdowns['vetDropDown']!=null&&confirmationDropdowns['vetDropDown'].length>0){
+//                for(int i=0;i<confirmationDropdowns['vetDropDown'].length;i++){
+//                  vet.add(confirmationDropdowns['vetDropDown'][i]['name']);
+//                }
+//                vet_loaded=true;
+//              }
+              for(int i=0;i<confirmationDropdowns['horseDropDown'].length;i++)
+                horses.add(confirmationDropdowns['horseDropDown'][i]['name']);
+              for(int i=0;i<confirmationDropdowns['vetDropDown'].length;i++)
+                vet.add(confirmationDropdowns['vetDropDown'][i]['name']);
             });
 
           }
@@ -171,7 +171,7 @@ class add_confirmationState extends State<add_confirmation>{
                       attribute: "Opinion",
                       validators: [FormBuilderValidators.required()],
                       hint: Text("Opinion"),
-                      items:vet!=null?vet.map((horse)=>DropdownMenuItem(
+                      items:opinion!=null?opinion.map((horse)=>DropdownMenuItem(
                         child: Text(horse),
                         value: horse,
                       )).toList():[""].map((name) => DropdownMenuItem(
