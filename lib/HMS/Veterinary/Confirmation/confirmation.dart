@@ -82,10 +82,13 @@ class _confirmation_list extends State<confirmation_list>{
               ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
               pd.show();
               ConfirmationServices.confirmationlist(token).then((response){
+                print(response);
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
+                   // print(confirmation_lists['horseName']['name'].toString());
                     confirmation_lists=json.decode(response);
+                    print(confirmation_lists);
                     isVisible=true;
                   });
 

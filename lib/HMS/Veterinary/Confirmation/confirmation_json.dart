@@ -26,9 +26,8 @@ class ConfirmationServices {
 
   static Future<String> confirmationlist(String token) async{
     Map<String,String> headers = {'Authorization':'Bearer '+token};
-    final response = await http.get('http://192.236.147.77:8083/api/Veterinary/GetAllConformations',
-      headers: headers,
-    );
+    final response = await http.get('http://192.236.147.77:8083/api/Veterinary/GetAllConformations',headers: headers);
+    print(response.body);
     if(response.statusCode==200){
       return response.body;
     }else
