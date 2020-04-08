@@ -36,14 +36,13 @@ class ConfirmationServices {
   }
 
 
-  static Future<String> add_confirmation(String token,int confirmationId,int horseId,DateTime date,int vetId,int opinion, String comments, String createdBy,List<Map>confirmationDetails) async{
+  static Future<String> add_confirmation(String token,int confirmationId,int horseId,DateTime date,int vetId,int opinion, String createdBy,List<Map>confirmationDetails) async{
     Map<String,String> headers = {'Content-Type':'application/json',"Authorization":"Bearer "+token};
     final body = jsonEncode({
       "conformationId":confirmationId,
       "horseId":horseId,
       "vetId":vetId,
       "opinion":opinion,
-      "comments":comments,
       "createdBy": createdBy,
       "createdOn":DateTime.now(),
       "isActive":true,

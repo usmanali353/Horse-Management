@@ -4,34 +4,34 @@ import 'package:progress_dialog/progress_dialog.dart';
 
 import '../../../Utils.dart';
 
-class addProductsApplied extends StatefulWidget{
+class addlimbs_dataApplied extends StatefulWidget{
   String token;
   DateTime date;
-  int horse_id,vet_id,type_id;
-  var inventoryProductsDropDown;
-  addProductsApplied(this.token, this.date, this.horse_id, this.vet_id,this.type_id,this.inventoryProductsDropDown);
+  int horse_id,vet_id,opinion_id;
+  var limbsDropdown;
+  addlimbs_dataApplied(this.token, this.date, this.horse_id, this.vet_id,this.opinion_id,this.limbsDropdown);
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return addProductsAppliedState(token,date,horse_id,vet_id,type_id,inventoryProductsDropDown);
+    return addlimbs_dataAppliedState(token,date,horse_id,vet_id,opinion_id,limbsDropdown);
   }
 
 }
-class addProductsAppliedState extends State<addProductsApplied>{
+class addlimbs_dataAppliedState extends State<addlimbs_dataApplied>{
   String token;
   DateTime date;
-  int horse_id,vet_id,type_id;
-  List<String> products=[];
-  var selected_product=[];
+  int horse_id,vet_id,opinion_id;
+  List<String> limbs_data=[];
+  var selected_limb=[];
   var quantityTECs = <TextEditingController>[];
   var cards = <Card>[];
-  var inventoryProductsDropDown;
-  addProductsAppliedState(this.token, this.date, this.horse_id, this.vet_id,this.type_id,this.inventoryProductsDropDown);
+  var limbsDropdown;
+  addlimbs_dataAppliedState(this.token, this.date, this.horse_id, this.vet_id,this.opinion_id,this.limbsDropdown);
   @override
   void initState() {
-    if(inventoryProductsDropDown!=null&&inventoryProductsDropDown.length>0){
-      for(int i=0;i<inventoryProductsDropDown.length;i++){
-        products.add(inventoryProductsDropDown[i]['name']);
+    if(limbsDropdown!=null&&limbsDropdown.length>0){
+      for(int i=0;i<limbsDropdown.length;i++){
+        limbs_data.add(limbsDropdown[i]['name']);
       }
       cards.add(createCard());
     }
@@ -41,36 +41,36 @@ class addProductsAppliedState extends State<addProductsApplied>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(title: Text("Add Products Applied"),),
+      appBar: AppBar(title: Text("Add Horse Limbs Data"),),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.done),
         onPressed: (){
-           Utils.check_connectivity().then((result){
-             if(result){
-    List<Map> entries=[];
-    var quantity,product_id;
-    for(int i=0;i<cards.length;i++){
-    if(quantityTECs[i].text!=null) {
-    quantity = int.parse(quantityTECs[i].text);
-    }
-    if(inventoryProductsDropDown!=null&&inventoryProductsDropDown[selected_product[i]]['id']!=null) {
-    product_id =
-    inventoryProductsDropDown[selected_product[i]]['id'];
-    }
-    entries.add(productsApplied(quantity,0,product_id,0,'',DateTime.now()).toJson());
-    }
-               ProgressDialog pd=ProgressDialog(context,type:ProgressDialogType.Normal,isDismissible: true,);
-                 pd.show();
-              vieterniaryServices.addVetVisits(token, 0, horse_id, vet_id, date, type_id, '', entries).then((response){
-                 pd.hide();
+          Utils.check_connectivity().then((result){
+            if(result){
+              List<Map> entries=[];
+              var quantity,product_id;
+              for(int i=0;i<cards.length;i++){
+                if(quantityTECs[i].text!=null) {
+                  quantity = int.parse(quantityTECs[i].text);
+                }
+                if(limbsDropdown!=null&&limbsDropdown[selected_limb[i]]['id']!=null) {
+                  product_id =
+                  limbsDropdown[selected_limb[i]]['id'];
+                }
+                entries.add(limbs_dataApplied(quantity,0,product_id,0,'',DateTime.now()).toJson());
+              }
+              ProgressDialog pd=ProgressDialog(context,type:ProgressDialogType.Normal,isDismissible: true,);
+              pd.show();
+              vieterniaryServices.addVetVisits(token, 0, horse_id, vet_id, date, opinion_id, '', entries).then((response){
+                pd.hide();
                 if(response!=null){
 
                 }
               });
-             }else{
+            }else{
 
-             }
-           });
+            }
+          });
         },
       ),
       body:  Column(
@@ -101,12 +101,12 @@ class addProductsAppliedState extends State<addProductsApplied>{
       child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text('Applied Products ${cards.length + 1}'),
+            Text('Applied limbs_data ${cards.length + 1}'),
             Padding(
               padding: const EdgeInsets.all(16),
               child: DropdownButtonFormField(
                 hint: Text("Select Product"),
-                items: products!=null?products.map((trainer)=>DropdownMenuItem(
+                items: limbs_data!=null?limbs_data.map((trainer)=>DropdownMenuItem(
                   child: Text(trainer),
                   value: trainer,
                 )).toList():[""].map((name) => DropdownMenuItem(
@@ -120,7 +120,7 @@ class addProductsAppliedState extends State<addProductsApplied>{
                 ),
                 onChanged: (value){
                   setState(() {
-                    selected_product.insert(cards.length-1, products.indexOf(value));
+                    selected_limb.insert(cards.length-1, limbs_data.indexOf(value));
                   });
                 },
               ),
@@ -147,19 +147,19 @@ class addProductsAppliedState extends State<addProductsApplied>{
 
 
 }
-class productsApplied{
-  int quantity,vetVisitsId,inventoryProductId,vetVisitsProductsId;
+class limbs_dataApplied{
+  int quantity,vetVisitsId,inventoryProductId,vetVisitslimbs_dataId;
   String createdBy;
   DateTime createdOn;
 
-  productsApplied(this.quantity, this.vetVisitsId, this.inventoryProductId,
-      this.vetVisitsProductsId, this.createdBy, this.createdOn);
+  limbs_dataApplied(this.quantity, this.vetVisitsId, this.inventoryProductId,
+      this.vetVisitslimbs_dataId, this.createdBy, this.createdOn);
   Map<String, dynamic> toJson() {
     var map = new Map<String, dynamic>();
     map["quantity"] = quantity;
     map["vetVisitsId"]=vetVisitsId;
     map["inventoryProductId"]=inventoryProductId;
-    map["vetVisitsProductsId"]=vetVisitsProductsId;
+    map["vetVisitslimbs_dataId"]=vetVisitslimbs_dataId;
     map["createdBy"]=createdBy;
     map["createdOn"]=createdOn;
     return map;
