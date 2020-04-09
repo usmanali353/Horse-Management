@@ -93,7 +93,7 @@ class _add_breeding_control_state extends State<add_breeding_control>{
                     Padding(
                       padding: const EdgeInsets.all(16),
                       child: Visibility(
-                        visible: horses_loaded,
+                       // visible: horses_loaded,
                         child: FormBuilderDropdown(
                           attribute: "Horse",
                           validators: [FormBuilderValidators.required()],
@@ -188,7 +188,7 @@ class _add_breeding_control_state extends State<add_breeding_control>{
                     Padding(
                       padding: const EdgeInsets.only(top: 16,left: 16,right:16),
                       child: Visibility(
-                        visible: vets_loaded,
+                        //visible: vets_loaded,
                         child: FormBuilderDropdown(
                           attribute: "Vet",
                          validators: [FormBuilderValidators.required()],
@@ -578,7 +578,7 @@ class _add_breeding_control_state extends State<add_breeding_control>{
                     Padding(
                       padding: const EdgeInsets.only(top: 16,left: 16,right: 16),
                       child: Visibility(
-                        visible: currency_loaded,
+                       // visible: currency_loaded,
                         child: FormBuilderDropdown(
                           attribute: "Currency",
                           validators: [FormBuilderValidators.required()],
@@ -608,7 +608,7 @@ class _add_breeding_control_state extends State<add_breeding_control>{
                     Padding(
                       padding: const EdgeInsets.only(top: 16,left: 16,right: 16),
                       child: Visibility(
-                        visible: account_category_loaded,
+                       // visible: account_category_loaded,
                         child: FormBuilderDropdown(
                           attribute: "Account Category",
                           validators: [FormBuilderValidators.required()],
@@ -638,7 +638,7 @@ class _add_breeding_control_state extends State<add_breeding_control>{
                     Padding(
                       padding: const EdgeInsets.only(top: 16,left: 16,right: 16),
                       child: Visibility(
-                        visible: account_category_loaded,
+                      //  visible: account_category_loaded,
                         child: FormBuilderDropdown(
                           attribute: "Cost Center",
                           validators: [FormBuilderValidators.required()],
@@ -668,7 +668,7 @@ class _add_breeding_control_state extends State<add_breeding_control>{
                     Padding(
                       padding: const EdgeInsets.only(top: 16,left: 16,right:16),
                       child: Visibility(
-                        visible: account_category_loaded,
+                       // visible: account_category_loaded,
                         child: FormBuilderDropdown(
                           attribute: "Contact",
                           validators: [FormBuilderValidators.required()],

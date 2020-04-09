@@ -6,9 +6,9 @@ import '../../../Utils.dart';
 
 class SireServices{
 
-  static Future<String> addSire(String token,int sireId,String sireName,String createdBy) async{
+  static Future<String> addSire(String token,int sireId,String sireName, int genderId, String createdBy) async{
     Map<String,String> headers = {'Authorization':'Bearer '+token,'Content-Type':'application/json'};
-    final body = jsonEncode({"sireId":sireId,"name":sireName,"createdBy":createdBy,"createdOn":DateTime.now(),"isActive":true},toEncodable: Utils.myEncode);
+    final body = jsonEncode({"horseId":sireId,"name":sireName,"isHorse": true, "isSire": true, "isDam": true, "genderId":genderId, "createdBy":createdBy,"createdOn":DateTime.now(),"isActive":true},toEncodable: Utils.myEncode);
     var response= await http.post("http://192.236.147.77:8083/api/configuration/SireSave",headers: headers,body: body);
     print(response.body);
     if(response.statusCode==200){

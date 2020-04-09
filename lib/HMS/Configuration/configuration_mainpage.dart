@@ -210,15 +210,15 @@ class _configuration_Category extends State<configuration_Category>{
                         Navigator.push(context,MaterialPageRoute(builder: (context)=>currency_list(token)));
                       },
                     ),
-                    ListTile(
-                      title: Text("Scoring"),
-                      subtitle: Text("Add Scorings"),
-                      leading: Icon(Icons.score,size: 40, color: Colors.blueAccent,),
-                      trailing: Icon(Icons.arrow_right),
-                      onTap: (){
-                       // Navigator.push(context,MaterialPageRoute(builder: (context)=>scoring_list(token)));
-                      },
-                    ),
+//                    ListTile(
+//                      title: Text("Scoring"),
+//                      subtitle: Text("Add Scorings"),
+//                      leading: Icon(Icons.score,size: 40, color: Colors.blueAccent,),
+//                      trailing: Icon(Icons.arrow_right),
+//                      onTap: (){
+//                       // Navigator.push(context,MaterialPageRoute(builder: (context)=>scoring_list(token)));
+//                      },
+//                    ),
                   ],
                 ),
         ),

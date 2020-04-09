@@ -149,7 +149,7 @@ class _marking_list extends State<marking_list>{
                     child: FadeAnimation(2.0,
                        ListTile(
                         title: Text(marking_lists!=null?marking_lists[index]['name']:''),
-                        subtitle: Text(marking_lists!=null?marking_lists[index]['abbreviation']:''),
+                        //subtitle: Text(marking_lists!=null?marking_lists[index]['type'].toString():''),
                         //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
                         onTap: (){
                           // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));

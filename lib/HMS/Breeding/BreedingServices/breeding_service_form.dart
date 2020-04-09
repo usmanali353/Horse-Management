@@ -526,7 +526,7 @@ class _breeding_service_form extends State<breeding_service_form> {
                             .toList(),
                         onChanged: (value) {
                           this.select_currency = value;
-                          this.currency_id = select_currency.indexOf(value);
+                          this.currency_id = currency.indexOf(value);
                           print(value);
                         }
                     ),
@@ -559,8 +559,8 @@ class _breeding_service_form extends State<breeding_service_form> {
                             .toList(),
                         onChanged: (value) {
                           this.select_category = value;
-                          this.category_id = select_category.indexOf(value);
-                          print(category_id.toString());
+                          this.category_id = category.indexOf(value);
+                          print(category.toString());
                         }
                     ),
                   ),
@@ -592,7 +592,7 @@ class _breeding_service_form extends State<breeding_service_form> {
                         onChanged: (value) {
                           this.select_cost_center = value;
                           this.cost_center_id =
-                              select_cost_center.indexOf(value);
+                              cost_center.indexOf(value);
                           print(value);
                         }
                     ),
@@ -623,7 +623,7 @@ class _breeding_service_form extends State<breeding_service_form> {
                             .toList(),
                         onChanged: (value) {
                           this.select_contact = value;
-                          this.contact_id = select_contact.indexOf(value);
+                          this.contact_id = contact.indexOf(value);
                           print(value);
                         }
                     ),

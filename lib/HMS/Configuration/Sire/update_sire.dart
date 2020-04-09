@@ -104,7 +104,7 @@ class _update_sire extends State<update_sire>{
                               if(result){
                                 ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                                 pd.show();
-                                SireServices.addSire(token,specificSire['sireId'],sire.text,specificSire['createdBy']).then((respons){
+                                SireServices.addSire(token,specificSire['sireId'],sire.text, specificSire['genderId'],specificSire['createdBy']).then((respons){
                                   pd.dismiss();
                                   setState(() {
                                     var parsedjson  = jsonDecode(respons);

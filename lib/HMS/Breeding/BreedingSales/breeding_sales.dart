@@ -153,7 +153,7 @@ class _breeding_sales extends State<breeding_sales>{
                        ListTile(
                         title: Text(sales_list!=null?sales_list[index]['horseName']['name']:''),
                          //subtitle: Text(sales_list!=null?sales_list[index]['status'].toString():''),
-                        subtitle: Text(sales_list!=null?sales_list[index]['assignedVetName']['contactName']['name']:''),
+                       // subtitle: Text(sales_list!=null?sales_list[index]['customerName']['contactName']['name']:''),
                         trailing: Text(sales_list!=null?sales_list[index]['date']:''),
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context) => breeding_sales_details_page(sales_list[index], get_status_by_id(sales_list[index]['status']))));
