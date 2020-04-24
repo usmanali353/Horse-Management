@@ -283,7 +283,7 @@ static Future<String> add_semen_collection(String token, int id,DateTime selecte
   }else
     return null;
 }
-static Future<String> add_breeding_control(String token, int id, int horseId,DateTime date,DateTime hour,int check_method_id,int serviceid,bool empty,bool pregnancy,bool abortion,bool reabsorption,bool follicle,bool ovule,bool twins,bool volvoplasty,double amount, int currencyid, String Createdby,String comments,String lo,String ro,String uterus,String vagina,String cervix,int accountcategory,int costcenterid,int contactid,int vetId) async{
+static Future<String> add_breeding_control(String token, int id, int horseId,DateTime date,DateTime hour,int check_method_id,int serviceid,bool empty,bool pregnancy,bool abortion,bool reabsorption,bool follicle,bool ovule,bool twins,bool volvoplasty,double amount, int currencyid, String Createdby,String comments,String lo,String ro,String uterus,String vagina,String cervix,int accountcategory,int costcenterid,int contactid,int vetId, bool nextcheck) async{
   Map<String,String> headers = {
     HttpHeaders.contentTypeHeader: 'application/json',
     HttpHeaders.authorizationHeader : 'Bearer '+token
@@ -293,13 +293,6 @@ static Future<String> add_breeding_control(String token, int id, int horseId,Dat
     "date": date,
     "hour": "01:00:00",
     "check_Method": check_method_id,
-    "vetId": vetId,
-    "lo": lo,
-    "ro": ro,
-    "uterus": uterus,
-    "vagina": vagina,
-    "cervix": cervix,
-    "comments": comments,
     "relatedServiceId": serviceid,
     "empty": empty,
     "pregnancy": pregnancy,
@@ -309,10 +302,18 @@ static Future<String> add_breeding_control(String token, int id, int horseId,Dat
     "ovule": ovule,
     "twins": twins,
     "volvoplasty": volvoplasty,
-    "nextCheckReason": 0,
     "nextCheckDate": "2020-03-06T10:09:59.17",
-    "nextCheckComments": null,
+    "NextCheck":nextcheck,
     "amount": amount,
+    "vetId": vetId,
+    "lo": lo,
+    "ro": ro,
+    "uterus": uterus,
+    "vagina": vagina,
+    "cervix": cervix,
+    "comments": comments,
+    "nextCheckReason": 0,
+    "nextCheckComments": null,
     "currency": currencyid,
     "categoryId": accountcategory,
     "costCenterId": costcenterid,

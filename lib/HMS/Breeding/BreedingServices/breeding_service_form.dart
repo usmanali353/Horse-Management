@@ -350,6 +350,12 @@ class _breeding_service_form extends State<breeding_service_form> {
                             .toList(),
                         onChanged: (value) {
                           setState(() {
+//                            if (value == "Normal") {
+//                              setState(() {
+//                                semen_type_loaded = false;
+//                                embryo_age_loaded = false;
+//                              });
+//                            }
                             if (value == "Artificial Insemination") {
                               setState(() {
                                 semen_type_loaded = true;
