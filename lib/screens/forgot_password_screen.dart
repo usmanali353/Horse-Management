@@ -133,11 +133,14 @@ class scrollview extends StatelessWidget {
                                  pd.show();
                                  network_operations.Forgot_Password(email.text).then((response){
                                    pd.dismiss();
+
                                    if(response!=null){
+                                     var parsedJson=json.decode(response);
                                      Scaffold.of(context).showSnackBar(SnackBar(
                                        backgroundColor: Colors.green,
                                        content: Text("Email is Verified"),
                                      ));
+                                     Navigator.push(context, MaterialPageRoute(builder: (context)=>reset_password_screen(email.text,parsedJson['result']['token'])));
                                    }else{
                                      Scaffold.of(context).showSnackBar(SnackBar(
                                        backgroundColor: Colors.red,
