@@ -14,6 +14,7 @@ import 'package:horse_management/HMS/OperationNotes/operation_notes.dart';
 import 'package:horse_management/HMS/Paddock/paddocks.dart';
 import 'package:horse_management/HMS/Tanks/tanks.dart';
 import 'package:horse_management/HMS/Training/trainingMainPage.dart';
+import 'package:horse_management/HMS/Training/training_options.dart';
 import 'package:horse_management/HMS/Veterinary/vet_mainPage.dart';
 import 'package:horse_management/HMS/my_horses/horses_list.dart';
 import 'package:horse_management/Model/restaurants.dart';
@@ -137,7 +138,7 @@ class _HomeState extends State<Home>{ //with AutomaticKeepAliveClientMixin<Home>
                           Navigator.push(context, MaterialPageRoute(builder: (context)=> breeding_Category(prefs.getString('token')) ));
                         }else if(index == 3){
                           prefs= await SharedPreferences.getInstance();
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=> trainingMainPage(prefs.getString('token')) ));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> training_options(prefs.getString('token')) ));
                         }else if(index == 4){
                           prefs= await SharedPreferences.getInstance();
                            Navigator.push(context, MaterialPageRoute(builder: (context)=> vet_category() ));
