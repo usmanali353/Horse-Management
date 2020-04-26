@@ -39,20 +39,14 @@ class dietDetailsState extends State<dietDetails>{
           if(response!=null){
             setState(() {
               dietDropDowns=json.decode(response);
-             if(dietDropDowns['dietDetail']['dietTimeDropDown']!=null&&dietDropDowns['dietDetail']['dietTimeDropDown']>0) {
-               for (int i = 0; i <
-                   dietDropDowns['dietDetail']['dietTimeDropDown']
-                       .length; i++) {
-                 time.add(
-                     dietDropDowns['dietDetail']['dietTimeDropDown'][i]['name']);
+             if(dietDropDowns['dietDetail']['dietTimeDropDown']!=null&&dietDropDowns['dietDetail']['dietTimeDropDown'].length>0) {
+               for (int i = 0; i < dietDropDowns['dietDetail']['dietTimeDropDown'].length; i++) {
+                 time.add(dietDropDowns['dietDetail']['dietTimeDropDown'][i]['name']);
                }
              }
              if(dietDropDowns['dietDetail']['productTypesDropDown']!=null&&dietDropDowns['dietDetail']['productTypesDropDown'].length>0) {
-               for (int i = 0; i <
-                   dietDropDowns['dietDetail']['productTypesDropDown']
-                       .length; i++) {
-                 products.add(
-                     dietDropDowns['dietDetail']['productTypesDropDown'][i]['name']);
+               for (int i = 0; i < dietDropDowns['dietDetail']['productTypesDropDown'].length; i++) {
+                 products.add(dietDropDowns['dietDetail']['productTypesDropDown'][i]['name']);
                }
              }
               cards.add(createCard());
