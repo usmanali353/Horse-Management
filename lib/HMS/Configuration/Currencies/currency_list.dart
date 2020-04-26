@@ -54,14 +54,30 @@ class _currency_list extends State<currency_list>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_currency(token)));
-        },
-        child: Icon(Icons.add),
-      ),
+//      floatingActionButton: FloatingActionButton(
+//        onPressed: (){
+//          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_currency(token)));
+//        },
+//        child: Icon(Icons.add),
+//      ),
       appBar: AppBar(
         title: Text("Currencies"),
+        actions: <Widget>[
+          Center(child: Text("Add New",textScaleFactor: 1.3,)),
+          IconButton(
+            icon: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => add_currency(token)),);
+            },
+          )
+//          IconButton(
+//            icon: Icon(Icons.picture_as_pdf),
+//           // onPressed: () => _generatePdfAndView(context),
+//          ),
+        ],
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
@@ -82,17 +98,17 @@ class _currency_list extends State<currency_list>{
                   setState(() {
                     isVisible=false;
                   });
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                    backgroundColor: Colors.red,
-                    content: Text("List Not Available"),
-                  ));
+//                  Scaffold.of(context).showSnackBar(SnackBar(
+//                    backgroundColor: Colors.red,
+//                    content: Text("List Not Available"),
+//                  ));
                 }
               });
             }else{
-              Scaffold.of(context).showSnackBar(SnackBar(
-                backgroundColor: Colors.red,
-                content: Text("Network Not Available"),
-              ));
+//              Scaffold.of(context).showSnackBar(SnackBar(
+//                backgroundColor: Colors.red,
+//                content: Text("Network Not Available"),
+//              ));
             }
           });
         },
@@ -144,8 +160,8 @@ class _currency_list extends State<currency_list>{
                     ],
                     child: FadeAnimation(2.0,
                       ListTile(
-                        title: Text(currency_lists!=null?currency_lists[index]['id'].toString():''),
-                        // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
+                       title: Text(currency_lists!=null?currency_lists[index]['name'].toString():''),
+                         subtitle: Text(currency_lists!=null?currency_lists[index]['symbol'].toString():''),
                         //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
 //                      onTap: (){
 //                       // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));

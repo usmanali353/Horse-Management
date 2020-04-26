@@ -100,7 +100,7 @@ class addVetVisitsState extends State<addVetVisits>{
                 Padding(
                   padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                   child: Visibility(
-                    visible: horses_loaded,
+                    //visible: horses_loaded,
                     child: FormBuilderDropdown(
                       attribute: "Horse",
                       validators: [FormBuilderValidators.required()],
@@ -149,7 +149,7 @@ class addVetVisitsState extends State<addVetVisits>{
                     onChanged: (value){
                       setState(() {
                         this.selected_type=value;
-                        this.selected_type_id=vet.indexOf(value);
+                        this.selected_type_id=type.indexOf(value);
                       });
                     },
                   ),
@@ -157,7 +157,7 @@ class addVetVisitsState extends State<addVetVisits>{
                 Padding(
                   padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                   child: Visibility(
-                    visible: vet_loaded,
+                  //  visible: vet_loaded,
                     child: FormBuilderDropdown(
                       attribute: "Vet",
                       validators: [FormBuilderValidators.required()],

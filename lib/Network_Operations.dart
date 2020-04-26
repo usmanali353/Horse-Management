@@ -283,7 +283,7 @@ static Future<String> add_semen_collection(String token, int id,DateTime selecte
   }else
     return null;
 }
-static Future<String> add_breeding_control(String token, int id, int horseId,DateTime date,DateTime hour,int check_method_id,int serviceid,bool empty,bool pregnancy,bool abortion,bool reabsorption,bool follicle,bool ovule,bool twins,bool volvoplasty,double amount, int currencyid, String Createdby,String comments,String lo,String ro,String uterus,String vagina,String cervix,int accountcategory,int costcenterid,int contactid,int vetId) async{
+static Future<String> add_breeding_control(String token, int id, int horseId,DateTime date,DateTime hour,int check_method_id,int serviceid,bool empty,bool pregnancy,bool abortion,bool reabsorption,bool follicle,bool ovule,bool twins,bool volvoplasty,double amount, int currencyid, String Createdby,String comments,String lo,String ro,String uterus,String vagina,String cervix,int accountcategory,int costcenterid,int contactid,int vetId, bool nextcheck) async{
   Map<String,String> headers = {
     HttpHeaders.contentTypeHeader: 'application/json',
     HttpHeaders.authorizationHeader : 'Bearer '+token
@@ -293,13 +293,6 @@ static Future<String> add_breeding_control(String token, int id, int horseId,Dat
     "date": date,
     "hour": "01:00:00",
     "check_Method": check_method_id,
-    "vetId": vetId,
-    "lo": lo,
-    "ro": ro,
-    "uterus": uterus,
-    "vagina": vagina,
-    "cervix": cervix,
-    "comments": comments,
     "relatedServiceId": serviceid,
     "empty": empty,
     "pregnancy": pregnancy,
@@ -309,10 +302,18 @@ static Future<String> add_breeding_control(String token, int id, int horseId,Dat
     "ovule": ovule,
     "twins": twins,
     "volvoplasty": volvoplasty,
-    "nextCheckReason": 0,
     "nextCheckDate": "2020-03-06T10:09:59.17",
-    "nextCheckComments": null,
+    "NextCheck":nextcheck,
     "amount": amount,
+    "vetId": vetId,
+    "lo": lo,
+    "ro": ro,
+    "uterus": uterus,
+    "vagina": vagina,
+    "cervix": cervix,
+    "comments": comments,
+    "nextCheckReason": 0,
+    "nextCheckComments": null,
     "currency": currencyid,
     "categoryId": accountcategory,
     "costCenterId": costcenterid,
@@ -406,5 +407,28 @@ static Future<String> delete_already_trained_horses(String token,int id) async{
     }else
       return null;
   }
+
+static Future<String> save_next_breeding_check(String token, int id, bool nextCheck, DateTime date, int next_check_reason, String comments, String Createdby) async{
+  Map<String,String> headers = {
+    HttpHeaders.contentTypeHeader: 'application/json',
+    HttpHeaders.authorizationHeader : 'Bearer '+token
+  };
+  final body = jsonEncode({
+    "breedingControlId": id,
+    "NextCheck": nextCheck,
+    "nextCheckDate": date,
+    "nextCheckReason": next_check_reason,
+    "nextCheckComments": comments,
+    "createdBy": Createdby,
+    "createdOn": DateTime.now(),
+//    "updatedBy": "ce84c3c9-c8b3-464f-8516-49aae24af9ea",
+//    "updatedOn": "2020-03-06T02:21:50.338155-08:00",
+    "isActive": true,},toEncodable: Utils.myEncode);
+  final response = await http.post('http://192.236.147.77:8083/api/breed/NextBreedingCheckSave', headers: headers, body: body);
+  if(response.statusCode==200){
+    return response.body;
+  }else
+    return null;
+}
 
 }

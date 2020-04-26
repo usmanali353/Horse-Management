@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/breeding_control_details.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/breeding_control_form.dart';
+import 'package:horse_management/HMS/Breeding/BreedingControl/next_breeding_check.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/update_breeding_control.dart';
 import 'package:horse_management/HMS/Breeding/EmbryoStock/update_embryo_stock.dart';
 
@@ -44,14 +45,31 @@ class _breeding_control_list extends State< breeding_control_list>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_breeding_control(token)));
-        },
-        child: Icon(Icons.add),
-      ),
+//      floatingActionButton: FloatingActionButton(
+//        onPressed: (){
+//          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_breeding_control(token)));
+//        },
+//        child: Icon(Icons.add),
+//      ),
       appBar: AppBar(
         title: Text("Breeding Control"),
+        actions: <Widget>[
+          Center(child: Text("Add New",textScaleFactor: 1.3,)),
+          IconButton(
+
+            icon: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => add_breeding_control(token)),);
+            },
+          )
+//          IconButton(
+//            icon: Icon(Icons.picture_as_pdf),
+//           // onPressed: () => _generatePdfAndView(context),
+//          ),
+        ],
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
@@ -103,6 +121,15 @@ class _breeding_control_list extends State< breeding_control_list>{
                           Navigator.push(context,MaterialPageRoute(builder: (context)=>update_breeding_control(token,control_list[index])));
                         },
                       ),
+                      IconSlideAction(
+                        icon: Icons.access_time,
+                        color: Colors.deepPurple,
+                        caption: 'Next Check',
+                        onTap: () async {
+                          print(control_list[index]);
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>next_breeding_check(token, control_list[index]['breedingControlId'])));
+                        },
+                      ),
                     ],
                     actions: <Widget>[
                       IconSlideAction(
@@ -144,10 +171,10 @@ class _breeding_control_list extends State< breeding_control_list>{
                     ],
                     child: FadeAnimation(2.0,
                       ListTile(
-                        trailing:Text(control_list!=null?control_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
+                        trailing:Text(control_list!=null?control_list[index]['date']:''),
                         title: Text(control_list!=null?control_list[index]['horseName']['name']:''),
                         subtitle: Text(control_list!=null?get_check_method_by_id(control_list[index]['check_Method']):''),
-                        leading: Icon(Icons.pets,size: 40,color: Colors.teal,),
+                        //leading: Icon(Icons.pets,size: 40,color: Colors.teal,),
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context) => breeding_control_details_page(control_list[index], get_check_method_by_id(control_list[index]['check_Method']))));
                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>breeding_control_details_page(token,control_list[index])));

@@ -45,14 +45,31 @@ class _embryo_stock_list extends State< embryo_stock_list>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_embryo_stock(token)));
-        },
-        child: Icon(Icons.add),
-      ),
+//      floatingActionButton: FloatingActionButton(
+//        onPressed: (){
+//          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_embryo_stock(token)));
+//        },
+//        child: Icon(Icons.add),
+//      ),
       appBar: AppBar(
         title: Text("Embryo Stock"),
+        actions: <Widget>[
+          Center(child: Text("Add New",textScaleFactor: 1.3,)),
+          IconButton(
+
+            icon: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => add_embryo_stock(token)),);
+            },
+          )
+//          IconButton(
+//            icon: Icon(Icons.picture_as_pdf),
+//           // onPressed: () => _generatePdfAndView(context),
+//          ),
+        ],
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
@@ -136,7 +153,7 @@ class _embryo_stock_list extends State< embryo_stock_list>{
                       ListTile(
                         title: Text(embryo_list!=null?embryo_list[index]['horseName']['name']:''),
                         subtitle: Text(embryo_list!=null?embryo_list[index]['sireName']['name']:''),
-                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                        trailing: Text(embryo_list!=null?embryo_list[index]['collectionDate']:''),
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context) => embryo_stock_details_page(embryo_list[index])));
                         },

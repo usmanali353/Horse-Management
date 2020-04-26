@@ -41,14 +41,31 @@ class _ironbrand_list extends State<ironbrand_list>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_ironbrand(token)));
-        },
-        child: Icon(Icons.add),
-      ),
+//      floatingActionButton: FloatingActionButton(
+//        onPressed: (){
+//          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_ironbrand(token)));
+//        },
+//        child: Icon(Icons.add),
+//      ),
       appBar: AppBar(
         title: Text("Iron Brand"),
+        actions: <Widget>[
+          Center(child: Text("Add New",textScaleFactor: 1.3,)),
+          IconButton(
+
+            icon: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => add_ironbrand(token)),);
+            },
+          )
+//          IconButton(
+//            icon: Icon(Icons.picture_as_pdf),
+//           // onPressed: () => _generatePdfAndView(context),
+//          ),
+        ],
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
@@ -132,6 +149,7 @@ class _ironbrand_list extends State<ironbrand_list>{
                     child: FadeAnimation(2.0,
                        ListTile(
                         title: Text(ironbrand_lists!=null?ironbrand_lists[index]['brandTitle']:''),
+                       leading: ironbrand_lists[index]['brandImage']!=null?Image.memory(base64.decode(ironbrand_lists[index]['brandImage'])):Text(''),
                         // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
                         //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
                         onTap: (){

@@ -68,7 +68,7 @@ class _update_sire extends State<update_sire>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Cost Center"),),
+        appBar: AppBar(title: Text("Update Sire"),),
         body:  Padding(
           padding: EdgeInsets.all(10),
           child: SingleChildScrollView(
@@ -104,7 +104,7 @@ class _update_sire extends State<update_sire>{
                               if(result){
                                 ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                                 pd.show();
-                                SireServices.addSire(token,specificSire['horseId'],sire.text,specificSire['createdBy']).then((respons){
+                                SireServices.addSire(token,specificSire['sireId'],sire.text, specificSire['genderId'],specificSire['createdBy']).then((respons){
                                   pd.dismiss();
                                   setState(() {
                                     var parsedjson  = jsonDecode(respons);

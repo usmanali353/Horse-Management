@@ -47,14 +47,31 @@ class _operational_noteList extends State<operational_noteList>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_new_opertation_note(token)));
-        },
-        child: Icon(Icons.add),
-      ),
+//      floatingActionButton: FloatingActionButton(
+//        onPressed: (){
+//          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_new_opertation_note(token)));
+//        },
+//        child: Icon(Icons.add),
+//      ),
       appBar: AppBar(
         title: Text("Operation Notes"),
+        actions: <Widget>[
+          Center(child: Text("Add New",textScaleFactor: 1.3,)),
+          IconButton(
+
+            icon: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => add_new_opertation_note(token)),);
+            },
+          )
+//          IconButton(
+//            icon: Icon(Icons.picture_as_pdf),
+//           // onPressed: () => _generatePdfAndView(context),
+//          ),
+        ],
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
@@ -137,8 +154,8 @@ class _operational_noteList extends State<operational_noteList>{
                     child: FadeAnimation(2.0,
                        ListTile(
                         title: Text(notes_list!=null?notes_list[index]['generalCategoryName']['name']:''),
-                        // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
-                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                         subtitle: Text(notes_list!=null?notes_list[index]['details']:''),
+                        trailing: Text(notes_list!=null?notes_list[index]['date'].toString():''),
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context) => operation_notes_details_page(notes_list[index])));
                         },

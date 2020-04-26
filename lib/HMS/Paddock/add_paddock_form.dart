@@ -117,7 +117,7 @@ class _add_paddock extends State<add_paddock>{
                             child: FormBuilderDropdown(
                               attribute: "Location",
                               validators: [FormBuilderValidators.required()],
-                              hint: Text("Horse"),
+                              hint: Text("Location"),
                               items:location!=null?location.map((horse)=>DropdownMenuItem(
                                 child: Text(horse),
                                 value: horse,

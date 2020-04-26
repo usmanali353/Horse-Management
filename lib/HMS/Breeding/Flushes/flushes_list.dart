@@ -6,11 +6,7 @@ import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 import 'embryo_retrieval_form.dart';
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:horse_management/HMS/Training/training_detail_page.dart';
-import 'package:horse_management/HMS/Training/update_training.dart';
-import 'package:horse_management/Network_Operations.dart';
 import 'flushes_update.dart';
 import 'utils/flushes_services_json.dart';
 
@@ -47,14 +43,31 @@ class _flushes_list extends State<flushes_list>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_flushes(token)));
-        },
-        child: Icon(Icons.add),
-      ),
+//      floatingActionButton: FloatingActionButton(
+//        onPressed: (){
+//          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_flushes(token)));
+//        },
+//        child: Icon(Icons.add),
+//      ),
       appBar: AppBar(
         title: Text("Flushes"),
+        actions: <Widget>[
+          Center(child: Text("Add New",textScaleFactor: 1.3,)),
+          IconButton(
+
+            icon: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => add_flushes(token)),);
+            },
+          )
+//          IconButton(
+//            icon: Icon(Icons.picture_as_pdf),
+//           // onPressed: () => _generatePdfAndView(context),
+//          ),
+        ],
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
@@ -144,8 +157,8 @@ class _flushes_list extends State<flushes_list>{
                     child: FadeAnimation(2.0,
                        ListTile(
                         title: Text(flushes_list!=null?flushes_list[index]['horseName']['name']:''),
-                      // subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
-                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                        subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
+                        trailing: Text(flushes_list!=null?flushes_list[index]['date']:''),
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context) => flushes_details_page(flushes_list[index])));
 

@@ -140,7 +140,7 @@ class _add_dam extends State<add_dam>{
                               attribute: "Color",
                               validators: [FormBuilderValidators.required()],
                               hint: Text("Color"),
-                              items:breed!=null?breed.map((horse)=>DropdownMenuItem(
+                              items:color!=null?color.map((horse)=>DropdownMenuItem(
                                 child: Text(horse),
                                 value: horse,
                               )).toList():[""].map((name) => DropdownMenuItem(
@@ -235,7 +235,7 @@ class _add_dam extends State<add_dam>{
                                         var parsedjson  = jsonDecode(respons);
                                         if(parsedjson != null){
                                           if(parsedjson['isSuccess'] == true){
-                                            print("Successfully data updated");
+                                            print("Successfully data saved");
                                           }else
                                             print("not saved");
                                         }else

@@ -531,7 +531,7 @@ class _add_vaccines extends State<add_vaccines> {
                           var parsedjson  = jsonDecode(respons);
                           if(parsedjson != null){
                             if(parsedjson['isSuccess'] == true){
-                              print("Successfully data updated");
+                              print("Successfully data added");
                             }else
                               print("not saved");
                           }else

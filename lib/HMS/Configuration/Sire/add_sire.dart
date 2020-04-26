@@ -97,9 +97,10 @@ class _add_sire extends State<add_sire>{
                           if (_fbKey.currentState.validate()) {
                             Utils.check_connectivity().then((result){
                               if(result){
+                                //addSire(token,0,sire.text,null)
                                 ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                                 pd.show();
-                                SireServices.addSire(token,0,sire.text,null).then((respons){
+                                SireServices.addSire(token, 0, sire.text, 0, null)  .then((respons){
                                   pd.dismiss();
                                   setState(() {
                                     var parsedjson  = jsonDecode(respons);

@@ -44,14 +44,31 @@ class _semen_stocks extends State<semen_stocks>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>semen_stock_form(token)));
-        },
-        child: Icon(Icons.add),
-      ),
+//      floatingActionButton: FloatingActionButton(
+//        onPressed: (){
+//          Navigator.push(context, MaterialPageRoute(builder: (context)=>semen_stock_form(token)));
+//        },
+//        child: Icon(Icons.add),
+//      ),
       appBar: AppBar(
         title: Text("Semen Stock"),
+        actions: <Widget>[
+          Center(child: Text("Add New",textScaleFactor: 1.3,)),
+          IconButton(
+
+            icon: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => semen_stock_form(token)),);
+            },
+          )
+//          IconButton(
+//            icon: Icon(Icons.picture_as_pdf),
+//           // onPressed: () => _generatePdfAndView(context),
+//          ),
+        ],
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
@@ -136,7 +153,7 @@ class _semen_stocks extends State<semen_stocks>{
                        ListTile(
                         title: Text(semen_stock_list!=null?semen_stock_list[index]['horseName']['name']:''),
                        subtitle: Text(semen_stock_list!=null?semen_stock_list[index]['tankName']['name']:''),
-                        //trailing: Text(semen_stock_list!=null?semen_stock_list[index]['enterDate']:''),
+                        trailing: Text(semen_stock_list!=null?semen_stock_list[index]['enterDate']:''),
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context) => semen_stock_details_page(semen_stock_list[index])));
                         },

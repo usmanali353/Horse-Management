@@ -25,6 +25,11 @@ List categories = [
     "color1": Color.fromARGB(100, 0, 0, 0),
     "color2": Color.fromARGB(100, 0, 0, 0),
     "img": "assets/contact.jpg"
+  },{
+    "name": "HorseGroup",
+    "color1": Color.fromARGB(100, 0, 0, 0),
+    "color2": Color.fromARGB(100, 0, 0, 0),
+    "img": "assets/horsegroup2.jpg"
   },
   {
     "name": "Operation Notes",

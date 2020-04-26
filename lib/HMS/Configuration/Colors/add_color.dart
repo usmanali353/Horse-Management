@@ -64,7 +64,7 @@ class _add_color extends State<add_color>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Cost Center"),),
+        appBar: AppBar(title: Text("Add Color"),),
         body:  Padding(
           padding: EdgeInsets.all(10),
           child: SingleChildScrollView(

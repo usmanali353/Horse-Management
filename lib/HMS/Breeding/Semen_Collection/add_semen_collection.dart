@@ -385,10 +385,10 @@ class add_semen_stock_button extends StatelessWidget {
               network_operations.add_semen_collection(token, 0, selected_date, selected_horse, semen_collection_list['horseDropDown'][selected_horse_id]['id'], '', toFreeze, semen_collection_list['inChargeDropDown'][selected_incharge_id]['id'], comments.text,int.parse(extracted_volume.text) ,int.parse(concentration.text) , int.parse(general.text),int.parse(progressive.text), selected_incharge,selected_incharge).then((respons){
                 pd.dismiss();
                 if(respons!=null){
-//                  Scaffold.of(context).showSnackBar(SnackBar(
-//                    content: Text("Saved "),
-//                    backgroundColor: Colors.green,
-//                  ));
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text("Saved "),
+                    backgroundColor: Colors.green,
+                  ));
                 }else{
                   Scaffold.of(context).showSnackBar(SnackBar(
                     content: Text("Not Saved "),

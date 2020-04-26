@@ -46,14 +46,31 @@ class _paddocks_list extends State<paddocks_list>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_paddock(token)));
-        },
-        child: Icon(Icons.add),
-      ),
+//      floatingActionButton: FloatingActionButton(
+//        onPressed: (){
+//          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_paddock(token)));
+//        },
+//        child: Icon(Icons.add),
+//      ),
       appBar: AppBar(
         title: Text("Paddocks"),
+        actions: <Widget>[
+          Center(child: Text("Add New",textScaleFactor: 1.3,)),
+          IconButton(
+
+            icon: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => add_paddock(token)),);
+            },
+          )
+//          IconButton(
+//            icon: Icon(Icons.picture_as_pdf),
+//           // onPressed: () => _generatePdfAndView(context),
+//          ),
+        ],
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
@@ -155,8 +172,8 @@ class _paddocks_list extends State<paddocks_list>{
                     child: FadeAnimation(2.0,
                        ListTile(
                         title: Text(paddock_lists!=null?paddock_lists[index]['name']:''),
-                        // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
-                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                        subtitle: Text(paddock_lists!=null?"Area: "+paddock_lists[index]['area'].toString():''),
+                        trailing: Text(paddock_lists[index]['hasShade'] == true ?"Has Shade: "+"Yes":"No"),
                         onTap: (){
                           // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
                         },
