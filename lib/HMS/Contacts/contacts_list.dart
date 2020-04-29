@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:horse_management/HMS/Contacts/ContactDashboard.dart';
 import 'package:horse_management/HMS/Contacts/add_contacts.dart';
 import 'package:horse_management/HMS/Contacts/contact_detail.dart';
 import 'package:horse_management/HMS/Contacts/update_contacts.dart';
 import 'package:horse_management/Network_Operations.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../Utils.dart';
 class contacts_list extends StatefulWidget{
   String token;
@@ -125,8 +127,8 @@ class _contacts_list_state extends State<contacts_list>{
                    // trailing: Text(contacts_list!=null?contacts_list[index]['startDate']:''),
                   //  subtitle: Text(already_trained_list!=null?get_training_type_by_id(already_trained_list[index]['trainingType']):''),
                     leading: Icon(Icons.phone,size: 40,color: Colors.teal,),
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>contacts_details_page(contacts_list[index])));
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ContactDashboard(token,contacts_list[index])));
                     },
                   ),
 

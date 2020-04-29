@@ -240,7 +240,6 @@ static Future<String> change_contact_visibility(String token,int id) async{
 static Future<String> get_all_contacts(String token) async{
   Map<String,String> headers = {'Authorization':'Bearer '+token};
   final response = await http.get('http://192.236.147.77:8083/api/Contacts/GetAllContacts', headers: headers,);
-  print(response.body);
   if(response.statusCode==200){
     return response.body;
   }else
@@ -250,6 +249,15 @@ static Future<String> add_contact(String token,int contactId,String name,String 
   Map<String,String> headers = {'Authorization':'Bearer '+token,'Content-Type':'application/json'};
   final body = jsonEncode({"contactId":contactId,"Name":name,"website":website,"facebook":facebook,"instagram":instagram,"twiter":twitter,"email":email,"address":address,"mobileNo":mobile,"phoneNo":phone,"cnic":cnic,"picture":picture,"contactTypess":contact_type},toEncodable: Utils.myEncode);
   var response= await http.post("http://192.236.147.77:8083/api/Contacts/ContactSave",headers: headers,body: body);
+  if(response.statusCode==200){
+    return response.body;
+  }else
+    return null;
+}
+static Future<String> GetContactDashBoard(String token,int id) async{
+  Map<String,String> headers = {'Authorization':'Bearer '+token};
+  var response =await http.get('http://192.236.147.77:8083/api/Contacts/GetContactsDashboard/'+id.toString(),headers: headers);
+  print(response.body);
   if(response.statusCode==200){
     return response.body;
   }else
