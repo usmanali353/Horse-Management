@@ -91,10 +91,6 @@ class _breeding_control_list extends State< breeding_control_list>{
                   setState(() {
                     isVisible=false;
                   });
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                    backgroundColor: Colors.red,
-                    content: Text("List Not Available"),
-                  ));
                 }
               });
             }else{

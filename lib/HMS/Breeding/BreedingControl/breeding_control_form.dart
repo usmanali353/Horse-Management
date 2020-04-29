@@ -12,7 +12,6 @@ class add_breeding_control extends StatefulWidget{
   add_breeding_control(this.token);
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _add_breeding_control_state(token);
   }
 

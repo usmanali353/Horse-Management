@@ -121,7 +121,7 @@ class _contacts_list_state extends State<contacts_list>{
                     ),
                   ],
                   child: ListTile(
-                    title: Text(contacts_list!=null?contacts_list[index]['contactName']['name']:''),
+                    title: Text(contacts_list!=null?contacts_list[index]['name']:''),
                    // trailing: Text(contacts_list!=null?contacts_list[index]['startDate']:''),
                   //  subtitle: Text(already_trained_list!=null?get_training_type_by_id(already_trained_list[index]['trainingType']):''),
                     leading: Icon(Icons.phone,size: 40,color: Colors.teal,),

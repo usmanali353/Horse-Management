@@ -33,7 +33,12 @@ class _contacts_detail_page_state extends State<contacts_details_page>{
               Divider(),
               ListTile(
                 title: Text("Name"),
-                trailing: Text(contacts_data['contactName']['name']!=null?contacts_data['contactName']['name']:''),
+                trailing: Text(contacts_data['name']!=null?contacts_data['name']:''),
+              ),
+              Divider(),
+              ListTile(
+                title: Text("Roles"),
+                subtitle: Text(contacts_data['allRoles']!=null?contacts_data['allRoles'].toString().replaceAll("[", '').replaceAll("]", ''):''),
               ),
               Divider(),
               ListTile(
