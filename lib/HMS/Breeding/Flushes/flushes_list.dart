@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:horse_management/HMS/Breeding/Flushes/flushes_details.dart';
-import 'package:horse_management/HMS/HypotheticPedegree/hypothetic_pedegree_page.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';

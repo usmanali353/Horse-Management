@@ -320,7 +320,7 @@ static Future<String> add_breeding_control(String token, int id, int horseId,Dat
     "vagina": vagina,
     "cervix": cervix,
     "comments": comments,
-    "nextCheckReason": 0,
+    "nextCheckReason": 1,
     "nextCheckComments": null,
     "currency": currencyid,
     "categoryId": accountcategory,
@@ -332,7 +332,7 @@ static Future<String> add_breeding_control(String token, int id, int horseId,Dat
     "updatedBy": "ce84c3c9-c8b3-464f-8516-49aae24af9ea",
     "updatedOn": "2020-03-06T02:21:50.338155-08:00",
     "isActive": true,},toEncodable: Utils.myEncode);
-  final response = await http.post('http://192.236.147.77:8083/api/horse/NotesSave', headers: headers, body: body);
+  final response = await http.post('http://192.236.147.77:8083/api/breed/BreedingControlSave', headers: headers, body: body);
   print(response.body);
   if(response.statusCode==200){
     return response.body;

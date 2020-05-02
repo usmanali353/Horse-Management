@@ -6,10 +6,6 @@ import 'package:horse_management/Utils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'horse_detail_page.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
-
-
-
 class horse_list extends StatefulWidget{
   String token;
 

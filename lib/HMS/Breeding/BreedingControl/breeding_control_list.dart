@@ -6,9 +6,6 @@ import 'package:horse_management/HMS/Breeding/BreedingControl/breeding_control_d
 import 'package:horse_management/HMS/Breeding/BreedingControl/breeding_control_form.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/next_breeding_check.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/update_breeding_control.dart';
-import 'package:horse_management/HMS/Breeding/EmbryoStock/update_embryo_stock.dart';
-import 'package:horse_management/HMS/HypotheticPedegree/hypothetic_pedegree_page.dart';
-
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
@@ -173,8 +170,7 @@ class _breeding_control_list extends State< breeding_control_list>{
                         subtitle: Text(control_list!=null?get_check_method_by_id(control_list[index]['check_Method']):''),
                         //leading: Icon(Icons.pets,size: 40,color: Colors.teal,),
                         onTap: (){
-                          //Navigator.push(context, MaterialPageRoute(builder: (context) => breeding_control_details_page(control_list[index], get_check_method_by_id(control_list[index]['check_Method']))));
-                         Navigator.push(context, MaterialPageRoute(builder: (context)=>hypothetic_pedegree_page(control_list[index])));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => breeding_control_details_page(control_list[index], get_check_method_by_id(control_list[index]['check_Method']))));
                         },
                       ),
                     )

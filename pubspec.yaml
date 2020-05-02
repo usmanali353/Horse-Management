@@ -47,6 +47,8 @@ dependencies:
   day_night_switch: ^0.0.2+1
   charts_flutter:
   pie_chart:
+  flutter_treeview: 0.4.0+1
+
 
 dev_dependencies:
   hive_generator: ^0.5.2

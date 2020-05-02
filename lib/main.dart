@@ -8,7 +8,6 @@ import 'package:horse_management/screens/welcome_screen.dart';
 import 'package:horse_management/Model/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'HMS/Contacts/ContactDashboard.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
