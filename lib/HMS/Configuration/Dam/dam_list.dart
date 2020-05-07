@@ -31,7 +31,7 @@ class _dam_list extends State<dam_list>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var dam_lists;
+  var dam_lists, load_list;
 
   @override
   void initState() {
@@ -81,7 +81,8 @@ class _dam_list extends State<dam_list>{
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
-                    dam_lists=json.decode(response);
+                    load_list=json.decode(response);
+                    dam_lists = load_list['response'];
                     isVisible=true;
                   });
 

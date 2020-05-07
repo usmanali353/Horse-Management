@@ -30,7 +30,7 @@ class _flushes_list extends State<flushes_list>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var flushes_list;
+  var flushes_list, load_list;
 
   @override
   void initState() {
@@ -82,7 +82,8 @@ class _flushes_list extends State<flushes_list>{
                   if(response!=null){
                     setState(() {
                       isVisible=true;
-                      flushes_list=json.decode(response);
+                      load_list=json.decode(response);
+                      flushes_list = load_list['response'];
                       Hive.box("FlushesList").put("offline_flushes_list",flushes_list);
                     });
 

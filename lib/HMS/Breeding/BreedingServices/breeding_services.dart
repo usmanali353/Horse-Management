@@ -31,7 +31,7 @@ class _breeding_services_State extends State<breeding_services>{
   bool isVisible=false;
   var temp=['','',];
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var breeding_services_list;
+  var breeding_services_list, load_list;
 
   @override
   void initState() {
@@ -81,7 +81,8 @@ class _breeding_services_State extends State<breeding_services>{
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
-                    breeding_services_list=json.decode(response);
+                    load_list=json.decode(response);
+                    breeding_services_list = load_list['response'];
                     isVisible=true;
                   });
 

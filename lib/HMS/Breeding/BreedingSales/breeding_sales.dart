@@ -31,7 +31,7 @@ class _breeding_sales extends State<breeding_sales>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var sales_list;
+  var sales_list, load_list;
 
 
   @override
@@ -82,7 +82,8 @@ class _breeding_sales extends State<breeding_sales>{
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
-                    sales_list=json.decode(response);
+                    load_list=json.decode(response);
+                    sales_list = load_list['response'];
                     isVisible=true;
                   });
 

@@ -24,7 +24,7 @@ class contacts_list extends StatefulWidget{
 class _contacts_list_state extends State<contacts_list>{
   String token;
   var horse_list;
-  var contacts_list=[];
+  var contacts_list=[], load_list;
   var temp=['',''];
   bool isvisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
@@ -52,7 +52,8 @@ class _contacts_list_state extends State<contacts_list>{
 
                   setState(() {
                     isvisible=true;
-                    contacts_list=json.decode(response);
+                    load_list=json.decode(response);
+                    contacts_list = load_list['response'];
                   });
 
                 }else{

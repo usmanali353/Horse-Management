@@ -28,7 +28,7 @@ class _location_list extends State<location_list>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var location_lists;
+  var location_lists, load_list;
 
   @override
   void initState() {
@@ -77,7 +77,8 @@ class _location_list extends State<location_list>{
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
-                    location_lists=json.decode(response);
+                    load_list=json.decode(response);
+                    location_lists = load_list['response'];
                     isVisible=true;
                   });
 

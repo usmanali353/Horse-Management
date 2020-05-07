@@ -30,7 +30,7 @@ class _performancetype_list extends State<performancetype_list>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var type_lists;
+  var type_lists, load_list;
 
   @override
   void initState() {
@@ -79,7 +79,8 @@ class _performancetype_list extends State<performancetype_list>{
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
-                    type_lists=json.decode(response);
+                    load_list=json.decode(response);
+                    type_lists = load_list['response'];
                     isVisible=true;
                   });
 

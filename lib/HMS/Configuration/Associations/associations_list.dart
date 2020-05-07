@@ -28,7 +28,7 @@ class _associations_list extends State<associations_list>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var name_lists;
+  var name_lists, load_list;
 
   @override
   void initState() {
@@ -77,7 +77,8 @@ class _associations_list extends State<associations_list>{
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
-                    name_lists=json.decode(response);
+                    load_list=json.decode(response);
+                    name_lists = load_list['response'];
                     isVisible=true;
                   });
 

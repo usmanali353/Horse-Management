@@ -28,7 +28,7 @@ class _vaccines_list extends State<vaccines_list>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var vaccine_lists;
+  var vaccine_lists,load_list;
 
   @override
   void initState() {
@@ -77,7 +77,8 @@ class _vaccines_list extends State<vaccines_list>{
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
-                    vaccine_lists=json.decode(response);
+                    load_list=json.decode(response);
+                    vaccine_lists = load_list['response'];
                     isVisible=true;
                   });
 

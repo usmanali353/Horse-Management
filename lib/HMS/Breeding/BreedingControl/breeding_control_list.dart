@@ -30,7 +30,7 @@ class _breeding_control_list extends State< breeding_control_list>{
   bool isVisible=false;
   var temp=['','',''];
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var control_list;
+  var control_list, load_list;
 
   @override
   void initState() {
@@ -80,7 +80,8 @@ class _breeding_control_list extends State< breeding_control_list>{
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
-                    control_list=json.decode(response);
+                    load_list=json.decode(response);
+                    control_list = load_list['response'];
                     isVisible=true;
                   });
 

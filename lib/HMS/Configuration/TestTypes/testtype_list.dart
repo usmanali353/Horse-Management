@@ -29,7 +29,7 @@ class _testtype_list extends State<testtype_list>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var types_lists;
+  var types_lists, load_list;
 
   @override
   void initState() {
@@ -78,7 +78,8 @@ class _testtype_list extends State<testtype_list>{
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
-                    types_lists=json.decode(response);
+                    load_list=json.decode(response);
+                    types_lists = load_list['response'];
                     isVisible=true;
                   });
 

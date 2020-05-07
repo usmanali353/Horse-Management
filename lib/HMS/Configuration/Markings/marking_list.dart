@@ -28,7 +28,7 @@ class _marking_list extends State<marking_list>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var marking_lists;
+  var marking_lists, load_list;
 
   @override
   void initState() {
@@ -78,7 +78,8 @@ class _marking_list extends State<marking_list>{
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
-                    marking_lists=json.decode(response);
+                    load_list =json.decode(response);
+                    marking_lists = load_list['response'];
                     isVisible=true;
                   });
 

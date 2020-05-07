@@ -25,7 +25,7 @@ class vetVisitList extends StatefulWidget{
 }
 class vetVisitListState extends State<vetVisitList>{
   String token;
-  var vetvisits_list=[];
+  var vetvisits_list=[], load_list;
   var temp=['',''];
   bool isvisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
@@ -73,7 +73,8 @@ class vetVisitListState extends State<vetVisitList>{
                 if(response!=null){
                   setState(() {
                     isvisible=true;
-                    vetvisits_list=json.decode(response);
+                    load_list=json.decode(response);
+                    vetvisits_list = load_list['response'];
                   });
 
                 }else{

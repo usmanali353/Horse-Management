@@ -27,7 +27,7 @@ class _colors_list extends State<colors_list>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var color_lists;
+  var color_lists, load_list;
 
   @override
   void initState() {
@@ -77,7 +77,8 @@ class _colors_list extends State<colors_list>{
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
-                    color_lists=json.decode(response);
+                    load_list=json.decode(response);
+                    color_lists = load_list['response'];
                     isVisible=true;
                   });
 

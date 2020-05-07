@@ -32,7 +32,7 @@ class _embryo_stock_list extends State< embryo_stock_list>{
   bool isVisible=false;
   var temp=['','',''];
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var embryo_list;
+  var embryo_list, load_list;
 
   @override
   void initState() {
@@ -82,7 +82,8 @@ class _embryo_stock_list extends State< embryo_stock_list>{
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
-                    embryo_list=json.decode(response);
+                    load_list=json.decode(response);
+                    embryo_list = load_list['response'];
                     isVisible=true;
                   });
 

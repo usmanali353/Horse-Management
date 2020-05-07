@@ -28,7 +28,7 @@ class _breeds_list extends State<breeds_list>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var breed_lists;
+  var breed_lists, load_list;
 
   @override
   void initState() {
@@ -78,7 +78,8 @@ class _breeds_list extends State<breeds_list>{
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
-                    breed_lists=json.decode(response);
+                    load_list=json.decode(response);
+                    breed_lists = load_list['response'];
                     isVisible=true;
                   });
 

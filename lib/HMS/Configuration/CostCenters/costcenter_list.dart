@@ -27,7 +27,7 @@ class _costcenter_list extends State<costcenter_list>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var costcenter_lists;
+  var costcenter_lists,load_list;
 
   @override
   void initState() {
@@ -76,7 +76,8 @@ class _costcenter_list extends State<costcenter_list>{
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
-                    costcenter_lists=json.decode(response);
+                    load_list=json.decode(response);
+                    costcenter_lists = load_list['response'];
                     isVisible=true;
                   });
 

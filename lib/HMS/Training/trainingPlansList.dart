@@ -24,7 +24,7 @@ class trainingPlanList extends StatefulWidget{
 class trainingPlanListState extends State<trainingPlanList>{
   String token;
   var horse_list;
-  var training_list=[];
+  var training_list=[], load_list;
   var temp=['',''];
   bool isvisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
@@ -54,7 +54,9 @@ class trainingPlanListState extends State<trainingPlanList>{
                 if(response!=null){
                   setState(() {
                     isvisible=true;
-                    training_list=json.decode(response);
+                    load_list=json.decode(response);
+                    training_list = load_list['response'];
+
                     // print('Training list Length'+training_list.length.toString());
                   });
 

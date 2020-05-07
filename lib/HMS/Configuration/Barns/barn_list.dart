@@ -28,7 +28,7 @@ class _barn_list extends State<barn_list>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var barn_lists;
+  var barn_lists, load_list;
 
   @override
   void initState() {
@@ -78,7 +78,8 @@ class _barn_list extends State<barn_list>{
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
-                    barn_lists=json.decode(response);
+                    load_list=json.decode(response);
+                    barn_lists = load_list['response'];
                     isVisible=true;
                   });
 
