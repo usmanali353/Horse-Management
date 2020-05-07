@@ -294,7 +294,7 @@ class add_confirmationState extends State<add_confirmation>{
                 onPressed: () async{
                   SharedPreferences prefs= await SharedPreferences.getInstance();
                   if(_fbKey.currentState.validate()){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>addProductsApplied(prefs.getString("token"),date,selected_horse_id,selected_vet_id,selected_opinion_id,confirmationDropdowns['conformationDetail']['foreLimbJointDropDown'])));
+                   // Navigator.push(context, MaterialPageRoute(builder: (context)=>addProductsApplied(prefs.getString("token"),date,selected_horse_id,selected_vet_id,selected_opinion_id,confirmationDropdowns['conformationDetail']['foreLimbJointDropDown'])));
                   }
                 },
                 child: Text("Add Products Applied",style: TextStyle(color: Colors.white),),

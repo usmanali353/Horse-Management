@@ -61,12 +61,12 @@ class addlimbs_dataAppliedState extends State<addlimbs_dataApplied>{
               }
               ProgressDialog pd=ProgressDialog(context,type:ProgressDialogType.Normal,isDismissible: true,);
               pd.show();
-              vieterniaryServices.addVetVisits(token, 0, horse_id, vet_id, date, opinion_id, '', entries).then((response){
-                pd.hide();
-                if(response!=null){
-
-                }
-              });
+//              vieterniaryServices.addVetVisits(token, 0, horse_id, vet_id, date, opinion_id, '', entries).then((response){
+//                pd.hide();
+//                if(response!=null){
+//
+//                }
+//              });
             }else{
 
             }

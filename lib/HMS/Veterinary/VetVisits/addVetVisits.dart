@@ -26,10 +26,10 @@ class addVetVisitsState extends State<addVetVisits>{
   addVetVisitsState(this.token);
 
   DateTime date=DateTime.now();
-  bool horses_loaded=false,vet_loaded=false;
-  List<String> horses=[],vet=[],type=['Emergency','Routine','Mornitoring'];
-  String selected_horse,selected_vet,selected_type;
-  int selected_horse_id,selected_vet_id,selected_type_id;
+  bool horses_loaded=false,vet_loaded=false,responsible_loaded=false;
+  List<String> horses=[],vet=[],type=['Emergency','Routine','Mornitoring'],responsible=[];
+  String selected_horse,selected_vet,selected_type,selected_responsible;
+  int selected_horse_id,selected_vet_id,selected_type_id,selected_responsible_id;
   var vetVisitsDropdowns;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
   @override
@@ -43,12 +43,17 @@ class addVetVisitsState extends State<addVetVisits>{
           if(response!=null){
             setState(() {
               vetVisitsDropdowns=json.decode(response);
-             print(vetVisitsDropdowns['vetVisitProduct']['inventoryProductsDropDown'].toString());
               if(vetVisitsDropdowns['horseDropDown']!=null&&vetVisitsDropdowns['horseDropDown'].length>0){
                 for(int i=0;i<vetVisitsDropdowns['horseDropDown'].length;i++){
                   horses.add(vetVisitsDropdowns['horseDropDown'][i]['name']);
                 }
                 horses_loaded=true;
+              }
+              if(vetVisitsDropdowns['responsibleDropDown']!=null&&vetVisitsDropdowns['responsibleDropDown'].length>0){
+                for(int i=0;i<vetVisitsDropdowns['responsibleDropDown'].length;i++){
+                  responsible.add(vetVisitsDropdowns['responsibleDropDown'][i]['name']);
+                }
+                responsible_loaded=true;
               }
               if(vetVisitsDropdowns['vetDropDown']!=null&&vetVisitsDropdowns['vetDropDown'].length>0){
                 for(int i=0;i<vetVisitsDropdowns['vetDropDown'].length;i++){
@@ -184,6 +189,36 @@ class addVetVisitsState extends State<addVetVisits>{
                     ),
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                  child: Visibility(
+                     visible: responsible_loaded,
+                    child: FormBuilderDropdown(
+                      attribute: "Responsible",
+                      validators: [FormBuilderValidators.required()],
+                      hint: Text("Responsible"),
+                      items:responsible!=null?responsible.map((horse)=>DropdownMenuItem(
+                        child: Text(horse),
+                        value: horse,
+                      )).toList():[""].map((name) => DropdownMenuItem(
+                          value: name, child: Text("$name")))
+                          .toList(),
+                      style: Theme.of(context).textTheme.body1,
+                      decoration: InputDecoration(labelText: "Responsible",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(9.0),
+                            borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                        ),
+                      ),
+                      onChanged: (value){
+                        setState(() {
+                          this.selected_responsible=value;
+                          this.selected_responsible_id=vet.indexOf(value);
+                        });
+                      },
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -194,7 +229,7 @@ class addVetVisitsState extends State<addVetVisits>{
                 onPressed: () async{
                   SharedPreferences prefs= await SharedPreferences.getInstance();
                   if(_fbKey.currentState.validate()){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>addProductsApplied(prefs.getString("token"),date,selected_horse_id,selected_vet_id,selected_type_id,vetVisitsDropdowns['vetVisitProduct']['inventoryProductsDropDown'])));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>addProductsApplied(prefs.getString("token"),date,selected_horse_id,selected_vet_id,selected_type_id,vetVisitsDropdowns['vetVisitProduct']['inventoryProductsDropDown'],selected_responsible_id)));
                   }
                 },
                 child: Text("Add Products Applied",style: TextStyle(color: Colors.white),),
