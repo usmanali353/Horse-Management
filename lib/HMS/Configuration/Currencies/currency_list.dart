@@ -28,7 +28,7 @@ class _currency_list extends State<currency_list>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var currency_lists;
+  var currency_lists, load_list;
   var currency_response;
   List<String> currency=[];
   @override
@@ -90,7 +90,8 @@ class _currency_list extends State<currency_list>{
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
-                    currency_lists=json.decode(response);
+                    load_list=json.decode(response);
+                    currency_lists = load_list['response'];
                     isVisible=true;
                   });
 

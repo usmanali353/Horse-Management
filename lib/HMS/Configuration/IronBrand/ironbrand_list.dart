@@ -28,7 +28,7 @@ class _ironbrand_list extends State<ironbrand_list>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var ironbrand_lists;
+  var ironbrand_lists, load_list;
 
   @override
   void initState() {
@@ -78,7 +78,8 @@ class _ironbrand_list extends State<ironbrand_list>{
                pd.dismiss();
                 if(response!=null){
                   setState(() {
-                    ironbrand_lists=json.decode(response);
+                    load_list=json.decode(response);
+                    ironbrand_lists = load_list['response'];
                     isVisible=true;
                   });
 

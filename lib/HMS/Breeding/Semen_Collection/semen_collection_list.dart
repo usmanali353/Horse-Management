@@ -27,7 +27,7 @@ class semen_collection_list extends StatefulWidget{
 class _semen_collection_list_state extends State<semen_collection_list>{
   String token;
   var horse_list;
-  var siemen_col_list=[];
+  var siemen_col_list=[], load_list;
   var temp=['',''];
   bool isvisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
@@ -76,7 +76,8 @@ class _semen_collection_list_state extends State<semen_collection_list>{
                       if(response!=null){
                         setState(() {
                           isvisible=true;
-                          siemen_col_list=json.decode(response);
+                          load_list=json.decode(response);
+                          siemen_col_list = load_list['response'];
                           // print('Training list Length'+training_list.length.toString());
                         });
 

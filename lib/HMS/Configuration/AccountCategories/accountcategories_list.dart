@@ -28,7 +28,7 @@ class _accountcategories_list extends State<accountcategories_list>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var category_lists;
+  var category_lists, load_list;
 
   @override
   void initState() {
@@ -78,7 +78,8 @@ class _accountcategories_list extends State<accountcategories_list>{
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
-                    category_lists=json.decode(response);
+                    load_list=json.decode(response);
+                    category_lists = load_list['response'];
                     isVisible=true;
                   });
 

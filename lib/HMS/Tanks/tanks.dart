@@ -30,7 +30,7 @@ class _tanks_list extends State<tanks_list>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var tanks_list;
+  var tanks_list, load_list;
 
 
   @override
@@ -82,6 +82,7 @@ class _tanks_list extends State<tanks_list>{
                 if(response!=null){
                   setState(() {
                     tanks_list=json.decode(response);
+                    tanks_list = load_list['response'];
                     isVisible=true;
                   });
 

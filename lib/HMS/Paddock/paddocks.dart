@@ -33,7 +33,7 @@ class _paddocks_list extends State<paddocks_list>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var paddock_lists;
+  var paddock_lists, load_list;
 
   @override
   void initState() {
@@ -83,7 +83,8 @@ class _paddocks_list extends State<paddocks_list>{
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
-                    paddock_lists=json.decode(response);
+                    load_list=json.decode(response);
+                    paddock_lists = load_list['response'];
                     isVisible=true;
                   });
 

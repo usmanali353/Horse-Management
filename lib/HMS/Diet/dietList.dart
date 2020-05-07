@@ -23,7 +23,7 @@ class dietList extends StatefulWidget{
 }
 class dietListState extends State<dietList>{
   String token;
-  var diet_list=[];
+  var diet_list=[],load_list;
   var temp=['',''];
   bool isvisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
@@ -53,7 +53,8 @@ class dietListState extends State<dietList>{
                 if(response!=null){
                   setState(() {
                     isvisible=true;
-                    diet_list=json.decode(response);
+                    load_list=json.decode(response);
+                    diet_list = load_list['response'];
                   });
 
                 }else{

@@ -28,7 +28,7 @@ class _generalcategory_list extends State<generalcategory_list>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var generalcategory_lists;
+  var generalcategory_lists, load_list;
 
   @override
   void initState() {
@@ -78,7 +78,8 @@ class _generalcategory_list extends State<generalcategory_list>{
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
-                    generalcategory_lists=json.decode(response);
+                    load_list=json.decode(response);
+                    generalcategory_lists = load_list['response'];
                     isVisible=true;
                   });
 

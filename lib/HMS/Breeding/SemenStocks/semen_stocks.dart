@@ -31,7 +31,7 @@ class _semen_stocks extends State<semen_stocks>{
   bool isVisible=false;
   var temp=['','',''];
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var semen_stock_list;
+  var semen_stock_list, load_list;
 
   @override
   void initState() {
@@ -82,7 +82,8 @@ class _semen_stocks extends State<semen_stocks>{
                 if(response!=null){
                   setState(() {
                     print(semen_stock_list);
-                    semen_stock_list=json.decode(response);
+                    load_list=json.decode(response);
+                    semen_stock_list = load_list['response'];
                     isVisible=true;
                   });
 

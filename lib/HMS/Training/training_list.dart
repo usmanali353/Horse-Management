@@ -26,7 +26,7 @@ training_list(this.token);
 class _training_list_state extends State<training_list>{
  String token;
    var horse_list;
-   var training_list=[],today_training_list=[];
+   var training_list=[],today_training_list=[], load_list;
    var temp=['',''];
    bool isvisible=false;
    var trainingListBox;
@@ -57,7 +57,9 @@ class _training_list_state extends State<training_list>{
                         if(response!=null){
                           setState(() {
                             isvisible=true;
-                            training_list=json.decode(response);
+                            load_list=json.decode(response);
+                            training_list = load_list['response'];
+
                             for(int i=0;i<training_list.length;i++){
                               if(DateTime.parse(training_list[i]['startDate'])==DateTime.now()){
                                 today_training_list.add(training_list[i]);

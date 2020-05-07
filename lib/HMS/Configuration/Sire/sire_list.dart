@@ -27,7 +27,7 @@ class _sire_list extends State<sire_list>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var sire_lists;
+  var sire_lists, load_list;
 
   @override
   void initState() {
@@ -78,7 +78,8 @@ class _sire_list extends State<sire_list>{
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
-                    sire_lists=json.decode(response);
+                    load_list=json.decode(response);
+                    sire_lists = load_list['response'];
                     isVisible=true;
                   });
 
