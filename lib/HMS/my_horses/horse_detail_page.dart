@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/my_horses/add_horse/update_horse.dart';
 import 'package:horse_management/HMS/my_horses/training/tariningList_specific.dart';
 import 'package:horse_management/HMS/my_horses/vaccination/vaccination_list.dart';
-import 'HypotheticPedegree/Pedigree.dart';
 import 'health_record/health_record_list.dart';
 import 'incomeExpense/income_expense_list.dart';
 import 'package:horse_management/HMS/my_horses/lab_reports/lab_test_list.dart';
@@ -204,18 +203,6 @@ class _Profile_Page_State extends State<horse_detail> {
                 trailing: Icon(Icons.arrow_right),
                 onTap: () {
                   //Navigator.push(context, MaterialPageRoute(builder: (context) => specificTraining_list(horsedata != null ? horsedata['allBreedingSales'] : '')));
-                },
-              ),
-              ListTile(
-                title: Text("Hypothetical Pedigree"),
-                subtitle: Text("View ancesstors of the horse"),
-                leading: Icon(
-                  Icons.history,
-                  size: 40,
-                ),
-                trailing: Icon(Icons.arrow_right),
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => HypotheticalPedigree(horsedata)));
                 },
               ),
 //              ListTile(

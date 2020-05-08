@@ -57,13 +57,15 @@ class _Profile_Page_State extends State<lab_list>{
               ExpansionTile(
                 //['categoryName']['name']
 
-                title: Text(specificlabtest[index]['date'],textScaleFactor: 1.3,),
-                //trailing: Text(specificlabtest[index]['isPositive'] == true ? "Yes" .toString():"No"),
+                title: Text("Test Date: "+specificlabtest[index]['date'].toString().substring(0,10),textScaleFactor: 1.1,),
+//                trailing: Text(specificlabtest[index]['status'] == true ? "Yes" .toString():"No"),
+                trailing: Text(specificlabtest != null ? "Status: "+get_status_by_id(specificlabtest[index]['status']):'status empty'),
+
 
                 children: <Widget>[
                   ListTile(
                     title: Text("Responsible"),
-                    trailing: Text(get_responsible_by_id(specificlabtest[index]['responsible']).toString()),
+                    trailing: Text(get_responsible_by_id(specificlabtest[index]['responsible']) != null? get_responsible_by_id(specificlabtest[index]['responsible']).toString():"Empty"),
                     onTap: ()async{
                     },
                   ),
@@ -100,6 +102,21 @@ class _Profile_Page_State extends State<lab_list>{
       return responsible_name;
     }else
       return null;
+  }
+  String get_status_by_id(int id){
+    var training_type_name;
+
+    if(id ==0){
+      training_type_name= "Bad";
+    }else if(id==1){
+      training_type_name='Fair';
+    }else if(id==2){
+      training_type_name="Good";
+    }
+    else{
+      training_type_name= "empty";
+    }
+    return training_type_name;
   }
   String get_testtype_by_id(int id){
     var responsible_name;

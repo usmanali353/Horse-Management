@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:horse_management/HMS/my_horses/services/add_horse_services.dart';
 import 'package:horse_management/Network_Operations.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,14 @@ class _incomeExpense_list_state extends State<specificTraining_list>{
         trainingdropdown = json.decode(response);
       });
     });
+
+//    Add_horse_services.horseDashBoard(token,horsedata['horseId']).then((response){
+//      setState(() {
+//        getinfo = jsonDecode(response);
+//        print(getinfo['horseDetails']);
+//        _isvisible =true;
+//      });
+//    });
   }
 
   @override
@@ -65,9 +74,9 @@ class _incomeExpense_list_state extends State<specificTraining_list>{
           return Column(
             children: <Widget>[
               ExpansionTile(
-                title: Text(list[index]['trainingType'] != null ? get_training_type_by_id(list[index]['trainingType']):'TrainerType Empty',textScaleFactor: 1.3,),
-                subtitle: Text(list != null ?list[index]['startDate'].toString():"date empty"),
-                trailing: Text(list != null ? list[index]['status'].toString():'status empty'),
+                title: Text(list[index]['trainingType'] != null ? "Training Type: "+get_training_type_by_id(list[index]['trainingType']):'TrainerType Empty',textScaleFactor: 1.3,),
+                subtitle: Text(list != null ?"Start Date: "+list[index]['startDate'].toString().substring(0,10):"date empty"),
+                trailing: Text(list != null ? "Status: "+get_status_by_id(list[index]['status']):'status empty'),
 
                 children: <Widget>[
 //                  ListTile(
@@ -99,7 +108,7 @@ class _incomeExpense_list_state extends State<specificTraining_list>{
                   Divider(),
                   ListTile(
                     title: Text("Trainer"),
-                   trailing: Text(get_trainer_by_id(list[index]['trainerId']) != null ? "Trainer: "+get_trainer_by_id(list[index]['trainerId']):"trainer empty"),
+                   trailing: Text(get_trainer_by_id(list[index]['trainerId']) != null ? get_trainer_by_id(list[index]['trainerId']):"trainer empty"),
                   ),
 
                 ],
@@ -130,6 +139,21 @@ class _incomeExpense_list_state extends State<specificTraining_list>{
       else{
         training_type_name= "empty";
       }
+    return training_type_name;
+  }
+  String get_status_by_id(int id){
+    var training_type_name;
+
+    if(id ==0){
+      training_type_name= "Bad";
+    }else if(id==1){
+      training_type_name='Fair';
+    }else if(id==2){
+      training_type_name="Good";
+    }
+    else{
+      training_type_name= "empty";
+    }
     return training_type_name;
   }
   String get_trainer_by_id(int id){
