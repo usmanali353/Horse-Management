@@ -8,22 +8,24 @@ import '../../../Utils.dart';
 
 class DamServices{
 
-  static Future<String> addDam(String token,int damHorseId, String damName, int breedId, int colorId, DateTime date, String number, String microchip, String createdBy) async{
+  static Future<String> addDam(String token,int damHorseId, String damName, bool isHorse, bool isSire, bool isDam, int breedId, int colorId, DateTime date, String number, String microchip, String createdBy) async{
     Map<String,String> headers = {'Authorization':'Bearer '+token,'Content-Type':'application/json'};
-    final body = jsonEncode({"horseId":damHorseId,
+    final body = jsonEncode({
+      "horseId":damHorseId,
       "name":damName,
-      "isHorse": false,
-      "isSire": false,
-      "isDam": true,
+      "isHorse": isHorse,
+      "isSire": isSire,
+      "isDam": isDam,
       "genderId": 2,
+      "createdBy":createdBy,
+      "createdOn":DateTime.now(),
+      "isActive":true,
       "breedId":breedId,
       "colorId":colorId,
       "dateOfBirth":date,
       "number":number,
       "microchipNo":microchip,
-      "createdBy":createdBy,
-      "createdOn":DateTime.now(),
-      "isActive":true,
+
 
     },toEncodable: Utils.myEncode);
     var response= await http.post("http://192.236.147.77:8083/api/configuration/DamSave",headers: headers,body: body);

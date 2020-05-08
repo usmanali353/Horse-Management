@@ -228,7 +228,7 @@ class _add_dam extends State<add_dam>{
                                   if(result){
                                     ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                                     pd.show();
-                                    DamServices.addDam(token, 0, name.text, selected_breed_id, selected_color_id, select_DOB, number.text, microchip.text, null)
+                                    DamServices.addDam(token, 0, name.text, true, true, true, selected_breed_id, selected_color_id, select_DOB, number.text, microchip.text, null)
                                         .then((respons){
                                       pd.dismiss();
                                       setState(() {
