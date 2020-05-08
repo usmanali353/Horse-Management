@@ -29,7 +29,7 @@ class _Profile_Page_State extends State<inventory_list>{
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   String token;
   bool isVisible=false;
-  var inventorylist;
+  var inventorylist, load_list;
   var temp=['',''];
 
 
@@ -55,7 +55,8 @@ class _Profile_Page_State extends State<inventory_list>{
           isVisible = true;
           setState(() {
             print(response);
-            inventorylist = json.decode(response);
+            load_list = json.decode(response);
+            inventorylist = load_list['response'];
           });
         });
       }else{

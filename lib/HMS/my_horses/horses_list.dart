@@ -23,7 +23,7 @@ class _training_list_state extends State<horse_list>{
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   _training_list_state (this.token);
 
-  var horse_list;
+  var horse_list, load_list;
   var temp=[];
   @override
   Widget build(BuildContext context) {
@@ -114,7 +114,8 @@ class _training_list_state extends State<horse_list>{
           if(response!=null){
             setState(() {
               //var parsedjson = jsonDecode(response);
-              horse_list  = jsonDecode(response);
+              load_list  = jsonDecode(response);
+              horse_list = load_list['response'];
               print(horse_list);
               //print(horse_list['createdBy']);
             });

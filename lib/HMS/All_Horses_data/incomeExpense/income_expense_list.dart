@@ -30,7 +30,7 @@ class income_expense_list extends StatefulWidget{
 
 }
 class _incomeExpense_list_state extends State<income_expense_list>{
-  var list,incomelist;
+  var list,incomelist, load_list;
   int horseId;String token;
   var temp=['',''];
   SharedPreferences prefs;
@@ -57,7 +57,8 @@ class _incomeExpense_list_state extends State<income_expense_list>{
           pd.dismiss();
           setState(() {
             print(response);
-            list = json.decode(response);
+            load_list = json.decode(response);
+            list = load_list['response'];
           });
         });
       }else

@@ -29,7 +29,7 @@ class _Profile_Page_State extends State<farrier_list>{
   _Profile_Page_State (this.token);
 
   String token;
-  var farrierlist;
+  var farrierlist, load_list;
   var temp=[];
 
 
@@ -58,7 +58,8 @@ class _Profile_Page_State extends State<farrier_list>{
           pd.dismiss();
           setState(() {
             print(response);
-            farrierlist = json.decode(response);
+            load_list = json.decode(response);
+            farrierlist = load_list['response'];
           });
         });
       }else

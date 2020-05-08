@@ -22,7 +22,7 @@ class notes_list extends StatefulWidget{
 class _notes_list_state extends State<notes_list>{
   String token;
   var horse_list;
-  var notes_list=[];
+  var notes_list=[], load_list;
   var temp=['',''];
   bool isvisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
@@ -51,7 +51,8 @@ class _notes_list_state extends State<notes_list>{
                       if(response!=null){
                         setState(() {
                           isvisible=true;
-                          notes_list=json.decode(response);
+                          load_list=json.decode(response);
+                          notes_list = load_list['response'];
                         });
 
                       }else{

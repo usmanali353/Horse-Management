@@ -56,7 +56,7 @@ class _Profile_Page_State extends State<vaccinationList>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("VAccination"),
+        appBar: AppBar(title: Text("Vaccination"),
         ),
         body: ListView.builder(itemCount:vaccinationlist!=null?vaccinationlist.length:temp.length,itemBuilder: (context,int index){
           return Column(

@@ -30,7 +30,7 @@ class _Profile_Page_State extends State<competetion_list>{
   _Profile_Page_State (this.token);
 
   String token;
-  var competetionlist;
+  var competetionlist, load_list;
   var temp=['',''];
 
 
@@ -48,7 +48,8 @@ class _Profile_Page_State extends State<competetion_list>{
           pd.dismiss();
           setState(() {
             print(response);
-            competetionlist = json.decode(response);
+            load_list = json.decode(response);
+            competetionlist = load_list['response'];
           });
         });
       }else
