@@ -51,6 +51,7 @@ class _SettingsPageState extends State<SettingsPage> {
               prefs.remove("token");
               prefs.remove("isLogin");
               prefs.remove("role");
+              prefs.remove("loginJson");
               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>WelcomeScreen()),(Route<dynamic> route) => false);
             },
           ),

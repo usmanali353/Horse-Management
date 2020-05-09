@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:data_connection_checker/data_connection_checker.dart';
-import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -33,6 +31,10 @@ class Utils{
   static Future<bool> isLogin()async{
      SharedPreferences prefs=await SharedPreferences.getInstance();
      return prefs.getBool("isLogin");
+  }
+  static Future<String> GetRole()async{
+    SharedPreferences prefs=await SharedPreferences.getInstance();
+    return prefs.getString("role");
   }
  static Future openBox(String name) async {
     var dir = await getApplicationDocumentsDirectory();

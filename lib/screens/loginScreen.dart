@@ -201,7 +201,8 @@ class scrollview extends StatelessWidget {
                                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Home()), (Route<dynamic> route) => false);
                                        }else {
                                          prefs.setString("role", 'user');
-                                         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => ContactHome(parsedJson)), (Route<dynamic> route) => false);
+                                         prefs.setString("loginJson",response_json);
+                                         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => ContactHome()), (Route<dynamic> route) => false);
                                        }
                                      }else{
                                        Scaffold.of(context).showSnackBar(SnackBar(
