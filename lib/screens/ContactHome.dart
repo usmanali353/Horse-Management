@@ -1,55 +1,56 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:horse_management/widgets/slide_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class ContactHome extends StatefulWidget {
- var userData;
 
- ContactHome(this.userData);
 
  @override
-  _ContactHomeState createState() => _ContactHomeState(userData);
+  _ContactHomeState createState() => _ContactHomeState();
 }
 
 class _ContactHomeState extends State<ContactHome> {
   var userData;
    List restaurants=[];
-  _ContactHomeState(this.userData);
 
   @override
   void initState() {
-    print(userData);
-    setState(() {
-      if(userData['contactResult']['Breeder']!=null){
-        restaurants.add(
-            {
-              "img": "assets/breeding.jpg",
-              "title": "Breeding",
-              "address": "Add breeds of horses",
-              "rating": "4.5"
-            }
-        );
-      }
-      if(userData['contactResult']['Vet']!=null){
-        restaurants.add(
-            {
-              "img": "assets/vetrinary.jpg",
-              "title": "Veterinary",
-              "address": "Add & check for the veterinary management",
-              "rating": "4.5"
-            }
-        );
-      }
-      if(userData['contactResult']['Trainer']!=null){
-        restaurants.add(
-            {
-              "img": "assets/training.jpg",
-              "title": "Training Center",
-              "address": "Add and check for the horse training",
-              "rating": "4.5"
-            }
-        );
-      }
+    SharedPreferences.getInstance().then((prefs){
+      this.userData=jsonDecode(prefs.getString("loginJson"));
+      setState(() {
+        if(userData['contactResult']['Breeder']!=null){
+          restaurants.add(
+              {
+                "img": "assets/breeding.jpg",
+                "title": "Breeding",
+                "address": "Add breeds of horses",
+                "rating": "4.5"
+              }
+          );
+        }
+        if(userData['contactResult']['Vet']!=null){
+          restaurants.add(
+              {
+                "img": "assets/vetrinary.jpg",
+                "title": "Veterinary",
+                "address": "Add & check for the veterinary management",
+                "rating": "4.5"
+              }
+          );
+        }
+        if(userData['contactResult']['Trainer']!=null){
+          restaurants.add(
+              {
+                "img": "assets/training.jpg",
+                "title": "Training Center",
+                "address": "Add and check for the horse training",
+                "rating": "4.5"
+              }
+          );
+        }
+      });
     });
     super.initState();
   }

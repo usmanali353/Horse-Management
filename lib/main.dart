@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:horse_management/Model/theme_notifier.dart';
@@ -42,6 +44,7 @@ class MyApp extends StatefulWidget {
 }
 class myAppState extends State<MyApp>{
   bool isLogin=false;
+  String userRole='admin';
   @override
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
@@ -57,14 +60,24 @@ class myAppState extends State<MyApp>{
   @override
   void initState() {
     Utils.isLogin().then((response){
-      setState(() {
-        if(response!=null)
-       this.isLogin=response;
-      });
+      if(response!=null){
+        setState(() {
+          this.isLogin=response;
+        });
+        Utils.GetRole().then((role){
+          if(role!=null){
+            setState(() {
+              this.userRole=role;
+            });
+          }
+        });
+      }
     });
   }
   Widget checkLogin(){
-    if(isLogin){
+    if(isLogin&&userRole=='user'){
+      return ContactHome();
+    } if(isLogin&&userRole=='admin'){
       return Home();
     }else
      return WelcomeScreen();
