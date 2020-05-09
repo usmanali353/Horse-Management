@@ -50,6 +50,7 @@ class _SettingsPageState extends State<SettingsPage> {
               SharedPreferences prefs=await SharedPreferences.getInstance();
               prefs.remove("token");
               prefs.remove("isLogin");
+              prefs.remove("role");
               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>WelcomeScreen()),(Route<dynamic> route) => false);
             },
           ),
