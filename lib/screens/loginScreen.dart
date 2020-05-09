@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:horse_management/screens/ContactHome.dart';
 import 'package:horse_management/screens/home.dart';
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
@@ -187,7 +188,6 @@ class scrollview extends StatelessWidget {
                                    }else{
                                      var parsedJson = json.decode(response_json);
                                      if(parsedJson['isSuccess']==true){
-
                                        Scaffold.of(context).showSnackBar(SnackBar(
                                          backgroundColor: Colors.green,
                                          content: Text("Login Sucess"),
@@ -195,7 +195,14 @@ class scrollview extends StatelessWidget {
                                        SharedPreferences  prefs= await SharedPreferences.getInstance();
                                        await prefs.setString("token", parsedJson['result']);
                                        await prefs.setBool("isLogin", true);
-                                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Home()),(Route<dynamic> route) => false);
+                                       print(parsedJson['contactResult']);
+                                       if(parsedJson['contactResult']['Trainer']==null&&parsedJson['contactResult']['Breeder']==null&&parsedJson['contactResult']['Vet']==null&&parsedJson['contactResult']['Farrier']==null){
+                                         prefs.setString("role", 'admin');
+                                         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Home()), (Route<dynamic> route) => false);
+                                       }else {
+                                         prefs.setString("role", 'user');
+                                         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => ContactHome(parsedJson)), (Route<dynamic> route) => false);
+                                       }
                                      }else{
                                        Scaffold.of(context).showSnackBar(SnackBar(
                                          backgroundColor: Colors.red,

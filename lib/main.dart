@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:horse_management/Model/theme_notifier.dart';
+import 'package:horse_management/screens/ContactHome.dart';
 import 'package:horse_management/screens/home.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:horse_management/screens/splashScreen.dart';
