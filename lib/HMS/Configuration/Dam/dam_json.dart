@@ -8,10 +8,27 @@ import '../../../Utils.dart';
 
 class DamServices{
 
-  static Future<String> addDam(String token,int damHorseId, String damName, int breedId, int colorId, DateTime date, String number, String microchip, String createdBy) async{
+  static Future<String> addDam(String token,int damHorseId, String damName, bool isHorse, bool isSire, bool isDam, int breedId, int colorId, DateTime date, String number, String microchip, String createdBy) async{
     Map<String,String> headers = {'Authorization':'Bearer '+token,'Content-Type':'application/json'};
-    final body = jsonEncode({"horseId":damHorseId,"name":damName,"createdOn":DateTime.now(), "breedId":breedId, "colorId":colorId, "dateOfBirth":date  , "number":number, "microchipNo":microchip, "isActive":true,"createdBy":createdBy,},toEncodable: Utils.myEncode);
-    var response= await http.post("http://192.236.147.77:8083/api/Paddock/PaddockSave",headers: headers,body: body);
+    final body = jsonEncode({
+      "horseId":damHorseId,
+      "name":damName,
+      "isHorse": isHorse,
+      "isSire": isSire,
+      "isDam": isDam,
+      "genderId": 2,
+      "createdBy":createdBy,
+      "createdOn":DateTime.now(),
+      "isActive":true,
+      "breedId":breedId,
+      "colorId":colorId,
+      "dateOfBirth":date,
+      "number":number,
+      "microchipNo":microchip,
+
+
+    },toEncodable: Utils.myEncode);
+    var response= await http.post("http://192.236.147.77:8083/api/configuration/DamSave",headers: headers,body: body);
     print(response.body);
     if(response.statusCode==200){
       return response.body;

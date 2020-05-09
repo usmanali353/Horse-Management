@@ -29,7 +29,7 @@ class _Profile_Page_State extends State<swabbing_list>{
   _Profile_Page_State (this.token);
 
   String token;
-  var swabbinglist;
+  var swabbinglist, load_list;
   var temp=[];
 
 
@@ -46,7 +46,8 @@ class _Profile_Page_State extends State<swabbing_list>{
           pd.dismiss();
           setState(() {
             print(response);
-            swabbinglist = json.decode(response);
+            load_list = json.decode(response);
+            swabbinglist = load_list['response'];
           });
         });
       }else

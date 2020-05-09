@@ -39,7 +39,7 @@ class _training_list_state extends State<horse_list>{
   String createdBy;
   _training_list_state (this.token);
   SharedPreferences prefs;
-  var horse_list;
+  var horse_list, load_list;
   var temp=['',''];
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
@@ -62,7 +62,8 @@ class _training_list_state extends State<horse_list>{
           if(response!=null){
             setState(() {
               //var parsedjson = jsonDecode(response);
-              horse_list  = jsonDecode(response);
+              load_list  = jsonDecode(response);
+              horse_list = load_list['response'];
               print(horse_list);
               //print(horse_list['createdBy']);
             });

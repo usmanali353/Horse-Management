@@ -28,7 +28,7 @@ class _Profile_Page_State extends State<healthRecord_list>{
   _Profile_Page_State (this.token);
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   String token;
-  var specifichorsehealthRecord,healthlist;
+  var specifichorsehealthRecord,healthlist, load_list;
   var temp=['',''];
   bool isVisible = false;
  // MainPageState _mainPageState;
@@ -61,7 +61,8 @@ class _Profile_Page_State extends State<healthRecord_list>{
           isVisible = true;
           setState(() {
 
-            healthlist = json.decode(response);
+            load_list = json.decode(response);
+            healthlist = load_list['response'];
 
 
             print(healthlist);

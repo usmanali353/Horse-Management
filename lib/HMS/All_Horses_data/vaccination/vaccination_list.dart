@@ -31,7 +31,7 @@ class _Profile_Page_State extends State<vaccination_list>{
   _Profile_Page_State (this.token);
 
   String token;
-  var vaccinationlist;
+  var vaccinationlist, load_list;
   var temp=[];
 
 
@@ -61,7 +61,8 @@ class _Profile_Page_State extends State<vaccination_list>{
           pd.dismiss();
           setState(() {
             print(response);
-            vaccinationlist = json.decode(response);
+            load_list = json.decode(response);
+            vaccinationlist = load_list['response'];
           });
         });
       }else

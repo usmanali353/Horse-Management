@@ -28,7 +28,7 @@ class _horse_videos_list_page_state extends State<horse_videos_list>{
   bool isVisible=false;
   var temp=['','',''];
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var videos_list;
+  var videos_list, load_list;
 
   @override
   void initState() {
@@ -58,7 +58,8 @@ class _horse_videos_list_page_state extends State<horse_videos_list>{
                network_operations.get_all_videos(token).then((response){
                  if(response!=null){
                    setState(() {
-                     videos_list=json.decode(response);
+                     load_list=json.decode(response);
+                     videos_list = load_list['response'];
                      isVisible=true;
                    });
 

@@ -20,7 +20,7 @@ class pictures_list extends StatefulWidget{
 class _pictures_list_state extends State<pictures_list>{
   String token;
   var horse_list;
-  var picture_list=[];
+  var picture_list=[],load_list;
   var temp=['',''];
   bool isvisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
@@ -50,7 +50,8 @@ class _pictures_list_state extends State<pictures_list>{
                       if(response!=null){
                         setState(() {
                           isvisible=true;
-                          picture_list=json.decode(response);
+                          load_list=json.decode(response);
+                          picture_list = load_list['response'];
                         });
 
                       }else{

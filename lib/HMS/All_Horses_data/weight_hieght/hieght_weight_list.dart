@@ -29,7 +29,7 @@ class _Profile_Page_State extends State<weight_hieght_list>{
   _Profile_Page_State (this.token);
 
   String token;
-  var weightlist;
+  var weightlist, load_list;
   var temp=['',''];
 
 
@@ -58,7 +58,8 @@ class _Profile_Page_State extends State<weight_hieght_list>{
           pd.dismiss();
           setState(() {
             print(response);
-            weightlist =json.decode(response);
+            load_list =json.decode(response);
+            weightlist = load_list['response'];
 
           });
 

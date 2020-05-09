@@ -317,7 +317,7 @@ class _update_dam extends State<update_dam>{
                                   if(result){
                                     ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                                     pd.show();
-                                    DamServices.addDam(token, specificdam['horseId'], name.text, selected_breed_id, selected_color_id, select_DOB, number.text, microchip.text, specificdam['createdBy']).then((respons){
+                                    DamServices.addDam(token, specificdam['horseId'], name.text, true, true, true, selected_breed_id, selected_color_id, select_DOB, number.text, microchip.text, specificdam['createdBy']).then((respons){
                                       pd.dismiss();
                                       setState(() {
                                         var parsedjson  = jsonDecode(respons);

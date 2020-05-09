@@ -29,7 +29,7 @@ class _Profile_Page_State extends State<lab_list>{
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   String token;
   bool isVisible=false;
-  var lablist;
+  var lablist, load_list;
   var temp=['',''];
 
 
@@ -55,7 +55,8 @@ class _Profile_Page_State extends State<lab_list>{
             isVisible = true;
             setState(() {
               print(response);
-             lablist = json.decode(response);
+             load_list = json.decode(response);
+             lablist = load_list['response'];
             });
           });
             }else{

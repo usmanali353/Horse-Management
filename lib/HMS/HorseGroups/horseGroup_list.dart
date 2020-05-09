@@ -28,7 +28,7 @@ class _training_list_state extends State<horseGroup_list>{
   String token;
   _training_list_state (this.token);
   SharedPreferences prefs;
-  var group_list;
+  var group_list, load_list;
   var temp=[];
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
@@ -51,7 +51,8 @@ class _training_list_state extends State<horseGroup_list>{
           if(response!=null){
             setState(() {
               //var parsedjson = jsonDecode(response);
-              group_list  = jsonDecode(response);
+              load_list  = jsonDecode(response);
+              group_list = load_list['response'];
               print(group_list);
               //print(group_list['createdBy']);
             });
