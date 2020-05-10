@@ -6,6 +6,7 @@ import 'package:horse_management/HMS/Breeding/BreedingSales/breeding_sales_detai
 import 'package:horse_management/HMS/Breeding/BreedingSales/breeding_sales_json.dart';
 import 'package:horse_management/HMS/Breeding/BreedingSales/update_breeding_sales.dart';
 import 'package:horse_management/HMS/Breeding/BreedingServices/breeding_service_form.dart';
+import 'package:horse_management/HMS/CareTakers/BreedingSales/BreedingSalesCaretaker.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
@@ -52,7 +53,7 @@ class _breeding_sales extends State<breeding_sales>{
 //        child: Icon(Icons.add),
 //      ),
       appBar: AppBar(
-        title: Text("Breeding Sales"),
+        title: Text("Breeding Sales & Caretaker"),
         actions: <Widget>[
           Center(child: Text("Add New",textScaleFactor: 1.3,)),
           IconButton(
@@ -78,7 +79,8 @@ class _breeding_sales extends State<breeding_sales>{
             if(result){
               ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
               pd.show();
-              BreedingSalesServices.get_breeding_sales(token).then((response){
+              //BreedingSalesServices.get_breeding_sales(token).then((response){
+              BreedingSalesCareTakerServices.get_breedingSales_caretaker(token).then((response){
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
@@ -147,6 +149,78 @@ class _breeding_sales extends State<breeding_sales>{
                               ));
                             }
                           });
+                        },
+                      ),
+                      IconSlideAction(
+                        icon: Icons.timer,
+                        color: Colors.deepOrange,
+                        caption: 'Start',
+                        onTap: () async {
+                          Utils.check_connectivity().then((result){
+                            if(result){
+                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                              pd.show();
+                              BreedingSalesCareTakerServices.start_breeding_sales(token, sales_list[index]['id']).then((response){
+                                pd.dismiss();
+                                if(response!=null){
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.green ,
+                                    content: Text('Process Started'),
+                                  ));
+//                                  setState(() {
+//                                    control_list.removeAt(index);
+//                                  });
+                                }else{
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.red ,
+                                    content: Text('Process Failed'),
+                                  ));
+                                }
+                              });
+                            }else{
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text("Network not Available"),
+                                backgroundColor: Colors.red,
+                              ));
+                            }
+                          });
+
+                        },
+                      ),
+                      IconSlideAction(
+                        icon: Icons.done_all,
+                        color: Colors.green,
+                        caption: 'Complete',
+                        onTap: () async {
+                          Utils.check_connectivity().then((result){
+                            if(result){
+                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                              pd.show();
+                              BreedingSalesCareTakerServices.complete_breeding_sales(token, sales_list[index]['id']).then((response){
+                                pd.dismiss();
+                                if(response!=null){
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.green ,
+                                    content: Text('Process Complete'),
+                                  ));
+//                                  setState(() {
+//                                    control_list.removeAt(index);
+//                                  });
+                                }else{
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.red ,
+                                    content: Text('Process Failed'),
+                                  ));
+                                }
+                              });
+                            }else{
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text("Network not Available"),
+                                backgroundColor: Colors.red,
+                              ));
+                            }
+                          });
+
                         },
                       ),
                     ],

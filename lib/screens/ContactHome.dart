@@ -1,7 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:horse_management/HMS/Breeding/breeding_mainPage.dart';
+import 'package:horse_management/HMS/Training/training_options.dart';
+import 'package:horse_management/HMS/Veterinary/vet_mainPage.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
+import 'package:horse_management/screens/settings_page.dart';
 import 'package:horse_management/widgets/slide_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class ContactHome extends StatefulWidget {
@@ -111,10 +115,15 @@ class _ContactHomeState extends State<ContactHome> {
                       onTap:() async{
                         SharedPreferences prefs=await SharedPreferences.getInstance();
                         if(restaurants[index]['title']=='Training Center'){
-                         // Trainings Page
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> training_options(prefs.getString('token'))));
+
+                          // Trainings Page
                         }else if(restaurants[index]['title']=='Breeding'){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> breeding_Category(prefs.getString('token'))));
+
                           // Breeding Page
                         }else if(restaurants[index]['title']=='Veterinary'){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> vet_category()));
                           // Vet Page
                         }else{
                           // Farrier Page
@@ -136,6 +145,15 @@ class _ContactHomeState extends State<ContactHome> {
               padding: EdgeInsets.all(15),
             ),
             SizedBox(height: 10.0),
+            FloatingActionButton(
+              backgroundColor: Colors.teal,
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> SettingsPage()));
+              } ,
+              tooltip: 'Settings',
+              child: Icon(Icons.settings, color: Colors.white,),
+
+            )
           ],
         ),
       ),

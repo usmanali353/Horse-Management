@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/Breeding/Semen_Collection/semen_collection_details.dart';
 import 'package:horse_management/HMS/Breeding/Semen_Collection/update_semen_collection.dart';
+import 'package:horse_management/HMS/CareTakers/SemenCollection/SemenCollectionCaretaker.dart';
 import 'package:horse_management/HMS/Training/training_detail_page.dart';
 import 'package:horse_management/HMS/Training/update_training.dart';
 import 'package:horse_management/Network_Operations.dart';
@@ -36,7 +37,7 @@ class _semen_collection_list_state extends State<semen_collection_list>{
 
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Semen Collections"),
+        appBar: AppBar(title: Text("Semen Collection & Caretaker"),
           actions: <Widget>[
             Center(child: Text("Add New",textScaleFactor: 1.3,)),
             IconButton(
@@ -71,7 +72,8 @@ class _semen_collection_list_state extends State<semen_collection_list>{
                   if(result){
                     ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
                     pd.show();
-                    network_operations.get_all_semen_collection(token).then((response){
+                    //network_operations.get_all_semen_collection(token).then((response){
+                    SemenCollectionCareTakerServices.get_semen_collection_caretaker(token).then((response){
                       pd.dismiss();
                       if(response!=null){
                         setState(() {
@@ -140,6 +142,78 @@ class _semen_collection_list_state extends State<semen_collection_list>{
                                   ));
                                 }
                               });
+                            },
+                          ),
+                          IconSlideAction(
+                            icon: Icons.timer,
+                            color: Colors.deepOrange,
+                            caption: 'Start',
+                            onTap: () async {
+                              Utils.check_connectivity().then((result){
+                                if(result){
+                                  ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                                  pd.show();
+                                  SemenCollectionCareTakerServices.start_semen_collection(token, siemen_col_list[index]['semenCollectionId']).then((response){
+                                    pd.dismiss();
+                                    if(response!=null){
+                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                        backgroundColor:Colors.green ,
+                                        content: Text('Process Started'),
+                                      ));
+//                                  setState(() {
+//                                    control_list.removeAt(index);
+//                                  });
+                                    }else{
+                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                        backgroundColor:Colors.red ,
+                                        content: Text('Process Failed'),
+                                      ));
+                                    }
+                                  });
+                                }else{
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    content: Text("Network not Available"),
+                                    backgroundColor: Colors.red,
+                                  ));
+                                }
+                              });
+
+                            },
+                          ),
+                          IconSlideAction(
+                            icon: Icons.done_all,
+                            color: Colors.green,
+                            caption: 'Complete',
+                            onTap: () async {
+                              Utils.check_connectivity().then((result){
+                                if(result){
+                                  ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                                  pd.show();
+                                  SemenCollectionCareTakerServices.complete_semen_collection(token, siemen_col_list[index]['semenCollectionId']).then((response){
+                                    pd.dismiss();
+                                    if(response!=null){
+                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                        backgroundColor:Colors.green ,
+                                        content: Text('Process Complete'),
+                                      ));
+//                                  setState(() {
+//                                    control_list.removeAt(index);
+//                                  });
+                                    }else{
+                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                        backgroundColor:Colors.red ,
+                                        content: Text('Process Failed'),
+                                      ));
+                                    }
+                                  });
+                                }else{
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    content: Text("Network not Available"),
+                                    backgroundColor: Colors.red,
+                                  ));
+                                }
+                              });
+
                             },
                           ),
                         ],

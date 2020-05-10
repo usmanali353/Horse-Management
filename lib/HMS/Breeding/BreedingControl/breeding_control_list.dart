@@ -6,6 +6,7 @@ import 'package:horse_management/HMS/Breeding/BreedingControl/breeding_control_d
 import 'package:horse_management/HMS/Breeding/BreedingControl/breeding_control_form.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/next_breeding_check.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/update_breeding_control.dart';
+import 'package:horse_management/HMS/CareTakers/BreedingControl/BreedingControlCaretaker.dart';
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
@@ -50,7 +51,7 @@ class _breeding_control_list extends State< breeding_control_list>{
 //        child: Icon(Icons.add),
 //      ),
       appBar: AppBar(
-        title: Text("Breeding Control"),
+        title: Text("Breeding Control & Caretaker"),
         actions: <Widget>[
           Center(child: Text("Add New",textScaleFactor: 1.3,)),
           IconButton(
@@ -76,7 +77,7 @@ class _breeding_control_list extends State< breeding_control_list>{
             if(result){
               ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
               pd.show();
-              network_operations.get_all_breeding_controls(token).then((response){
+              BreedingControlCareTakerServices.get_breedingControl_caretaker(token).then((response){
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
@@ -150,6 +151,77 @@ class _breeding_control_list extends State< breeding_control_list>{
                                   Scaffold.of(context).showSnackBar(SnackBar(
                                     backgroundColor:Colors.red ,
                                     content: Text('Failed'),
+                                  ));
+                                }
+                              });
+                            }else{
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text("Network not Available"),
+                                backgroundColor: Colors.red,
+                              ));
+                            }
+                          });
+                        },
+                      ),
+                      IconSlideAction(
+                        icon: Icons.timer,
+                        color: Colors.deepOrange,
+                        caption: 'Start',
+                        onTap: () async {
+                          Utils.check_connectivity().then((result){
+                            if(result){
+                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                              pd.show();
+                              BreedingControlCareTakerServices.start_breeding_Control(token, control_list[index]['breedingControlId']).then((response){
+                                pd.dismiss();
+                                if(response!=null){
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.green ,
+                                    content: Text('Process Started'),
+                                  ));
+                                  setState(() {
+                                    control_list.removeAt(index);
+                                  });
+                                }else{
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.red ,
+                                    content: Text('Process Failed'),
+                                  ));
+                                }
+                              });
+                            }else{
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text("Network not Available"),
+                                backgroundColor: Colors.red,
+                              ));
+                            }
+                          });
+
+                        },
+                      ),
+                      IconSlideAction(
+                        icon: Icons.done_all,
+                        color: Colors.green,
+                        caption: 'Complete',
+                        onTap: () async {
+                          Utils.check_connectivity().then((result){
+                            if(result){
+                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                              pd.show();
+                              BreedingControlCareTakerServices.complete_breeding_Control(token, control_list[index]['breedingControlId']).then((response){
+                                pd.dismiss();
+                                if(response!=null){
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.green ,
+                                    content: Text('Process Complete'),
+                                  ));
+                                  setState(() {
+                                    control_list.removeAt(index);
+                                  });
+                                }else{
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.red ,
+                                    content: Text('Process Failed'),
                                   ));
                                 }
                               });

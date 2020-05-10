@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:horse_management/HMS/Breeding/Flushes/flushes_details.dart';
+import 'package:horse_management/HMS/CareTakers/Flushes/flushes_caretaker.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
@@ -50,7 +51,7 @@ class _flushes_list extends State<flushes_list>{
 //        child: Icon(Icons.add),
 //      ),
       appBar: AppBar(
-        title: Text("Flushes"),
+        title: Text("Flushes & Caretaker"),
         actions: <Widget>[
           Center(child: Text("Add New",textScaleFactor: 1.3,)),
           IconButton(
@@ -77,14 +78,16 @@ class _flushes_list extends State<flushes_list>{
               if(result){
                 ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
                 pd.show();
-                FlushesServicesJson.flusheslist(token).then((response){
+               // FlushesServicesJson.flusheslist(token).then((response){
+
+                FlushesCareTakerServices.get_flushes_caretaker(token).then((response){
                   pd.dismiss();
                   if(response!=null){
                     setState(() {
                       isVisible=true;
                       load_list=json.decode(response);
                       flushes_list = load_list['response'];
-                      Hive.box("FlushesList").put("offline_flushes_list",flushes_list);
+                     // Hive.box("FlushesList").put("offline_flushes_list",flushes_list);
                     });
 
                   }else{
@@ -100,7 +103,7 @@ class _flushes_list extends State<flushes_list>{
               }else{
                 setState(() {
                   isVisible=true;
-                  flushes_list=Hive.box("FlushesList").get("offline_flushes_list");
+                  //flushes_list=Hive.box("FlushesList").get("offline_flushes_list");
                 });
 //                    Scaffold.of(context).showSnackBar(SnackBar(
 //                      backgroundColor: Colors.red,
@@ -152,6 +155,78 @@ class _flushes_list extends State<flushes_list>{
                               ));
                             }
                           });
+                        },
+                      ),
+                      IconSlideAction(
+                        icon: Icons.timer,
+                        color: Colors.deepOrange,
+                        caption: 'Start',
+                        onTap: () async {
+                          Utils.check_connectivity().then((result){
+                            if(result){
+                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                              pd.show();
+                              FlushesCareTakerServices.start_flushes(token, flushes_list[index]['id']).then((response){
+                                pd.dismiss();
+                                if(response!=null){
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.green ,
+                                    content: Text('Process Started'),
+                                  ));
+//                                  setState(() {
+//                                    control_list.removeAt(index);
+//                                  });
+                                }else{
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.red ,
+                                    content: Text('Process Failed'),
+                                  ));
+                                }
+                              });
+                            }else{
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text("Network not Available"),
+                                backgroundColor: Colors.red,
+                              ));
+                            }
+                          });
+
+                        },
+                      ),
+                      IconSlideAction(
+                        icon: Icons.done_all,
+                        color: Colors.green,
+                        caption: 'Complete',
+                        onTap: () async {
+                          Utils.check_connectivity().then((result){
+                            if(result){
+                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                              pd.show();
+                              FlushesCareTakerServices.complete_flushes(token, flushes_list[index]['id']).then((response){
+                                pd.dismiss();
+                                if(response!=null){
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.green ,
+                                    content: Text('Process Complete'),
+                                  ));
+//                                  setState(() {
+//                                    control_list.removeAt(index);
+//                                  });
+                                }else{
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.red ,
+                                    content: Text('Process Failed'),
+                                  ));
+                                }
+                              });
+                            }else{
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text("Network not Available"),
+                                backgroundColor: Colors.red,
+                              ));
+                            }
+                          });
+
                         },
                       ),
                     ],

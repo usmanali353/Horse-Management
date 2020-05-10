@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:horse_management/HMS/CareTakers/VetVisit/VetVisitCaretaker.dart';
 import 'package:horse_management/HMS/Diet/add_Diet.dart';
 import 'package:horse_management/HMS/Diet/diet_services.dart';
 import 'package:horse_management/HMS/Training/training_plans.dart';
@@ -32,7 +33,7 @@ class vetVisitListState extends State<vetVisitList>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Vet Visits"),
+      appBar: AppBar(title: Text("Vet Visits & Caretaker"),
         actions: <Widget>[
           Center(child: Text("Add New",textScaleFactor: 1.3,)),
           IconButton(
@@ -68,7 +69,8 @@ class vetVisitListState extends State<vetVisitList>{
             if(result){
               ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
               pd.show();
-              vieterniaryServices.getVetVisits(token).then((response){
+              //vieterniaryServices.getVetVisits(token).then((response){
+              VetVisitCareTakerServices.get_vetVisit_caretaker(token).then((response){
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
@@ -140,6 +142,79 @@ class vetVisitListState extends State<vetVisitList>{
 
                       },
                     ),
+                    IconSlideAction(
+                      icon: Icons.timer,
+                      color: Colors.deepOrange,
+                      caption: 'Start',
+                      onTap: () async {
+                        Utils.check_connectivity().then((result){
+                          if(result){
+                            ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                            pd.show();
+                            VetVisitCareTakerServices.start_vetVisit(token, vetvisits_list[index]['vetVisitId']).then((response){
+                              pd.dismiss();
+                              if(response!=null){
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor:Colors.green ,
+                                  content: Text('Process Started'),
+                                ));
+//                                  setState(() {
+//                                    control_list.removeAt(index);
+//                                  });
+                              }else{
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor:Colors.red ,
+                                  content: Text('Process Failed'),
+                                ));
+                              }
+                            });
+                          }else{
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              content: Text("Network not Available"),
+                              backgroundColor: Colors.red,
+                            ));
+                          }
+                        });
+
+                      },
+                    ),
+                    IconSlideAction(
+                      icon: Icons.done_all,
+                      color: Colors.green,
+                      caption: 'Complete',
+                      onTap: () async {
+                        Utils.check_connectivity().then((result){
+                          if(result){
+                            ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                            pd.show();
+                            VetVisitCareTakerServices.complete_vetVisit(token, vetvisits_list[index]['vetVisitId']).then((response){
+                              pd.dismiss();
+                              if(response!=null){
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor:Colors.green ,
+                                  content: Text('Process Complete'),
+                                ));
+//                                  setState(() {
+//                                    control_list.removeAt(index);
+//                                  });
+                              }else{
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor:Colors.red ,
+                                  content: Text('Process Failed'),
+                                ));
+                              }
+                            });
+                          }else{
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              content: Text("Network not Available"),
+                              backgroundColor: Colors.red,
+                            ));
+                          }
+                        });
+
+                      },
+                    ),
+
                     IconSlideAction(
                       icon: Icons.edit,
                       color: Colors.blue,
