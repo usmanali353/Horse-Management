@@ -5,6 +5,7 @@ import 'package:horse_management/HMS/All_Horses_data/farrier/add_farrier.dart';
 import 'package:horse_management/HMS/All_Horses_data/farrier/updateFarrier.dart';
 import 'package:horse_management/HMS/All_Horses_data/lab_reports/update_lab_reports.dart';
 import 'package:horse_management/HMS/All_Horses_data/services/farrier_services.dart';
+import 'package:horse_management/HMS/CareTakers/Farrier/FarrierCaretaker.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -54,7 +55,8 @@ class _Profile_Page_State extends State<farrier_list>{
         ProgressDialog pd = ProgressDialog(
             context, isDismissible: true, type: ProgressDialogType.Normal);
         pd.show();
-        farrier_services.farrierlist(token).then((response) {
+        //farrier_services.farrierlist(token).then((response) {
+        FarrierCareTakerServices.get_farrier_caretaker(token).then((response) {
           pd.dismiss();
           setState(() {
             print(response);
@@ -63,7 +65,7 @@ class _Profile_Page_State extends State<farrier_list>{
           });
         });
       }else
-        print("network nahi hai");
+        print("No Network");
     });
 
   }
@@ -72,7 +74,7 @@ class _Profile_Page_State extends State<farrier_list>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Farrier"),actions: <Widget>[
+        appBar: AppBar(title: Text("Farrier & Caretaker"),actions: <Widget>[
           Center(child: Text("Add New",textScaleFactor: 1.3,)),
           IconButton(
 
@@ -92,36 +94,107 @@ class _Profile_Page_State extends State<farrier_list>{
                 actionPane: SlidableDrawerActionPane(),
                 actionExtentRatio: 0.20,
                 actions: <Widget>[
-                  IconSlideAction(onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_farrier(farrierlist[index],token)));
-
-                  },color: Colors.blue,icon: Icons.border_color,caption: 'update',),
+//                  IconSlideAction(onTap: ()async{
+//                    prefs = await SharedPreferences.getInstance();
+//                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_farrier(farrierlist[index],token)));
+//
+//                  },color: Colors.blue,icon: Icons.border_color,caption: 'update',),
+//                  IconSlideAction(
+//                    icon: Icons.visibility_off,
+//                    color: Colors.red,
+//                    caption: 'Hide',
+//                    onTap: () async {
+//                      farrier_services.weight_hieghtvisibilty(token, farrierlist[index]['id']).then((response){
+//                        //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
+//                        print(response);
+//                        if(response!=null){
+//
+//                          Scaffold.of(context).showSnackBar(SnackBar(
+//                            backgroundColor:Colors.green ,
+//                            content: Text('Visibility Changed'),
+//                          ));
+//
+//                        }else{
+//                          Scaffold.of(context).showSnackBar(SnackBar(
+//                            backgroundColor:Colors.red ,
+//                            content: Text('Failed'),
+//                          ));
+//                        }
+//                      });
+//                    },
+//                  ),
                   IconSlideAction(
-                    icon: Icons.visibility_off,
-                    color: Colors.red,
-                    caption: 'Hide',
+                    icon: Icons.timer,
+                    color: Colors.deepOrange,
+                    caption: 'Start',
                     onTap: () async {
-                      farrier_services.weight_hieghtvisibilty(token, farrierlist[index]['id']).then((response){
-                        //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
-                        print(response);
-                        if(response!=null){
-
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            backgroundColor:Colors.green ,
-                            content: Text('Visibility Changed'),
-                          ));
-
+                      Utils.check_connectivity().then((result){
+                        if(result){
+                          ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                          pd.show();
+                          FarrierCareTakerServices.start_farrier(token, farrierlist[index]['id']).then((response){
+                            pd.dismiss();
+                            if(response!=null){
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                backgroundColor:Colors.green ,
+                                content: Text('Process Started'),
+                              ));
+//                                  setState(() {
+//                                    control_list.removeAt(index);
+//                                  });
+                            }else{
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                backgroundColor:Colors.red ,
+                                content: Text('Process Failed'),
+                              ));
+                            }
+                          });
                         }else{
                           Scaffold.of(context).showSnackBar(SnackBar(
-                            backgroundColor:Colors.red ,
-                            content: Text('Failed'),
+                            content: Text("Network not Available"),
+                            backgroundColor: Colors.red,
                           ));
                         }
                       });
+
                     },
                   ),
+                  IconSlideAction(
+                    icon: Icons.done_all,
+                    color: Colors.green,
+                    caption: 'Complete',
+                    onTap: () async {
+                      Utils.check_connectivity().then((result){
+                        if(result){
+                          ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                          pd.show();
+                          FarrierCareTakerServices.complete_farrier(token, farrierlist[index]['id']).then((response){
+                            pd.dismiss();
+                            if(response!=null){
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                backgroundColor:Colors.green ,
+                                content: Text('Process Complete'),
+                              ));
+//                                  setState(() {
+//                                    control_list.removeAt(index);
+//                                  });
+                            }else{
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                backgroundColor:Colors.red ,
+                                content: Text('Process Failed'),
+                              ));
+                            }
+                          });
+                        }else{
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text("Network not Available"),
+                            backgroundColor: Colors.red,
+                          ));
+                        }
+                      });
 
+                    },
+                  ),
                 ],
                 child: ListTile(
                   //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
@@ -132,7 +205,7 @@ class _Profile_Page_State extends State<farrier_list>{
                   onTap: ()async{
                     prefs = await SharedPreferences.getInstance();
                     print((farrierlist[index]));
-                    // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_labTest(lablist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
+                   // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_labTest(lablist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
                   },
                 ),
                 secondaryActions: <Widget>[

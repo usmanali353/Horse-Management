@@ -7,7 +7,6 @@ import 'package:horse_management/HMS/All_Horses_data/lab_reports/update_lab_repo
 import 'package:horse_management/HMS/All_Horses_data/services/vaccination_services.dart';
 import 'package:horse_management/HMS/All_Horses_data/vaccination/add_vaccination_form.dart';
 import 'package:horse_management/HMS/All_Horses_data/vaccination/update_vaccination.dart';
-import 'package:horse_management/HMS/CareTakers/Vaccination/VaccinationCaretaker.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -58,8 +57,7 @@ class _Profile_Page_State extends State<vaccination_list>{
         ProgressDialog pd = ProgressDialog(
             context, isDismissible: true, type: ProgressDialogType.Normal);
         pd.show();
-        //vaccination_services.vaccination_list(token).then((response) {
-          VaccinationCareTakerServices.get_vaccination_caretaker(token).then((response) {
+        vaccination_services.vaccination_list(token).then((response) {
           pd.dismiss();
           setState(() {
             print(response);
@@ -74,13 +72,16 @@ class _Profile_Page_State extends State<vaccination_list>{
         ));
     });
 
+
+
+
   }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Vaccination & Caretaker"),actions: <Widget>[
+        appBar: AppBar(title: Text("Vaccination"),actions: <Widget>[
           Center(child: Text("Add New",textScaleFactor: 1.3,)),
           IconButton(
 
@@ -130,78 +131,6 @@ class _Profile_Page_State extends State<vaccination_list>{
                           ));
                         }
                       });
-                    },
-                  ),
-                  IconSlideAction(
-                    icon: Icons.timer,
-                    color: Colors.deepOrange,
-                    caption: 'Start',
-                    onTap: () async {
-                      Utils.check_connectivity().then((result){
-                        if(result){
-                          ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                          pd.show();
-                          VaccinationCareTakerServices.start_vaccination(token, vaccinationlist[index]['id']).then((response){
-                            pd.dismiss();
-                            if(response!=null){
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.green ,
-                                content: Text('Process Started'),
-                              ));
-//                                  setState(() {
-//                                    control_list.removeAt(index);
-//                                  });
-                            }else{
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.red ,
-                                content: Text('Process Failed'),
-                              ));
-                            }
-                          });
-                        }else{
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text("Network not Available"),
-                            backgroundColor: Colors.red,
-                          ));
-                        }
-                      });
-
-                    },
-                  ),
-                  IconSlideAction(
-                    icon: Icons.done_all,
-                    color: Colors.green,
-                    caption: 'Complete',
-                    onTap: () async {
-                      Utils.check_connectivity().then((result){
-                        if(result){
-                          ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                          pd.show();
-                          VaccinationCareTakerServices.complete_vaccination(token, vaccinationlist[index]['id']).then((response){
-                            pd.dismiss();
-                            if(response!=null){
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.green ,
-                                content: Text('Process Complete'),
-                              ));
-//                                  setState(() {
-//                                    control_list.removeAt(index);
-//                                  });
-                            }else{
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.red ,
-                                content: Text('Process Failed'),
-                              ));
-                            }
-                          });
-                        }else{
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text("Network not Available"),
-                            backgroundColor: Colors.red,
-                          ));
-                        }
-                      });
-
                     },
                   ),
 
