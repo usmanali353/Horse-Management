@@ -22,15 +22,630 @@ class add_confirmation extends StatefulWidget{
 }
 class add_confirmationState extends State<add_confirmation>{
   String token;
-
+  Map<String, String> _rfdata = {};
+  Map<String, String> _lfdata = {};
+  Map<String, String> _rhdata = {};
+  Map<String, String> _lhdata = {};
+  var _rflist = List<Widget>();
+  var _lflist = List<Widget>();
+  var _rhlist = List<Widget>();
+  var _lhlist = List<Widget>();
+  int _rfindex = 1;
+  int _lfindex = 1;
+  int _rhindex = 1;
+  int _lhindex = 1;
   add_confirmationState(this.token);
 
   DateTime date=DateTime.now();
   bool horses_loaded=false,vet_loaded=false;
   List<String> horses=[],vet=[],opinion=['Well','Appropriate','Deficient'];
+  List<String> forejoint=[],hindjoint=[],confirmationstation =[],respons=[],confirmatioonmovement=[],lession=[],score=[];
   String selected_horse,selected_vet,selected_opinion;
   int selected_horse_id=0,selected_vet_id=0,selected_opinion_id;
   TextEditingController comments;
+
+
+  void _rflimb() {
+    int keyValue = _rfindex;
+    _rflist = List.from(_rflist)
+      ..add(Column(
+        key: Key("${keyValue}"),
+        children: <Widget>[
+          ListTile(
+            //leading: Text('Pet $_index : '),
+            title: FormBuilderDropdown(attribute: "Horse",
+              hint: Text("select"),
+              items:forejoint!=null?forejoint.map((horse)=>DropdownMenuItem(
+                child: Text(horse),
+                value: horse,
+              )).toList():[""].map((name) => DropdownMenuItem(
+                  value: name, child: Text("$name")))
+                  .toList(),
+              //style: Theme.of(context).textTheme.body1,
+              decoration: InputDecoration(labelText: "Joint",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+              onChanged: (value){
+                setState(() {
+                  //_rfdata['name${keyValue - 1}']=value;
+                  _rfdata['foreLimbJoint${keyValue - 1}']=forejoint.indexOf(value).toString();
+                });
+              },
+            ),
+          ),
+          ListTile(
+            title: FormBuilderDropdown(attribute: "Horse",
+              hint: Text("select"),
+              items:confirmationstation!=null?confirmationstation.map((horse)=>DropdownMenuItem(
+                child: Text(horse),
+                value: horse,
+              )).toList():[""].map((name) => DropdownMenuItem(
+                  value: name, child: Text("$name")))
+                  .toList(),
+              //style: Theme.of(context).textTheme.body1,
+              decoration: InputDecoration(labelText: "conformation-station",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+              onChanged: (value){
+                setState(() {
+                  //_rfdata['name${keyValue - 1}']=value;
+                  _rfdata['conformationStation${keyValue - 1}']=confirmationstation.indexOf(value).toString();
+                });
+              },
+            ),
+          ),
+          ListTile(
+            title: FormBuilderDropdown(attribute: "Horse",
+              hint: Text("select"),
+              items:confirmatioonmovement!=null?confirmatioonmovement.map((horse)=>DropdownMenuItem(
+                child: Text(horse),
+                value: horse,
+              )).toList():[""].map((name) => DropdownMenuItem(
+                  value: name, child: Text("$name")))
+                  .toList(),
+              //style: Theme.of(context).textTheme.body1,
+              decoration: InputDecoration(labelText: "Conformation Movement",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+              onChanged: (value){
+                setState(() {
+                  //_rfdata['name${keyValue - 1}']=value;
+                  _rfdata['conformationMovement${keyValue - 1}']=confirmatioonmovement.indexOf(value).toString();
+                });
+              },
+            ),
+          ),
+          ListTile(
+            title: FormBuilderDropdown(attribute: "Horse",
+              hint: Text("select"),
+              items:lession!=null?lession.map((horse)=>DropdownMenuItem(
+                child: Text(horse),
+                value: horse,
+              )).toList():[""].map((name) => DropdownMenuItem(
+                  value: name, child: Text("$name")))
+                  .toList(),
+              //style: Theme.of(context).textTheme.body1,
+              decoration: InputDecoration(labelText: "Lession",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+              onChanged: (value){
+                setState(() {
+                  //_rfdata['name${keyValue - 1}']=value;
+                  _rfdata['lesion${keyValue - 1}']=lession.indexOf(value).toString();
+                });
+              },
+            ),
+          ),
+          ListTile(
+            title: FormBuilderTextField(
+              // keyboardType: TextInputType.number,
+              attribute: "treatment",
+              validators: [FormBuilderValidators.required()],
+              onChanged: (val) {
+                _rfdata['treatment${keyValue - 1}'] = val;
+              },
+              decoration: InputDecoration(labelText: "Treatment",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+            ),
+          ),
+          ListTile(
+            title: FormBuilderDropdown(attribute: "Horse",
+              hint: Text("Response"),
+              items:respons!=null?respons.map((horse)=>DropdownMenuItem(
+                child: Text(horse),
+                value: horse,
+              )).toList():[""].map((name) => DropdownMenuItem(
+                  value: name, child: Text("$name")))
+                  .toList(),
+              //style: Theme.of(context).textTheme.body1,
+              decoration: InputDecoration(labelText: "Response",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+              onChanged: (value){
+                setState(() {
+                  //_rfdata['name${keyValue - 1}']=value;
+                  _rfdata['response${keyValue - 1}']=respons.indexOf(value).toString();
+                });
+              },
+            ),
+          ),
+          Divider()
+        ],
+      ));
+
+    setState(() => ++_rfindex);
+  }
+  void _lflimb() {
+    int keyValue = _lfindex;
+    _lflist = List.from(_lflist)
+      ..add(Column(
+        key: Key("${keyValue}"),
+        children: <Widget>[
+          ListTile(
+            //leading: Text('Pet $_index : '),
+            title: FormBuilderDropdown(attribute: "Horse",
+              hint: Text("select"),
+              items:forejoint!=null?forejoint.map((horse)=>DropdownMenuItem(
+                child: Text(horse),
+                value: horse,
+              )).toList():[""].map((name) => DropdownMenuItem(
+                  value: name, child: Text("$name")))
+                  .toList(),
+              //style: Theme.of(context).textTheme.body1,
+              decoration: InputDecoration(labelText: "Joint",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+              onChanged: (value){
+                setState(() {
+                  //_rfdata['name${keyValue - 1}']=value;
+                  _lfdata['foreLimbJoint${keyValue - 1}']=forejoint.indexOf(value).toString();
+                });
+              },
+            ),
+          ),
+          ListTile(
+            title: FormBuilderDropdown(attribute: "Horse",
+              hint: Text("select"),
+              items:confirmationstation!=null?confirmationstation.map((horse)=>DropdownMenuItem(
+                child: Text(horse),
+                value: horse,
+              )).toList():[""].map((name) => DropdownMenuItem(
+                  value: name, child: Text("$name")))
+                  .toList(),
+              //style: Theme.of(context).textTheme.body1,
+              decoration: InputDecoration(labelText: "conformation-station",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+              onChanged: (value){
+                setState(() {
+                  //_rfdata['name${keyValue - 1}']=value;
+                  _lfdata['conformationStation${keyValue - 1}']=confirmationstation.indexOf(value).toString();
+                });
+              },
+            ),
+          ),
+          ListTile(
+            title: FormBuilderDropdown(attribute: "Horse",
+              hint: Text("select"),
+              items:confirmatioonmovement!=null?confirmatioonmovement.map((horse)=>DropdownMenuItem(
+                child: Text(horse),
+                value: horse,
+              )).toList():[""].map((name) => DropdownMenuItem(
+                  value: name, child: Text("$name")))
+                  .toList(),
+              //style: Theme.of(context).textTheme.body1,
+              decoration: InputDecoration(labelText: "Conformation Movement",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+              onChanged: (value){
+                setState(() {
+                  //_rfdata['name${keyValue - 1}']=value;
+                  _lfdata['conformationMovement${keyValue - 1}']=confirmatioonmovement.indexOf(value).toString();
+                });
+              },
+            ),
+          ),
+          ListTile(
+            title: FormBuilderDropdown(attribute: "Horse",
+              hint: Text("select"),
+              items:lession!=null?lession.map((horse)=>DropdownMenuItem(
+                child: Text(horse),
+                value: horse,
+              )).toList():[""].map((name) => DropdownMenuItem(
+                  value: name, child: Text("$name")))
+                  .toList(),
+              //style: Theme.of(context).textTheme.body1,
+              decoration: InputDecoration(labelText: "Lession",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+              onChanged: (value){
+                setState(() {
+                  //_rfdata['name${keyValue - 1}']=value;
+                  _lfdata['lesion${keyValue - 1}']=lession.indexOf(value).toString();
+                });
+              },
+            ),
+          ),
+          ListTile(
+            title: FormBuilderTextField(
+              // keyboardType: TextInputType.number,
+              attribute: "treatment",
+              validators: [FormBuilderValidators.required()],
+              onChanged: (val) {
+                _lfdata['treatment${keyValue - 1}'] = val;
+              },
+              decoration: InputDecoration(labelText: "Treatment",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+            ),
+          ),
+          ListTile(
+            title: FormBuilderDropdown(attribute: "Horse",
+              hint: Text("Response"),
+              items:respons!=null?respons.map((horse)=>DropdownMenuItem(
+                child: Text(horse),
+                value: horse,
+              )).toList():[""].map((name) => DropdownMenuItem(
+                  value: name, child: Text("$name")))
+                  .toList(),
+              //style: Theme.of(context).textTheme.body1,
+              decoration: InputDecoration(labelText: "Response",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+              onChanged: (value){
+                setState(() {
+                  //_rfdata['name${keyValue - 1}']=value;
+                  _lfdata['response${keyValue - 1}']=respons.indexOf(value).toString();
+                });
+              },
+            ),
+          ),
+          Divider()
+        ],
+      ));
+
+    setState(() => ++_lfindex);
+  }
+  void _rhlimb() {
+    int keyValue = _rhindex;
+    _rhlist = List.from(_rhlist)
+      ..add(Column(
+        key: Key("${keyValue}"),
+        children: <Widget>[
+          ListTile(
+            //leading: Text('Pet $_index : '),
+            title: FormBuilderDropdown(attribute: "Horse",
+              hint: Text("select"),
+              items:hindjoint!=null?hindjoint.map((horse)=>DropdownMenuItem(
+                child: Text(horse),
+                value: horse,
+              )).toList():[""].map((name) => DropdownMenuItem(
+                  value: name, child: Text("$name")))
+                  .toList(),
+              //style: Theme.of(context).textTheme.body1,
+              decoration: InputDecoration(labelText: "Joint",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+              onChanged: (value){
+                setState(() {
+                  //_rfdata['name${keyValue - 1}']=value;
+                  _rhdata['hindLimbJoint${keyValue - 1}']=hindjoint.indexOf(value).toString();
+                });
+              },
+            ),
+          ),
+          ListTile(
+            title: FormBuilderDropdown(attribute: "Horse",
+              hint: Text("select"),
+              items:confirmationstation!=null?confirmationstation.map((horse)=>DropdownMenuItem(
+                child: Text(horse),
+                value: horse,
+              )).toList():[""].map((name) => DropdownMenuItem(
+                  value: name, child: Text("$name")))
+                  .toList(),
+              //style: Theme.of(context).textTheme.body1,
+              decoration: InputDecoration(labelText: "conformation-station",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+              onChanged: (value){
+                setState(() {
+                  //_rfdata['name${keyValue - 1}']=value;
+                  _rhdata['conformationStation${keyValue - 1}']=confirmationstation.indexOf(value).toString();
+                });
+              },
+            ),
+          ),
+          ListTile(
+            title: FormBuilderDropdown(attribute: "Horse",
+              hint: Text("select"),
+              items:confirmatioonmovement!=null?confirmatioonmovement.map((horse)=>DropdownMenuItem(
+                child: Text(horse),
+                value: horse,
+              )).toList():[""].map((name) => DropdownMenuItem(
+                  value: name, child: Text("$name")))
+                  .toList(),
+              //style: Theme.of(context).textTheme.body1,
+              decoration: InputDecoration(labelText: "Conformation Movement",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+              onChanged: (value){
+                setState(() {
+                  //_rfdata['name${keyValue - 1}']=value;
+                  _rhdata['conformationMovement${keyValue - 1}']=confirmatioonmovement.indexOf(value).toString();
+                });
+              },
+            ),
+          ),
+          ListTile(
+            title: FormBuilderDropdown(attribute: "Horse",
+              hint: Text("select"),
+              items:lession!=null?lession.map((horse)=>DropdownMenuItem(
+                child: Text(horse),
+                value: horse,
+              )).toList():[""].map((name) => DropdownMenuItem(
+                  value: name, child: Text("$name")))
+                  .toList(),
+              //style: Theme.of(context).textTheme.body1,
+              decoration: InputDecoration(labelText: "Lession",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+              onChanged: (value){
+                setState(() {
+                  //_rfdata['name${keyValue - 1}']=value;
+                  _rhdata['lesion${keyValue - 1}']=lession.indexOf(value).toString();
+                });
+              },
+            ),
+          ),
+          ListTile(
+            title: FormBuilderTextField(
+              // keyboardType: TextInputType.number,
+              attribute: "treatment",
+              validators: [FormBuilderValidators.required()],
+              onChanged: (val) {
+                _rhdata['treatment${keyValue - 1}'] = val;
+              },
+              decoration: InputDecoration(labelText: "Treatment",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+            ),
+          ),
+          ListTile(
+            title: FormBuilderDropdown(attribute: "Horse",
+              hint: Text("Response"),
+              items:respons!=null?respons.map((horse)=>DropdownMenuItem(
+                child: Text(horse),
+                value: horse,
+              )).toList():[""].map((name) => DropdownMenuItem(
+                  value: name, child: Text("$name")))
+                  .toList(),
+              //style: Theme.of(context).textTheme.body1,
+              decoration: InputDecoration(labelText: "Response",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+              onChanged: (value){
+                setState(() {
+                  //_rfdata['name${keyValue - 1}']=value;
+                  _rhdata['response${keyValue - 1}']=respons.indexOf(value).toString();
+                });
+              },
+            ),
+          ),
+          Divider()
+        ],
+      ));
+
+    setState(() => ++_rhindex);
+  }
+  void _lhlimb() {
+    int keyValue = _lhindex;
+    _lhlist = List.from(_lhlist)
+      ..add(Column(
+        key: Key("${keyValue}"),
+        children: <Widget>[
+          ListTile(
+            //leading: Text('Pet $_index : '),
+            title: FormBuilderDropdown(attribute: "Horse",
+              hint: Text("select"),
+              items:hindjoint!=null?hindjoint.map((horse)=>DropdownMenuItem(
+                child: Text(horse),
+                value: horse,
+              )).toList():[""].map((name) => DropdownMenuItem(
+                  value: name, child: Text("$name")))
+                  .toList(),
+              //style: Theme.of(context).textTheme.body1,
+              decoration: InputDecoration(labelText: "Joint",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+              onChanged: (value){
+                setState(() {
+                  //_rfdata['name${keyValue - 1}']=value;
+                  _lhdata['hindLimbJoint${keyValue - 1}']=hindjoint.indexOf(value).toString();
+                });
+              },
+            ),
+          ),
+          ListTile(
+            title: FormBuilderDropdown(attribute: "Horse",
+              hint: Text("select"),
+              items:confirmationstation!=null?confirmationstation.map((horse)=>DropdownMenuItem(
+                child: Text(horse),
+                value: horse,
+              )).toList():[""].map((name) => DropdownMenuItem(
+                  value: name, child: Text("$name")))
+                  .toList(),
+              //style: Theme.of(context).textTheme.body1,
+              decoration: InputDecoration(labelText: "conformation-station",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+              onChanged: (value){
+                setState(() {
+                  //_rfdata['name${keyValue - 1}']=value;
+                  _lhdata['conformationStation${keyValue - 1}']=confirmationstation.indexOf(value).toString();
+                });
+              },
+            ),
+          ),
+          ListTile(
+            title: FormBuilderDropdown(attribute: "Horse",
+              hint: Text("select"),
+              items:confirmatioonmovement!=null?confirmatioonmovement.map((horse)=>DropdownMenuItem(
+                child: Text(horse),
+                value: horse,
+              )).toList():[""].map((name) => DropdownMenuItem(
+                  value: name, child: Text("$name")))
+                  .toList(),
+              //style: Theme.of(context).textTheme.body1,
+              decoration: InputDecoration(labelText: "Conformation Movement",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+              onChanged: (value){
+                setState(() {
+                  //_rfdata['name${keyValue - 1}']=value;
+                  _lhdata['conformationMovement${keyValue - 1}']=confirmatioonmovement.indexOf(value).toString();
+                });
+              },
+            ),
+          ),
+          ListTile(
+            title: FormBuilderDropdown(attribute: "Horse",
+              hint: Text("select"),
+              items:lession!=null?lession.map((horse)=>DropdownMenuItem(
+                child: Text(horse),
+                value: horse,
+              )).toList():[""].map((name) => DropdownMenuItem(
+                  value: name, child: Text("$name")))
+                  .toList(),
+              //style: Theme.of(context).textTheme.body1,
+              decoration: InputDecoration(labelText: "Lession",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+              onChanged: (value){
+                setState(() {
+                  //_rfdata['name${keyValue - 1}']=value;
+                  _lhdata['lesion${keyValue - 1}']=lession.indexOf(value).toString();
+                });
+              },
+            ),
+          ),
+          ListTile(
+            title: FormBuilderTextField(
+              // keyboardType: TextInputType.number,
+              attribute: "treatment",
+              validators: [FormBuilderValidators.required()],
+              onChanged: (val) {
+                _lhdata['treatment${keyValue - 1}'] = val;
+              },
+              decoration: InputDecoration(labelText: "Treatment",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+            ),
+          ),
+          ListTile(
+            title: FormBuilderDropdown(attribute: "Horse",
+              hint: Text("Response"),
+              items:respons!=null?respons.map((horse)=>DropdownMenuItem(
+                child: Text(horse),
+                value: horse,
+              )).toList():[""].map((name) => DropdownMenuItem(
+                  value: name, child: Text("$name")))
+                  .toList(),
+              //style: Theme.of(context).textTheme.body1,
+              decoration: InputDecoration(labelText: "Response",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                ),
+              ),
+              onChanged: (value){
+                setState(() {
+                  //_rfdata['name${keyValue - 1}']=value;
+                  _lhdata['response${keyValue - 1}']=respons.indexOf(value).toString();
+                });
+              },
+            ),
+          ),
+          Divider()
+        ],
+      ));
+
+    setState(() => ++_lhindex);
+  }
+
+
+
+
+
   var confirmationDropdowns;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
   @override
@@ -62,6 +677,21 @@ class add_confirmationState extends State<add_confirmation>{
                 horses.add(confirmationDropdowns['horseDropDown'][i]['name']);
               for(int i=0;i<confirmationDropdowns['vetDropDown'].length;i++)
                 vet.add(confirmationDropdowns['vetDropDown'][i]['name']);
+              for(int i=0;i<confirmationDropdowns['conformationDetail']['foreLimbJointDropDown'].length;i++)
+                forejoint.add(confirmationDropdowns['conformationDetail']['foreLimbJointDropDown'][i]['name']);
+              for(int i=0;i<confirmationDropdowns['conformationDetail']['hindLimbJointDropDown'].length;i++)
+                hindjoint.add(confirmationDropdowns['conformationDetail']['hindLimbJointDropDown'][i]['name']);
+              for(int i=0;i<confirmationDropdowns['conformationDetail']['lesionDropDown'].length;i++)
+                lession.add(confirmationDropdowns['conformationDetail']['lesionDropDown'][i]['name']);
+              for(int i=0;i<confirmationDropdowns['conformationDetail']['movementDropDown'].length;i++)
+                confirmatioonmovement.add(confirmationDropdowns['conformationDetail']['movementDropDown'][i]['name']);
+              for(int i=0;i<confirmationDropdowns['conformationDetail']['stationDropDown'].length;i++)
+                confirmationstation.add(confirmationDropdowns['conformationDetail']['stationDropDown'][i]['name']);
+              for(int i=0;i<confirmationDropdowns['conformationDetail']['scoresDropDown'].length;i++)
+                score.add(confirmationDropdowns['conformationDetail']['scoresDropDown'][i]['name']);
+              for(int i=0;i<confirmationDropdowns['conformationDetail']['responseDropDown'].length;i++)
+                respons.add(confirmationDropdowns['conformationDetail']['responseDropDown'][i]['name']);
+
             });
 
           }
@@ -71,6 +701,7 @@ class add_confirmationState extends State<add_confirmation>{
       }
     });
     super.initState();
+   // _add();
   }
   @override
   Widget build(BuildContext context) {
@@ -82,6 +713,7 @@ class add_confirmationState extends State<add_confirmation>{
           FormBuilder(
             key: _fbKey,
             child: Column(
+
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(top:16,left: 16,right: 16),
@@ -208,82 +840,65 @@ class add_confirmationState extends State<add_confirmation>{
                     ),
                   ),
                 ),
-      Padding(padding: EdgeInsets.only(top:30, right: 250),
-                child: Text("Right Forelimb", style: TextStyle(color: Colors.teal,fontSize: 20, fontWeight: FontWeight.bold),)
+                  Padding(padding: EdgeInsets.only(top:30, right: 250),
+                    child: Text("Right Forelimb", style: TextStyle(color: Colors.teal,fontSize: 20, fontWeight: FontWeight.bold),)
             ),
-        Padding(padding: EdgeInsets.only(right: 350),
-          child: IconButton(
-                      icon: Icon(Icons.add_circle),
-                      color: Colors.teal,
-                      tooltip: 'Add Right Forlimb',
-                      onPressed: () async
-                      {
-//                        List<PersonEntry> persons = await Navigator.push(
-//                          context,
-//                          MaterialPageRoute(
-//                            builder: (context) => SOF(),
-//                          ),
-//                        );
-                       // if (persons != null) persons.forEach(print);
-                      },
-                    ),
-               ),
-      Padding(padding: EdgeInsets.only(top:30,right: 250),
-          child: Text("Left Forelimb", style: TextStyle(color: Colors.teal,fontSize: 20, fontWeight: FontWeight.bold),)
-      ),
-      Padding(padding: EdgeInsets.only(right: 350),
-        child: IconButton(
-          icon: Icon(Icons.add_circle),
-          color: Colors.teal,
-          tooltip: 'Add Left Forlimb',
-          onPressed: () async {
-//            List<PersonEntry> persons = await Navigator.push(
-//              context,
-//              MaterialPageRoute(
-//                builder: (context) => SOF(),
-//              ),
-//            );
-//            if (persons != null) persons.forEach(print);
-          },
-        ),
-      ),
-      Padding(padding: EdgeInsets.only(top:30,right: 250),
-          child: Text("Right Hindlimb", style: TextStyle(color: Colors.teal,fontSize: 20, fontWeight: FontWeight.bold),)
-      ),
-      Padding(padding: EdgeInsets.only(right: 350),
-        child: IconButton(
-          icon: Icon(Icons.add_circle),
-          color: Colors.teal,
-          tooltip: 'Add Right Hindlimb',
-          onPressed: () async {
-//            List<PersonEntry> persons = await Navigator.push(
-//              context,
-//              MaterialPageRoute(
-//                builder: (context) => SOF(),
-//              ),
-//            );
-//            if (persons != null) persons.forEach(print);
-          },
-        ),
-      ),
-      Padding(padding: EdgeInsets.only(top:30,right: 250),
-          child: Text("Left Hindlimb", style: TextStyle(color: Colors.teal,fontSize: 20, fontWeight: FontWeight.bold),)
-      ),
-      Padding(padding: EdgeInsets.only(right: 350),
-        child: IconButton(
-          icon: Icon(Icons.add_circle),
-          color: Colors.teal,
-          onPressed: () async {
-//            List<PersonEntry> persons = await Navigator.push(
-//              context,
-//              MaterialPageRoute(
-//                builder: (context) => SOF(),
-//              ),
-//            );
-//            if (persons != null) persons.forEach(print);
-          },
-        ),
-      ),
+                Padding(padding: EdgeInsets.only(right: 350),
+                  child: IconButton(
+                    icon: Icon(Icons.add_circle),
+                    color: Colors.teal,
+                    tooltip: 'Add Right Forlimb',
+                    onPressed: _rflimb,
+                  ),
+                ),
+                ListView(
+                  shrinkWrap: true,
+                  children: _rflist,
+                ),
+                Padding(padding: EdgeInsets.only(top:30,right: 250),
+                    child: Text("Left Forelimb", style: TextStyle(color: Colors.teal,fontSize: 20, fontWeight: FontWeight.bold),)
+                ),
+                Padding(padding: EdgeInsets.only(right: 350),
+                  child: IconButton(
+                    icon: Icon(Icons.add_circle),
+                    color: Colors.teal,
+                    tooltip: 'Add Left Forlimb',
+                    onPressed: _lflimb,
+                  ),
+                ),
+                ListView(
+                  shrinkWrap: true,
+                  children: _lflist,
+                ),
+                Padding(padding: EdgeInsets.only(top:30,right: 250),
+                    child: Text("Right Hindlimb", style: TextStyle(color: Colors.teal,fontSize: 20, fontWeight: FontWeight.bold),)
+                ),
+                Padding(padding: EdgeInsets.only(right: 350),
+                  child: IconButton(
+                    icon: Icon(Icons.add_circle),
+                    color: Colors.teal,
+                    tooltip: 'Add Right Hindlimb',
+                    onPressed: _rhlimb,
+                  ),
+                ),
+                ListView(
+                  shrinkWrap: true,
+                  children: _rhlist,
+                ),
+                Padding(padding: EdgeInsets.only(top:30,right: 250),
+                    child: Text("Left Hindlimb", style: TextStyle(color: Colors.teal,fontSize: 20, fontWeight: FontWeight.bold),)
+                ),
+                Padding(padding: EdgeInsets.only(right: 350),
+                  child: IconButton(
+                    icon: Icon(Icons.add_circle),
+                    color: Colors.teal,
+                    onPressed: _lhlimb,
+                  ),
+                ),
+                ListView(
+                  shrinkWrap: true,
+                  children: _lhlist,
+                ),
               ],
             ),
           ),
@@ -292,6 +907,11 @@ class add_confirmationState extends State<add_confirmation>{
               padding: EdgeInsets.only(top: 16),
               child: MaterialButton(
                 onPressed: () async{
+                  print(_rfdata);
+                  print(_lfdata);
+                  print(_rhdata);
+                  print(_lhdata);
+
                   SharedPreferences prefs= await SharedPreferences.getInstance();
                   if(_fbKey.currentState.validate()){
                    // Navigator.push(context, MaterialPageRoute(builder: (context)=>addProductsApplied(prefs.getString("token"),date,selected_horse_id,selected_vet_id,selected_opinion_id,confirmationDropdowns['conformationDetail']['foreLimbJointDropDown'])));
@@ -303,8 +923,11 @@ class add_confirmationState extends State<add_confirmation>{
             ),
           )
         ],
+        shrinkWrap: true,
       ),
+
     );
+
   }
 
 }

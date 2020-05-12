@@ -87,7 +87,8 @@ class _confirmation_list extends State<confirmation_list>{
                 if(response!=null){
                   setState(() {
                    // print(confirmation_lists['horseName']['name'].toString());
-                    confirmation_lists=json.decode(response);
+                   var lists=json.decode(response);
+                    confirmation_lists = lists['response'];
                     print(confirmation_lists);
                     isVisible=true;
                   });
@@ -159,8 +160,9 @@ class _confirmation_list extends State<confirmation_list>{
                     child: FadeAnimation(2.0,
                       ListTile(
                         title: Text(confirmation_lists!=null?confirmation_lists[index]['horseName']['name']:''),
+                        //title: Text("data"),
                         subtitle: Text(confirmation_lists!=null?confirmation_lists[index]['vetName']['contactName']['name'].toString():''),
-                       trailing: Text(confirmation_lists!=null?confirmation_lists[index]['date'].toString():''),
+                       trailing: Text(confirmation_lists!=null?confirmation_lists[index]['date'].toString().substring(0,10) :''),
                         onTap: (){
                           // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
                         },
