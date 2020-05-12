@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import  'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/HMS/CareTakers/BreedingControl/BreedingControlCaretaker.dart';
+import 'package:horse_management/HMS/CareTakers/SemenCollection/SemenCollectionCaretaker.dart';
 import 'package:horse_management/HMS/Configuration/Barns/barn_json.dart';
 import 'dart:convert';
 
@@ -9,20 +10,20 @@ import 'package:progress_dialog/progress_dialog.dart';
 import '../../../Utils.dart';
 
 
-class breeding_control_late_reason extends StatefulWidget{
+class semen_collection_late_reason extends StatefulWidget{
   final token;
-  breeding_control_late_reason(this.token);
+  semen_collection_late_reason(this.token);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _breeding_control_late_reason(token);
+    return _semen_collection_late_reason(token);
   }
 
 }
-class _breeding_control_late_reason extends State<breeding_control_late_reason>{
+class _semen_collection_late_reason extends State<semen_collection_late_reason>{
   final token;
-  _breeding_control_late_reason(this.token,);
+  _semen_collection_late_reason(this.token,);
   TextEditingController late_reason;
   //int selected_currency_id=0;
   bool autoValidate = true;
@@ -97,7 +98,7 @@ class _breeding_control_late_reason extends State<breeding_control_late_reason>{
                               if(result){
                                 ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                                 pd.show();
-                                BreedingControlCareTakerServices.save_late_complete_reason(token,0,late_reason.text)
+                                SemenCollectionCareTakerServices.save_late_complete_reason(token,0,late_reason.text)
                                     .then((respons){
                                   pd.dismiss();
                                   setState(() {
