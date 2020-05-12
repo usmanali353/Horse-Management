@@ -8,28 +8,28 @@ import '../../../Utils.dart';
 
 
 
-class ConfirmationCareTakerServices{
+class BreedingControlCareTakerServices{
 
-  static Future<String> get_confirmation_caretaker(String token) async{
+  static Future<String> get_breedingControl_caretaker(String token) async{
     Map<String,String> headers = {'Authorization':'Bearer '+token};
-    var response =await http.get('http://192.236.147.77:8083/api/CareTakers/AllConformations',headers: headers);
+    var response =await http.get('http://192.236.147.77:8083/api/CareTakers/AllBreedingControls',headers: headers);
     print(response.body);
     if(response.statusCode==200){
       return response.body;
     }else
       return null;
   }
-  static Future<String> start_confirmation(String token,int id) async{
+  static Future<String> start_breeding_Control(String token,int id) async{
     Map<String,String> headers = {'Authorization':'Bearer '+token};
-    var response =await http.get('http://192.236.147.77:8083/api/CareTakers/StartConformations/'+id.toString(),headers: headers);
+    var response =await http.get('http://192.236.147.77:8083/api/CareTakers/StartBreedingControl/'+id.toString(),headers: headers);
     if(response.statusCode==200){
       return response.body;
     }else
       return null;
   }
-  static Future<String> complete_confirmation(String token,int id) async{
+  static Future<String> complete_breeding_Control(String token,int id) async{
     Map<String,String> headers = {'Authorization':'Bearer '+token};
-    var response =await http.get('http://192.236.147.77:8083/api/CareTakers/CompleteConformations/'+id.toString(),headers: headers);
+    var response =await http.get('http://192.236.147.77:8083/api/CareTakers/CompleteBreedingControl/'+id.toString(),headers: headers);
     if(response.statusCode==200){
       return response.body;
     }else
@@ -42,11 +42,11 @@ class ConfirmationCareTakerServices{
       HttpHeaders.authorizationHeader : 'Bearer '+token
     };
     final body = jsonEncode({
-      // "breedingControlId": id,
+     // "breedingControlId": id,
       "id" : id,
       "LateReason": lateReason,
-    },toEncodable: Utils.myEncode);
-    final response = await http.post('http://192.236.147.77:8083/api/CareTakers/LateCompleteConformationsReason', headers: headers, body: body);
+      },toEncodable: Utils.myEncode);
+    final response = await http.post('http://192.236.147.77:8083/api/CareTakers/LateCompleteBreedingControlReason', headers: headers, body: body);
     print(response.body);
     if(response.statusCode==200){
       return response.body;

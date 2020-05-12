@@ -41,8 +41,8 @@ class _Profile_Page_State extends State<vet_category>{
                 shrinkWrap: true,
                 children: <Widget>[
                   ListTile(
-                    title: Text("Training List"),
-                    subtitle: Text("Add Training List"),
+                    title: Text("Confirmation"),
+                    subtitle: Text("Add & Show Confirmation"),
                     leading: Icon(Icons.account_balance_wallet,size: 40,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: ()async{

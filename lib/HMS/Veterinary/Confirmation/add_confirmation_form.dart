@@ -917,7 +917,7 @@ class add_confirmationState extends State<add_confirmation>{
                    // Navigator.push(context, MaterialPageRoute(builder: (context)=>addProductsApplied(prefs.getString("token"),date,selected_horse_id,selected_vet_id,selected_opinion_id,confirmationDropdowns['conformationDetail']['foreLimbJointDropDown'])));
                   }
                 },
-                child: Text("Add Products Applied",style: TextStyle(color: Colors.white),),
+                child: Text("Save",style: TextStyle(color: Colors.white),),
                 color: Colors.teal,
               ),
             ),
