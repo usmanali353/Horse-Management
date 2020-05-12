@@ -7,6 +7,7 @@ import 'package:horse_management/HMS/Breeding/BreedingControl/breeding_control_f
 import 'package:horse_management/HMS/Breeding/BreedingControl/next_breeding_check.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/update_breeding_control.dart';
 import 'package:horse_management/HMS/CareTakers/BreedingControl/BreedingControlCaretaker.dart';
+import 'package:horse_management/HMS/CareTakers/BreedingControl/BreedingControlLateReason.dart';
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
@@ -117,15 +118,15 @@ class _breeding_control_caretaker_list extends State<breeding_control_caretaker_
 //                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_breeding_control(token,control_list[index])));
 //                        },
 //                      ),
-                      IconSlideAction(
-                        icon: Icons.access_time,
-                        color: Colors.deepPurple,
-                        caption: 'Next Check',
-                        onTap: () async {
-                          print(control_list[index]);
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>next_breeding_check(token, control_list[index]['breedingControlId'])));
-                        },
-                      ),
+//                      IconSlideAction(
+//                        icon: Icons.access_time,
+//                        color: Colors.deepPurple,
+//                        caption: 'Next Check',
+//                        onTap: () async {
+//                          print(control_list[index]);
+//                          Navigator.push(context,MaterialPageRoute(builder: (context)=>next_breeding_check(token, control_list[index]['breedingControlId'])));
+//                        },
+//                      ),
                     ],
                     actions: <Widget>[
 //                      IconSlideAction(
@@ -203,37 +204,41 @@ class _breeding_control_caretaker_list extends State<breeding_control_caretaker_
                         icon: Icons.done_all,
                         color: Colors.green,
                         caption: 'Complete',
-                        onTap: () async {
-                          Utils.check_connectivity().then((result){
-                            if(result){
-                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                              pd.show();
-                              BreedingControlCareTakerServices.complete_breeding_Control(token, control_list[index]['breedingControlId']).then((response){
-                                pd.dismiss();
-                                if(response!=null){
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    backgroundColor:Colors.green ,
-                                    content: Text('Process Complete'),
-                                  ));
-                                  setState(() {
-                                    control_list.removeAt(index);
-                                  });
-                                }else{
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    backgroundColor:Colors.red ,
-                                    content: Text('Process Failed'),
-                                  ));
-                                }
-                              });
-                            }else{
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                content: Text("Network not Available"),
-                                backgroundColor: Colors.red,
-                              ));
-                            }
-                          });
-
+                       onTap: () async {
+                          print(control_list[index]);
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>breeding_control_late_reason(token, /*control_list[index]['breedingControlId']*/)));
                         },
+//                        onTap: () async {
+//                          Utils.check_connectivity().then((result){
+//                            if(result){
+//                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+//                              pd.show();
+//                              BreedingControlCareTakerServices.complete_breeding_Control(token, control_list[index]['breedingControlId']).then((response){
+//                                pd.dismiss();
+//                                if(response!=null){
+//                                  Scaffold.of(context).showSnackBar(SnackBar(
+//                                    backgroundColor:Colors.green ,
+//                                    content: Text('Process Complete'),
+//                                  ));
+//                                  setState(() {
+//                                    control_list.removeAt(index);
+//                                  });
+//                                }else{
+//                                  Scaffold.of(context).showSnackBar(SnackBar(
+//                                    backgroundColor:Colors.red ,
+//                                    content: Text('Process Failed'),
+//                                  ));
+//                                }
+//                              });
+//                            }else{
+//                              Scaffold.of(context).showSnackBar(SnackBar(
+//                                content: Text("Network not Available"),
+//                                backgroundColor: Colors.red,
+//                              ));
+//                            }
+//                          });
+//
+//                        },
                       ),
                     ],
                     child: FadeAnimation(2.0,
