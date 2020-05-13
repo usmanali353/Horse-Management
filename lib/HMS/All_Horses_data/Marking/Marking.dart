@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:async';
 import 'dart:typed_data';
@@ -52,7 +53,10 @@ class MarkingState extends State<Marking> {
   }
 
   Future<Null> showImage(BuildContext context) async {
-    var pngBytes = await image.toByteData(format: ui.ImageByteFormat.png);
+    var byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    Uint8List pngBytes = byteData.buffer.asUint8List();
+    String bs64 = base64Encode(pngBytes);
+    print(bs64);
     return showDialog<Null>(
         context: context,
         builder: (BuildContext context) {
