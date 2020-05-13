@@ -35,7 +35,7 @@ class _confirmation_list extends State<confirmation_list>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var confirmation_lists, load_list;
+  var confirmation_lists;
 
   @override
   void initState() {
@@ -88,8 +88,7 @@ class _confirmation_list extends State<confirmation_list>{
                   setState(() {
                    // print(confirmation_lists['horseName']['name'].toString());
                    var lists=json.decode(response);
-                   load_list=json.decode(response);
-                   confirmation_lists = load_list['response'];
+                    confirmation_lists = lists['response'];
                     print(confirmation_lists);
                     isVisible=true;
                   });

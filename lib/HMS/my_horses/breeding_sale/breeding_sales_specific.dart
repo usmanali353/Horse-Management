@@ -27,6 +27,7 @@ class _incomeExpense_list_state extends State<breedingSale_list>{
   var list,blist,trainingdropdown,horseId;
   SharedPreferences prefs;
   String token;
+  bool isvisible=false;
 
   _incomeExpense_list_state (this.token,this.horseId);
 
@@ -45,7 +46,7 @@ class _incomeExpense_list_state extends State<breedingSale_list>{
         blist = jsonDecode(response);
         print(blist['allBreedingSales']);
         list = blist['allBreedingSales'];
-        print(list['horseId'].toString());
+       // print(list['horseId'].toString());
       });
     });
 
@@ -83,7 +84,7 @@ class _incomeExpense_list_state extends State<breedingSale_list>{
           return Column(
             children: <Widget>[
               ExpansionTile(
-                title: Text(list[index]['breedingSalesId'] != null ? "vet: "+list[index]['assignedVetName']['contactName']['name'].toString():'empty',textScaleFactor: 1.3,),
+                title: Text(list != null ? "vet: "+list[index]['assignedVetName']['contactName']['name'].toString():'empty',textScaleFactor: 1.3,),
                 //title: Text("abc"),
                 subtitle: Text(list != null ?" Date: "+list[index]['date'].toString().substring(0,10):"date empty"),
                 trailing: Text(list != null ? "Status: "+get_status_by_id(list[index]['status']):'status empty'),
@@ -158,13 +159,18 @@ class _incomeExpense_list_state extends State<breedingSale_list>{
   String get_status_by_id(int id){
     var training_type_name;
 
-    if(id ==0){
-      training_type_name= "Bad";
-    }else if(id==1){
-      training_type_name='Fair';
+    if(id ==1){
+      training_type_name= "Sold";
     }else if(id==2){
-      training_type_name="Good";
-    }
+      training_type_name='Shipped';
+    }else if(id==3){
+      training_type_name="Delivered";
+    }else if(id==4){
+      training_type_name="Pregnant";
+    }else if(id==5){
+      training_type_name="empty";
+    }else if(id==6){
+      training_type_name="Breeding Report";}
     else{
       training_type_name= "empty";
     }

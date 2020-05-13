@@ -1,8 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:horse_management/HMS/my_horses/HypotheticPedegree/Pedigree.dart';
 import 'package:horse_management/HMS/my_horses/add_horse/update_horse.dart';
+import 'package:horse_management/HMS/my_horses/breeding_sale/breeding_sales_specific.dart';
+import 'package:horse_management/HMS/my_horses/competetion/specific_competetion.dart';
+import 'package:horse_management/HMS/my_horses/services/add_horse_services.dart';
 import 'package:horse_management/HMS/my_horses/training/tariningList_specific.dart';
 import 'package:horse_management/HMS/my_horses/vaccination/vaccination_list.dart';
+import 'package:horse_management/HMS/my_horses/vet/vetList.dart';
 import 'health_record/health_record_list.dart';
 import 'incomeExpense/income_expense_list.dart';
 import 'package:horse_management/HMS/my_horses/lab_reports/lab_test_list.dart';
@@ -23,8 +30,10 @@ class horse_detail extends StatefulWidget {
 class _Profile_Page_State extends State<horse_detail> {
   var horsedata;
   SharedPreferences prefs;
-
+  var list,blist;
+  String token;
   _Profile_Page_State(this.horsedata);
+
 
   @override
   Widget build(BuildContext context) {
@@ -169,16 +178,16 @@ class _Profile_Page_State extends State<horse_detail> {
                 },
               ),
               ListTile(
-                title: Text("Diet"),
-                subtitle: Text("Diet for this horse"),
+                title: Text("Competetion"),
+                subtitle: Text("View All competetion"),
                 leading: Icon(
                   Icons.receipt,
                   size: 40,
                 ),
                 trailing: Icon(Icons.arrow_right),
-                onTap: () {
-//                  Navigator.push(context, MaterialPageRoute(
-//                      builder: (context) => specificTraining_list(horsedata != null ? horsedata['allTrainings'] : '')));
+                onTap: ()async {
+                  prefs = await SharedPreferences.getInstance();
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => competetion_list(prefs.get('token'),horsedata != null ? horsedata['allCompetitions'] : '')));
                 },
               ),
               ListTile(
@@ -189,8 +198,9 @@ class _Profile_Page_State extends State<horse_detail> {
                   size: 40,
                 ),
                 trailing: Icon(Icons.arrow_right),
-                onTap: () {
-                  //Navigator.push(context, MaterialPageRoute(builder: (context) => specificTraining_list(horsedata != null ? horsedata['allVetVisits'] : '')));
+                onTap: () async{
+                  prefs = await SharedPreferences.getInstance();
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => vet_list(prefs.get('token'),horsedata != null ? horsedata['allVetVisits'] : '')));
                 },
               ),
               ListTile(
@@ -201,8 +211,26 @@ class _Profile_Page_State extends State<horse_detail> {
                   size: 40,
                 ),
                 trailing: Icon(Icons.arrow_right),
+                onTap: () async{
+                  print(horsedata['horseId'].toString());
+                  prefs = await SharedPreferences.getInstance();
+                  setState(() {
+                    token = prefs.get('token');
+                  });
+
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => breedingSale_list(prefs.get('token'),horsedata != null ? horsedata['horseId'] : '')));
+                },
+              ),
+              ListTile(
+                title: Text("Hypothetical Pedigree"),
+                subtitle: Text("View ancesstors of the horse"),
+                leading: Icon(
+                  Icons.history,
+                  size: 40,
+                ),
+                trailing: Icon(Icons.arrow_right),
                 onTap: () {
-                  //Navigator.push(context, MaterialPageRoute(builder: (context) => specificTraining_list(horsedata != null ? horsedata['allBreedingSales'] : '')));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => HypotheticalPedigree(horsedata)));
                 },
               ),
 //              ListTile(

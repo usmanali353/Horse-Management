@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Breeding/breeding_mainPage.dart';
+import 'package:horse_management/HMS/CareTakers/BreedingControl/breeding_control_caretaker_list.dart';
+import 'package:horse_management/HMS/CareTakers/BreedingControl/listwithTabstesting.dart';
 import 'package:horse_management/HMS/Training/training_options.dart';
 import 'package:horse_management/HMS/Veterinary/vet_mainPage.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
@@ -119,7 +121,7 @@ class _ContactHomeState extends State<ContactHome> {
 
                           // Trainings Page
                         }else if(restaurants[index]['title']=='Breeding'){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=> breeding_Category(prefs.getString('token'))));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> breeding_control_caretaker_list(prefs.getString('token'))));
 
                           // Breeding Page
                         }else if(restaurants[index]['title']=='Veterinary'){
