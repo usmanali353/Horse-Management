@@ -6,16 +6,17 @@ import 'package:horse_management/HMS/All_Horses_data/farrier/updateFarrier.dart'
 import 'package:horse_management/HMS/All_Horses_data/lab_reports/update_lab_reports.dart';
 import 'package:horse_management/HMS/All_Horses_data/services/farrier_services.dart';
 import 'package:horse_management/HMS/CareTakers/Farrier/FarrierCaretaker.dart';
+import 'package:horse_management/HMS/CareTakers/Farrier/FarrierLateReason.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-class farrier_list extends StatefulWidget{
+class careTakerFarrierList extends StatefulWidget{
   String token;
 
 
-  farrier_list (this.token);
+  careTakerFarrierList (this.token);
 
   @override
   State<StatefulWidget> createState() {
@@ -24,7 +25,7 @@ class farrier_list extends StatefulWidget{
   }
 
 }
-class _Profile_Page_State extends State<farrier_list>{
+class _Profile_Page_State extends State<careTakerFarrierList>{
   int id;
   SharedPreferences prefs;
   _Profile_Page_State (this.token);
@@ -75,17 +76,17 @@ class _Profile_Page_State extends State<farrier_list>{
     // TODO: implement build
     return Scaffold(
         appBar: AppBar(title: Text("Farrier & Caretaker"),actions: <Widget>[
-          Center(child: Text("Add New",textScaleFactor: 1.3,)),
-          IconButton(
-
-            icon: Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => add_farrier(token)),);
-            },
-          )
+//          Center(child: Text("Add New",textScaleFactor: 1.3,)),
+//          IconButton(
+//
+//            icon: Icon(
+//              Icons.add,
+//              color: Colors.white,
+//            ),
+//            onPressed: () {
+//              Navigator.push(context, MaterialPageRoute(builder: (context) => add_farrier(token)),);
+//            },
+//          )
         ],),
         body: ListView.builder(itemCount:farrierlist!=null?farrierlist.length:temp.length,itemBuilder: (context,int index){
           return Column(
@@ -164,49 +165,67 @@ class _Profile_Page_State extends State<farrier_list>{
                     color: Colors.green,
                     caption: 'Complete',
                     onTap: () async {
-                      Utils.check_connectivity().then((result){
-                        if(result){
-                          ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                          pd.show();
-                          FarrierCareTakerServices.complete_farrier(token, farrierlist[index]['id']).then((response){
-                            pd.dismiss();
-                            if(response!=null){
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.green ,
-                                content: Text('Process Complete'),
-                              ));
+                      if(DateTime.now().isAfter(DateTime.parse(farrierlist[index]['date'])) )
+                        Navigator.push(context,MaterialPageRoute(builder: (context)=>farrier_late_reason(token, farrierlist[index]['id'])));
+
+                      else {
+                        Utils.check_connectivity().then((result) {
+                          if (result) {
+                            ProgressDialog pd = ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: true);
+                            pd.show();
+                            FarrierCareTakerServices.complete_farrier(token, farrierlist[index]['id']).then((response) {
+                              pd.dismiss();
+                              if (response != null) {
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor: Colors.green,
+                                  content: Text('Process Complete'),
+                                ));
 //                                  setState(() {
 //                                    control_list.removeAt(index);
 //                                  });
-                            }else{
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.red ,
-                                content: Text('Process Failed'),
-                              ));
-                            }
-                          });
-                        }else{
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text("Network not Available"),
-                            backgroundColor: Colors.red,
-                          ));
-                        }
-                      });
-
+                              } else {
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor: Colors.red,
+                                  content: Text('Process Failed'),
+                                ));
+                              }
+                            });
+                          } else {
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              content: Text("Network not Available"),
+                              backgroundColor: Colors.red,
+                            ));
+                          }
+                        });
+                      }
                     },
                   ),
                 ],
-                child: ListTile(
-                  //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
+                child: ExpansionTile(
                   title: Text(farrierlist!=null?(farrierlist[index]['horseName']['name']):''),
-                  subtitle: Text(farrierlist!=null?"Farrier: "+(farrierlist[index]['farrierName']['contactName']['name']):'farrier name not showing'),
-                  trailing: Text(farrierlist!=null?"Amount: "+(farrierlist[index]['amount']).toString():''),
-                  //leading: Image.asset("Assets/horses_icon.png"),
-                  onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    print((farrierlist[index]));
-                   // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_labTest(lablist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
-                  },
+                  trailing: Text(farrierlist!=null?"Status: "+(get_status_by_id(farrierlist[index]['status'])).toString():'empty'),
+                  children: <Widget>[
+                  ListTile(
+                      title: Text("Farrier "),
+                     // trailing: Text("jn"),
+                      trailing: Text(farrierlist!=null?"Farrier: "+(farrierlist[index]['farrierName']['contactName']['name']):'farrier name not showing'),
+                      onTap: ()async{
+                            },
+                      ),
+                    Divider(),
+                    ListTile(
+                      title: Text("Amount"),
+                      trailing: Text(farrierlist!=null?"Amount: "+(farrierlist[index]['amount']).toString():''),
+                    ),
+                    Divider(),
+                    ListTile(
+                      title: Text("Shoeing Type"),
+                      trailing: Text(farrierlist!=null?"Amount: "+(get_ShoeingType_by_id(farrierlist[index]['shoeingType'])).toString():''),
+                    ),
+
+
+                  ],
+
                 ),
                 secondaryActions: <Widget>[
 
@@ -221,12 +240,44 @@ class _Profile_Page_State extends State<farrier_list>{
         })
     );
   }
+  String get_status_by_id(int id){
+    var status;
 
+    if(id ==0){
+      status= "Not started";
+    }else if(id==1){
+      status='Started';
+    }else if(id==2){
+      status="Complete";
+    }
+    else if(id==3){
+      status="Late Complete";
+    }
+    else{
+      status= "empty";
+    }
+    return status;
+  }
+  String get_ShoeingType_by_id(int id){
+    var status;
+
+    if(id ==1){
+      status= "Complete";
+    }
+    else if(id==2){
+      status="Front Shoeing";
+    }
+    else if(id==3){
+      status="Back Shoeing";
+    }else if(id==4){
+      status="Trimming";
+    }
+    else{
+      status= "empty";
+    }
+    return status;
+  }
 }
-
-
-
-
 
 
 

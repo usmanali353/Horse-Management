@@ -11,19 +11,19 @@ import 'FarrierCaretaker.dart';
 
 
 class farrier_late_reason extends StatefulWidget{
-  final token;
-  farrier_late_reason(this.token);
+  final token,id;
+  farrier_late_reason(this.token,this.id);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _farrier_late_reason(token);
+    return _farrier_late_reason(token,id);
   }
 
 }
 class _farrier_late_reason extends State<farrier_late_reason>{
-  final token;
-  _farrier_late_reason(this.token,);
+  final token,id;
+  _farrier_late_reason(this.token,this.id);
   TextEditingController late_reason;
   //int selected_currency_id=0;
   bool autoValidate = true;
@@ -98,7 +98,7 @@ class _farrier_late_reason extends State<farrier_late_reason>{
                               if(result){
                                 ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                                 pd.show();
-                                FarrierCareTakerServices.save_late_complete_reason(token,0,late_reason.text)
+                                FarrierCareTakerServices.save_late_complete_reason(token,id,late_reason.text)
                                     .then((respons){
                                   pd.dismiss();
                                   setState(() {
@@ -115,7 +115,8 @@ class _farrier_late_reason extends State<farrier_late_reason>{
                               }
                             });
                           }
-                        },
+                        Navigator.of(context).pop();
+                          },
                         child: Text("Save",style: TextStyle(color: Colors.white),
                         ),
                         color: Colors.teal,
