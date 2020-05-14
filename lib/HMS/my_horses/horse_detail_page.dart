@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/my_horses/HypotheticPedegree/Pedigree.dart';
+import 'package:horse_management/HMS/my_horses/HypotheticPedegree/hypothetic_pedegree_page.dart';
 import 'package:horse_management/HMS/my_horses/add_horse/update_horse.dart';
 import 'package:horse_management/HMS/my_horses/breeding_sale/breeding_sales_specific.dart';
 import 'package:horse_management/HMS/my_horses/competetion/specific_competetion.dart';
@@ -230,7 +231,8 @@ class _Profile_Page_State extends State<horse_detail> {
                 ),
                 trailing: Icon(Icons.arrow_right),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => HypotheticalPedigree(horsedata)));
+                  print(horsedata);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => hypothetic_pedegree_page(horsedata)));
                 },
               ),
 //              ListTile(
