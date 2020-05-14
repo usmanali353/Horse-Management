@@ -75,7 +75,7 @@ class _Profile_Page_State extends State<careTakerFarrierList>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Farrier & Caretaker"),actions: <Widget>[
+        appBar: AppBar(title: Text(" Caretaker"),actions: <Widget>[
 //          Center(child: Text("Add New",textScaleFactor: 1.3,)),
 //          IconButton(
 //
