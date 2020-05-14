@@ -3,7 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Breeding/breeding_mainPage.dart';
 import 'package:horse_management/HMS/CareTakers/BreedingControl/breeding_control_caretaker_list.dart';
-import 'package:horse_management/HMS/CareTakers/BreedingControl/listwithTabstesting.dart';
+import 'package:horse_management/HMS/CareTakers/Trainings/training_caretaker_list.dart';
+import 'package:horse_management/HMS/CareTakers/breeding_caretaker_mainpage.dart';
+import 'package:horse_management/HMS/CareTakers/veterinary_mainpage.dart';
+//import 'package:horse_management/HMS/CareTakers/BreedingControl/listwithTabstesting.dart';
 import 'package:horse_management/HMS/Training/training_options.dart';
 import 'package:horse_management/HMS/Veterinary/vet_mainPage.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
@@ -52,6 +55,16 @@ class _ContactHomeState extends State<ContactHome> {
                 "img": "assets/training.jpg",
                 "title": "Training Center",
                 "address": "Add and check for the horse training",
+                "rating": "4.5"
+              }
+          );
+        }
+        if(userData['contactResult']['Farrier']!=null){
+          restaurants.add(
+              {
+                "img": "assets/farrier.jpg",
+                "title": "Farrier",
+                "address": "Add Farrier",
                 "rating": "4.5"
               }
           );
@@ -117,18 +130,22 @@ class _ContactHomeState extends State<ContactHome> {
                       onTap:() async{
                         SharedPreferences prefs=await SharedPreferences.getInstance();
                         if(restaurants[index]['title']=='Training Center'){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=> training_options(prefs.getString('token'))));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> training_caretaker_list(prefs.getString('token'))));
 
                           // Trainings Page
                         }else if(restaurants[index]['title']=='Breeding'){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=> breeding_control_caretaker_list(prefs.getString('token'))));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> breeding_caretaker_Category(prefs.getString('token'))));
 
                           // Breeding Page
                         }else if(restaurants[index]['title']=='Veterinary'){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=> vet_category()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> vet_category_mainpage()));
                           // Vet Page
-                        }else{
+                        }
+                       else if(restaurants[index]['title']=='Farrier'){
+                         // Navigator.push(context, MaterialPageRoute(builder: (context)=>()));
+                          // Vet Pageelse{
                           // Farrier Page
+
                         }
                       } ,
                       child: SlideItem(
