@@ -12,7 +12,7 @@ import 'FarrierCaretaker.dart';
 
 class farrier_late_reason extends StatefulWidget{
   final token,id;
-  farrier_late_reason(this.token, this.id);
+  farrier_late_reason(this.token,this.id);
 
   @override
   State<StatefulWidget> createState() {
@@ -115,7 +115,8 @@ class _farrier_late_reason extends State<farrier_late_reason>{
                               }
                             });
                           }
-                        },
+                        Navigator.of(context).pop();
+                          },
                         child: Text("Save",style: TextStyle(color: Colors.white),
                         ),
                         color: Colors.teal,

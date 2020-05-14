@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Breeding/breeding_mainPage.dart';
 import 'package:horse_management/HMS/CareTakers/BreedingControl/breeding_control_caretaker_list.dart';
+import 'package:horse_management/HMS/CareTakers/Farrier/farrier_caretaker_List.dart';
 import 'package:horse_management/HMS/CareTakers/Trainings/training_caretaker_list.dart';
 import 'package:horse_management/HMS/CareTakers/breeding_caretaker_mainpage.dart';
 import 'package:horse_management/HMS/CareTakers/veterinary_mainpage.dart';
@@ -142,7 +143,7 @@ class _ContactHomeState extends State<ContactHome> {
                           // Vet Page
                         }
                        else if(restaurants[index]['title']=='Farrier'){
-                         // Navigator.push(context, MaterialPageRoute(builder: (context)=>()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>careTakerFarrierList(prefs.getString('token'))));
                           // Vet Pageelse{
                           // Farrier Page
 
