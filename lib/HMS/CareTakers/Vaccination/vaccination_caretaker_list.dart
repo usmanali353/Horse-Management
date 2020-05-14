@@ -14,11 +14,11 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-class vaccination_list extends StatefulWidget{
+class vaccination_caretaker_list extends StatefulWidget{
   String token;
 
 
-  vaccination_list (this.token);
+  vaccination_caretaker_list (this.token);
 
   @override
   State<StatefulWidget> createState() {
@@ -27,7 +27,7 @@ class vaccination_list extends StatefulWidget{
   }
 
 }
-class _Profile_Page_State extends State<vaccination_list>{
+class _Profile_Page_State extends State<vaccination_caretaker_list>{
   int id;
   SharedPreferences prefs;
   _Profile_Page_State (this.token);
