@@ -11,19 +11,19 @@ import 'flushes_caretaker.dart';
 
 
 class flushes_late_reason extends StatefulWidget{
-  final token;
-  flushes_late_reason(this.token);
+  final token,id;
+  flushes_late_reason(this.token,this.id);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _flushes_late_reason(token);
+    return _flushes_late_reason(token,id);
   }
 
 }
 class _flushes_late_reason extends State<flushes_late_reason>{
-  final token;
-  _flushes_late_reason(this.token,);
+  final token,id;
+  _flushes_late_reason(this.token,this.id);
   TextEditingController late_reason;
   //int selected_currency_id=0;
   bool autoValidate = true;
@@ -98,7 +98,7 @@ class _flushes_late_reason extends State<flushes_late_reason>{
                               if(result){
                                 ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                                 pd.show();
-                                FlushesCareTakerServices.save_late_complete_reason(token,0,late_reason.text)
+                                FlushesCareTakerServices.save_late_complete_reason(token,id,late_reason.text)
                                     .then((respons){
                                   pd.dismiss();
                                   setState(() {

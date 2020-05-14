@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/CareTakers/VetVisit/VetVisitCaretaker.dart';
+import 'package:horse_management/HMS/CareTakers/VetVisit/VetVisitLateReason.dart';
 import 'package:horse_management/HMS/Diet/add_Diet.dart';
 import 'package:horse_management/HMS/Diet/diet_services.dart';
 import 'package:horse_management/HMS/Training/training_plans.dart';
@@ -12,19 +13,19 @@ import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
-class vetVisitList extends StatefulWidget{
+class vetVisit_caretaker_List extends StatefulWidget{
   String token;
 
-  vetVisitList(this.token);
+  vetVisit_caretaker_List(this.token);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return vetVisitListState(token);
+    return vetVisit_caretaker_ListState(token);
   }
 
 }
-class vetVisitListState extends State<vetVisitList>{
+class vetVisit_caretaker_ListState extends State<vetVisit_caretaker_List>{
   String token;
   var vetvisits_list=[], load_list;
   var temp=['',''];
@@ -183,36 +184,72 @@ class vetVisitListState extends State<vetVisitList>{
                       color: Colors.green,
                       caption: 'Complete',
                       onTap: () async {
-                        Utils.check_connectivity().then((result){
-                          if(result){
-                            ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                            pd.show();
-                            VetVisitCareTakerServices.complete_vetVisit(token, vetvisits_list[index]['vetVisitId']).then((response){
-                              pd.dismiss();
-                              if(response!=null){
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  backgroundColor:Colors.green ,
-                                  content: Text('Process Complete'),
-                                ));
-//                                  setState(() {
-//                                    control_list.removeAt(index);
-//                                  });
-                              }else{
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  backgroundColor:Colors.red ,
-                                  content: Text('Process Failed'),
-                                ));
-                              }
-                            });
-                          }else{
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text("Network not Available"),
-                              backgroundColor: Colors.red,
-                            ));
-                          }
-                        });
-
+                        print(vetvisits_list[index]);
+                        print(DateTime.parse(vetvisits_list[index]['date']));
+                        if(DateTime.now().isAfter(DateTime.parse(vetvisits_list[index]['date'])) )
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>vetvisit_late_reason(token, vetvisits_list[index]['vetVisitId'])));
+                        else{
+                          Utils.check_connectivity().then((result){
+                            if(result){
+                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                              pd.show();
+                              VetVisitCareTakerServices.complete_vetVisit(token, vetvisits_list[index]['vetVisitId']).then((response){
+                                pd.dismiss();
+                                if(response!=null){
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.green ,
+                                    content: Text('Completed'),
+                                  ));
+                                  setState(() {
+                                    //  control_list.removeAt(index);
+                                  });
+                                }else{
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.red ,
+                                    content: Text('Process Failed'),
+                                  ));
+                                }
+                              });
+                            }else{
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text("Network not Available"),
+                                backgroundColor: Colors.red,
+                              ));
+                            }
+                          });
+                        }
                       },
+//                      onTap: () async {
+//                        Utils.check_connectivity().then((result){
+//                          if(result){
+//                            ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+//                            pd.show();
+//                            VetVisitCareTakerServices.complete_vetVisit(token, vetvisits_list[index]['vetVisitId']).then((response){
+//                              pd.dismiss();
+//                              if(response!=null){
+//                                Scaffold.of(context).showSnackBar(SnackBar(
+//                                  backgroundColor:Colors.green ,
+//                                  content: Text('Process Complete'),
+//                                ));
+////                                  setState(() {
+////                                    control_list.removeAt(index);
+////                                  });
+//                              }else{
+//                                Scaffold.of(context).showSnackBar(SnackBar(
+//                                  backgroundColor:Colors.red ,
+//                                  content: Text('Process Failed'),
+//                                ));
+//                              }
+//                            });
+//                          }else{
+//                            Scaffold.of(context).showSnackBar(SnackBar(
+//                              content: Text("Network not Available"),
+//                              backgroundColor: Colors.red,
+//                            ));
+//                          }
+//                        });
+//
+//                      },
                     ),
 
 //                    IconSlideAction(
@@ -226,6 +263,8 @@ class vetVisitListState extends State<vetVisitList>{
                   ],
                   child: ListTile(
                     title: Text(vetvisits_list!=null?vetvisits_list[index]['horseName']['name']:''),
+                    trailing:Text(vetvisits_list!=null?get_status_by_id(vetvisits_list[index]['status']):''),
+
                     //leading: Icon(Icons.local_hospital,size: 40,color: Colors.teal,),
                     onTap: (){
                     },
@@ -251,6 +290,25 @@ class vetVisitListState extends State<vetVisitList>{
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
   }
 
-  vetVisitListState(this.token);
+  vetVisit_caretaker_ListState(this.token);
 
+}
+
+String get_status_by_id(int id){
+  var status;
+
+  if(id ==0){
+    status= "Not started";
+  }else if(id==1){
+    status='Started';
+  }else if(id==2){
+    status="Complete";
+  }
+  else if(id==3){
+    status="Late Complete";
+  }
+  else{
+    status= "empty";
+  }
+  return status;
 }
