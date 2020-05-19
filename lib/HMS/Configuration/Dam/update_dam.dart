@@ -49,8 +49,6 @@ class _update_dam extends State<update_dam>{
   var breed_name,color_name;
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
     this.name=TextEditingController();
     this.number=TextEditingController();
     this.microchip=TextEditingController();
@@ -82,6 +80,7 @@ class _update_dam extends State<update_dam>{
 
       }
     });
+    super.initState();
   }
   String get_breed_by_id(int id){
     var breed_name;
@@ -167,7 +166,6 @@ class _update_dam extends State<update_dam>{
 
                           ),
                         ),
-
                         Padding(
                           padding: const EdgeInsets.only(left: 16,right: 16, top:16),
                           child: Visibility(
@@ -304,38 +302,44 @@ class _update_dam extends State<update_dam>{
                       ],
                     ),
                   ),
-                  Center(
-                      child:Padding(
-                          padding: const EdgeInsets.all(16),
-                          child:MaterialButton(
-                            color: Colors.teal,
-                            child: Text("Update",style: TextStyle(color: Colors.white),),
-                            onPressed: (){
-                              if (_fbKey.currentState.validate()) {
-                                _fbKey.currentState.save();
-                                Utils.check_connectivity().then((result){
-                                  if(result){
-                                    ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                                    pd.show();
-                                    DamServices.addDam(token, specificdam['horseId'], name.text, true, true, true, selected_breed_id, selected_color_id, select_DOB, number.text, microchip.text, specificdam['createdBy']).then((respons){
-                                      pd.dismiss();
-                                      setState(() {
-                                        var parsedjson  = jsonDecode(respons);
-                                        if(parsedjson != null){
-                                          if(parsedjson['isSuccess'] == true){
-                                            print("Successfully data updated");
-                                          }else
-                                            print("not saved");
-                                        }else
-                                          print("json response null");
-                                      });
+                  Builder(
+                    builder: (BuildContext context){
+                      return Center(
+                          child:Padding(
+                              padding: const EdgeInsets.all(16),
+                              child:MaterialButton(
+                                color: Colors.teal,
+                                child: Text("Update",style: TextStyle(color: Colors.white),),
+                                onPressed: (){
+                                  if (_fbKey.currentState.validate()) {
+                                    _fbKey.currentState.save();
+                                    Utils.check_connectivity().then((result){
+                                      if(result){
+                                        ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                        pd.show();
+                                        DamServices.addDam(token, specificdam['horseId'], name.text, true, true, true, dam_response['breedDropDown'][selected_breed_id]['id'], dam_response['colorDropDown'][selected_color_id]['id'], select_DOB, number.text, microchip.text, specificdam['createdBy']).then((respons){
+                                          pd.dismiss();
+                                          if(respons!=null){
+                                            Scaffold.of(context).showSnackBar(SnackBar(
+                                              content: Text("Updated sucessfully"),
+                                              backgroundColor: Colors.green,
+                                            ));
+                                          }else{
+                                            Scaffold.of(context).showSnackBar(SnackBar(
+                                              content: Text("Not Updated sucessfully"),
+                                              backgroundColor: Colors.red,
+                                            ));
+                                          }
+                                        });
+                                      }
                                     });
                                   }
-                                });
-                              }
-                            },
+                                },
+                              )
                           )
-                      )
+                      );
+                    },
+
                   )
                 ],
               )

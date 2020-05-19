@@ -106,7 +106,6 @@ class _add_currency extends State<add_currency>{
                           child:MaterialButton(
                             color: Colors.teal,
                             child: Text("Save",style: TextStyle(color: Colors.white),),
-
                             onPressed: (){
                               if (_fbKey.currentState.validate()) {
                                 Utils.check_connectivity().then((result){
