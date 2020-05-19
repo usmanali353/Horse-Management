@@ -56,7 +56,7 @@ class MarkingState extends State<Marking> {
     var byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     Uint8List pngBytes = byteData.buffer.asUint8List();
     String bs64 = base64Encode(pngBytes);
-    print(bs64);
+    debugPrint(bs64);
     return showDialog<Null>(
         context: context,
         builder: (BuildContext context) {
@@ -68,7 +68,7 @@ class MarkingState extends State<Marking> {
                   letterSpacing: 1.1
               ),
             ),
-            content: Image.memory(Uint8List.view(pngBytes.buffer)),
+            content: Image.memory(base64Decode(bs64)),
           );
         }
     );
