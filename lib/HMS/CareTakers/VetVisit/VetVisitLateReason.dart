@@ -12,19 +12,19 @@ import 'VetVisitCaretaker.dart';
 
 
 class vetvisit_late_reason extends StatefulWidget{
-  final token;
-  vetvisit_late_reason(this.token);
+  final token,id;
+  vetvisit_late_reason(this.token,this.id);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _vetvisit_late_reason(token);
+    return _vetvisit_late_reason(token,id);
   }
 
 }
 class _vetvisit_late_reason extends State<vetvisit_late_reason>{
-  final token;
-  _vetvisit_late_reason(this.token,);
+  final token,id;
+  _vetvisit_late_reason(this.token,this.id);
   TextEditingController late_reason;
   //int selected_currency_id=0;
   bool autoValidate = true;
@@ -99,7 +99,7 @@ class _vetvisit_late_reason extends State<vetvisit_late_reason>{
                               if(result){
                                 ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                                 pd.show();
-                                VetVisitCareTakerServices.save_late_complete_reason(token,0,late_reason.text)
+                                VetVisitCareTakerServices.save_late_complete_reason(token,id,late_reason.text)
                                     .then((respons){
                                   pd.dismiss();
                                   setState(() {

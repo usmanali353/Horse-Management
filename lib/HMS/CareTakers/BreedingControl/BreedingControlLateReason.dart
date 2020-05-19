@@ -10,19 +10,19 @@ import '../../../Utils.dart';
 
 
 class breeding_control_late_reason extends StatefulWidget{
-  final token;
-  breeding_control_late_reason(this.token);
+  final token,id;
+  breeding_control_late_reason(this.token,this.id);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _breeding_control_late_reason(token);
+    return _breeding_control_late_reason(token,id);
   }
 
 }
 class _breeding_control_late_reason extends State<breeding_control_late_reason>{
-  final token;
-  _breeding_control_late_reason(this.token,);
+  final token,id;
+  _breeding_control_late_reason(this.token,this.id);
   TextEditingController late_reason;
   //int selected_currency_id=0;
   bool autoValidate = true;
@@ -97,7 +97,7 @@ class _breeding_control_late_reason extends State<breeding_control_late_reason>{
                               if(result){
                                 ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                                 pd.show();
-                                BreedingControlCareTakerServices.save_late_complete_reason(token,0,late_reason.text)
+                                BreedingControlCareTakerServices.save_late_complete_reason(token,id,late_reason.text)
                                     .then((respons){
                                   pd.dismiss();
                                   setState(() {

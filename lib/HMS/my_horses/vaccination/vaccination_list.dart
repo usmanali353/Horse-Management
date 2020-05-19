@@ -63,8 +63,8 @@ class _Profile_Page_State extends State<vaccinationList>{
             children: <Widget>[
               ExpansionTile(
                 //['categoryName']['name']
-                title: Text(vaccinationlist != null ?get_vaccinetype_by_id(vaccinationlist[index]['vaccinationTypeId']):"Vaccination Type Empty",textScaleFactor: 1.3,),
-                //trailing: Text(specifichorsevaccination != null ?specifichorsevaccination[index]['status']:"status empty"),
+                title: Text(vaccinationlist != null ?"Type: "+get_vaccinetype_by_id(vaccinationlist[index]['vaccinationTypeId']):"Vaccination Type Empty",textScaleFactor: 1.3,),
+                trailing: Text(specifichorsevaccination != null ? "Status: "+get_status_by_id(specifichorsevaccination[index]['status']):"status empty"),
 
                 children: <Widget>[
                   ListTile(
@@ -100,7 +100,21 @@ class _Profile_Page_State extends State<vaccinationList>{
         })
     );
   }
+  String get_status_by_id(int id){
+    var training_type_name;
 
+    if(id ==0){
+      training_type_name= "Bad";
+    }else if(id==1){
+      training_type_name='Fair';
+    }else if(id==2){
+      training_type_name="Good";
+    }
+    else{
+      training_type_name= "empty";
+    }
+    return training_type_name;
+  }
   String get_vaccine_by_id(int id){
     var responsible_name;
     if(vaccinationlist!=null&&vaccinationdropDown['vaccineDropDown']!=null&&id!=null){

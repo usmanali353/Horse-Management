@@ -33,7 +33,7 @@ class _breeding_sales_form extends State<breeding_sales_form>{
   bool  selected_gift_id;
 
   List<String> horses=[],customer=[],vet=[],semen=['Yes','No'], frozen=['Yes','No'], cashpayment=['Yes','No'], gift=['Yes','No'], status=['Sold','Shipped','Delivered','Pregnant','Breeding Report',], currency=[], category=[], costcenter=[],contact=[];
-  var sale_response;
+  var sale_response, load_response;
   TextEditingController payment_reference,contract_no,report_no,comments,amount;
 
 
@@ -58,6 +58,7 @@ class _breeding_sales_form extends State<breeding_sales_form>{
             print(response);
             setState(() {
               sale_response=json.decode(response);
+              //sale_response = load_response['response'];
               for(int i=0;i<sale_response['horseDropDown'].length;i++)
                 horses.add(sale_response['horseDropDown'][i]['name']);
               for(int i=0;i<sale_response['customerDropDown'].length;i++)
@@ -102,7 +103,7 @@ class _breeding_sales_form extends State<breeding_sales_form>{
                   Padding(
                     padding: const EdgeInsets.only(left: 16,right: 16, top:16),
                     child: Visibility(
-                      visible: sale_loaded,
+                      //visible: sale_loaded,
                       child: FormBuilderDropdown(
                         attribute: "Horse",
                         validators: [FormBuilderValidators.required()],

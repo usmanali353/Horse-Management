@@ -4,6 +4,7 @@ import 'package:horse_management/HMS/Breeding/Flushes/embryo_retrieval_form.dart
 import 'package:horse_management/HMS/Breeding/Flushes/flushes_details.dart';
 import 'package:horse_management/HMS/Breeding/Flushes/flushes_update.dart';
 import 'package:horse_management/HMS/Breeding/Flushes/utils/flushes_services_json.dart';
+import 'package:horse_management/HMS/CareTakers/Flushes/FlushesLateReason.dart';
 import 'package:horse_management/HMS/CareTakers/Flushes/flushes_caretaker.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -16,21 +17,21 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 
 
-class flushes_list extends StatefulWidget{
+class flushes_caretaker_list extends StatefulWidget{
   String token;
-  flushes_list(this.token);
+  flushes_caretaker_list(this.token);
 
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _flushes_list(token);
+    return _flushes_caretaker_list(token);
   }
 }
 
-class _flushes_list extends State<flushes_list>{
+class _flushes_caretaker_list extends State<flushes_caretaker_list>{
   String token;
-  _flushes_list(this.token);
+  _flushes_caretaker_list(this.token);
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
@@ -201,43 +202,82 @@ class _flushes_list extends State<flushes_list>{
                         color: Colors.green,
                         caption: 'Complete',
                         onTap: () async {
-                          Utils.check_connectivity().then((result){
-                            if(result){
-                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                              pd.show();
-                              FlushesCareTakerServices.complete_flushes(token, flushes_list[index]['id']).then((response){
-                                pd.dismiss();
-                                if(response!=null){
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    backgroundColor:Colors.green ,
-                                    content: Text('Process Complete'),
-                                  ));
-//                                  setState(() {
-//                                    control_list.removeAt(index);
-//                                  });
-                                }else{
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    backgroundColor:Colors.red ,
-                                    content: Text('Process Failed'),
-                                  ));
-                                }
-                              });
-                            }else{
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                content: Text("Network not Available"),
-                                backgroundColor: Colors.red,
-                              ));
-                            }
-                          });
-
+                          print(flushes_list[index]);
+                          print(DateTime.parse(flushes_list[index]['date']));
+                          if(DateTime.now().isAfter(DateTime.parse(flushes_list[index]['date'])) )
+                            Navigator.push(context,MaterialPageRoute(builder: (context)=>flushes_late_reason(token, flushes_list[index]['id'])));
+                          else{
+                            Utils.check_connectivity().then((result){
+                              if(result){
+                                ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                                pd.show();
+                                FlushesCareTakerServices.complete_flushes(token, flushes_list[index]['id']).then((response){
+                                  pd.dismiss();
+                                  if(response!=null){
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      backgroundColor:Colors.green ,
+                                      content: Text('Completed'),
+                                    ));
+                                    setState(() {
+                                      //  control_list.removeAt(index);
+                                    });
+                                  }else{
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      backgroundColor:Colors.red ,
+                                      content: Text('Process Failed'),
+                                    ));
+                                  }
+                                });
+                              }else{
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text("Network not Available"),
+                                  backgroundColor: Colors.red,
+                                ));
+                              }
+                            });
+                          }
                         },
+
+//                        onTap: () async {
+//                          Utils.check_connectivity().then((result){
+//                            if(result){
+//                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+//                              pd.show();
+//                              FlushesCareTakerServices.complete_flushes(token, flushes_list[index]['id']).then((response){
+//                                pd.dismiss();
+//                                if(response!=null){
+//                                  Scaffold.of(context).showSnackBar(SnackBar(
+//                                    backgroundColor:Colors.green ,
+//                                    content: Text('Process Complete'),
+//                                  ));
+////                                  setState(() {
+////                                    control_list.removeAt(index);
+////                                  });
+//                                }else{
+//                                  Scaffold.of(context).showSnackBar(SnackBar(
+//                                    backgroundColor:Colors.red ,
+//                                    content: Text('Process Failed'),
+//                                  ));
+//                                }
+//                              });
+//                            }else{
+//                              Scaffold.of(context).showSnackBar(SnackBar(
+//                                content: Text("Network not Available"),
+//                                backgroundColor: Colors.red,
+//                              ));
+//                            }
+//                          });
+//
+//                        },
                       ),
                     ],
                     child: FadeAnimation(2.0,
                        ListTile(
                         title: Text(flushes_list!=null?flushes_list[index]['horseName']['name']:''),
                         subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
-                        trailing: Text(flushes_list!=null?flushes_list[index]['date']:''),
+                         trailing:Text(flushes_list!=null?get_status_by_id(flushes_list[index]['status']):''),
+
+                         //trailing: Text(flushes_list!=null?flushes_list[index]['date']:''),
                         onTap: (){
                          Navigator.push(context, MaterialPageRoute(builder: (context) => flushes_details_page(flushes_list[index])));
                          // Navigator.push(context, MaterialPageRoute(builder: (context) => hypothetic_pedegree_page(flushes_list[index])));
@@ -254,5 +294,22 @@ class _flushes_list extends State<flushes_list>{
     );
   }
 
+  String get_status_by_id(int id){
+    var status;
 
+    if(id ==0){
+      status= "Not started";
+    }else if(id==1){
+      status='Started';
+    }else if(id==2){
+      status="Complete";
+    }
+    else if(id==3){
+      status="Late Complete";
+    }
+    else{
+      status= "empty";
+    }
+    return status;
+  }
 }

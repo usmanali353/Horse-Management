@@ -8,16 +8,17 @@ import 'package:horse_management/HMS/All_Horses_data/services/vaccination_servic
 import 'package:horse_management/HMS/All_Horses_data/vaccination/add_vaccination_form.dart';
 import 'package:horse_management/HMS/All_Horses_data/vaccination/update_vaccination.dart';
 import 'package:horse_management/HMS/CareTakers/Vaccination/VaccinationCaretaker.dart';
+import 'package:horse_management/HMS/CareTakers/Vaccination/VaccinationLateReason.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-class vaccination_list extends StatefulWidget{
+class vaccination_caretaker_list extends StatefulWidget{
   String token;
 
 
-  vaccination_list (this.token);
+  vaccination_caretaker_list (this.token);
 
   @override
   State<StatefulWidget> createState() {
@@ -26,7 +27,7 @@ class vaccination_list extends StatefulWidget{
   }
 
 }
-class _Profile_Page_State extends State<vaccination_list>{
+class _Profile_Page_State extends State<vaccination_caretaker_list>{
   int id;
   SharedPreferences prefs;
   _Profile_Page_State (this.token);
@@ -173,36 +174,72 @@ class _Profile_Page_State extends State<vaccination_list>{
                     color: Colors.green,
                     caption: 'Complete',
                     onTap: () async {
-                      Utils.check_connectivity().then((result){
-                        if(result){
-                          ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                          pd.show();
-                          VaccinationCareTakerServices.complete_vaccination(token, vaccinationlist[index]['id']).then((response){
-                            pd.dismiss();
-                            if(response!=null){
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.green ,
-                                content: Text('Process Complete'),
-                              ));
-//                                  setState(() {
-//                                    control_list.removeAt(index);
-//                                  });
-                            }else{
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.red ,
-                                content: Text('Process Failed'),
-                              ));
-                            }
-                          });
-                        }else{
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text("Network not Available"),
-                            backgroundColor: Colors.red,
-                          ));
-                        }
-                      });
-
+                      print(vaccinationlist[index]);
+                      print(DateTime.parse(vaccinationlist[index]['date']));
+                      if(DateTime.now().isAfter(DateTime.parse(vaccinationlist[index]['date'])) )
+                        Navigator.push(context,MaterialPageRoute(builder: (context)=>vaccination_late_reason(token, vaccinationlist[index]['id'])));
+                      else{
+                        Utils.check_connectivity().then((result){
+                          if(result){
+                            ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                            pd.show();
+                            VaccinationCareTakerServices.complete_vaccination(token, vaccinationlist[index]['id']).then((response){
+                              pd.dismiss();
+                              if(response!=null){
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor:Colors.green ,
+                                  content: Text('Completed'),
+                                ));
+                                setState(() {
+                                  //  control_list.removeAt(index);
+                                });
+                              }else{
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor:Colors.red ,
+                                  content: Text('Process Failed'),
+                                ));
+                              }
+                            });
+                          }else{
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              content: Text("Network not Available"),
+                              backgroundColor: Colors.red,
+                            ));
+                          }
+                        });
+                      }
                     },
+//                    onTap: () async {
+//                      Utils.check_connectivity().then((result){
+//                        if(result){
+//                          ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+//                          pd.show();
+//                          VaccinationCareTakerServices.complete_vaccination(token, vaccinationlist[index]['id']).then((response){
+//                            pd.dismiss();
+//                            if(response!=null){
+//                              Scaffold.of(context).showSnackBar(SnackBar(
+//                                backgroundColor:Colors.green ,
+//                                content: Text('Process Complete'),
+//                              ));
+////                                  setState(() {
+////                                    control_list.removeAt(index);
+////                                  });
+//                            }else{
+//                              Scaffold.of(context).showSnackBar(SnackBar(
+//                                backgroundColor:Colors.red ,
+//                                content: Text('Process Failed'),
+//                              ));
+//                            }
+//                          });
+//                        }else{
+//                          Scaffold.of(context).showSnackBar(SnackBar(
+//                            content: Text("Network not Available"),
+//                            backgroundColor: Colors.red,
+//                          ));
+//                        }
+//                      });
+//
+//                    },
                   ),
 
                 ],
@@ -210,7 +247,9 @@ class _Profile_Page_State extends State<vaccination_list>{
                   //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                   title: Text(vaccinationlist!=null?(vaccinationlist[index]['horseName']['name']):' '),
                   subtitle: Text(vaccinationlist!=null?'Vaccine: '+(vaccinationlist[index]['vaccineName']['name']):'farrier name not showing'),
-                  trailing: Text(vaccinationlist[index]['vetId']!=null?'Vet: '+(vaccinationlist[index]['vetName']['contactName']['name']):'Vet name empty'),
+                  trailing:Text(vaccinationlist!=null?get_status_by_id(vaccinationlist[index]['status']):''),
+
+                  //trailing: Text(vaccinationlist[index]['vetId']!=null?'Vet: '+(vaccinationlist[index]['vetName']['contactName']['name']):'Vet name empty'),
                   onTap: ()async{
                     prefs = await SharedPreferences.getInstance();
                     print((vaccinationlist[index]));
@@ -230,5 +269,22 @@ class _Profile_Page_State extends State<vaccination_list>{
         })
     );
   }
+  String get_status_by_id(int id){
+    var status;
 
+    if(id ==0){
+      status= "Not started";
+    }else if(id==1){
+      status='Started';
+    }else if(id==2){
+      status="Complete";
+    }
+    else if(id==3){
+      status="Late Complete";
+    }
+    else{
+      status= "empty";
+    }
+    return status;
+  }
 }

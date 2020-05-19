@@ -57,7 +57,7 @@ class _Profile_Page_State extends State<all_horse_data>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("All Horse Data"),
+        appBar: AppBar(title: Text("All Records"),
 //          actions: <Widget>[
 //          IconButton(
 //            icon: Icon(

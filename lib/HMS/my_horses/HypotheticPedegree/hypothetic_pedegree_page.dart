@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 
 class hypothetic_pedegree_page extends StatefulWidget{
   var hp_data;
@@ -15,6 +17,26 @@ class hypothetic_pedegree_page extends StatefulWidget{
 
 }
 class _hypothetic_pedegree_page extends State<hypothetic_pedegree_page>{
+  @override
+  void initState(){
+    super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
+  }
+
+  @override
+  dispose(){
+    SystemChrome.setPreferredOrientations([
+//      DeviceOrientation.landscapeRight,
+//      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    super.dispose();
+  }
+
   var hp_data;
   String training_type_name;
 
@@ -26,7 +48,7 @@ class _hypothetic_pedegree_page extends State<hypothetic_pedegree_page>{
         body:  Column(
           children: <Widget>[
             Container(
-              height: MediaQuery.of(context).size.height * 0.30,
+              height: 92,
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 2.0,
@@ -39,20 +61,16 @@ class _hypothetic_pedegree_page extends State<hypothetic_pedegree_page>{
                   Expanded(
                     flex: 20,
                     child: Container(
-                      height: MediaQuery.of(context).size.height,
-                  //  alignment: Alignment.center,
-                   // child: Text(hp_data['breedingControlId'].toString()!=null?hp_data['breedingControlId'].toString():'', style: TextStyle(color: Colors.black),),
-                      color: Colors.lightBlue[200],
                       child: Column(
-                      //  crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(hp_data['breedingControlId'].toString()!=null?hp_data['breedingControlId'].toString():'', style: TextStyle(color: Colors.black),),
-                        ],
+//  crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                      Text(hp_data['horseId']!=null?hp_data['name'].toString():'empty', style: TextStyle(color: Colors.black),),
+                      ],
                       ),
+                      color: Colors.lightBlue[200],
                     ),
                   ),
-
                 ],
               ),
             ),
@@ -71,12 +89,26 @@ class _hypothetic_pedegree_page extends State<hypothetic_pedegree_page>{
                     flex: 30,
                     child: Container(
                       color: Colors.lightBlue[200],
+                      child: Column(
+//  crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(hp_data['sireId']!=null?hp_data['sireName']['name'].toString():'empty', style: TextStyle(color: Colors.black),),
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(
                     flex: 30,
                     child: Container(
                       color: Colors.pink.shade200,
+                      child: Column(
+//  crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(hp_data['damId']!=null?hp_data['damName']['name'].toString():'empty', style: TextStyle(color: Colors.black),),
+                        ],
+                      ),
                     ),
                   )
                 ],
@@ -126,7 +158,6 @@ class _hypothetic_pedegree_page extends State<hypothetic_pedegree_page>{
 
     );
   }
-
 
   _hypothetic_pedegree_page(this.hp_data);
 

@@ -11,19 +11,19 @@ import 'ConfirmationCaretaker.dart';
 
 
 class confirmation_late_reason extends StatefulWidget{
-  final token;
-  confirmation_late_reason(this.token);
+  final token,id;
+  confirmation_late_reason(this.token,this.id);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _confirmation_late_reason(token);
+    return _confirmation_late_reason(token,id);
   }
 
 }
 class _confirmation_late_reason extends State<confirmation_late_reason>{
-  final token;
-  _confirmation_late_reason(this.token,);
+  final token,id;
+  _confirmation_late_reason(this.token,this.id);
   TextEditingController late_reason;
   //int selected_currency_id=0;
   bool autoValidate = true;
@@ -98,7 +98,7 @@ class _confirmation_late_reason extends State<confirmation_late_reason>{
                               if(result){
                                 ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                                 pd.show();
-                                ConfirmationCareTakerServices.save_late_complete_reason(token,0,late_reason.text)
+                                ConfirmationCareTakerServices.save_late_complete_reason(token,id,late_reason.text)
                                     .then((respons){
                                   pd.dismiss();
                                   setState(() {

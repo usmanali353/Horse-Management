@@ -13,9 +13,9 @@ class DamServices{
     final body = jsonEncode({
       "horseId":damHorseId,
       "name":damName,
-      "isHorse": isHorse,
-      "isSire": isSire,
-      "isDam": isDam,
+      "isHorse": true,
+      "isSire": false,
+      "isDam": true,
       "genderId": 2,
       "createdBy":createdBy,
       "createdOn":DateTime.now(),

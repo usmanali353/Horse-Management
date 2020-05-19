@@ -56,3 +56,11 @@ class _HypotheticalPedigreeState extends State<HypotheticalPedigree> {
     );
   }
 }
+
+//child: Column(
+////  crossAxisAlignment: CrossAxisAlignment.center,
+//mainAxisAlignment: MainAxisAlignment.center,
+//children: <Widget>[
+//Text(hp_data['breedingControlId'].toString()!=null?hp_data['breedingControlId'].toString():'', style: TextStyle(color: Colors.black),),
+//],
+//),

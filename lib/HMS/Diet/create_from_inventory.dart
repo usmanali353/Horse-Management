@@ -199,12 +199,12 @@ class add_note_button extends StatelessWidget {
                   if(response!=null){
                     Scaffold.of(context).showSnackBar(SnackBar(
                       backgroundColor: Colors.green,
-                      content: Text("Notes Added Sucessfully"),
+                      content: Text("Diet Added Sucessfully"),
                     ));
                   }else{
                     Scaffold.of(context).showSnackBar(SnackBar(
                       backgroundColor: Colors.red,
-                      content: Text("Notes not Added"),
+                      content: Text("Diet not Added"),
                     ));
                   }
                 });
@@ -217,7 +217,7 @@ class add_note_button extends StatelessWidget {
             }
           });
         },
-        child: Text("Add Notes",style: TextStyle(color: Colors.white),),
+        child: Text("Add Diet",style: TextStyle(color: Colors.white),),
       ),
     );
   }

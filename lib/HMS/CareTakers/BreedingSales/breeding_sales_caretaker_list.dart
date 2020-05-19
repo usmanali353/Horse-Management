@@ -2,34 +2,37 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+//import 'package:horse_management/HMS/Breeding/BreedingSales/breeding_sales_caretaker_list_details.dart';
+//import 'package:horse_management/HMS/Breeding/BreedingSales/breeding_sales_caretaker_list_form.dart';
+//import 'package:horse_management/HMS/Breeding/BreedingSales/breeding_sales_caretaker_list_json.dart';
 import 'package:horse_management/HMS/Breeding/BreedingSales/breeding_sales_details.dart';
 import 'package:horse_management/HMS/Breeding/BreedingSales/breeding_sales_form.dart';
-import 'package:horse_management/HMS/Breeding/BreedingSales/breeding_sales_json.dart';
-import 'package:horse_management/HMS/Breeding/BreedingSales/update_breeding_sales.dart';
+//import 'package:horse_management/HMS/Breeding/BreedingSales/update_breeding_sales_caretaker_list.dart';
 import 'package:horse_management/HMS/Breeding/BreedingServices/breeding_service_form.dart';
 import 'package:horse_management/HMS/CareTakers/BreedingSales/BreedingSalesCaretaker.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 import '../../../Utils.dart';
-//import 'breeding_sales_form.dart';
+import 'BreedingSalesLateReason.dart';
+//import 'breeding_sales_caretaker_list_form.dart';
 
 
-class breeding_sales extends StatefulWidget{
+class breeding_sales_caretaker_list extends StatefulWidget{
   String token;
-  breeding_sales(this.token);
+  breeding_sales_caretaker_list(this.token);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _breeding_sales(token);
+    return _breeding_sales_caretaker_list(token);
   }
 
 }
 
-class _breeding_sales extends State<breeding_sales>{
+class _breeding_sales_caretaker_list extends State<breeding_sales_caretaker_list>{
   String token;
-  _breeding_sales(this.token);
+  _breeding_sales_caretaker_list(this.token);
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
@@ -49,7 +52,7 @@ class _breeding_sales extends State<breeding_sales>{
     return Scaffold(
 //      floatingActionButton: FloatingActionButton(
 //        onPressed: (){
-//          Navigator.push(context, MaterialPageRoute(builder: (context)=>breeding_sales_form(token)));
+//          Navigator.push(context, MaterialPageRoute(builder: (context)=>breeding_sales_caretaker_list_form(token)));
 //        },
 //        child: Icon(Icons.add),
 //      ),
@@ -80,7 +83,7 @@ class _breeding_sales extends State<breeding_sales>{
             if(result){
               ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
               pd.show();
-              //BreedingSalesServices.get_breeding_sales(token).then((response){
+              //BreedingSalesServices.get_breeding_sales_caretaker_list(token).then((response){
               BreedingSalesCareTakerServices.get_breedingSales_caretaker(token).then((response){
                 pd.dismiss();
                 if(response!=null){
@@ -122,7 +125,7 @@ class _breeding_sales extends State<breeding_sales>{
 //                        color: Colors.blue,
 //                        caption: 'Update',
 //                        onTap: () async {
-//                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_breeding_sales_form(token,sales_list[index])));
+//                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_breeding_sales_caretaker_list_form(token,sales_list[index])));
 //                        },
 //                      ),
                     ],
@@ -132,7 +135,7 @@ class _breeding_sales extends State<breeding_sales>{
 //                        color: Colors.red,
 //                        caption: 'Hide',
 //                        onTap: () async {
-//                          BreedingSalesServices.change_breeding_sales_visibility(token, sales_list[index]['id']).then((response){
+//                          BreedingSalesServices.change_breeding_sales_caretaker_list_visibility(token, sales_list[index]['id']).then((response){
 //                            print(response);
 //                            if(response!=null){
 //                              Scaffold.of(context).showSnackBar(SnackBar(
@@ -193,46 +196,83 @@ class _breeding_sales extends State<breeding_sales>{
                         color: Colors.green,
                         caption: 'Complete',
                         onTap: () async {
-                          Utils.check_connectivity().then((result){
-                            if(result){
-                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                              pd.show();
-                              BreedingSalesCareTakerServices.complete_breeding_sales(token, sales_list[index]['id']).then((response){
-                                pd.dismiss();
-                                if(response!=null){
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    backgroundColor:Colors.green ,
-                                    content: Text('Process Complete'),
-                                  ));
-//                                  setState(() {
-//                                    control_list.removeAt(index);
-//                                  });
-                                }else{
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    backgroundColor:Colors.red ,
-                                    content: Text('Process Failed'),
-                                  ));
-                                }
-                              });
-                            }else{
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                content: Text("Network not Available"),
-                                backgroundColor: Colors.red,
-                              ));
-                            }
-                          });
-
+                          print(sales_list[index]);
+                          print(DateTime.parse(sales_list[index]['date']));
+                          if(DateTime.now().isAfter(DateTime.parse(sales_list[index]['date'])) )
+                            Navigator.push(context,MaterialPageRoute(builder: (context)=>breeding_sales_late_reason(token, sales_list[index]['id'])));
+                          else{
+                            Utils.check_connectivity().then((result){
+                              if(result){
+                                ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                                pd.show();
+                                BreedingSalesCareTakerServices.complete_breeding_sales(token, sales_list[index]['id']).then((response){
+                                  pd.dismiss();
+                                  if(response!=null){
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      backgroundColor:Colors.green ,
+                                      content: Text('Completed'),
+                                    ));
+                                    setState(() {
+                                      //  control_list.removeAt(index);
+                                    });
+                                  }else{
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      backgroundColor:Colors.red ,
+                                      content: Text('Process Failed'),
+                                    ));
+                                  }
+                                });
+                              }else{
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text("Network not Available"),
+                                  backgroundColor: Colors.red,
+                                ));
+                              }
+                            });
+                          }
                         },
+//                        onTap: () async {
+//                          Utils.check_connectivity().then((result){
+//                            if(result){
+//                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+//                              pd.show();
+//                              BreedingSalesCareTakerServices.complete_breeding_sales_caretaker_list(token, sales_list[index]['id']).then((response){
+//                                pd.dismiss();
+//                                if(response!=null){
+//                                  Scaffold.of(context).showSnackBar(SnackBar(
+//                                    backgroundColor:Colors.green ,
+//                                    content: Text('Process Complete'),
+//                                  ));
+////                                  setState(() {
+////                                    control_list.removeAt(index);
+////                                  });
+//                                }else{
+//                                  Scaffold.of(context).showSnackBar(SnackBar(
+//                                    backgroundColor:Colors.red ,
+//                                    content: Text('Process Failed'),
+//                                  ));
+//                                }
+//                              });
+//                            }else{
+//                              Scaffold.of(context).showSnackBar(SnackBar(
+//                                content: Text("Network not Available"),
+//                                backgroundColor: Colors.red,
+//                              ));
+//                            }
+//                          });
+//
+//                        },
                       ),
                     ],
                     child: FadeAnimation(2.0,
                        ListTile(
                         title: Text(sales_list!=null?sales_list[index]['horseName']['name']:''),
+                         trailing:Text(sales_list!=null?get_status_by_id(sales_list[index]['status']):''),
                          //subtitle: Text(sales_list!=null?sales_list[index]['status'].toString():''),
                        // subtitle: Text(sales_list!=null?sales_list[index]['customerName']['contactName']['name']:''),
-                        trailing: Text(sales_list!=null?sales_list[index]['date']:''),
+                        subtitle: Text(sales_list!=null?sales_list[index]['date']:''),
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => breeding_sales_details_page(sales_list[index], get_status_by_id(sales_list[index]['status']))));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => breeding_sales_details_page(sales_list[index], get_delivery_status_by_id(sales_list[index]['status']))));
 
                       },
                       ),
@@ -247,7 +287,7 @@ class _breeding_sales extends State<breeding_sales>{
     );
   }
 
-  String get_status_by_id(int id){
+  String get_delivery_status_by_id(int id){
     var status_type;
     if(sales_list!=null&&id!=null){
       if(id==1){
@@ -266,5 +306,26 @@ class _breeding_sales extends State<breeding_sales>{
     }
     return status_type;
   }
+
+  String get_status_by_id(int id){
+    var status;
+
+    if(id ==0){
+      status= "Not started";
+    }else if(id==1){
+      status='Started';
+    }else if(id==2){
+      status="Complete";
+    }
+    else if(id==3){
+      status="Late Complete";
+    }
+    else{
+      status= "empty";
+    }
+    return status;
+  }
+
+
 }
 

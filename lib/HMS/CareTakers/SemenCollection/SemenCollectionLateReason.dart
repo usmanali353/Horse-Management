@@ -11,19 +11,19 @@ import '../../../Utils.dart';
 
 
 class semen_collection_late_reason extends StatefulWidget{
-  final token;
-  semen_collection_late_reason(this.token);
+  final token,id;
+  semen_collection_late_reason(this.token,this.id);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _semen_collection_late_reason(token);
+    return _semen_collection_late_reason(token,id);
   }
 
 }
 class _semen_collection_late_reason extends State<semen_collection_late_reason>{
-  final token;
-  _semen_collection_late_reason(this.token,);
+  final token,id;
+  _semen_collection_late_reason(this.token,this.id);
   TextEditingController late_reason;
   //int selected_currency_id=0;
   bool autoValidate = true;
@@ -98,7 +98,7 @@ class _semen_collection_late_reason extends State<semen_collection_late_reason>{
                               if(result){
                                 ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                                 pd.show();
-                                SemenCollectionCareTakerServices.save_late_complete_reason(token,0,late_reason.text)
+                                SemenCollectionCareTakerServices.save_late_complete_reason(token,id,late_reason.text)
                                     .then((respons){
                                   pd.dismiss();
                                   setState(() {

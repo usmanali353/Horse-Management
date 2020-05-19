@@ -15,24 +15,25 @@ import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 import '../../../Utils.dart';
+import 'ConfirmationLateReason.dart';
 
 
 
-class confirmation_list extends StatefulWidget{
+class confirmation_caretaker_list extends StatefulWidget{
   String token;
-  confirmation_list(this.token);
+  confirmation_caretaker_list(this.token);
 
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _confirmation_list(token);
+    return _confirmation_caretaker_list(token);
   }
 }
 
-class _confirmation_list extends State<confirmation_list>{
+class _confirmation_caretaker_list extends State<confirmation_caretaker_list>{
   String token;
-  _confirmation_list(this.token);
+  _confirmation_caretaker_list(this.token);
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
@@ -56,7 +57,7 @@ class _confirmation_list extends State<confirmation_list>{
 //        child: Icon(Icons.add),
 //      ),
       appBar: AppBar(
-        title: Text("Confirmation"),
+        title: Text("Confirmation & Caretaker"),
         actions: <Widget>[
           Center(child: Text("Add New",textScaleFactor: 1.3,)),
           IconButton(
@@ -197,45 +198,97 @@ class _confirmation_list extends State<confirmation_list>{
                         icon: Icons.done_all,
                         color: Colors.green,
                         caption: 'Complete',
-                        onTap: () async {
-                          Utils.check_connectivity().then((result){
-                            if(result){
-                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                              pd.show();
-                              ConfirmationCareTakerServices.complete_confirmation(token, confirmation_lists[index]['conformationId']).then((response){
-                                pd.dismiss();
-                                if(response!=null){
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    backgroundColor:Colors.green ,
-                                    content: Text('Process Complete'),
-                                  ));
-//                                  setState(() {
-//                                    control_list.removeAt(index);
-//                                  });
-                                }else{
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    backgroundColor:Colors.red ,
-                                    content: Text('Process Failed'),
-                                  ));
-                                }
-                              });
-                            }else{
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                content: Text("Network not Available"),
-                                backgroundColor: Colors.red,
-                              ));
-                            }
-                          });
-
-                        },
-                      ),
+                                  onTap: () async {
+                                    print(confirmation_lists[index]);
+                                    print(DateTime.parse(
+                                        confirmation_lists[index]['date']));
+                                    if (DateTime.now().isAfter(DateTime.parse(
+                                        confirmation_lists[index]['date'])))
+                                      Navigator.push(context, MaterialPageRoute(
+                                          builder: (context) =>
+                                              confirmation_late_reason(token, confirmation_lists[index]['conformationId'])));
+                                    else {
+                                      Utils.check_connectivity().then((result) {
+                                        if (result) {
+                                          ProgressDialog pd = ProgressDialog(
+                                              context,
+                                              type: ProgressDialogType.Normal,
+                                              isDismissible: true);
+                                          pd.show();
+                                          ConfirmationCareTakerServices
+                                              .complete_confirmation(token,
+                                              confirmation_lists[index]['conformationId'])
+                                              .then((response) {
+                                            pd.dismiss();
+                                            if (response != null) {
+                                              Scaffold.of(context).showSnackBar(
+                                                  SnackBar(
+                                                    backgroundColor: Colors
+                                                        .green,
+                                                    content: Text('Completed'),
+                                                  ));
+                                              setState(() {
+                                                //  control_list.removeAt(index);
+                                              });
+                                            } else {
+                                              Scaffold.of(context).showSnackBar(
+                                                  SnackBar(
+                                                    backgroundColor: Colors.red,
+                                                    content: Text(
+                                                        'Process Failed'),
+                                                  ));
+                                            }
+                                          });
+                                        } else {
+                                          Scaffold.of(context).showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                    "Network not Available"),
+                                                backgroundColor: Colors.red,
+                                              ));
+                                        }
+                                      });
+                                    }
+//                        onTap: () async {
+//                          Utils.check_connectivity().then((result){
+//                            if(result){
+//                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+//                              pd.show();
+//                              ConfirmationCareTakerServices.complete_confirmation(token, confirmation_lists[index]['conformationId']).then((response){
+//                                pd.dismiss();
+//                                if(response!=null){
+//                                  Scaffold.of(context).showSnackBar(SnackBar(
+//                                    backgroundColor:Colors.green ,
+//                                    content: Text('Process Complete'),
+//                                  ));
+////                                  setState(() {
+////                                    control_list.removeAt(index);
+////                                  });
+//                                }else{
+//                                  Scaffold.of(context).showSnackBar(SnackBar(
+//                                    backgroundColor:Colors.red ,
+//                                    content: Text('Process Failed'),
+//                                  ));
+//                                }
+//                              });
+//                            }else{
+//                              Scaffold.of(context).showSnackBar(SnackBar(
+//                                content: Text("Network not Available"),
+//                                backgroundColor: Colors.red,
+//                              ));
+//                            }
+//                          });
+//
+//                        },
+                                  }),
                     ],
                     child: FadeAnimation(2.0,
                       ListTile(
                         title: Text(confirmation_lists!=null?confirmation_lists[index]['horseName']['name']:''),
                         //title: Text("data"),
-                        subtitle: Text(confirmation_lists!=null?confirmation_lists[index]['vetName']['contactName']['name'].toString():''),
-                       trailing: Text(confirmation_lists!=null?confirmation_lists[index]['date'].toString().substring(0,10) :''),
+                        subtitle: Text(confirmation_lists!=null?confirmation_lists[index]['date'].toString().substring(0,10) :''),
+                        //subtitle: Text(confirmation_lists!=null?confirmation_lists[index]['vetName']['contactName']['name'].toString():''),
+                       trailing: Text(confirmation_lists!=null?get_status_by_id(confirmation_lists[index]['status']):''),
                         onTap: (){
                           // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
                         },
@@ -251,5 +304,23 @@ class _confirmation_list extends State<confirmation_list>{
     );
   }
 
+  String get_status_by_id(int id){
+    var status;
+
+    if(id ==0){
+      status= "Not started";
+    }else if(id==1){
+      status='Started';
+    }else if(id==2){
+      status="Complete";
+    }
+    else if(id==3){
+      status="Late Complete";
+    }
+    else{
+      status= "empty";
+    }
+    return status;
+  }
 
 }
