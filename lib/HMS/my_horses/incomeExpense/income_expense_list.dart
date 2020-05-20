@@ -39,7 +39,8 @@ class _incomeExpense_list_state extends State<income_expense_list>{
 
   @override
   void initState () {
-    income_expense_services.horseIdincomeExpense(token,1).then((
+
+    income_expense_services.horseIdincomeExpense(token,horseId).then((
         response) {
       setState(() {
         print(response);
@@ -74,6 +75,7 @@ class _incomeExpense_list_state extends State<income_expense_list>{
           )
         ],),
         body:ListView.builder(itemCount:list!=null?list.length:temp.length,itemBuilder: (context,int index){
+
           return Column(
             children: <Widget>[
               ExpansionTile(

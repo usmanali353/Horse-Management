@@ -117,6 +117,7 @@ class _Profile_Page_State extends State<competetion_list>{
 
                 ],
                 child: ListTile(
+                  enabled: competetionlist[index]['isActive']!= null ? competetionlist[index]['isActive']:true,
                   //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                   title: Text(competetionlist!=null?(competetionlist[index]['horseName']['name']):'Horse Name'),
                   trailing: Text(competetionlist!=null?'Performance :'+(competetionlist[index]['performanceTypeName']['name']):'performance not showing'),

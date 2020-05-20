@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/HMS/All_Horses_data/services/labTest_services.dart';
 import 'package:horse_management/Model/sqlite_helper.dart';
+import 'package:horse_management/Utils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -21,7 +23,7 @@ class add_labTest extends StatefulWidget{
 
 }
 class _add_horse_state extends State<add_labTest>{
-  String token;
+  String token,select_image;
 
   _add_horse_state (this.token);
   int selected_horse_id,selected_testtype_id,selected_positive_id,selected_responsible_id,selected_currency_id,selected_category_id,selected_costcenter_id,selected_contact_id;
@@ -31,7 +33,7 @@ class _add_horse_state extends State<add_labTest>{
   List<String> horse=[];List<String> testtype=[];List<String> positive=["Yes","No"];List<String> responsible=[];List<String> currency=[];List<String> category=[];List<String> costcenter=[];
   List<String> contact=[];
   var labDropdown;
-
+  Uint8List picked_image;
   sqlite_helper local_db;
   bool isPositive;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
@@ -362,7 +364,28 @@ class _add_horse_state extends State<add_labTest>{
                         ),
                       ),
                       //ImagePickerExample(),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: MaterialButton(
+                          color: Colors.teal,
+                          onPressed: (){
+                            Utils.getImage().then((image_file){
+                              if(image_file!=null){
+                                image_file.readAsBytes().then((image){
+                                  if(image!=null){
+                                    setState(() {
+                                      this.picked_image=image;
+                                    });
+                                  }
+                                });
+                              }else{
 
+                              }
+                            });
+                          },
+                          child: Text("Select Image",style: TextStyle(color: Colors.white),),
+                        ),
+                      ),
 
                     ],
                   ),
@@ -385,7 +408,7 @@ class _add_horse_state extends State<add_labTest>{
                             print(labDropdown['contactsDropDown'][selected_contact_id]['id']);
                             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                             pd.show();
-                            labtest_services.labTestSave(null,0,token, labDropdown['horseDropDown'][selected_horse_id]['id'], Select_date, labDropdown['testTypesdropDown'][selected_testtype_id]['id'], isPositive, labDropdown['responsibleDropDown'][selected_responsible_id]['id'], lab.text, result.text, amount.text, labDropdown['currencyDropDown'][selected_currency_id]['id'], labDropdown['categoryDropDown'][selected_category_id]['id'], labDropdown['costCenterDropDown'][selected_costcenter_id]['id'], labDropdown['contactsDropDown'][selected_contact_id]['id']).then((response){
+                            labtest_services.labTestSave(null,0,token, labDropdown['horseDropDown'][selected_horse_id]['id'], Select_date, labDropdown['testTypesdropDown'][selected_testtype_id]['id'], isPositive, labDropdown['responsibleDropDown'][selected_responsible_id]['id'], lab.text, result.text, amount.text, labDropdown['currencyDropDown'][selected_currency_id]['id'], labDropdown['categoryDropDown'][selected_category_id]['id'], labDropdown['costCenterDropDown'][selected_costcenter_id]['id'], labDropdown['contactsDropDown'][selected_contact_id]['id'],picked_image).then((response){
                             pd.dismiss();
                             if(response !=null)
                             print("Successfully lab test added");

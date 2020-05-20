@@ -42,6 +42,11 @@ class _training_detail_page_state extends State<training_details_page>{
                ),
                Divider(),
                ListTile(
+                 title: Text("Sessions"),
+                 trailing: Text(training_data['sessions']!=null?training_data['sessions'].toString():''),
+               ),
+               Divider(),
+               ListTile(
                  title: Text("Targer Competition"),
                  trailing: Text(training_data['targetCompetition']!=null?training_data['targetCompetition']:''),
                ),

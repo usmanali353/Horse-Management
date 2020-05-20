@@ -350,8 +350,10 @@ class _health_record_form extends State<health_record_form>{
                       pd.show();
                       healthServices.healthRecordSave(null,0,token, healthdropdown['horseDropDown'][selected_horse_id]['id'], healthdropdown['responsibleDropDown'][selected_responsible_id]['id'],selected_health_record_type_id, product.text, selected_quantity, comment.text,amount.text, healthdropdown['currencyDropDown'][selected_currency_id]['id'], healthdropdown['categoryDropDown'][selected_category_id]['id'], healthdropdown['costCenterDropDown'][selected_cost_center_id]['id'], healthdropdown['contactsDropDown'][selected_contact_id]['id']).then((response){
                         pd.dismiss();
-                        if(response !=null)
+                        if(response !=null) {
                           print("Successfully lab test added");
+                          Navigator.of(context).pop();
+                        }
                         else{
                           print("data not added");}
                       });

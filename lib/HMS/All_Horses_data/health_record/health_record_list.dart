@@ -221,6 +221,8 @@ class _Profile_Page_State extends State<healthRecord_list>{
                       ),
                     ],
                     child: ListTile(
+                      enabled: healthlist[index]['isActive']!= null? healthlist[index]['isActive']:true,
+
                       //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                       title: Text(healthlist!=null?healthlist[index]['horseName']['name'].toString():'name not show'),
                       subtitle: Text(healthlist!=null? "Responsible: "+healthlist[index]['responsibleName']['contactName']['name'].toString():'responsible empty'),

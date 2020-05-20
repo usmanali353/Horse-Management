@@ -78,6 +78,11 @@ class _Profile_Page_State extends State<lab_list>{
                   ListTile(
                     title: Text("Amount"),
                     trailing: Text(specificlabtest[index]['amount'].toString()),
+                  ),
+                  Divider(),
+                  ListTile(
+                    title: Text("Test Image"),
+                    trailing: specificlabtest[index]['image']!=null?Image.memory(base64.decode(specificlabtest[index]['image'])):Text('empty'),
                   )
 
                 ],

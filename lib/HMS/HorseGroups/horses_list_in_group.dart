@@ -58,8 +58,10 @@ class _training_list_state extends State<HorseListInGroup>{
           // print(response.length.toString());
           if(response!=null){
             setState(() {
+              var loadlist;
               //var parsedjson = jsonDecode(response);
-              horse_list  = jsonDecode(response);
+              loadlist = jsonDecode(response);
+              horse_list = loadlist['response'];
               print(horse_list);
               //print(horse_list['createdBy']);
             });

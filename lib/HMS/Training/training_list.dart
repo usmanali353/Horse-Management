@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive/hive.dart';
 import 'package:horse_management/HMS/Training/training_detail_page.dart';
+import 'package:horse_management/HMS/Training/session_list.dart';
 import 'package:horse_management/HMS/Training/update_training.dart';
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
@@ -100,6 +101,17 @@ class _training_list_state extends State<training_list>{
                 Slidable(
                   actionPane: SlidableDrawerActionPane(),
                   actionExtentRatio: 0.20,
+                  secondaryActions: <Widget>[
+                    IconSlideAction(
+                      icon: Icons.list,
+                      color: Colors.green,
+                      caption: 'Sessions',
+                      onTap: () async {
+                        Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => training_session_list(token, training_list[index])));
+                      },
+                    ),
+                  ],
                   actions: <Widget>[
                     IconSlideAction(
                       icon: Icons.visibility_off,

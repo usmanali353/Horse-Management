@@ -274,9 +274,10 @@ class _state_add_farrier extends State<add_swabbing>{
                             swabbing_services.swabbingSave(null,token,0, swabbingdropdown['horseDropDown'][selected_horse_id]['id'],swabbing_date,treatment_date,antibiotic.text,result.text,amount.text,comment.text).then((response){
 
                               pd.dismiss();
-                              if(response !=null)
+                              if(response !=null) {
                                 print(response);
-
+                                Navigator.of(context).pop();
+                              }
                               else{
                                 print("data not added");}
                             });

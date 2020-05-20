@@ -117,6 +117,7 @@ class _Profile_Page_State extends State<swabbing_list>{
                   },color: Colors.blue,icon: Icons.border_color,caption: 'update',)
                 ],
                 child: ListTile(
+                  enabled: swabbinglist[index]['isActive']!=null?swabbinglist[index]['isActive']:true,
                   //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                   title: Text(swabbinglist!=null?(swabbinglist[index]['horseName']['name']):'Horse Name'),
                   subtitle: Text(swabbinglist!=null?'Date '+(swabbinglist[index]['swabbingDate'].toString().substring(0,10)):'empty'),

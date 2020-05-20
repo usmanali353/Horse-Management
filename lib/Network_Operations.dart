@@ -1,4 +1,5 @@
 import 'dart:convert';
+//import 'dart:html';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
@@ -400,6 +401,75 @@ static Future<String> delete_already_trained_horses(String token,int id) async{
     }else
       return null;
   }
+static Future<String> addTrainingSession(String token,String createdBy,int id,int trainingId,DateTime date,int trainer,int hour,int min,int sec,int milli,int activitylevel,int repose,int fivemin,int tenmin,int thirtymin,int amount,int currencyid,int category,String comment)async{
+  Map<String,String> headers = {'Authorization':'Bearer '+token,'Content-Type':'application/json'};
+  final body = jsonEncode({ "id": id,
+    "trainingId": trainingId,
+    "date":date,
+    "trainerId":trainer,
+    "amount": amount,"hours": hour,
+    "minutes": min,
+    "seconds": sec,
+    "milli": milli,
+    "levelOfActivity": activitylevel,
+    "min": null,
+    "max": null,
+    "average": null,
+    "repose": repose,
+    "min5": fivemin,
+    "min10": tenmin,
+    "min30": thirtymin,
+    "comments": comment,
+    "amount":amount,
+    "currencyId": currencyid,
+    "categoryId": category,'createdBy':createdBy,'isActive':true,'createdOn':DateTime.now(),},toEncodable: Utils.myEncode);
+  var response= await http.post("http://192.236.147.77:8083/api/Training/TrainingSessionSave",headers: headers,body: body);
+  print(response.body);
+  if(response.statusCode==200){
+    return response.body;
+  }else
+    return null;
+}
+static Future<String> training_session_dropdowns(String token,int trainingId) async{
+  Map<String,String> headers = {'Authorization':'Bearer '+token};
+  final response = await http.get('http://192.236.147.77:8083/api/Training/GetTrainingSessionById/'+trainingId.toString(), headers: headers,);
+  if(response.statusCode==200){
+    return response.body;
+  }else
+    return null;
+}
+static Future<String> training_session_list(String token,int trainingId) async{
+  Map<String,String> headers = {'Authorization':'Bearer '+token};
+  final response = await http.get('http://192.236.147.77:8083/api/Training/GetAllTrainingSessions/'+trainingId.toString(), headers: headers,);
+  if(response.statusCode==200){
+    return response.body;
+  }else
+    return null;
+}
+static Future<String> session_visibility(String token,int id) async{
+  Map<String,String> headers = {'Authorization':'Bearer '+token};
+  final response = await http.get('http://192.236.147.77:8083/api/Training/TrainingSessionVisibility/'+id.toString(), headers: headers,);
+  if(response.statusCode==200){
+    return response.body;
+  }else
+    return null;
+}
+static Future<String> session_deletion(String token,int id) async{
+  Map<String,String> headers = {'Authorization':'Bearer '+token};
+  final response = await http.get('http://192.236.147.77:8083/api/Training/DeleteTrainingSession/'+id.toString(), headers: headers,);
+  if(response.statusCode==200){
+    return response.body;
+  }else
+    return null;
+}
+static Future<String> session_training_type(String token,int id) async{
+  Map<String,String> headers = {'Authorization':'Bearer '+token};
+  final response = await http.get('http://192.236.147.77:8083/api/Training/GetTrainingType/'+id.toString(), headers: headers,);
+  if(response.statusCode==200){
+    return response.body;
+  }else
+    return null;
+}
   static Future<String> getTrainingPlans(String token) async{
     Map<String,String> headers = {'Authorization':'Bearer '+token};
     final response = await http.get('http://192.236.147.77:8083/api/Training/GetAllTrainingPlans', headers: headers,);

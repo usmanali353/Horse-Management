@@ -148,11 +148,12 @@ class _training_list_state extends State<horseGroup_list>{
                     ),
                   ],
                   child: ListTile(
+                    //title: Text("abc"),
                     //leading: Image.asset("assets/horse_icon.png", fit: BoxFit.cover),
                     title: Text(group_list!=null?(group_list[index]['name']):''),
                     subtitle: Text(group_list!=null?"Comment: "+group_list[index]['comments'].toString():''),
                     //leading: Image.asset("Assets/horses_icon.png"),
-                    trailing: Text(group_list[index]['isDynamic'] == true ?"Dynamic: "+"Yes":"No"),
+                   // trailing: Text(group_list[index]['isDynamic'] == true ?"Dynamic: "+"Yes":"No"),
                     onTap: (){
 //                      print(group_list[index]);
 //                      print(group_list[index]['isActive']);
