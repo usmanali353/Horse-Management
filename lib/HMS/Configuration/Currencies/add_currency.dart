@@ -14,7 +14,6 @@ class add_currency extends StatefulWidget{
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _add_currency(token);
   }
 }
@@ -100,38 +99,45 @@ class _add_currency extends State<add_currency>{
                       ],
                     ),
                   ),
-                  Center(
-                      child:Padding(
-                          padding: const EdgeInsets.all(16),
-                          child:MaterialButton(
-                            color: Colors.teal,
-                            child: Text("Save",style: TextStyle(color: Colors.white),),
-                            onPressed: (){
-                              if (_fbKey.currentState.validate()) {
-                                Utils.check_connectivity().then((result){
-                                  if(result){
-                                    ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                                    pd.show();
-                                    CurrenciesServices.addCurrency(token, 0,selected_currency, null)
-                                        .then((respons){
-                                      pd.dismiss();
-                                      setState(() {
-                                        var parsedjson  = jsonDecode(respons);
-                                        if(parsedjson != null){
-                                          if(parsedjson['isSuccess'] == true){
-                                            print("Successfully data updated");
-                                          }else
-                                            print("not saved");
-                                        }else
-                                          print("json response null");
-                                      });
+                  Builder(
+                    builder: (BuildContext context){
+                      return  Center(
+                          child:Padding(
+                              padding: const EdgeInsets.all(16),
+                              child:MaterialButton(
+                                color: Colors.teal,
+                                child: Text("Save",style: TextStyle(color: Colors.white),),
+                                onPressed: (){
+                                  if (_fbKey.currentState.validate()) {
+                                    Utils.check_connectivity().then((result){
+                                      if(result){
+                                        ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                        pd.show();
+                                        CurrenciesServices.addCurrency(token,currency_response['currencySymbolsDropDown'][selected_currency_id]['id'],selected_currency, null)
+                                            .then((respons){
+                                          pd.dismiss();
+                                           if(respons!=null){
+                                             Scaffold.of(context).showSnackBar(SnackBar(
+                                               content: Text("Currency Added"),
+                                               backgroundColor: Colors.green,
+                                             ));
+                                             Navigator.pop(context);
+                                           }else{
+                                             Scaffold.of(context).showSnackBar(SnackBar(
+                                               content: Text("Currency not Added"),
+                                               backgroundColor: Colors.red,
+                                             ));
+                                           }
+                                        });
+                                      }
                                     });
                                   }
-                                });
-                              }
-                            },
+                                },
+                              )
                           )
-                      )
+                      );
+                    },
+
                   )
                 ],
               )
