@@ -101,7 +101,6 @@ class _add_dam extends State<add_dam>{
 
                           ),
                         ),
-
                         Padding(
                           padding: const EdgeInsets.only(left: 16,right: 16, top:16),
                           child: Visibility(
@@ -219,33 +218,39 @@ class _add_dam extends State<add_dam>{
                   Center(
                       child:Padding(
                           padding: const EdgeInsets.all(16),
-                          child:MaterialButton(
-                            color: Colors.teal,
-                            child: Text("Save",style: TextStyle(color: Colors.white),),
-                            onPressed: (){
-                              if (_fbKey.currentState.validate()) {
-                                Utils.check_connectivity().then((result){
-                                  if(result){
-                                    ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                                    pd.show();
-                                    DamServices.addDam(token, 0, name.text, true, true, true, selected_breed_id, selected_color_id, select_DOB, number.text, microchip.text, null)
-                                        .then((respons){
-                                      pd.dismiss();
-                                      setState(() {
-                                        var parsedjson  = jsonDecode(respons);
-                                        if(parsedjson != null){
-                                          if(parsedjson['isSuccess'] == true){
-                                            print("Successfully data saved");
-                                          }else
-                                            print("not saved");
-                                        }else
-                                          print("json response null");
-                                      });
+                          child:Builder(
+                            builder: (BuildContext context){
+                              return  MaterialButton(
+                                color: Colors.teal,
+                                child: Text("Save",style: TextStyle(color: Colors.white),),
+                                onPressed: (){
+                                  if (_fbKey.currentState.validate()) {
+                                    Utils.check_connectivity().then((result){
+                                      if(result){
+                                        ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                        pd.show();
+                                        DamServices.addDam(token, 0, name.text, true, true, true, dam_response['breedDropDown'][selected_breed_id]['id'], dam_response['colorDropDown'][selected_color_id]['id'], select_DOB, number.text, microchip.text, null)
+                                            .then((respons){
+                                          pd.dismiss();
+                                          if(respons!=null){
+                                            Scaffold.of(context).showSnackBar(SnackBar(
+                                              content: Text("Dam Added"),
+                                              backgroundColor: Colors.green,
+                                            ));
+                                          }else{
+                                            Scaffold.of(context).showSnackBar(SnackBar(
+                                              content: Text("Dam not Added"),
+                                              backgroundColor: Colors.red,
+                                            ));
+                                          }
+                                        });
+                                      }
                                     });
                                   }
-                                });
-                              }
-                            },
+                                },
+                              );
+                            }
+
                           )
                       )
                   )

@@ -166,39 +166,46 @@ class _update_currency extends State<update_currency>{
                       ],
                     ),
                   ),
-                  Center(
-                      child:Padding(
-                          padding: const EdgeInsets.all(16),
-                          child:MaterialButton(
-                            color: Colors.teal,
-                            child: Text("Update",style: TextStyle(color: Colors.white),),
+                  Builder(
+                    builder: (BuildContext context){
+                      return  Center(
+                          child:Padding(
+                              padding: const EdgeInsets.all(16),
+                              child:MaterialButton(
+                                color: Colors.teal,
+                                child: Text("Update",style: TextStyle(color: Colors.white),),
 
-                            onPressed: (){
-                              if (_fbKey.currentState.validate()) {
-                                _fbKey.currentState.save();
-                                Utils.check_connectivity().then((result){
-                                  if(result){
-                                    ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                                    pd.show();
-                                    CurrenciesServices.addCurrency(token, specificcurrency['id'],selected_currency, specificcurrency['createdBy'],).then((respons){
-                                      pd.dismiss();
-                                      setState(() {
-                                        var parsedjson  = jsonDecode(respons);
-                                        if(parsedjson != null){
-                                          if(parsedjson['isSuccess'] == true){
-                                            print("Successfully data updated");
-                                          }else
-                                            print("not saved");
-                                        }else
-                                          print("json response null");
-                                      });
+                                onPressed: (){
+                                  if (_fbKey.currentState.validate()) {
+                                    _fbKey.currentState.save();
+                                    Utils.check_connectivity().then((result){
+                                      if(result){
+                                        ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                        pd.show();
+                                        CurrenciesServices.addCurrency(token,currency_response['currencySymbolsDropDown'][selected_currency_id]['id'],selected_currency, specificcurrency['createdBy'],).then((respons){
+                                          pd.dismiss();
+                                          if(respons!=null){
+                                            Scaffold.of(context).showSnackBar(SnackBar(
+                                              content: Text("Currency Updated"),
+                                              backgroundColor: Colors.green,
+                                            ));
+                                            Navigator.pop(context);
+                                          }else{
+                                            Scaffold.of(context).showSnackBar(SnackBar(
+                                              content: Text("Currency not Updated"),
+                                              backgroundColor: Colors.red,
+                                            ));
+                                          }
+                                        });
+                                      }
                                     });
                                   }
-                                });
-                              }
-                            },
+                                },
+                              )
                           )
-                      )
+                      );
+                    },
+
                   )
                 ],
               )
