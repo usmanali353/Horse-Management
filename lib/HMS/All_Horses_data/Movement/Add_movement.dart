@@ -482,7 +482,7 @@ class _state_add_farrier extends State<add_movement>{
                       child: MaterialButton(
                         color: Colors.teal,
                         onPressed: (){
-                          if(departure_date.isBefore(return_date) || select_fromlocation == select_tolocation) {
+                          if(departure_date.isBefore(return_date) || select_fromlocation != select_tolocation) {
                             if (_fbKey.currentState.validate()) {
                               print(_fbKey.currentState.value);
                               print(token);
@@ -528,7 +528,7 @@ class _state_add_farrier extends State<add_movement>{
                               });
                             }
                           }else {
-                            print("chane date");
+                            print("change date & location");
                             // Scaffold.of(context).showSnackBar(SnackBar(content: Text("Plz check the return date"),backgroundColor: Colors.red,));
                            // Clipboard.setData(new ClipboardData(text: ruleGroup['label'] + " "  + ruleGroup['details']));
 //                            Flushbar(
@@ -538,7 +538,7 @@ class _state_add_farrier extends State<add_movement>{
 //                            )..show(context);
                           }
                           },
-                        child:Text("Add Horse",style: TextStyle(color: Colors.white),),
+                        child:Text("Add Movement",style: TextStyle(color: Colors.white),),
                       ),
                     )
                 )

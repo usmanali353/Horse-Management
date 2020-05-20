@@ -47,7 +47,7 @@ class _training_session_list extends State< training_session_list>{
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text("Breeding Control & Caretaker"),
+        title: Text("Training Session"),
         actions: <Widget>[
           Center(child: Text("Add New",textScaleFactor: 1.3,)),
           IconButton(

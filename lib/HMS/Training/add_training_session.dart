@@ -458,6 +458,7 @@ class _add_training_session extends State<add_training_session>{
                                 if(parsedjson != null){
                                   if(parsedjson['isSuccess'] == true){
                                     print("Successfully data updated");
+                                    Navigator.of(context).pop();
                                   }else
                                     print("not saved");
                                 }else
