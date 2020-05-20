@@ -29,7 +29,7 @@ class _training_list_state extends State<horseGroup_list>{
   _training_list_state (this.token);
   SharedPreferences prefs;
   var group_list, load_list;
-  var temp=[];
+  var temp=['',''];
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
   @override
@@ -45,13 +45,15 @@ class _training_list_state extends State<horseGroup_list>{
         ProgressDialog pd = ProgressDialog(
             context, isDismissible: true, type: ProgressDialogType.Normal);
         pd.show();
-        Add_horsegroup_services.horsegrouplist(token).then((response){
+        Add_horsegroup_services.horsegrouplist(token).then((respons){
           pd.dismiss();
           // print(response.length.toString());
-          if(response!=null){
+          if(respons!=null){
             setState(() {
               //var parsedjson = jsonDecode(response);
-              load_list  = jsonDecode(response);
+              print(respons);
+              print("object");
+              load_list  = jsonDecode(respons);
               group_list = load_list['response'];
               print(group_list);
               //print(group_list['createdBy']);
@@ -150,19 +152,17 @@ class _training_list_state extends State<horseGroup_list>{
                   child: ListTile(
                     //title: Text("abc"),
                     //leading: Image.asset("assets/horse_icon.png", fit: BoxFit.cover),
-                    title: Text(group_list!=null?(group_list[index]['name']):''),
+                    title: Text(group_list!=null?group_list[index]['name']:'Empty'),
                     subtitle: Text(group_list!=null?"Comment: "+group_list[index]['comments'].toString():''),
                     //leading: Image.asset("Assets/horses_icon.png"),
-                   // trailing: Text(group_list[index]['isDynamic'] == true ?"Dynamic: "+"Yes":"No"),
+                   trailing: Text(group_list[index]['isDynamic'] == true ?"Dynamic: "+"Yes":"No"),
                     onTap: (){
-//                      print(group_list[index]);
+                      print(group_list[index]);
 //                      print(group_list[index]['isActive']);
 //                      print(group_list[index]['isDynamic']);
                       //prefs = await SharedPreferences.getInstance();
                       if(group_list[index]['isActive'] == true) {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => HorseListInGroup(token, group_list[index])));
-//                        print(group_list[index]['isDynamic']);
-//                        print(group_list[index]['isActive']);
                       }
                     },
                   ),

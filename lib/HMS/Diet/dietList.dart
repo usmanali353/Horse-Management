@@ -130,11 +130,27 @@ class dietListState extends State<dietList>{
                     ),
                   ],
                   child: FadeAnimation(2.0,
-                     ListTile(
+                     ExpansionTile(
                       title: Text(diet_list!=null?diet_list[index]['name']:''),
                       leading: Icon(Icons.fastfood,size: 40,color: Colors.teal,),
-                      onTap: (){
-                      },
+                      children: <Widget>[
+                        ListTile(
+                          title: Text("\$daily per 1"),
+                          trailing: Text(diet_list[index]['dailyPer1']!=null?diet_list[index]['dailyPer1'].toString():''),
+                        ),
+                        ListTile(
+                          title: Text("\$daily Total"),
+                          trailing: Text(diet_list[index]['dailyTotal']!=null?diet_list[index]['dailyTotal'].toString():''),
+                        ),
+                        ListTile(
+                          title: Text("\$Month per 1"),
+                          trailing: Text(diet_list[index]['monthlyPer1']!=null?diet_list[index]['monthlyPer1'].toString():''),
+                        ),
+                        ListTile(
+                          title: Text("\$Month Total"),
+                          trailing: Text(diet_list[index]['monthlyTotal']!=null?diet_list[index]['monthlyTotal'].toString():''),
+                        ),
+                      ],
                     ),
                   ),
 

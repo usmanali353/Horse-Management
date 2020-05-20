@@ -4,6 +4,8 @@ import 'package:horse_management/Utils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'trainingPlansList.dart';
+
 class excercises extends StatefulWidget {
   String trainingPlanName,trainingPlanDescription;
 
@@ -64,18 +66,22 @@ class _excercisesState extends State<excercises> {
       if(result){
         ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
         pd.show();
-         network_operations.addTrainingPlan(token, 0, entries,trainingPlanName, '').then((response){
+         network_operations.addTrainingPlan(token, 111, entries,trainingPlanName, trainingPlanDescription).then((response){
            pd.dismiss();
             if(response!=null){
-             Scaffold.of(context).showSnackBar(SnackBar(
-               content: Text("Training Plan Added Sucessfully"),
-               backgroundColor: Colors.green,
-             ));
+              print("Training paln added");
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>trainingPlanList(token)));
+             // Navigator.pop(context,trainingPlanList);
+//             Scaffold.of(context).showSnackBar(SnackBar(
+//               content: Text("Training Plan Added Sucessfully"),
+//               backgroundColor: Colors.green,
+//             ));
             }else{
-              Scaffold.of(context).showSnackBar(SnackBar(
-                content: Text("Training Plan not Added"),
-                backgroundColor: Colors.red,
-              ));
+              print("Traing plan no added");
+//              Scaffold.of(context).showSnackBar(SnackBar(
+//                content: Text("Training Plan not Added"),
+//                backgroundColor: Colors.red,
+//              ));
             }
          });
       }else{

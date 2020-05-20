@@ -53,14 +53,14 @@ class _training_list_state extends State<HorseListInGroup>{
         ProgressDialog pd = ProgressDialog(
             context, isDismissible: true, type: ProgressDialogType.Normal);
         pd.show();
-        Add_horsegroup_services.gethorselistOfGroup(token,groupid['id']).then((response){
+        Add_horsegroup_services.gethorselistOfGroup(token,groupid['id']).then((respons){
           pd.dismiss();
           // print(response.length.toString());
-          if(response!=null){
+          if(respons!=null){
             setState(() {
               var loadlist;
               //var parsedjson = jsonDecode(response);
-              loadlist = jsonDecode(response);
+              loadlist = jsonDecode(respons);
               horse_list = loadlist['response'];
               print(horse_list);
               //print(horse_list['createdBy']);
@@ -105,12 +105,14 @@ class _training_list_state extends State<HorseListInGroup>{
           onRefresh: (){
             return Utils.check_connectivity().then((result){
               if(result){
-                Add_horsegroup_services.gethorselistOfGroup(token,groupid['id']).then((response){
+                Add_horsegroup_services.gethorselistOfGroup(token,groupid['id']).then((respons){
                   // print(response.length.toString());
-                  if(response!=null){
+                  if(respons!=null){
                     setState(() {
+                      var loadlist;
                       //var parsedjson = jsonDecode(response);
-                      horse_list  = jsonDecode(response);
+                      loadlist = jsonDecode(respons);
+                      horse_list = loadlist['response'];
                       print(horse_list);
                       //print(horse_list['createdBy']);
                     });
