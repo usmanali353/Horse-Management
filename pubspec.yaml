@@ -46,6 +46,7 @@ dependencies:
   day_night_switch: ^0.0.2+1
   charts_flutter:
   pie_chart:
+  draggable_scrollbar: ^0.0.4
 
 
 dev_dependencies:
