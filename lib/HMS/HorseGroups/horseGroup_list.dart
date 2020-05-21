@@ -97,13 +97,13 @@ class _training_list_state extends State<horseGroup_list>{
           onRefresh: (){
             return Utils.check_connectivity().then((result){
               if(result){
-                Add_horsegroup_services.horsegrouplist(token).then((response){
+                Add_horsegroup_services.horsegrouplist(token).then((respons){
                   // print(response.length.toString());
-                  if(response!=null){
+                  if(respons!=null){
                     setState(() {
                       //var parsedjson = jsonDecode(response);
-                      group_list  = jsonDecode(response);
-                      print(group_list);
+                      load_list  = jsonDecode(respons);
+                      group_list = load_list['response'];
                       //print(group_list['createdBy']);
                     });
                   }

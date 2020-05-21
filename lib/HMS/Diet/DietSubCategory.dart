@@ -7,7 +7,7 @@ import 'package:horse_management/HMS/All_Horses_data/Horse_Notes/update_notes.da
 import 'package:horse_management/HMS/Diet/dietList.dart';
 import 'package:horse_management/HMS/Diet/diet_services.dart';
 import 'package:horse_management/HMS/Diet/productType/productTypeList.dart';
-
+import 'package:horse_management/HMS/Diet/productType/producttypelistMainPage.dart';
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
 
@@ -55,7 +55,7 @@ class _notes_list_state extends State<dietMainList>{
               leading: Icon(FontAwesomeIcons.pizzaSlice,size: 40,color: Colors.teal,),
             //  trailing: Text(itemList[index]['unit'] != null ? itemList[index]['unit'].toString():""),
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>productList(token)));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>producttypeMainPage(token)));
               },
             ),
 

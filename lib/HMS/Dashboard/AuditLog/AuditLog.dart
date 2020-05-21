@@ -170,3 +170,35 @@ class _audit_log extends State<audit_log>{
 
 
 }
+
+
+
+
+
+
+
+
+
+//
+//DraggableScrollbar(
+//controller: customController,
+//heightScrollThumb: 38.0,
+//backgroundColor: Colors.teal,
+//scrollThumbBuilder: (
+//Color backgroundColor,
+//    Animation<double> thumbAnimation,
+//Animation<double> labelAnimation,
+//    double height, {
+//Text labelText,
+//BoxConstraints labelConstraints,
+//}) {
+//return FadeTransition(
+//opacity: thumbAnimation,
+//child: Container(
+//height: height,
+//width: 10.0,
+//color: backgroundColor,
+//),
+//);
+//},
+//alwaysVisibleScrollThumb: true,

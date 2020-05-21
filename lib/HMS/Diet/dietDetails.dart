@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -7,6 +8,7 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Utils.dart';
+import 'dietList.dart';
 
 class dietDetails extends StatefulWidget{
   String token,dietName,dietDescription;
@@ -112,6 +114,12 @@ class dietDetailsState extends State<dietDetails>{
                 pd.hide();
                 if(response!=null){
                   print("Diet Added Sucessfully");
+                  sleep(Duration(seconds: 3));
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) {
+                    return dietList(token);
+                  }));
+                  Navigator.pop(context);
+                 // Navigator.push(context, MaterialPageRoute(builder: (context)=>dietList(token)));
                 }
               });
             }else{

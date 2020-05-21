@@ -12,10 +12,10 @@ import 'package:horse_management/Utils.dart';
 import '../create_from_inventory.dart';
 import '../create_product_type.dart';
 
-class productList extends StatefulWidget{
+class supplement_page extends StatefulWidget{
   String token;
 
-  productList(this.token);
+  supplement_page(this.token);
 
   @override
   State<StatefulWidget> createState() {
@@ -24,7 +24,7 @@ class productList extends StatefulWidget{
   }
 
 }
-class _notes_list_state extends State<productList>{
+class _notes_list_state extends State<supplement_page>{
   String token;
   var itemList;
   //var notes_list=[];
@@ -36,7 +36,6 @@ class _notes_list_state extends State<productList>{
 
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(title: Text("Product Types")),
       floatingActionButton: FloatingActionButton(
         child: Icon(
           Icons.add,
@@ -149,37 +148,29 @@ class _notes_list_state extends State<productList>{
                       },
                     ),
                   ],
-                  child: ListTile(
-                    title: Text(itemList!=null?itemList[index]['name']:''),
-                    subtitle: Text(itemList[index]['costPerUnit']!=null?"Cost: "+itemList[index]['costPerUnit'].toString():''),
-                    leading: Icon(FontAwesomeIcons.box,size: 40,color: Colors.teal,),
-                    trailing: Text(itemList[index]['unit'] != null ? itemList[index]['unit'].toString():""),
-                    onTap: (){
-                    },
+                  child: Visibility(
+                    visible: checklist(itemList[index]['category']),
+                    child: ListTile(
+                      title: Text(itemList!=null?itemList[index]['name']:''),
+                      subtitle: Text(itemList[index]['costPerUnit']!=null?"Cost: "+itemList[index]['costPerUnit'].toString():''),
+                      leading: Icon(FontAwesomeIcons.box,size: 40,color: Colors.teal,),
+                      trailing: Text(itemList[index]['unit'] != null ? itemList[index]['unit'].toString():""),
+                      onTap: (){
+                      },
+                    ),
                   ),
 
                 ),
                 Divider(),
-                Text("Foarge"),
-
-                ListTile(
-                  title: Text(itemList!=null?itemList[index]['name']:''),
-                  subtitle: Text(itemList[index]['costPerUnit']!=null?"Cost: "+itemList[index]['costPerUnit'].toString():''),
-                  leading: Icon(FontAwesomeIcons.box,size: 40,color: Colors.teal,),
-                  trailing: Text(itemList[index]['unit'] != null ? itemList[index]['unit'].toString():""),
-                  onTap: (){
-                  },
-                ),
-                Text("supplement"),
-
-                ListTile(
-                  title: Text(itemList!=null?itemList[index]['name']:''),
-                  subtitle: Text(itemList[index]['costPerUnit']!=null?"Cost: "+itemList[index]['costPerUnit'].toString():''),
-                  leading: Icon(FontAwesomeIcons.box,size: 40,color: Colors.teal,),
-                  trailing: Text(itemList[index]['unit'] != null ? itemList[index]['unit'].toString():""),
-                  onTap: (){
-                  },
-                ),
+//                Text("Foarge"),
+//                ListTile(
+//                  title: Text(itemList!=null?itemList[index]['name']:''),
+//                  subtitle: Text(itemList[index]['costPerUnit']!=null?"Cost: "+itemList[index]['costPerUnit'].toString():''),
+//                  leading: Icon(FontAwesomeIcons.box,size: 40,color: Colors.teal,),
+//                  trailing: Text(itemList[index]['unit'] != null ? itemList[index]['unit'].toString():""),
+//                  onTap: (){
+//                  },
+//                ),
               ],
 
             );
@@ -188,6 +179,28 @@ class _notes_list_state extends State<productList>{
         ),
       ),
     );
+  }
+  bool checklist(int id){
+    bool type;
+    if(id ==1){
+
+      type= false;
+
+    }else if(id ==2){
+
+      type= true;
+
+    }else if(id ==3){
+
+      type= false;
+
+    }else if(id ==4){
+
+      type= false;
+
+    }else if(id == null){
+      type = false;}
+    return type;
   }
 
   @override
