@@ -88,13 +88,14 @@ class _Profile_Page_State extends State<careTakerFarrierList>{
 //            },
 //          )
         ],),
-        body: ListView.builder(itemCount:farrierlist!=null?farrierlist.length:temp.length,itemBuilder: (context,int index){
-          return Column(
-            children: <Widget>[
-              Slidable(
-                actionPane: SlidableDrawerActionPane(),
-                actionExtentRatio: 0.20,
-                actions: <Widget>[
+        body: Scrollbar(
+          child: ListView.builder(itemCount:farrierlist!=null?farrierlist.length:temp.length,itemBuilder: (context,int index){
+            return Column(
+              children: <Widget>[
+                Slidable(
+                  actionPane: SlidableDrawerActionPane(),
+                  actionExtentRatio: 0.20,
+                  actions: <Widget>[
 //                  IconSlideAction(onTap: ()async{
 //                    prefs = await SharedPreferences.getInstance();
 //                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_farrier(farrierlist[index],token)));
@@ -124,120 +125,121 @@ class _Profile_Page_State extends State<careTakerFarrierList>{
 //                      });
 //                    },
 //                  ),
-                  IconSlideAction(
-                    icon: Icons.timer,
-                    color: Colors.deepOrange,
-                    caption: 'Start',
-                    onTap: () async {
-                      Utils.check_connectivity().then((result){
-                        if(result){
-                          ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                          pd.show();
-                          FarrierCareTakerServices.start_farrier(token, farrierlist[index]['id']).then((response){
-                            pd.dismiss();
-                            if(response!=null){
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.green ,
-                                content: Text('Process Started'),
-                              ));
-//                                  setState(() {
-//                                    control_list.removeAt(index);
-//                                  });
-                            }else{
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.red ,
-                                content: Text('Process Failed'),
-                              ));
-                            }
-                          });
-                        }else{
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text("Network not Available"),
-                            backgroundColor: Colors.red,
-                          ));
-                        }
-                      });
-
-                    },
-                  ),
-                  IconSlideAction(
-                    icon: Icons.done_all,
-                    color: Colors.green,
-                    caption: 'Complete',
-                    onTap: () async {
-                      if(DateTime.now().isAfter(DateTime.parse(farrierlist[index]['date'])) )
-                        Navigator.push(context,MaterialPageRoute(builder: (context)=>farrier_late_reason(token, farrierlist[index]['id'])));
-
-                      else {
-                        Utils.check_connectivity().then((result) {
-                          if (result) {
-                            ProgressDialog pd = ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: true);
+                    IconSlideAction(
+                      icon: Icons.timer,
+                      color: Colors.deepOrange,
+                      caption: 'Start',
+                      onTap: () async {
+                        Utils.check_connectivity().then((result){
+                          if(result){
+                            ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
                             pd.show();
-                            FarrierCareTakerServices.complete_farrier(token, farrierlist[index]['id']).then((response) {
+                            FarrierCareTakerServices.start_farrier(token, farrierlist[index]['id']).then((response){
                               pd.dismiss();
-                              if (response != null) {
+                              if(response!=null){
                                 Scaffold.of(context).showSnackBar(SnackBar(
-                                  backgroundColor: Colors.green,
-                                  content: Text('Process Complete'),
+                                  backgroundColor:Colors.green ,
+                                  content: Text('Process Started'),
                                 ));
 //                                  setState(() {
 //                                    control_list.removeAt(index);
 //                                  });
-                              } else {
+                              }else{
                                 Scaffold.of(context).showSnackBar(SnackBar(
-                                  backgroundColor: Colors.red,
+                                  backgroundColor:Colors.red ,
                                   content: Text('Process Failed'),
                                 ));
                               }
                             });
-                          } else {
+                          }else{
                             Scaffold.of(context).showSnackBar(SnackBar(
                               content: Text("Network not Available"),
                               backgroundColor: Colors.red,
                             ));
                           }
                         });
-                      }
-                    },
-                  ),
-                ],
-                child: ExpansionTile(
-                  title: Text(farrierlist!=null?(farrierlist[index]['horseName']['name']):''),
-                  trailing: Text(farrierlist!=null?"Status: "+(get_status_by_id(farrierlist[index]['status'])).toString():'empty'),
-                  children: <Widget>[
-                  ListTile(
-                      title: Text("Farrier "),
-                     // trailing: Text("jn"),
-                      trailing: Text(farrierlist!=null?"Farrier: "+(farrierlist[index]['farrierName']['contactName']['name']):'farrier name not showing'),
-                      onTap: ()async{
-                            },
-                      ),
-                    Divider(),
-                    ListTile(
-                      title: Text("Amount"),
-                      trailing: Text(farrierlist!=null?"Amount: "+(farrierlist[index]['amount']).toString():''),
-                    ),
-                    Divider(),
-                    ListTile(
-                      title: Text("Shoeing Type"),
-                      trailing: Text(farrierlist!=null?"Amount: "+(get_ShoeingType_by_id(farrierlist[index]['shoeingType'])).toString():''),
-                    ),
 
+                      },
+                    ),
+                    IconSlideAction(
+                      icon: Icons.done_all,
+                      color: Colors.green,
+                      caption: 'Complete',
+                      onTap: () async {
+                        if(DateTime.now().isAfter(DateTime.parse(farrierlist[index]['date'])) )
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>farrier_late_reason(token, farrierlist[index]['id'])));
+
+                        else {
+                          Utils.check_connectivity().then((result) {
+                            if (result) {
+                              ProgressDialog pd = ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: true);
+                              pd.show();
+                              FarrierCareTakerServices.complete_farrier(token, farrierlist[index]['id']).then((response) {
+                                pd.dismiss();
+                                if (response != null) {
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor: Colors.green,
+                                    content: Text('Process Complete'),
+                                  ));
+//                                  setState(() {
+//                                    control_list.removeAt(index);
+//                                  });
+                                } else {
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor: Colors.red,
+                                    content: Text('Process Failed'),
+                                  ));
+                                }
+                              });
+                            } else {
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text("Network not Available"),
+                                backgroundColor: Colors.red,
+                              ));
+                            }
+                          });
+                        }
+                      },
+                    ),
+                  ],
+                  child: ExpansionTile(
+                    title: Text(farrierlist!=null?(farrierlist[index]['horseName']['name']):''),
+                    trailing: Text(farrierlist!=null?"Status: "+(get_status_by_id(farrierlist[index]['status'])).toString():'empty'),
+                    children: <Widget>[
+                    ListTile(
+                        title: Text("Farrier "),
+                       // trailing: Text("jn"),
+                        trailing: Text(farrierlist!=null?"Farrier: "+(farrierlist[index]['farrierName']['contactName']['name']):'farrier name not showing'),
+                        onTap: ()async{
+                              },
+                        ),
+                      Divider(),
+                      ListTile(
+                        title: Text("Amount"),
+                        trailing: Text(farrierlist!=null?"Amount: "+(farrierlist[index]['amount']).toString():''),
+                      ),
+                      Divider(),
+                      ListTile(
+                        title: Text("Shoeing Type"),
+                        trailing: Text(farrierlist!=null?"Amount: "+(get_ShoeingType_by_id(farrierlist[index]['shoeingType'])).toString():''),
+                      ),
+
+
+                    ],
+
+                  ),
+                  secondaryActions: <Widget>[
 
                   ],
 
                 ),
-                secondaryActions: <Widget>[
+                Divider(),
+              ],
 
-                ],
+            );
 
-              ),
-              Divider(),
-            ],
-
-          );
-
-        })
+          }),
+        )
     );
   }
   String get_status_by_id(int id){

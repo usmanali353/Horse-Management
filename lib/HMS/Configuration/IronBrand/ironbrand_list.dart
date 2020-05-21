@@ -103,66 +103,68 @@ class _ironbrand_list extends State<ironbrand_list>{
         },
         child: Visibility(
           visible: isVisible,
-          child: ListView.builder(itemCount:ironbrand_lists!=null?ironbrand_lists.length:temp.length,itemBuilder: (context,int index){
-            return Column(
-              children: <Widget>[
-                Slidable(
-                    actionPane: SlidableDrawerActionPane(),
-                    actionExtentRatio: 0.20,
-                    secondaryActions: <Widget>[
-                      IconSlideAction(
-                        icon: Icons.edit,
-                        color: Colors.blue,
-                        caption: 'Update',
-                        onTap: () async {
-                          print(ironbrand_lists[index]);
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_ironbrand(token,ironbrand_lists[index])));
-                        },
-                      ),
-                    ],
-                    actions: <Widget>[
-                      IconSlideAction(
-                        icon: Icons.visibility_off,
-                        color: Colors.red,
-                        caption: 'Hide',
-                        onTap: () async {
-                          IronBrandServices.changeIronBrandVisibility(token, ironbrand_lists[index]['brandId']).then((response){
-                            print(response);
-                            if(response!=null){
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.green ,
-                                content: Text('Visibility Changed'),
-                              ));
-                              setState(() {
-                                ironbrand_lists.removeAt(index);
-                              });
+          child: Scrollbar(
+            child: ListView.builder(itemCount:ironbrand_lists!=null?ironbrand_lists.length:temp.length,itemBuilder: (context,int index){
+              return Column(
+                children: <Widget>[
+                  Slidable(
+                      actionPane: SlidableDrawerActionPane(),
+                      actionExtentRatio: 0.20,
+                      secondaryActions: <Widget>[
+                        IconSlideAction(
+                          icon: Icons.edit,
+                          color: Colors.blue,
+                          caption: 'Update',
+                          onTap: () async {
+                            print(ironbrand_lists[index]);
+                            Navigator.push(context,MaterialPageRoute(builder: (context)=>update_ironbrand(token,ironbrand_lists[index])));
+                          },
+                        ),
+                      ],
+                      actions: <Widget>[
+                        IconSlideAction(
+                          icon: Icons.visibility_off,
+                          color: Colors.red,
+                          caption: 'Hide',
+                          onTap: () async {
+                            IronBrandServices.changeIronBrandVisibility(token, ironbrand_lists[index]['brandId']).then((response){
+                              print(response);
+                              if(response!=null){
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor:Colors.green ,
+                                  content: Text('Visibility Changed'),
+                                ));
+                                setState(() {
+                                  ironbrand_lists.removeAt(index);
+                                });
 
-                            }else{
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.red ,
-                                content: Text('Failed'),
-                              ));
-                            }
-                          });
-                        },
-                      ),
-                    ],
-                    child: FadeAnimation(2.0,
-                       ListTile(
-                        title: Text(ironbrand_lists!=null?ironbrand_lists[index]['brandTitle']:''),
-                       leading: ironbrand_lists[index]['brandImage']!=null?Image.memory(base64.decode(ironbrand_lists[index]['brandImage'])):Text(''),
-                        // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
-                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
-                        onTap: (){
-                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
-                        },
-                      ),
-                    )
-                ),
-                Divider(),
-              ],
-            );
-          }),
+                              }else{
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor:Colors.red ,
+                                  content: Text('Failed'),
+                                ));
+                              }
+                            });
+                          },
+                        ),
+                      ],
+                      child: FadeAnimation(2.0,
+                         ListTile(
+                          title: Text(ironbrand_lists!=null?ironbrand_lists[index]['brandTitle']:''),
+                         leading: ironbrand_lists[index]['brandImage']!=null?Image.memory(base64.decode(ironbrand_lists[index]['brandImage'])):Text(''),
+                          // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
+                          //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                          onTap: (){
+                            // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                          },
+                        ),
+                      )
+                  ),
+                  Divider(),
+                ],
+              );
+            }),
+          ),
         ),
       ),
     );

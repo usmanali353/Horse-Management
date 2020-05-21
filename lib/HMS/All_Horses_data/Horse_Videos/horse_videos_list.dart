@@ -128,8 +128,6 @@ class _horse_videos_list_page_state extends State<horse_videos_list>{
                       ),
                     ],
                     child: ListTile(
-                      enabled: videos_list[index]['isActive']!=null?videos_list[index]['isActive']:true,
-
                       title: Text(videos_list!=null?videos_list[index]['horseName']['name']:''),
                       subtitle: Text(videos_list!=null?videos_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
                       leading: Icon(

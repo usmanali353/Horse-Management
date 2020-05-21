@@ -115,13 +115,14 @@ class _confirmation_caretaker_list extends State<confirmation_caretaker_list>{
         },
         child: Visibility(
           visible: isVisible,
-          child: ListView.builder(itemCount:confirmation_lists!=null?confirmation_lists.length:temp.length,itemBuilder: (context,int index){
-            return Column(
-              children: <Widget>[
-                Slidable(
-                    actionPane: SlidableDrawerActionPane(),
-                    actionExtentRatio: 0.20,
-                    secondaryActions: <Widget>[
+          child: Scrollbar(
+            child: ListView.builder(itemCount:confirmation_lists!=null?confirmation_lists.length:temp.length,itemBuilder: (context,int index){
+              return Column(
+                children: <Widget>[
+                  Slidable(
+                      actionPane: SlidableDrawerActionPane(),
+                      actionExtentRatio: 0.20,
+                      secondaryActions: <Widget>[
 //                      IconSlideAction(
 //                        icon: Icons.edit,
 //                        color: Colors.blue,
@@ -131,8 +132,8 @@ class _confirmation_caretaker_list extends State<confirmation_caretaker_list>{
 //                         // Navigator.push(context,MaterialPageRoute(builder: (context)=>update_paddock(token,paddock_lists[index])));
 //                        },
 //                      ),
-                    ],
-                    actions: <Widget>[
+                      ],
+                      actions: <Widget>[
 //                      IconSlideAction(
 //                        icon: Icons.visibility_off,
 //                        color: Colors.red,
@@ -158,97 +159,97 @@ class _confirmation_caretaker_list extends State<confirmation_caretaker_list>{
 //                          });
 //                        },
 //                      ),
-                      IconSlideAction(
-                        icon: Icons.timer,
-                        color: Colors.deepOrange,
-                        caption: 'Start',
-                        onTap: () async {
-                          Utils.check_connectivity().then((result){
-                            if(result){
-                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                              pd.show();
-                              ConfirmationCareTakerServices.start_confirmation(token, confirmation_lists[index]['conformationId']).then((response){
-                                pd.dismiss();
-                                if(response!=null){
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    backgroundColor:Colors.green ,
-                                    content: Text('Process Started'),
-                                  ));
+                        IconSlideAction(
+                          icon: Icons.timer,
+                          color: Colors.deepOrange,
+                          caption: 'Start',
+                          onTap: () async {
+                            Utils.check_connectivity().then((result){
+                              if(result){
+                                ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                                pd.show();
+                                ConfirmationCareTakerServices.start_confirmation(token, confirmation_lists[index]['conformationId']).then((response){
+                                  pd.dismiss();
+                                  if(response!=null){
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      backgroundColor:Colors.green ,
+                                      content: Text('Process Started'),
+                                    ));
 //                                  setState(() {
 //                                    control_list.removeAt(index);
 //                                  });
-                                }else{
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    backgroundColor:Colors.red ,
-                                    content: Text('Process Failed'),
-                                  ));
-                                }
-                              });
-                            }else{
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                content: Text("Network not Available"),
-                                backgroundColor: Colors.red,
-                              ));
-                            }
-                          });
+                                  }else{
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      backgroundColor:Colors.red ,
+                                      content: Text('Process Failed'),
+                                    ));
+                                  }
+                                });
+                              }else{
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text("Network not Available"),
+                                  backgroundColor: Colors.red,
+                                ));
+                              }
+                            });
 
-                        },
-                      ),
-                      IconSlideAction(
-                        icon: Icons.done_all,
-                        color: Colors.green,
-                        caption: 'Complete',
-                                  onTap: () async {
-                                    print(confirmation_lists[index]);
-                                    print(DateTime.parse(
-                                        confirmation_lists[index]['date']));
-                                    if (DateTime.now().isAfter(DateTime.parse(
-                                        confirmation_lists[index]['date'])))
-                                      Navigator.push(context, MaterialPageRoute(
-                                          builder: (context) =>
-                                              confirmation_late_reason(token, confirmation_lists[index]['conformationId'])));
-                                    else {
-                                      Utils.check_connectivity().then((result) {
-                                        if (result) {
-                                          ProgressDialog pd = ProgressDialog(
-                                              context,
-                                              type: ProgressDialogType.Normal,
-                                              isDismissible: true);
-                                          pd.show();
-                                          ConfirmationCareTakerServices
-                                              .complete_confirmation(token,
-                                              confirmation_lists[index]['conformationId'])
-                                              .then((response) {
-                                            pd.dismiss();
-                                            if (response != null) {
-                                              Scaffold.of(context).showSnackBar(
-                                                  SnackBar(
-                                                    backgroundColor: Colors
-                                                        .green,
-                                                    content: Text('Completed'),
-                                                  ));
-                                              setState(() {
-                                                //  control_list.removeAt(index);
-                                              });
-                                            } else {
-                                              Scaffold.of(context).showSnackBar(
-                                                  SnackBar(
-                                                    backgroundColor: Colors.red,
-                                                    content: Text(
-                                                        'Process Failed'),
-                                                  ));
-                                            }
-                                          });
-                                        } else {
-                                          Scaffold.of(context).showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                    "Network not Available"),
-                                                backgroundColor: Colors.red,
-                                              ));
-                                        }
-                                      });
-                                    }
+                          },
+                        ),
+                        IconSlideAction(
+                          icon: Icons.done_all,
+                          color: Colors.green,
+                          caption: 'Complete',
+                                    onTap: () async {
+                                      print(confirmation_lists[index]);
+                                      print(DateTime.parse(
+                                          confirmation_lists[index]['date']));
+                                      if (DateTime.now().isAfter(DateTime.parse(
+                                          confirmation_lists[index]['date'])))
+                                        Navigator.push(context, MaterialPageRoute(
+                                            builder: (context) =>
+                                                confirmation_late_reason(token, confirmation_lists[index]['conformationId'])));
+                                      else {
+                                        Utils.check_connectivity().then((result) {
+                                          if (result) {
+                                            ProgressDialog pd = ProgressDialog(
+                                                context,
+                                                type: ProgressDialogType.Normal,
+                                                isDismissible: true);
+                                            pd.show();
+                                            ConfirmationCareTakerServices
+                                                .complete_confirmation(token,
+                                                confirmation_lists[index]['conformationId'])
+                                                .then((response) {
+                                              pd.dismiss();
+                                              if (response != null) {
+                                                Scaffold.of(context).showSnackBar(
+                                                    SnackBar(
+                                                      backgroundColor: Colors
+                                                          .green,
+                                                      content: Text('Completed'),
+                                                    ));
+                                                setState(() {
+                                                  //  control_list.removeAt(index);
+                                                });
+                                              } else {
+                                                Scaffold.of(context).showSnackBar(
+                                                    SnackBar(
+                                                      backgroundColor: Colors.red,
+                                                      content: Text(
+                                                          'Process Failed'),
+                                                    ));
+                                              }
+                                            });
+                                          } else {
+                                            Scaffold.of(context).showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                      "Network not Available"),
+                                                  backgroundColor: Colors.red,
+                                                ));
+                                          }
+                                        });
+                                      }
 //                        onTap: () async {
 //                          Utils.check_connectivity().then((result){
 //                            if(result){
@@ -280,25 +281,26 @@ class _confirmation_caretaker_list extends State<confirmation_caretaker_list>{
 //                          });
 //
 //                        },
-                                  }),
-                    ],
-                    child: FadeAnimation(2.0,
-                      ListTile(
-                        title: Text(confirmation_lists!=null?confirmation_lists[index]['horseName']['name']:''),
-                        //title: Text("data"),
-                        subtitle: Text(confirmation_lists!=null?confirmation_lists[index]['date'].toString().substring(0,10) :''),
-                        //subtitle: Text(confirmation_lists!=null?confirmation_lists[index]['vetName']['contactName']['name'].toString():''),
-                       trailing: Text(confirmation_lists!=null?get_status_by_id(confirmation_lists[index]['status']):''),
-                        onTap: (){
-                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
-                        },
-                      ),
-                    )
-                ),
-                Divider(),
-              ],
-            );
-          }),
+                                    }),
+                      ],
+                      child: FadeAnimation(2.0,
+                        ListTile(
+                          title: Text(confirmation_lists!=null?confirmation_lists[index]['horseName']['name']:''),
+                          //title: Text("data"),
+                          subtitle: Text(confirmation_lists!=null?confirmation_lists[index]['date'].toString().substring(0,10) :''),
+                          //subtitle: Text(confirmation_lists!=null?confirmation_lists[index]['vetName']['contactName']['name'].toString():''),
+                         trailing: Text(confirmation_lists!=null?get_status_by_id(confirmation_lists[index]['status']):''),
+                          onTap: (){
+                            // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                          },
+                        ),
+                      )
+                  ),
+                  Divider(),
+                ],
+              );
+            }),
+          ),
         ),
       ),
     );

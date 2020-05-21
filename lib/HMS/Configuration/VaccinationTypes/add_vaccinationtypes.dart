@@ -69,6 +69,7 @@ class _add_vaccinationtypes extends State<add_vaccinationtypes>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+
         appBar: AppBar(title: Text("Add Vaccination Type"),),
         body: ListView(
             children: <Widget>[

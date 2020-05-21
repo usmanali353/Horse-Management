@@ -119,13 +119,14 @@ class _flushes_caretaker_list extends State<flushes_caretaker_list>{
         },
         child: Visibility(
           visible: isVisible,
-          child: ListView.builder(itemCount:flushes_list!=null?flushes_list.length:temp.length,itemBuilder: (context,int index){
-            return Column(
-              children: <Widget>[
-                Slidable(
-                    actionPane: SlidableDrawerActionPane(),
-                    actionExtentRatio: 0.20,
-                    secondaryActions: <Widget>[
+          child: Scrollbar(
+            child: ListView.builder(itemCount:flushes_list!=null?flushes_list.length:temp.length,itemBuilder: (context,int index){
+              return Column(
+                children: <Widget>[
+                  Slidable(
+                      actionPane: SlidableDrawerActionPane(),
+                      actionExtentRatio: 0.20,
+                      secondaryActions: <Widget>[
 //                      IconSlideAction(
 //                        icon: Icons.edit,
 //                        color: Colors.blue,
@@ -134,8 +135,8 @@ class _flushes_caretaker_list extends State<flushes_caretaker_list>{
 //                          Navigator.push(context,MaterialPageRoute(builder: (context)=>flushes_update(token,flushes_list[index])));
 //                        },
 //                      ),
-                    ],
-                    actions: <Widget>[
+                      ],
+                      actions: <Widget>[
 //                      IconSlideAction(
 //                        icon: Icons.visibility_off,
 //                        color: Colors.red,
@@ -161,66 +162,25 @@ class _flushes_caretaker_list extends State<flushes_caretaker_list>{
 //                          });
 //                        },
 //                      ),
-                      IconSlideAction(
-                        icon: Icons.timer,
-                        color: Colors.deepOrange,
-                        caption: 'Start',
-                        onTap: () async {
-                          Utils.check_connectivity().then((result){
-                            if(result){
-                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                              pd.show();
-                              FlushesCareTakerServices.start_flushes(token, flushes_list[index]['id']).then((response){
-                                pd.dismiss();
-                                if(response!=null){
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    backgroundColor:Colors.green ,
-                                    content: Text('Process Started'),
-                                  ));
-//                                  setState(() {
-//                                    control_list.removeAt(index);
-//                                  });
-                                }else{
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    backgroundColor:Colors.red ,
-                                    content: Text('Process Failed'),
-                                  ));
-                                }
-                              });
-                            }else{
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                content: Text("Network not Available"),
-                                backgroundColor: Colors.red,
-                              ));
-                            }
-                          });
-
-                        },
-                      ),
-                      IconSlideAction(
-                        icon: Icons.done_all,
-                        color: Colors.green,
-                        caption: 'Complete',
-                        onTap: () async {
-                          print(flushes_list[index]);
-                          print(DateTime.parse(flushes_list[index]['date']));
-                          if(DateTime.now().isAfter(DateTime.parse(flushes_list[index]['date'])) )
-                            Navigator.push(context,MaterialPageRoute(builder: (context)=>flushes_late_reason(token, flushes_list[index]['id'])));
-                          else{
+                        IconSlideAction(
+                          icon: Icons.timer,
+                          color: Colors.deepOrange,
+                          caption: 'Start',
+                          onTap: () async {
                             Utils.check_connectivity().then((result){
                               if(result){
                                 ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
                                 pd.show();
-                                FlushesCareTakerServices.complete_flushes(token, flushes_list[index]['id']).then((response){
+                                FlushesCareTakerServices.start_flushes(token, flushes_list[index]['id']).then((response){
                                   pd.dismiss();
                                   if(response!=null){
                                     Scaffold.of(context).showSnackBar(SnackBar(
                                       backgroundColor:Colors.green ,
-                                      content: Text('Completed'),
+                                      content: Text('Process Started'),
                                     ));
-                                    setState(() {
-                                      //  control_list.removeAt(index);
-                                    });
+//                                  setState(() {
+//                                    control_list.removeAt(index);
+//                                  });
                                   }else{
                                     Scaffold.of(context).showSnackBar(SnackBar(
                                       backgroundColor:Colors.red ,
@@ -235,8 +195,49 @@ class _flushes_caretaker_list extends State<flushes_caretaker_list>{
                                 ));
                               }
                             });
-                          }
-                        },
+
+                          },
+                        ),
+                        IconSlideAction(
+                          icon: Icons.done_all,
+                          color: Colors.green,
+                          caption: 'Complete',
+                          onTap: () async {
+                            print(flushes_list[index]);
+                            print(DateTime.parse(flushes_list[index]['date']));
+                            if(DateTime.now().isAfter(DateTime.parse(flushes_list[index]['date'])) )
+                              Navigator.push(context,MaterialPageRoute(builder: (context)=>flushes_late_reason(token, flushes_list[index]['id'])));
+                            else{
+                              Utils.check_connectivity().then((result){
+                                if(result){
+                                  ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                                  pd.show();
+                                  FlushesCareTakerServices.complete_flushes(token, flushes_list[index]['id']).then((response){
+                                    pd.dismiss();
+                                    if(response!=null){
+                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                        backgroundColor:Colors.green ,
+                                        content: Text('Completed'),
+                                      ));
+                                      setState(() {
+                                        //  control_list.removeAt(index);
+                                      });
+                                    }else{
+                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                        backgroundColor:Colors.red ,
+                                        content: Text('Process Failed'),
+                                      ));
+                                    }
+                                  });
+                                }else{
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    content: Text("Network not Available"),
+                                    backgroundColor: Colors.red,
+                                  ));
+                                }
+                              });
+                            }
+                          },
 
 //                        onTap: () async {
 //                          Utils.check_connectivity().then((result){
@@ -269,26 +270,27 @@ class _flushes_caretaker_list extends State<flushes_caretaker_list>{
 //                          });
 //
 //                        },
-                      ),
-                    ],
-                    child: FadeAnimation(2.0,
-                       ListTile(
-                        title: Text(flushes_list!=null?flushes_list[index]['horseName']['name']:''),
-                        subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
-                         trailing:Text(flushes_list!=null?get_status_by_id(flushes_list[index]['status']):''),
+                        ),
+                      ],
+                      child: FadeAnimation(2.0,
+                         ListTile(
+                          title: Text(flushes_list!=null?flushes_list[index]['horseName']['name']:''),
+                          subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
+                           trailing:Text(flushes_list!=null?get_status_by_id(flushes_list[index]['status']):''),
 
-                         //trailing: Text(flushes_list!=null?flushes_list[index]['date']:''),
-                        onTap: (){
-                         Navigator.push(context, MaterialPageRoute(builder: (context) => flushes_details_page(flushes_list[index])));
-                         // Navigator.push(context, MaterialPageRoute(builder: (context) => hypothetic_pedegree_page(flushes_list[index])));
-                        },
-                      ),
-                    )
-                ),
-                Divider(),
-              ],
-            );
-          }),
+                           //trailing: Text(flushes_list!=null?flushes_list[index]['date']:''),
+                          onTap: (){
+                           Navigator.push(context, MaterialPageRoute(builder: (context) => flushes_details_page(flushes_list[index])));
+                           // Navigator.push(context, MaterialPageRoute(builder: (context) => hypothetic_pedegree_page(flushes_list[index])));
+                          },
+                        ),
+                      )
+                  ),
+                  Divider(),
+                ],
+              );
+            }),
+          ),
         ),
       ),
     );

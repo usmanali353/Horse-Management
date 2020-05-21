@@ -101,69 +101,71 @@ class _semen_collection_list_state extends State<semen_collection_list>{
         },
         child: Visibility(
           visible: isvisible,
-          child: ListView.builder(itemCount:siemen_col_list!=null?siemen_col_list.length:temp.length,itemBuilder: (context,int index){
-            return Column(
-              children: <Widget>[
-                Slidable(
-                  actionPane: SlidableDrawerActionPane(),
-                  actionExtentRatio: 0.20,
-                  secondaryActions: <Widget>[
-                    IconSlideAction(
-                      icon: Icons.edit,
-                      color: Colors.blue,
-                      caption: 'Update',
-                      onTap: () async {
-                        Navigator.push(context,MaterialPageRoute(builder: (context)=>update_semen_collection(token,siemen_col_list[index])));
-                      },
-                    ),
-                  ],
-                  actions: <Widget>[
-                    IconSlideAction(
-                      icon: Icons.visibility_off,
-                      color: Colors.red,
-                      caption: 'Hide',
-                      onTap: () async {
-                        network_operations.change_semen_collection_visibility(token, siemen_col_list[index]['semenCollectionId']).then((response){
-                          if(response!=null){
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                              backgroundColor:Colors.green ,
-                              content: Text('Visibility Changed'),
-                            ));
-                            setState(() {
-                              siemen_col_list.removeAt(index);
-                            });
+          child: Scrollbar(
+            child: ListView.builder(itemCount:siemen_col_list!=null?siemen_col_list.length:temp.length,itemBuilder: (context,int index){
+              return Column(
+                children: <Widget>[
+                  Slidable(
+                    actionPane: SlidableDrawerActionPane(),
+                    actionExtentRatio: 0.20,
+                    secondaryActions: <Widget>[
+                      IconSlideAction(
+                        icon: Icons.edit,
+                        color: Colors.blue,
+                        caption: 'Update',
+                        onTap: () async {
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_semen_collection(token,siemen_col_list[index])));
+                        },
+                      ),
+                    ],
+                    actions: <Widget>[
+                      IconSlideAction(
+                        icon: Icons.visibility_off,
+                        color: Colors.red,
+                        caption: 'Hide',
+                        onTap: () async {
+                          network_operations.change_semen_collection_visibility(token, siemen_col_list[index]['semenCollectionId']).then((response){
+                            if(response!=null){
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                backgroundColor:Colors.green ,
+                                content: Text('Visibility Changed'),
+                              ));
+                              setState(() {
+                                siemen_col_list.removeAt(index);
+                              });
 
-                          }else{
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                              backgroundColor:Colors.red ,
-                              content: Text('Failed'),
-                            ));
-                          }
-                        });
-                      },
-                    ),
-                  ],
-                  child: FadeAnimation(2.0,
-                    ListTile(
-                      title: Text(siemen_col_list!=null?siemen_col_list[index]['horseName']['name']:''),
-                      trailing: Text(siemen_col_list!=null?siemen_col_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
-                      subtitle: Text(siemen_col_list!=null?siemen_col_list[index]['inChargeName']['contactName']['name']:''),
-                      //leading: Image.asset("assets/horse_icon.png"),
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => semen_collection_details_page(siemen_col_list[index])));
+                            }else{
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                backgroundColor:Colors.red ,
+                                content: Text('Failed'),
+                              ));
+                            }
+                          });
+                        },
+                      ),
+                    ],
+                    child: FadeAnimation(2.0,
+                      ListTile(
+                        title: Text(siemen_col_list!=null?siemen_col_list[index]['horseName']['name']:''),
+                        trailing: Text(siemen_col_list!=null?siemen_col_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
+                        subtitle: Text(siemen_col_list!=null?siemen_col_list[index]['inChargeName']['contactName']['name']:''),
+                        //leading: Image.asset("assets/horse_icon.png"),
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => semen_collection_details_page(siemen_col_list[index])));
 
-                      },
+                        },
+                      ),
                     ),
+
+
                   ),
+                  Divider(),
+                ],
 
+              );
 
-                ),
-                Divider(),
-              ],
-
-            );
-
-          }),
+            }),
+          ),
         ),
       ),
     );

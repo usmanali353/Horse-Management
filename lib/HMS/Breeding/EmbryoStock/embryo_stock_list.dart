@@ -107,64 +107,66 @@ class _embryo_stock_list extends State< embryo_stock_list>{
         },
         child: Visibility(
           visible: isVisible,
-          child: ListView.builder(itemCount:embryo_list!=null?embryo_list.length:temp.length,itemBuilder: (context,int index){
-            return Column(
-              children: <Widget>[
-                Slidable(
-                    actionPane: SlidableDrawerActionPane(),
-                    actionExtentRatio: 0.20,
-                    secondaryActions: <Widget>[
-                      IconSlideAction(
-                        icon: Icons.edit,
-                        color: Colors.blue,
-                        caption: 'Update',
-                        onTap: () async {
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_embryo_stock(token,embryo_list[index])));
-                        },
-                      ),
-                    ],
-                    actions: <Widget>[
-                      IconSlideAction(
-                        icon: Icons.visibility_off,
-                        color: Colors.red,
-                        caption: 'Hide',
-                        onTap: () async {
-                          EmbryoStockServices.change_embryo_stock_visibility(token, embryo_list[index]['embryoStockId']).then((response){
-                            print(response);
-                            if(response!=null){
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.green ,
-                                content: Text('Visibility Changed'),
-                              ));
-                              setState(() {
-                                embryo_list.removeAt(index);
-                              });
+          child: Scrollbar(
+            child: ListView.builder(itemCount:embryo_list!=null?embryo_list.length:temp.length,itemBuilder: (context,int index){
+              return Column(
+                children: <Widget>[
+                  Slidable(
+                      actionPane: SlidableDrawerActionPane(),
+                      actionExtentRatio: 0.20,
+                      secondaryActions: <Widget>[
+                        IconSlideAction(
+                          icon: Icons.edit,
+                          color: Colors.blue,
+                          caption: 'Update',
+                          onTap: () async {
+                            Navigator.push(context,MaterialPageRoute(builder: (context)=>update_embryo_stock(token,embryo_list[index])));
+                          },
+                        ),
+                      ],
+                      actions: <Widget>[
+                        IconSlideAction(
+                          icon: Icons.visibility_off,
+                          color: Colors.red,
+                          caption: 'Hide',
+                          onTap: () async {
+                            EmbryoStockServices.change_embryo_stock_visibility(token, embryo_list[index]['embryoStockId']).then((response){
+                              print(response);
+                              if(response!=null){
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor:Colors.green ,
+                                  content: Text('Visibility Changed'),
+                                ));
+                                setState(() {
+                                  embryo_list.removeAt(index);
+                                });
 
-                            }else{
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.red ,
-                                content: Text('Failed'),
-                              ));
-                            }
-                          });
-                        },
-                      ),
-                    ],
-                    child: FadeAnimation(2.0,
-                      ListTile(
-                        title: Text(embryo_list!=null?embryo_list[index]['horseName']['name']:''),
-                        subtitle: Text(embryo_list!=null?embryo_list[index]['sireName']['name']:''),
-                        trailing: Text(embryo_list!=null?embryo_list[index]['collectionDate']:''),
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => embryo_stock_details_page(embryo_list[index])));
-                        },
-                      ),
-                    )
-                ),
-                Divider(),
-              ],
-            );
-          }),
+                              }else{
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor:Colors.red ,
+                                  content: Text('Failed'),
+                                ));
+                              }
+                            });
+                          },
+                        ),
+                      ],
+                      child: FadeAnimation(2.0,
+                        ListTile(
+                          title: Text(embryo_list!=null?embryo_list[index]['horseName']['name']:''),
+                          subtitle: Text(embryo_list!=null?embryo_list[index]['sireName']['name']:''),
+                          trailing: Text(embryo_list!=null?embryo_list[index]['collectionDate']:''),
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => embryo_stock_details_page(embryo_list[index])));
+                          },
+                        ),
+                      )
+                  ),
+                  Divider(),
+                ],
+              );
+            }),
+          ),
         ),
       ),
     );

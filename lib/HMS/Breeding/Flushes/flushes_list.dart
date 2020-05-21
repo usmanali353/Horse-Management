@@ -112,65 +112,67 @@ class _flushes_list extends State<flushes_list>{
         },
         child: Visibility(
           visible: isVisible,
-          child: ListView.builder(itemCount:flushes_list!=null?flushes_list.length:temp.length,itemBuilder: (context,int index){
-            return Column(
-              children: <Widget>[
-                Slidable(
-                    actionPane: SlidableDrawerActionPane(),
-                    actionExtentRatio: 0.20,
-                    secondaryActions: <Widget>[
-                      IconSlideAction(
-                        icon: Icons.edit,
-                        color: Colors.blue,
-                        caption: 'Update',
-                        onTap: () async {
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>flushes_update(token,flushes_list[index])));
-                        },
-                      ),
-                    ],
-                    actions: <Widget>[
-                      IconSlideAction(
-                        icon: Icons.visibility_off,
-                        color: Colors.red,
-                        caption: 'Hide',
-                        onTap: () async {
-                          FlushesServicesJson.flushesvisibilty(token, flushes_list[index]['id']).then((response){
-                            print(response);
-                            if(response!=null){
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.green ,
-                                content: Text('Visibility Changed'),
-                              ));
-                              setState(() {
-                                flushes_list.removeAt(index);
-                              });
+          child: Scrollbar(
+            child: ListView.builder(itemCount:flushes_list!=null?flushes_list.length:temp.length,itemBuilder: (context,int index){
+              return Column(
+                children: <Widget>[
+                  Slidable(
+                      actionPane: SlidableDrawerActionPane(),
+                      actionExtentRatio: 0.20,
+                      secondaryActions: <Widget>[
+                        IconSlideAction(
+                          icon: Icons.edit,
+                          color: Colors.blue,
+                          caption: 'Update',
+                          onTap: () async {
+                            Navigator.push(context,MaterialPageRoute(builder: (context)=>flushes_update(token,flushes_list[index])));
+                          },
+                        ),
+                      ],
+                      actions: <Widget>[
+                        IconSlideAction(
+                          icon: Icons.visibility_off,
+                          color: Colors.red,
+                          caption: 'Hide',
+                          onTap: () async {
+                            FlushesServicesJson.flushesvisibilty(token, flushes_list[index]['id']).then((response){
+                              print(response);
+                              if(response!=null){
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor:Colors.green ,
+                                  content: Text('Visibility Changed'),
+                                ));
+                                setState(() {
+                                  flushes_list.removeAt(index);
+                                });
 
-                            }else{
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.red ,
-                                content: Text('Failed'),
-                              ));
-                            }
-                          });
-                        },
-                      ),
-                    ],
-                    child: FadeAnimation(2.0,
-                      ListTile(
-                        title: Text(flushes_list!=null?flushes_list[index]['horseName']['name']:''),
-                        subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
-                        trailing: Text(flushes_list!=null?flushes_list[index]['date']:''),
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => flushes_details_page(flushes_list[index])));
-                          // Navigator.push(context, MaterialPageRoute(builder: (context) => hypothetic_pedegree_page(flushes_list[index])));
-                        },
-                      ),
-                    )
-                ),
-                Divider(),
-              ],
-            );
-          }),
+                              }else{
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor:Colors.red ,
+                                  content: Text('Failed'),
+                                ));
+                              }
+                            });
+                          },
+                        ),
+                      ],
+                      child: FadeAnimation(2.0,
+                        ListTile(
+                          title: Text(flushes_list!=null?flushes_list[index]['horseName']['name']:''),
+                          subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
+                          trailing: Text(flushes_list!=null?flushes_list[index]['date']:''),
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => flushes_details_page(flushes_list[index])));
+                            // Navigator.push(context, MaterialPageRoute(builder: (context) => hypothetic_pedegree_page(flushes_list[index])));
+                          },
+                        ),
+                      )
+                  ),
+                  Divider(),
+                ],
+              );
+            }),
+          ),
         ),
       ),
     );

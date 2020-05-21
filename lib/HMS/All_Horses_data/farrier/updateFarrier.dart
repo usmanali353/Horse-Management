@@ -423,10 +423,9 @@ class _state_add_farrier extends State<update_farrier> {
                             pd.show();
                             farrier_services.farrierSave(createdBy,farrierlist['id'],token, farrierdropdown['horseDropDown'][selected_horse_id]['id'], farrierdropdown['farrierDropDown'][selected_farrier_id]['id'],selected_shoeingtype_id, comment.text,amount.text, farrierdropdown['currencyDropDown'][selected_currency_id]['id'], farrierdropdown['categoryDropDown'][selected_category_id]['id'], farrierdropdown['costCenterDropDown'][selected_costcenter_id]['id'], farrierdropdown['contactsDropDown'][selected_contact_id]['id']).then((response){
                               pd.dismiss();
-                              if(response !=null) {
+                              if(response !=null)
                                 print("Successfully lab test added");
-                                Navigator.of(context).pop();
-                              }else{
+                              else{
                                 print("data not added");}
                             });
 

@@ -22,57 +22,59 @@ class _semen_collection_details_page extends State<semen_collection_details_page
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(title: Text("Semen Collection Details"),),
-      body: ListView(
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              ListTile(
-                title: Text("Semen Collection ID: "),
-                trailing: Text(semen_collection_data['semenCollectionId'].toString()!=null?semen_collection_data['semenCollectionId'].toString():''),
-              ),
-              Divider(),
-              ListTile(
-                title: Text("Horse: "),
-                trailing: Text(semen_collection_data['horseName']['name'].toString()!=null?semen_collection_data['horseName']['name'].toString():''),
-              ),
-              ListTile(
-                title: Text("Date:"),
-                trailing: Text(semen_collection_data['date'].toString()!=null?semen_collection_data['date'].toString():''),
-              ),
-              ListTile(
-                title: Text("In Charge:"),
-                trailing: Text(semen_collection_data['inChargeName']['contactName']['name']!=null?semen_collection_data['inChargeName']['contactName']['name']:''),
-              ),
-              ListTile(
-                title: Text("Comments:"),
-                trailing: Text(semen_collection_data['comments'].toString()!=null?semen_collection_data['comments'].toString():''),
-              ),
+      body: Scrollbar(
+        child: ListView(
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                ListTile(
+                  title: Text("Semen Collection ID: "),
+                  trailing: Text(semen_collection_data['semenCollectionId'].toString()!=null?semen_collection_data['semenCollectionId'].toString():''),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("Horse: "),
+                  trailing: Text(semen_collection_data['horseName']['name'].toString()!=null?semen_collection_data['horseName']['name'].toString():''),
+                ),
+                ListTile(
+                  title: Text("Date:"),
+                  trailing: Text(semen_collection_data['date'].toString()!=null?semen_collection_data['date'].toString():''),
+                ),
+                ListTile(
+                  title: Text("In Charge:"),
+                  trailing: Text(semen_collection_data['inChargeName']['contactName']['name']!=null?semen_collection_data['inChargeName']['contactName']['name']:''),
+                ),
+                ListTile(
+                  title: Text("Comments:"),
+                  trailing: Text(semen_collection_data['comments'].toString()!=null?semen_collection_data['comments'].toString():''),
+                ),
 //              ListTile(
 //                title: Text("Assigned Vet"),
 //                trailing: Text(semen_collection_data['assignedVetName']['contactName']['name']!=null?semen_collection_data['assignedVetName']['contactName']['name']:''),
 //              ),
-              Divider(),
-              Text("Semen Evaluation",style: TextStyle(color: Colors.teal, fontSize: 25, fontWeight: FontWeight.bold),),
-              ListTile(
-                title: Text("Extracted Volume:"),
-                trailing: Text(semen_collection_data['extractedVolume'].toString()!=null?semen_collection_data['extractedVolume'].toString():''),
-              ),
-              ListTile(
-                title: Text("Concentration:"),
-                trailing: Text(semen_collection_data['concentration'].toString()!=null?semen_collection_data['concentration'].toString():''),
-              ),
-              ListTile(
-                title: Text("General Motility:"),
-                trailing: Text(semen_collection_data['generalMotility'].toString()!=null?semen_collection_data['generalMotility'].toString():''),
-              ),
-              ListTile(
-                title: Text("Progressive Motility:"),
-                trailing: Text(semen_collection_data['progressiveMotility'].toString()!=null?semen_collection_data['progressiveMotility'].toString():''),
-              ),
-              Divider(),
-            ],
-          ),
-        ],
+                Divider(),
+                Text("Semen Evaluation",style: TextStyle(color: Colors.teal, fontSize: 25, fontWeight: FontWeight.bold),),
+                ListTile(
+                  title: Text("Extracted Volume:"),
+                  trailing: Text(semen_collection_data['extractedVolume'].toString()!=null?semen_collection_data['extractedVolume'].toString():''),
+                ),
+                ListTile(
+                  title: Text("Concentration:"),
+                  trailing: Text(semen_collection_data['concentration'].toString()!=null?semen_collection_data['concentration'].toString():''),
+                ),
+                ListTile(
+                  title: Text("General Motility:"),
+                  trailing: Text(semen_collection_data['generalMotility'].toString()!=null?semen_collection_data['generalMotility'].toString():''),
+                ),
+                ListTile(
+                  title: Text("Progressive Motility:"),
+                  trailing: Text(semen_collection_data['progressiveMotility'].toString()!=null?semen_collection_data['progressiveMotility'].toString():''),
+                ),
+                Divider(),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -64,273 +64,275 @@ class _add_semen_collection_state extends State<add_semen_collection>{
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(title: Text("Add Semen Collection"),),
-      body: ListView(
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              FormBuilder(
-                key: _fbKey,
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                      child: Visibility(
-                        visible: horses_loaded,
-                        child: FormBuilderDropdown(
-                          attribute: "Horse",
-                          validators: [FormBuilderValidators.required()],
-                          hint: Text("Horse"),
-                          items:horses!=null?horses.map((horse)=>DropdownMenuItem(
-                            child: Text(horse),
-                            value: horse,
-                          )).toList():[""].map((name) => DropdownMenuItem(
-                              value: name, child: Text("$name")))
-                              .toList(),
-                          style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Horse",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                            ),
-                          ),
-                          onSaved: (value){
-                            setState(() {
-                              this.selected_horse=value;
-                              this.selected_horse_id=horses.indexOf(value);
-                            });
-                          },
-                          onChanged: (value){
-                            setState(() {
-                              this.selected_horse=value;
-                              this.selected_horse_id=horses.indexOf(value);
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top:16,left: 16,right: 16),
-                      child:FormBuilderDateTimePicker(
-                        attribute: "Date",
-                        style: Theme.of(context).textTheme.body1,
-                        inputType: InputType.date,
-                        validators: [FormBuilderValidators.required()],
-                        format: DateFormat("MM-dd-yyyy"),
-                        decoration: InputDecoration(labelText: "Date",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(9.0),
-                              borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                          ),),
-                        onSaved: (value){
-                          setState(() {
-                            this.selected_date=value;
-                          });
-                        },
-                        onChanged: (value){
-                          setState(() {
-                            this.selected_date=value;
-                          });
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top:16,left: 16,right: 16),
-                      child:FormBuilderDateTimePicker(
-                        attribute: "Hour",
-                        style: Theme.of(context).textTheme.body1,
-                        inputType: InputType.time,
-                        validators: [FormBuilderValidators.required()],
-                        format: DateFormat("hh:mm:ss"),
-                        decoration: InputDecoration(labelText: "Hour",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(9.0),
-                              borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                          ),),
-                        onSaved: (value){
-                          setState(() {
-                            this.hour=value;
-                          });
-                        },
-                        onChanged: (value){
-                          setState(() {
-                            this.hour=value;
-                          });
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                      child: Visibility(
-                        visible: true,
-                        child: FormBuilderDropdown(
-                          attribute: "To Freeze",
-                          validators: [FormBuilderValidators.required()],
-                          hint: Text("To Freeze"),
-                          items:['Yes','No'].map((horse)=>DropdownMenuItem(
-                            child: Text(horse),
-                            value: horse,
-                          )).toList(),
-                          style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "To Freeze",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                            ),
-                          ),
-                          onSaved: (value){
-                            setState(() {
-                              if(value=="Yes"){
-                                toFreeze=true;
-                              }else{
-                                toFreeze=false;
-                              }
-                            });
-                          },
-                          onChanged: (value){
-                            setState(() {
-                              if(value=="Yes"){
-                                toFreeze=true;
-                              }else{
-                                toFreeze=false;
-                              }
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                      child: Visibility(
-                        visible: incharge_loaded,
-                        child: FormBuilderDropdown(
-                          attribute: "Incharge",
-                          validators: [FormBuilderValidators.required()],
-                          hint: Text("Incharge"),
-                          items:incharge!=null?incharge.map((horse)=>DropdownMenuItem(
-                            child: Text(horse),
-                            value: horse,
-                          )).toList():[""].map((name) => DropdownMenuItem(
-                              value: name, child: Text("$name")))
-                              .toList(),
-                          style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Incharge",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(9.0),
-                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                            ),
-                          ),
-                          onSaved: (value){
-                            setState(() {
-                              this.selected_incharge=value;
-                              this.selected_incharge_id=incharge.indexOf(value);
-                            });
-                          },
-                          onChanged: (value){
-                            setState(() {
-                              this.selected_incharge=value;
-                              this.selected_incharge_id=incharge.indexOf(value);
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 16,left: 16,right: 16),
-                      child: FormBuilderTextField(
-                        controller: comments,
-                        attribute: "Comments",
-                        validators: [FormBuilderValidators.required()],
-                        decoration: InputDecoration(labelText: "Comments",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(9.0),
-                              borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                          ),
-                        ),
-
-                      ),
-                    ),
-                    Center(
-                      child: Padding(
+      body: Scrollbar(
+        child: ListView(
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                FormBuilder(
+                  key: _fbKey,
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: Text("Semen Evaluation",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 16,left: 16,right: 16),
-                      child: FormBuilderTextField(
-                        controller: extracted_volume,
-                        attribute: "Extracted volume",
-                        keyboardType: TextInputType.number,
-                        validators: [FormBuilderValidators.required()],
-                        decoration: InputDecoration(labelText: "Extracted volume",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(9.0),
-                              borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                        child: Visibility(
+                          visible: horses_loaded,
+                          child: FormBuilderDropdown(
+                            attribute: "Horse",
+                            validators: [FormBuilderValidators.required()],
+                            hint: Text("Horse"),
+                            items:horses!=null?horses.map((horse)=>DropdownMenuItem(
+                              child: Text(horse),
+                              value: horse,
+                            )).toList():[""].map((name) => DropdownMenuItem(
+                                value: name, child: Text("$name")))
+                                .toList(),
+                            style: Theme.of(context).textTheme.body1,
+                            decoration: InputDecoration(labelText: "Horse",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
+                            ),
+                            onSaved: (value){
+                              setState(() {
+                                this.selected_horse=value;
+                                this.selected_horse_id=horses.indexOf(value);
+                              });
+                            },
+                            onChanged: (value){
+                              setState(() {
+                                this.selected_horse=value;
+                                this.selected_horse_id=horses.indexOf(value);
+                              });
+                            },
                           ),
                         ),
-
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 16,left: 16,right: 16),
-                      child: FormBuilderTextField(
-                        controller: concentration,
-                        attribute: "Concentration",
-                        keyboardType: TextInputType.number,
-                        validators: [FormBuilderValidators.required()],
-                        decoration: InputDecoration(labelText: "Concentration",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(9.0),
-                              borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                      Padding(
+                        padding: EdgeInsets.only(top:16,left: 16,right: 16),
+                        child:FormBuilderDateTimePicker(
+                          attribute: "Date",
+                          style: Theme.of(context).textTheme.body1,
+                          inputType: InputType.date,
+                          validators: [FormBuilderValidators.required()],
+                          format: DateFormat("MM-dd-yyyy"),
+                          decoration: InputDecoration(labelText: "Date",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(9.0),
+                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                            ),),
+                          onSaved: (value){
+                            setState(() {
+                              this.selected_date=value;
+                            });
+                          },
+                          onChanged: (value){
+                            setState(() {
+                              this.selected_date=value;
+                            });
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top:16,left: 16,right: 16),
+                        child:FormBuilderDateTimePicker(
+                          attribute: "Hour",
+                          style: Theme.of(context).textTheme.body1,
+                          inputType: InputType.time,
+                          validators: [FormBuilderValidators.required()],
+                          format: DateFormat("hh:mm:ss"),
+                          decoration: InputDecoration(labelText: "Hour",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(9.0),
+                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                            ),),
+                          onSaved: (value){
+                            setState(() {
+                              this.hour=value;
+                            });
+                          },
+                          onChanged: (value){
+                            setState(() {
+                              this.hour=value;
+                            });
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                        child: Visibility(
+                          visible: true,
+                          child: FormBuilderDropdown(
+                            attribute: "To Freeze",
+                            validators: [FormBuilderValidators.required()],
+                            hint: Text("To Freeze"),
+                            items:['Yes','No'].map((horse)=>DropdownMenuItem(
+                              child: Text(horse),
+                              value: horse,
+                            )).toList(),
+                            style: Theme.of(context).textTheme.body1,
+                            decoration: InputDecoration(labelText: "To Freeze",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
+                            ),
+                            onSaved: (value){
+                              setState(() {
+                                if(value=="Yes"){
+                                  toFreeze=true;
+                                }else{
+                                  toFreeze=false;
+                                }
+                              });
+                            },
+                            onChanged: (value){
+                              setState(() {
+                                if(value=="Yes"){
+                                  toFreeze=true;
+                                }else{
+                                  toFreeze=false;
+                                }
+                              });
+                            },
                           ),
                         ),
-
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 16,left: 16,right: 16),
-                      child: FormBuilderTextField(
-                        controller: general,
-                        attribute: "General motility",
-                        keyboardType: TextInputType.number,
-                        validators: [FormBuilderValidators.required()],
-                        decoration: InputDecoration(labelText: "General motility",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(9.0),
-                              borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                      Padding(
+                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                        child: Visibility(
+                          visible: incharge_loaded,
+                          child: FormBuilderDropdown(
+                            attribute: "Incharge",
+                            validators: [FormBuilderValidators.required()],
+                            hint: Text("Incharge"),
+                            items:incharge!=null?incharge.map((horse)=>DropdownMenuItem(
+                              child: Text(horse),
+                              value: horse,
+                            )).toList():[""].map((name) => DropdownMenuItem(
+                                value: name, child: Text("$name")))
+                                .toList(),
+                            style: Theme.of(context).textTheme.body1,
+                            decoration: InputDecoration(labelText: "Incharge",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
+                            ),
+                            onSaved: (value){
+                              setState(() {
+                                this.selected_incharge=value;
+                                this.selected_incharge_id=incharge.indexOf(value);
+                              });
+                            },
+                            onChanged: (value){
+                              setState(() {
+                                this.selected_incharge=value;
+                                this.selected_incharge_id=incharge.indexOf(value);
+                              });
+                            },
                           ),
                         ),
-
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 16,left: 16,right: 16),
-                      child: FormBuilderTextField(
-                        controller: progressive,
-                        attribute: "Progressive motility",
-                        keyboardType: TextInputType.number,
-                        validators: [FormBuilderValidators.required()],
-                        decoration: InputDecoration(labelText: "Progressive motility",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(9.0),
-                              borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                      Padding(
+                        padding: EdgeInsets.only(top: 16,left: 16,right: 16),
+                        child: FormBuilderTextField(
+                          controller: comments,
+                          attribute: "Comments",
+                          validators: [FormBuilderValidators.required()],
+                          decoration: InputDecoration(labelText: "Comments",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(9.0),
+                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                            ),
                           ),
-                        ),
 
+                        ),
                       ),
-                    ),
-                  ],
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                          child: Text("Semen Evaluation",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 16,left: 16,right: 16),
+                        child: FormBuilderTextField(
+                          controller: extracted_volume,
+                          attribute: "Extracted volume",
+                          keyboardType: TextInputType.number,
+                          validators: [FormBuilderValidators.required()],
+                          decoration: InputDecoration(labelText: "Extracted volume",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(9.0),
+                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                            ),
+                          ),
+
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 16,left: 16,right: 16),
+                        child: FormBuilderTextField(
+                          controller: concentration,
+                          attribute: "Concentration",
+                          keyboardType: TextInputType.number,
+                          validators: [FormBuilderValidators.required()],
+                          decoration: InputDecoration(labelText: "Concentration",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(9.0),
+                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                            ),
+                          ),
+
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 16,left: 16,right: 16),
+                        child: FormBuilderTextField(
+                          controller: general,
+                          attribute: "General motility",
+                          keyboardType: TextInputType.number,
+                          validators: [FormBuilderValidators.required()],
+                          decoration: InputDecoration(labelText: "General motility",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(9.0),
+                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                            ),
+                          ),
+
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 16,left: 16,right: 16),
+                        child: FormBuilderTextField(
+                          controller: progressive,
+                          attribute: "Progressive motility",
+                          keyboardType: TextInputType.number,
+                          validators: [FormBuilderValidators.required()],
+                          decoration: InputDecoration(labelText: "Progressive motility",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(9.0),
+                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                            ),
+                          ),
+
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: add_semen_stock_button(fbKey: _fbKey, token: token, selected_date: selected_date, selected_horse: selected_horse, semen_collection_list: semen_collection_list, selected_horse_id: selected_horse_id, toFreeze: toFreeze, selected_incharge_id: selected_incharge_id, comments: comments, extracted_volume: extracted_volume, concentration: concentration, general: general, progressive: progressive, selected_incharge: selected_incharge),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: add_semen_stock_button(fbKey: _fbKey, token: token, selected_date: selected_date, selected_horse: selected_horse, semen_collection_list: semen_collection_list, selected_horse_id: selected_horse_id, toFreeze: toFreeze, selected_incharge_id: selected_incharge_id, comments: comments, extracted_volume: extracted_volume, concentration: concentration, general: general, progressive: progressive, selected_incharge: selected_incharge),
+                  ),
                 ),
-              ),
-            ],
-          )
-        ],
+              ],
+            )
+          ],
+        ),
       ),
 
     );

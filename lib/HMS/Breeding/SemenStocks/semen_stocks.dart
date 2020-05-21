@@ -107,64 +107,66 @@ class _semen_stocks extends State<semen_stocks>{
         },
         child: Visibility(
           visible: isVisible,
-          child: ListView.builder(itemCount:semen_stock_list!=null?semen_stock_list.length:temp.length,itemBuilder: (context,int index){
-            return Column(
-              children: <Widget>[
-                Slidable(
-                    actionPane: SlidableDrawerActionPane(),
-                    actionExtentRatio: 0.20,
-                    secondaryActions: <Widget>[
-                      IconSlideAction(
-                        icon: Icons.edit,
-                        color: Colors.blue,
-                        caption: 'Update',
-                        onTap: () async {
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_semen_stock_form(token,semen_stock_list[index])));
-                        },
-                      ),
-                    ],
-                    actions: <Widget>[
-                      IconSlideAction(
-                        icon: Icons.visibility_off,
-                        color: Colors.red,
-                        caption: 'Hide',
-                        onTap: () async {
-                          SemenStockServices.change_semen_dose_visibility(token, semen_stock_list[index]['id']).then((response){
-                            print(response);
-                            if(response!=null){
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.green ,
-                                content: Text('Visibility Changed'),
-                              ));
-                              setState(() {
-                                semen_stock_list.removeAt(index);
-                              });
+          child: Scrollbar(
+            child: ListView.builder(itemCount:semen_stock_list!=null?semen_stock_list.length:temp.length,itemBuilder: (context,int index){
+              return Column(
+                children: <Widget>[
+                  Slidable(
+                      actionPane: SlidableDrawerActionPane(),
+                      actionExtentRatio: 0.20,
+                      secondaryActions: <Widget>[
+                        IconSlideAction(
+                          icon: Icons.edit,
+                          color: Colors.blue,
+                          caption: 'Update',
+                          onTap: () async {
+                            Navigator.push(context,MaterialPageRoute(builder: (context)=>update_semen_stock_form(token,semen_stock_list[index])));
+                          },
+                        ),
+                      ],
+                      actions: <Widget>[
+                        IconSlideAction(
+                          icon: Icons.visibility_off,
+                          color: Colors.red,
+                          caption: 'Hide',
+                          onTap: () async {
+                            SemenStockServices.change_semen_dose_visibility(token, semen_stock_list[index]['id']).then((response){
+                              print(response);
+                              if(response!=null){
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor:Colors.green ,
+                                  content: Text('Visibility Changed'),
+                                ));
+                                setState(() {
+                                  semen_stock_list.removeAt(index);
+                                });
 
-                            }else{
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.red ,
-                                content: Text('Failed'),
-                              ));
-                            }
-                          });
-                        },
-                      ),
-                    ],
-                    child: FadeAnimation(2.0,
-                       ListTile(
-                        title: Text(semen_stock_list!=null?semen_stock_list[index]['horseName']['name']:''),
-                       subtitle: Text(semen_stock_list!=null?semen_stock_list[index]['tankName']['name']:''),
-                        trailing: Text(semen_stock_list!=null?semen_stock_list[index]['enterDate']:''),
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => semen_stock_details_page(semen_stock_list[index])));
-                        },
-                      ),
-                    )
-                ),
-                Divider(),
-              ],
-            );
-          }),
+                              }else{
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor:Colors.red ,
+                                  content: Text('Failed'),
+                                ));
+                              }
+                            });
+                          },
+                        ),
+                      ],
+                      child: FadeAnimation(2.0,
+                         ListTile(
+                          title: Text(semen_stock_list!=null?semen_stock_list[index]['horseName']['name']:''),
+                         subtitle: Text(semen_stock_list!=null?semen_stock_list[index]['tankName']['name']:''),
+                          trailing: Text(semen_stock_list!=null?semen_stock_list[index]['enterDate']:''),
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => semen_stock_details_page(semen_stock_list[index])));
+                          },
+                        ),
+                      )
+                  ),
+                  Divider(),
+                ],
+              );
+            }),
+          ),
         ),
       ),
     );

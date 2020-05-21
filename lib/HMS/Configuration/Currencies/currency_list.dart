@@ -115,65 +115,67 @@ class _currency_list extends State<currency_list>{
         },
         child: Visibility(
           visible: isVisible,
-          child: ListView.builder(itemCount:currency_lists!=null?currency_lists.length:temp.length,itemBuilder: (context,int index){
-            return Column(
-              children: <Widget>[
-                Slidable(
-                    actionPane: SlidableDrawerActionPane(),
-                    actionExtentRatio: 0.20,
-                    secondaryActions: <Widget>[
-                      IconSlideAction(
-                        icon: Icons.edit,
-                        color: Colors.blue,
-                        caption: 'Update',
-                        onTap: () async {
-                          print(currency_lists[index]);
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_currency(token,currency_lists[index])));
-                        },
-                      ),
-                    ],
-                    actions: <Widget>[
-                      IconSlideAction(
-                        icon: Icons.visibility_off,
-                        color: Colors.red,
-                        caption: 'Hide',
-                        onTap: () async {
-                          CurrenciesServices.changeCurrencyVisibility(token, currency_lists[index]['id']).then((response){
-                            print(response);
-                            if(response!=null){
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.green ,
-                                content: Text('Visibility Changed'),
-                              ));
-                              setState(() {
-                                currency_lists.removeAt(index);
-                              });
+          child: Scrollbar(
+            child: ListView.builder(itemCount:currency_lists!=null?currency_lists.length:temp.length,itemBuilder: (context,int index){
+              return Column(
+                children: <Widget>[
+                  Slidable(
+                      actionPane: SlidableDrawerActionPane(),
+                      actionExtentRatio: 0.20,
+                      secondaryActions: <Widget>[
+                        IconSlideAction(
+                          icon: Icons.edit,
+                          color: Colors.blue,
+                          caption: 'Update',
+                          onTap: () async {
+                            print(currency_lists[index]);
+                            Navigator.push(context,MaterialPageRoute(builder: (context)=>update_currency(token,currency_lists[index])));
+                          },
+                        ),
+                      ],
+                      actions: <Widget>[
+                        IconSlideAction(
+                          icon: Icons.visibility_off,
+                          color: Colors.red,
+                          caption: 'Hide',
+                          onTap: () async {
+                            CurrenciesServices.changeCurrencyVisibility(token, currency_lists[index]['id']).then((response){
+                              print(response);
+                              if(response!=null){
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor:Colors.green ,
+                                  content: Text('Visibility Changed'),
+                                ));
+                                setState(() {
+                                  currency_lists.removeAt(index);
+                                });
 
-                            }else{
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.red ,
-                                content: Text('Failed'),
-                              ));
-                            }
-                          });
-                        },
-                      ),
-                    ],
-                    child: FadeAnimation(2.0,
-                      ListTile(
-                       title: Text(currency_lists!=null?currency_lists[index]['name'].toString():''),
-                         subtitle: Text(currency_lists!=null?currency_lists[index]['symbol'].toString():''),
-                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                              }else{
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor:Colors.red ,
+                                  content: Text('Failed'),
+                                ));
+                              }
+                            });
+                          },
+                        ),
+                      ],
+                      child: FadeAnimation(2.0,
+                        ListTile(
+                         title: Text(currency_lists!=null?currency_lists[index]['name'].toString():''),
+                           subtitle: Text(currency_lists!=null?currency_lists[index]['symbol'].toString():''),
+                          //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
 //                      onTap: (){
 //                       // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
 //                      },
-                      ),
-                    )
-                ),
-                Divider(),
-              ],
-            );
-          }),
+                        ),
+                      )
+                  ),
+                  Divider(),
+                ],
+              );
+            }),
+          ),
         ),
       ),
     );

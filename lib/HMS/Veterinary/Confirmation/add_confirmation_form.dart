@@ -708,223 +708,225 @@ class add_confirmationState extends State<add_confirmation>{
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(title: Text("Add Confirmation Form"),),
-      body: ListView(
-        children: <Widget>[
-          FormBuilder(
-            key: _fbKey,
-            child: Column(
+      body: Scrollbar(
+        child: ListView(
+          children: <Widget>[
+            FormBuilder(
+              key: _fbKey,
+              child: Column(
 
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top:16,left: 16,right: 16),
-                  child:FormBuilderDateTimePicker(
-                    attribute: "date",
-                    style: Theme.of(context).textTheme.body1,
-                    inputType: InputType.date,
-                    validators: [FormBuilderValidators.required()],
-                    format: DateFormat("MM-dd-yyyy"),
-                    decoration: InputDecoration(labelText: "Date",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(9.0),
-                          borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                      ),),
-                    onChanged: (value){
-                      setState(() {
-                        this.date=value;
-                      });
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                  child: Visibility(
-                    //visible: horses_loaded,
-                    child: FormBuilderDropdown(
-                      attribute: "Horse",
-                      validators: [FormBuilderValidators.required()],
-                      hint: Text("Horse"),
-                      items:horses!=null?horses.map((horse)=>DropdownMenuItem(
-                        child: Text(horse),
-                        value: horse,
-                      )).toList():[""].map((name) => DropdownMenuItem(
-                          value: name, child: Text("$name")))
-                          .toList(),
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(top:16,left: 16,right: 16),
+                    child:FormBuilderDateTimePicker(
+                      attribute: "date",
                       style: Theme.of(context).textTheme.body1,
-                      decoration: InputDecoration(labelText: "Horse",
+                      inputType: InputType.date,
+                      validators: [FormBuilderValidators.required()],
+                      format: DateFormat("MM-dd-yyyy"),
+                      decoration: InputDecoration(labelText: "Date",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(9.0),
+                            borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                        ),),
+                      onChanged: (value){
+                        setState(() {
+                          this.date=value;
+                        });
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                    child: Visibility(
+                      //visible: horses_loaded,
+                      child: FormBuilderDropdown(
+                        attribute: "Horse",
+                        validators: [FormBuilderValidators.required()],
+                        hint: Text("Horse"),
+                        items:horses!=null?horses.map((horse)=>DropdownMenuItem(
+                          child: Text(horse),
+                          value: horse,
+                        )).toList():[""].map((name) => DropdownMenuItem(
+                            value: name, child: Text("$name")))
+                            .toList(),
+                        style: Theme.of(context).textTheme.body1,
+                        decoration: InputDecoration(labelText: "Horse",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(9.0),
+                              borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                          ),
+                        ),
+                        onChanged: (value){
+                          setState(() {
+                            this.selected_horse=value;
+                            this.selected_horse_id=horses.indexOf(value);
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                    child: Visibility(
+                     // visible: vet_loaded,
+                      child: FormBuilderDropdown(
+                        attribute: "Vet",
+                        validators: [FormBuilderValidators.required()],
+                        hint: Text("Vet"),
+                        items:vet!=null?vet.map((horse)=>DropdownMenuItem(
+                          child: Text(horse),
+                          value: horse,
+                        )).toList():[""].map((name) => DropdownMenuItem(
+                            value: name, child: Text("$name")))
+                            .toList(),
+                        style: Theme.of(context).textTheme.body1,
+                        decoration: InputDecoration(labelText: "Vet",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(9.0),
+                              borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                          ),
+                        ),
+                        onChanged: (value){
+                          setState(() {
+                            this.selected_vet=value;
+                            this.selected_vet_id=vet.indexOf(value);
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                    child: Visibility(
+                      // visible: vet_loaded,
+                      child: FormBuilderDropdown(
+                        attribute: "Opinion",
+                        validators: [FormBuilderValidators.required()],
+                        hint: Text("Opinion"),
+                        items:opinion!=null?opinion.map((horse)=>DropdownMenuItem(
+                          child: Text(horse),
+                          value: horse,
+                        )).toList():[""].map((name) => DropdownMenuItem(
+                            value: name, child: Text("$name")))
+                            .toList(),
+                        style: Theme.of(context).textTheme.body1,
+                        decoration: InputDecoration(labelText: "Opinion",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(9.0),
+                              borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                          ),
+                        ),
+                        onChanged: (value){
+                          setState(() {
+                            this.selected_opinion=value;
+                            this.selected_opinion_id=opinion.indexOf(value);
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top:16,left: 16,right: 16),
+                    child: FormBuilderTextField(
+                      controller: comments,
+                      // keyboardType: TextInputType.number,
+                      attribute: "Comments",
+                      validators: [FormBuilderValidators.required()],
+                      decoration: InputDecoration(labelText: "Comments",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(9.0),
                             borderSide: BorderSide(color: Colors.teal, width: 1.0)
                         ),
                       ),
-                      onChanged: (value){
-                        setState(() {
-                          this.selected_horse=value;
-                          this.selected_horse_id=horses.indexOf(value);
-                        });
-                      },
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                  child: Visibility(
-                   // visible: vet_loaded,
-                    child: FormBuilderDropdown(
-                      attribute: "Vet",
-                      validators: [FormBuilderValidators.required()],
-                      hint: Text("Vet"),
-                      items:vet!=null?vet.map((horse)=>DropdownMenuItem(
-                        child: Text(horse),
-                        value: horse,
-                      )).toList():[""].map((name) => DropdownMenuItem(
-                          value: name, child: Text("$name")))
-                          .toList(),
-                      style: Theme.of(context).textTheme.body1,
-                      decoration: InputDecoration(labelText: "Vet",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(9.0),
-                            borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                        ),
-                      ),
-                      onChanged: (value){
-                        setState(() {
-                          this.selected_vet=value;
-                          this.selected_vet_id=vet.indexOf(value);
-                        });
-                      },
+                    Padding(padding: EdgeInsets.only(top:30, right: 250),
+                      child: Text("Right Forelimb", style: TextStyle(color: Colors.teal,fontSize: 20, fontWeight: FontWeight.bold),)
+              ),
+                  Padding(padding: EdgeInsets.only(right: 350),
+                    child: IconButton(
+                      icon: Icon(Icons.add_circle),
+                      color: Colors.teal,
+                      tooltip: 'Add Right Forlimb',
+                      onPressed: _rflimb,
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                  child: Visibility(
-                    // visible: vet_loaded,
-                    child: FormBuilderDropdown(
-                      attribute: "Opinion",
-                      validators: [FormBuilderValidators.required()],
-                      hint: Text("Opinion"),
-                      items:opinion!=null?opinion.map((horse)=>DropdownMenuItem(
-                        child: Text(horse),
-                        value: horse,
-                      )).toList():[""].map((name) => DropdownMenuItem(
-                          value: name, child: Text("$name")))
-                          .toList(),
-                      style: Theme.of(context).textTheme.body1,
-                      decoration: InputDecoration(labelText: "Opinion",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(9.0),
-                            borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                        ),
-                      ),
-                      onChanged: (value){
-                        setState(() {
-                          this.selected_opinion=value;
-                          this.selected_opinion_id=opinion.indexOf(value);
-                        });
-                      },
+                  ListView(
+                    shrinkWrap: true,
+                    children: _rflist,
+                  ),
+                  Padding(padding: EdgeInsets.only(top:30,right: 250),
+                      child: Text("Left Forelimb", style: TextStyle(color: Colors.teal,fontSize: 20, fontWeight: FontWeight.bold),)
+                  ),
+                  Padding(padding: EdgeInsets.only(right: 350),
+                    child: IconButton(
+                      icon: Icon(Icons.add_circle),
+                      color: Colors.teal,
+                      tooltip: 'Add Left Forlimb',
+                      onPressed: _lflimb,
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top:16,left: 16,right: 16),
-                  child: FormBuilderTextField(
-                    controller: comments,
-                    // keyboardType: TextInputType.number,
-                    attribute: "Comments",
-                    validators: [FormBuilderValidators.required()],
-                    decoration: InputDecoration(labelText: "Comments",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(9.0),
-                          borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                      ),
-                    ),
-                  ),
-                ),
-                  Padding(padding: EdgeInsets.only(top:30, right: 250),
-                    child: Text("Right Forelimb", style: TextStyle(color: Colors.teal,fontSize: 20, fontWeight: FontWeight.bold),)
-            ),
-                Padding(padding: EdgeInsets.only(right: 350),
-                  child: IconButton(
-                    icon: Icon(Icons.add_circle),
-                    color: Colors.teal,
-                    tooltip: 'Add Right Forlimb',
-                    onPressed: _rflimb,
-                  ),
-                ),
-                ListView(
-                  shrinkWrap: true,
-                  children: _rflist,
-                ),
-                Padding(padding: EdgeInsets.only(top:30,right: 250),
-                    child: Text("Left Forelimb", style: TextStyle(color: Colors.teal,fontSize: 20, fontWeight: FontWeight.bold),)
-                ),
-                Padding(padding: EdgeInsets.only(right: 350),
-                  child: IconButton(
-                    icon: Icon(Icons.add_circle),
-                    color: Colors.teal,
-                    tooltip: 'Add Left Forlimb',
-                    onPressed: _lflimb,
-                  ),
-                ),
-                ListView(
-                  shrinkWrap: true,
+                  ListView(
+                    shrinkWrap: true,
 
-                  children: _lflist,
-                ),
-                Padding(padding: EdgeInsets.only(top:30,right: 250),
-                    child: Text("Right Hindlimb", style: TextStyle(color: Colors.teal,fontSize: 20, fontWeight: FontWeight.bold),)
-                ),
-                Padding(padding: EdgeInsets.only(right: 350),
-                  child: IconButton(
-                    icon: Icon(Icons.add_circle),
-                    color: Colors.teal,
-                    tooltip: 'Add Right Hindlimb',
-                    onPressed: _rhlimb,
+                    children: _lflist,
                   ),
-                ),
-                ListView(
-                  shrinkWrap: true,
-                  children: _rhlist,
-                ),
-                Padding(padding: EdgeInsets.only(top:30,right: 250),
-                    child: Text("Left Hindlimb", style: TextStyle(color: Colors.teal,fontSize: 20, fontWeight: FontWeight.bold),)
-                ),
-                Padding(padding: EdgeInsets.only(right: 350),
-                  child: IconButton(
-                    icon: Icon(Icons.add_circle),
-                    color: Colors.teal,
-                    onPressed: _lhlimb,
+                  Padding(padding: EdgeInsets.only(top:30,right: 250),
+                      child: Text("Right Hindlimb", style: TextStyle(color: Colors.teal,fontSize: 20, fontWeight: FontWeight.bold),)
                   ),
-                ),
-                ListView(
-                  shrinkWrap: true,
-                  children: _lhlist,
-                ),
-              ],
-            ),
-          ),
-          Center(
-            child: Padding(
-              padding: EdgeInsets.only(top: 16),
-              child: MaterialButton(
-                onPressed: () async{
-                  print(_rfdata);
-                  print(_lfdata);
-                  print(_rhdata);
-                  print(_lhdata);
-
-                  SharedPreferences prefs= await SharedPreferences.getInstance();
-                  if(_fbKey.currentState.validate()){
-                   // Navigator.push(context, MaterialPageRoute(builder: (context)=>addProductsApplied(prefs.getString("token"),date,selected_horse_id,selected_vet_id,selected_opinion_id,confirmationDropdowns['conformationDetail']['foreLimbJointDropDown'])));
-                  }
-                },
-                child: Text("Save",style: TextStyle(color: Colors.white),),
-                color: Colors.teal,
+                  Padding(padding: EdgeInsets.only(right: 350),
+                    child: IconButton(
+                      icon: Icon(Icons.add_circle),
+                      color: Colors.teal,
+                      tooltip: 'Add Right Hindlimb',
+                      onPressed: _rhlimb,
+                    ),
+                  ),
+                  ListView(
+                    shrinkWrap: true,
+                    children: _rhlist,
+                  ),
+                  Padding(padding: EdgeInsets.only(top:30,right: 250),
+                      child: Text("Left Hindlimb", style: TextStyle(color: Colors.teal,fontSize: 20, fontWeight: FontWeight.bold),)
+                  ),
+                  Padding(padding: EdgeInsets.only(right: 350),
+                    child: IconButton(
+                      icon: Icon(Icons.add_circle),
+                      color: Colors.teal,
+                      onPressed: _lhlimb,
+                    ),
+                  ),
+                  ListView(
+                    shrinkWrap: true,
+                    children: _lhlist,
+                  ),
+                ],
               ),
             ),
-          )
-        ],
-        shrinkWrap: true,
+            Center(
+              child: Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: MaterialButton(
+                  onPressed: () async{
+                    print(_rfdata);
+                    print(_lfdata);
+                    print(_rhdata);
+                    print(_lhdata);
+
+                    SharedPreferences prefs= await SharedPreferences.getInstance();
+                    if(_fbKey.currentState.validate()){
+                     // Navigator.push(context, MaterialPageRoute(builder: (context)=>addProductsApplied(prefs.getString("token"),date,selected_horse_id,selected_vet_id,selected_opinion_id,confirmationDropdowns['conformationDetail']['foreLimbJointDropDown'])));
+                    }
+                  },
+                  child: Text("Save",style: TextStyle(color: Colors.white),),
+                  color: Colors.teal,
+                ),
+              ),
+            )
+          ],
+          shrinkWrap: true,
+        ),
       ),
 
     );

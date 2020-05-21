@@ -104,13 +104,14 @@ class _semen_collection_caretaker_list_state extends State<semen_collection_care
               },
               child: Visibility(
                 visible: isvisible,
-                child: ListView.builder(itemCount:siemen_col_list!=null?siemen_col_list.length:temp.length,itemBuilder: (context,int index){
-                  return Column(
-                    children: <Widget>[
-                      Slidable(
-                        actionPane: SlidableDrawerActionPane(),
-                        actionExtentRatio: 0.20,
-                        secondaryActions: <Widget>[
+                child: Scrollbar(
+                  child: ListView.builder(itemCount:siemen_col_list!=null?siemen_col_list.length:temp.length,itemBuilder: (context,int index){
+                    return Column(
+                      children: <Widget>[
+                        Slidable(
+                          actionPane: SlidableDrawerActionPane(),
+                          actionExtentRatio: 0.20,
+                          secondaryActions: <Widget>[
 //                          IconSlideAction(
 //                            icon: Icons.edit,
 //                            color: Colors.blue,
@@ -119,8 +120,8 @@ class _semen_collection_caretaker_list_state extends State<semen_collection_care
 //                              Navigator.push(context,MaterialPageRoute(builder: (context)=>update_semen_collection(token,siemen_col_list[index])));
 //                            },
 //                          ),
-                        ],
-                        actions: <Widget>[
+                          ],
+                          actions: <Widget>[
 //                          IconSlideAction(
 //                            icon: Icons.visibility_off,
 //                            color: Colors.red,
@@ -145,66 +146,25 @@ class _semen_collection_caretaker_list_state extends State<semen_collection_care
 //                              });
 //                            },
 //                          ),
-                          IconSlideAction(
-                            icon: Icons.timer,
-                            color: Colors.deepOrange,
-                            caption: 'Start',
-                            onTap: () async {
-                              Utils.check_connectivity().then((result){
-                                if(result){
-                                  ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                                  pd.show();
-                                  SemenCollectionCareTakerServices.start_semen_collection(token, siemen_col_list[index]['semenCollectionId']).then((response){
-                                    pd.dismiss();
-                                    if(response!=null){
-                                      Scaffold.of(context).showSnackBar(SnackBar(
-                                        backgroundColor:Colors.green ,
-                                        content: Text('Process Started'),
-                                      ));
-//                                  setState(() {
-//                                    control_list.removeAt(index);
-//                                  });
-                                    }else{
-                                      Scaffold.of(context).showSnackBar(SnackBar(
-                                        backgroundColor:Colors.red ,
-                                        content: Text('Process Failed'),
-                                      ));
-                                    }
-                                  });
-                                }else{
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    content: Text("Network not Available"),
-                                    backgroundColor: Colors.red,
-                                  ));
-                                }
-                              });
-
-                            },
-                          ),
-                          IconSlideAction(
-                            icon: Icons.done_all,
-                            color: Colors.green,
-                            caption: 'Complete',
-                            onTap: () async {
-                              print(siemen_col_list[index]);
-                              print(DateTime.parse(siemen_col_list[index]['date']));
-                              if(DateTime.now().isAfter(DateTime.parse(siemen_col_list[index]['date'])) )
-                                Navigator.push(context,MaterialPageRoute(builder: (context)=>semen_collection_late_reason(token, siemen_col_list[index]['semenCollectionId'])));
-                              else{
+                            IconSlideAction(
+                              icon: Icons.timer,
+                              color: Colors.deepOrange,
+                              caption: 'Start',
+                              onTap: () async {
                                 Utils.check_connectivity().then((result){
                                   if(result){
                                     ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
                                     pd.show();
-                                    SemenCollectionCareTakerServices.complete_semen_collection(token, siemen_col_list[index]['semenCollectionId']).then((response){
+                                    SemenCollectionCareTakerServices.start_semen_collection(token, siemen_col_list[index]['semenCollectionId']).then((response){
                                       pd.dismiss();
                                       if(response!=null){
                                         Scaffold.of(context).showSnackBar(SnackBar(
                                           backgroundColor:Colors.green ,
-                                          content: Text('Completed'),
+                                          content: Text('Process Started'),
                                         ));
-                                        setState(() {
-                                          //  control_list.removeAt(index);
-                                        });
+//                                  setState(() {
+//                                    control_list.removeAt(index);
+//                                  });
                                       }else{
                                         Scaffold.of(context).showSnackBar(SnackBar(
                                           backgroundColor:Colors.red ,
@@ -219,8 +179,49 @@ class _semen_collection_caretaker_list_state extends State<semen_collection_care
                                     ));
                                   }
                                 });
-                              }
-                            },
+
+                              },
+                            ),
+                            IconSlideAction(
+                              icon: Icons.done_all,
+                              color: Colors.green,
+                              caption: 'Complete',
+                              onTap: () async {
+                                print(siemen_col_list[index]);
+                                print(DateTime.parse(siemen_col_list[index]['date']));
+                                if(DateTime.now().isAfter(DateTime.parse(siemen_col_list[index]['date'])) )
+                                  Navigator.push(context,MaterialPageRoute(builder: (context)=>semen_collection_late_reason(token, siemen_col_list[index]['semenCollectionId'])));
+                                else{
+                                  Utils.check_connectivity().then((result){
+                                    if(result){
+                                      ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                                      pd.show();
+                                      SemenCollectionCareTakerServices.complete_semen_collection(token, siemen_col_list[index]['semenCollectionId']).then((response){
+                                        pd.dismiss();
+                                        if(response!=null){
+                                          Scaffold.of(context).showSnackBar(SnackBar(
+                                            backgroundColor:Colors.green ,
+                                            content: Text('Completed'),
+                                          ));
+                                          setState(() {
+                                            //  control_list.removeAt(index);
+                                          });
+                                        }else{
+                                          Scaffold.of(context).showSnackBar(SnackBar(
+                                            backgroundColor:Colors.red ,
+                                            content: Text('Process Failed'),
+                                          ));
+                                        }
+                                      });
+                                    }else{
+                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                        content: Text("Network not Available"),
+                                        backgroundColor: Colors.red,
+                                      ));
+                                    }
+                                  });
+                                }
+                              },
 
 //                            onTap: () async {
 //                              Utils.check_connectivity().then((result){
@@ -253,31 +254,32 @@ class _semen_collection_caretaker_list_state extends State<semen_collection_care
 //                              });
 //
 //                            },
-                          ),
-                        ],
-                        child: FadeAnimation(2.0,
-                        ListTile(
-                            title: Text(siemen_col_list!=null?siemen_col_list[index]['horseName']['name']:''),
-                            subtitle: Text(siemen_col_list!=null?siemen_col_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
-                           trailing:Text(siemen_col_list!=null?get_status_by_id(siemen_col_list[index]['status']):''),
+                            ),
+                          ],
+                          child: FadeAnimation(2.0,
+                          ListTile(
+                              title: Text(siemen_col_list!=null?siemen_col_list[index]['horseName']['name']:''),
+                              subtitle: Text(siemen_col_list!=null?siemen_col_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
+                             trailing:Text(siemen_col_list!=null?get_status_by_id(siemen_col_list[index]['status']):''),
 
-                          // subtitle: Text(siemen_col_list!=null?siemen_col_list[index]['inChargeName']['contactName']['name']:''),
-                            //leading: Image.asset("assets/horse_icon.png"),
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => semen_collection_details_page(siemen_col_list[index])));
+                            // subtitle: Text(siemen_col_list!=null?siemen_col_list[index]['inChargeName']['contactName']['name']:''),
+                              //leading: Image.asset("assets/horse_icon.png"),
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => semen_collection_details_page(siemen_col_list[index])));
 
-                            },
+                              },
+                            ),
                           ),
+
+
                         ),
+                        Divider(),
+                      ],
 
+                    );
 
-                      ),
-                      Divider(),
-                    ],
-
-                  );
-
-                }),
+                  }),
+                ),
               ),
             ),
     );

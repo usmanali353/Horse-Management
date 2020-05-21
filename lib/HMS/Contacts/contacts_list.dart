@@ -72,75 +72,77 @@ class _contacts_list_state extends State<contacts_list>{
         },
         child: Visibility(
           visible: isvisible,
-          child: ListView.builder(itemCount:contacts_list!=null?contacts_list.length:temp.length,itemBuilder: (context,int index){
-            return Column(
-              children: <Widget>[
-                Slidable(
-                  actionPane: SlidableDrawerActionPane(),
-                  actionExtentRatio: 0.20,
-                  actions: <Widget>[
-                    IconSlideAction(
-                      icon: Icons.visibility_off,
-                      color: Colors.red,
-                      caption: 'Hide',
-                      onTap: () async {
-                        Utils.check_connectivity().then((result){
-                          if(result){
-                            ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                            pd.show();
-                            network_operations.change_contact_visibility(token, contacts_list[index]['contactId']).then((response){
-                              pd.dismiss();
-                              if(response!=null){
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  backgroundColor:Colors.green ,
-                                  content: Text('Visibility Changed'),
-                                ));
-                                WidgetsBinding.instance
-                                    .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-                              }else{
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  backgroundColor:Colors.red ,
-                                  content: Text('Failed'),
-                                ));
-                              }
-                            });
-                          }else{
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text("Network not Available"),
-                              backgroundColor: Colors.red,
-                            ));
-                          }
-                        });
+          child: Scrollbar(
+            child: ListView.builder(itemCount:contacts_list!=null?contacts_list.length:temp.length,itemBuilder: (context,int index){
+              return Column(
+                children: <Widget>[
+                  Slidable(
+                    actionPane: SlidableDrawerActionPane(),
+                    actionExtentRatio: 0.20,
+                    actions: <Widget>[
+                      IconSlideAction(
+                        icon: Icons.visibility_off,
+                        color: Colors.red,
+                        caption: 'Hide',
+                        onTap: () async {
+                          Utils.check_connectivity().then((result){
+                            if(result){
+                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                              pd.show();
+                              network_operations.change_contact_visibility(token, contacts_list[index]['contactId']).then((response){
+                                pd.dismiss();
+                                if(response!=null){
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.green ,
+                                    content: Text('Visibility Changed'),
+                                  ));
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                                }else{
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.red ,
+                                    content: Text('Failed'),
+                                  ));
+                                }
+                              });
+                            }else{
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text("Network not Available"),
+                                backgroundColor: Colors.red,
+                              ));
+                            }
+                          });
 
+                        },
+                      ),
+                      IconSlideAction(
+                        icon: Icons.edit,
+                        color: Colors.blue,
+                        caption: 'Update',
+                        onTap: () async {
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_contacts(token,contacts_list[index])));
+                        },
+                      ),
+                    ],
+                    child: ListTile(
+                      title: Text(contacts_list!=null?contacts_list[index]['name']:''),
+                     // trailing: Text(contacts_list!=null?contacts_list[index]['startDate']:''),
+                    //  subtitle: Text(already_trained_list!=null?get_training_type_by_id(already_trained_list[index]['trainingType']):''),
+                      leading: Icon(Icons.phone,size: 40,color: Colors.teal,),
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ContactDashboard(token,contacts_list[index])));
                       },
                     ),
-                    IconSlideAction(
-                      icon: Icons.edit,
-                      color: Colors.blue,
-                      caption: 'Update',
-                      onTap: () async {
-                        Navigator.push(context,MaterialPageRoute(builder: (context)=>update_contacts(token,contacts_list[index])));
-                      },
-                    ),
-                  ],
-                  child: ListTile(
-                    title: Text(contacts_list!=null?contacts_list[index]['name']:''),
-                   // trailing: Text(contacts_list!=null?contacts_list[index]['startDate']:''),
-                  //  subtitle: Text(already_trained_list!=null?get_training_type_by_id(already_trained_list[index]['trainingType']):''),
-                    leading: Icon(Icons.phone,size: 40,color: Colors.teal,),
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ContactDashboard(token,contacts_list[index])));
-                    },
+
+
                   ),
+                  Divider(),
+                ],
 
+              );
 
-                ),
-                Divider(),
-              ],
-
-            );
-
-          }),
+            }),
+          ),
         ),
       ),
     );

@@ -127,7 +127,6 @@ class _Profile_Page_State extends State<weight_hieght_list>{
                   },color: Colors.blue,icon: Icons.border_color,caption: 'update',)
                 ],
                 child: ListTile(
-                enabled: weightlist[index]['isActive']!=null?weightlist[index]['isActive']:true,
                   //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                   title: Text(weightlist!=null?(weightlist[index]['horseName']['name']):''),
                   subtitle: Text(weightlist[index]['weight']!=null?"Weight: "+(weightlist[index]['weight']).toString():'weight empty'),

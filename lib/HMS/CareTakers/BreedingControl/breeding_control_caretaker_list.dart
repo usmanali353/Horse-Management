@@ -103,13 +103,14 @@ class _breeding_control_caretaker_list extends State<breeding_control_caretaker_
         },
         child: Visibility(
           visible: isVisible,
-          child: ListView.builder(itemCount:control_list!=null?control_list.length:temp.length,itemBuilder: (context,int index){
-            return Column(
-              children: <Widget>[
-                Slidable(
-                    actionPane: SlidableDrawerActionPane(),
-                    actionExtentRatio: 0.20,
-                    secondaryActions: <Widget>[
+          child: Scrollbar(
+            child: ListView.builder(itemCount:control_list!=null?control_list.length:temp.length,itemBuilder: (context,int index){
+              return Column(
+                children: <Widget>[
+                  Slidable(
+                      actionPane: SlidableDrawerActionPane(),
+                      actionExtentRatio: 0.20,
+                      secondaryActions: <Widget>[
 //                      IconSlideAction(
 //                        icon: Icons.edit,
 //                        color: Colors.blue,
@@ -127,8 +128,8 @@ class _breeding_control_caretaker_list extends State<breeding_control_caretaker_
 //                          Navigator.push(context,MaterialPageRoute(builder: (context)=>next_breeding_check(token, control_list[index]['breedingControlId'])));
 //                        },
 //                      ),
-                    ],
-                    actions: <Widget>[
+                      ],
+                      actions: <Widget>[
 //                      IconSlideAction(
 //                        icon: Icons.visibility_off,
 //                        color: Colors.red,
@@ -164,89 +165,89 @@ class _breeding_control_caretaker_list extends State<breeding_control_caretaker_
 //                          });
 //                        },
 //                      ),
-                   // if(control_list[index]['status']==0){
-                      IconSlideAction(
-                        icon: Icons.timer,
-                        color: Colors.deepOrange,
-                        caption: 'Start',
-                        onTap: () async {
-                          Utils.check_connectivity().then((result) {
-                            if (result) {
-                              ProgressDialog pd = ProgressDialog(
-                                  context, type: ProgressDialogType.Normal,
-                                  isDismissible: true);
-                              pd.show();
-                              BreedingControlCareTakerServices
-                                  .start_breeding_Control(token,
-                                  control_list[index]['breedingControlId'])
-                                  .then((response) {
-                                pd.dismiss();
-                                if (response != null) {
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    backgroundColor: Colors.green,
-                                    content: Text('Process Started'),
-                                  ));
-                                  setState(() {
-                                    //  control_list.removeAt(index);
-                                  });
-                                } else {
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    backgroundColor: Colors.red,
-                                    content: Text('Process Failed'),
-                                  ));
-                                }
-                              });
-                            } else {
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                content: Text("Network not Available"),
-                                backgroundColor: Colors.red,
-                              ));
-                            }
-                          });
-                        },
-                      ),
-
-                      IconSlideAction(
-                        icon: Icons.done_all,
-                        color: Colors.green,
-                        caption: 'Complete',
-
-                       onTap: () async {
-                          print(control_list[index]);
-                          print(DateTime.parse(control_list[index]['date']));
-                          if(DateTime.now().isAfter(DateTime.parse(control_list[index]['date'])) )
-                            Navigator.push(context,MaterialPageRoute(builder: (context)=>breeding_control_late_reason(token, control_list[index]['breedingControlId'])));
-                       else{
-                            Utils.check_connectivity().then((result){
-                              if(result){
-                                ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                     // if(control_list[index]['status']==0){
+                        IconSlideAction(
+                          icon: Icons.timer,
+                          color: Colors.deepOrange,
+                          caption: 'Start',
+                          onTap: () async {
+                            Utils.check_connectivity().then((result) {
+                              if (result) {
+                                ProgressDialog pd = ProgressDialog(
+                                    context, type: ProgressDialogType.Normal,
+                                    isDismissible: true);
                                 pd.show();
-                                BreedingControlCareTakerServices.complete_breeding_Control(token, control_list[index]['breedingControlId']).then((response){
+                                BreedingControlCareTakerServices
+                                    .start_breeding_Control(token,
+                                    control_list[index]['breedingControlId'])
+                                    .then((response) {
                                   pd.dismiss();
-                                  if(response!=null){
+                                  if (response != null) {
                                     Scaffold.of(context).showSnackBar(SnackBar(
-                                      backgroundColor:Colors.green ,
-                                      content: Text('Completed'),
+                                      backgroundColor: Colors.green,
+                                      content: Text('Process Started'),
                                     ));
                                     setState(() {
                                       //  control_list.removeAt(index);
                                     });
-                                  }else{
+                                  } else {
                                     Scaffold.of(context).showSnackBar(SnackBar(
-                                      backgroundColor:Colors.red ,
+                                      backgroundColor: Colors.red,
                                       content: Text('Process Failed'),
                                     ));
                                   }
                                 });
-                              }else{
+                              } else {
                                 Scaffold.of(context).showSnackBar(SnackBar(
                                   content: Text("Network not Available"),
                                   backgroundColor: Colors.red,
                                 ));
                               }
                             });
-                          }
-                        },
+                          },
+                        ),
+
+                        IconSlideAction(
+                          icon: Icons.done_all,
+                          color: Colors.green,
+                          caption: 'Complete',
+
+                         onTap: () async {
+                            print(control_list[index]);
+                            print(DateTime.parse(control_list[index]['date']));
+                            if(DateTime.now().isAfter(DateTime.parse(control_list[index]['date'])) )
+                              Navigator.push(context,MaterialPageRoute(builder: (context)=>breeding_control_late_reason(token, control_list[index]['breedingControlId'])));
+                         else{
+                              Utils.check_connectivity().then((result){
+                                if(result){
+                                  ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                                  pd.show();
+                                  BreedingControlCareTakerServices.complete_breeding_Control(token, control_list[index]['breedingControlId']).then((response){
+                                    pd.dismiss();
+                                    if(response!=null){
+                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                        backgroundColor:Colors.green ,
+                                        content: Text('Completed'),
+                                      ));
+                                      setState(() {
+                                        //  control_list.removeAt(index);
+                                      });
+                                    }else{
+                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                        backgroundColor:Colors.red ,
+                                        content: Text('Process Failed'),
+                                      ));
+                                    }
+                                  });
+                                }else{
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    content: Text("Network not Available"),
+                                    backgroundColor: Colors.red,
+                                  ));
+                                }
+                              });
+                            }
+                          },
 //                        onTap: () async {
 //                          Utils.check_connectivity().then((result){
 //                            if(result){
@@ -278,24 +279,25 @@ class _breeding_control_caretaker_list extends State<breeding_control_caretaker_
 //                          });
 //
 //                        },
-                      ),
-                    ],
-                    child: FadeAnimation(2.0,
-                      ListTile(
-                        trailing:Text(control_list!=null?get_status_by_id(control_list[index]['status']):''),
-                        title: Text(control_list!=null?control_list[index]['horseName']['name']:''),
-                        subtitle: Text(control_list!=null?control_list[index]['date'].toString().substring(1,10):''),
-                        //leading: Icon(Icons.pets,size: 40,color: Colors.teal,),
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => breeding_control_details_page(control_list[index], get_check_method_by_id(control_list[index]['check_Method']))));
-                          },
-                      ),
-                    )
-                ),
-                Divider(),
-              ],
-            );
-          }),
+                        ),
+                      ],
+                      child: FadeAnimation(2.0,
+                        ListTile(
+                          trailing:Text(control_list!=null?get_status_by_id(control_list[index]['status']):''),
+                          title: Text(control_list!=null?control_list[index]['horseName']['name']:''),
+                          subtitle: Text(control_list!=null?control_list[index]['date'].toString().substring(1,10):''),
+                          //leading: Icon(Icons.pets,size: 40,color: Colors.teal,),
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => breeding_control_details_page(control_list[index], get_check_method_by_id(control_list[index]['check_Method']))));
+                            },
+                        ),
+                      )
+                  ),
+                  Divider(),
+                ],
+              );
+            }),
+          ),
         ),
       ),
     );

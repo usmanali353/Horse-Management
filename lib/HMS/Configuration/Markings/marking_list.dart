@@ -103,65 +103,67 @@ class _marking_list extends State<marking_list>{
         },
         child: Visibility(
           visible: isVisible,
-          child: ListView.builder(itemCount:marking_lists!=null?marking_lists.length:temp.length,itemBuilder: (context,int index){
-            return Column(
-              children: <Widget>[
-                Slidable(
-                    actionPane: SlidableDrawerActionPane(),
-                    actionExtentRatio: 0.20,
-                    secondaryActions: <Widget>[
-                      IconSlideAction(
-                        icon: Icons.edit,
-                        color: Colors.blue,
-                        caption: 'Update',
-                        onTap: () async {
-                          print(marking_lists[index]);
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_marking(token,marking_lists[index])));
-                        },
-                      ),
-                    ],
-                    actions: <Widget>[
-                      IconSlideAction(
-                        icon: Icons.visibility_off,
-                        color: Colors.red,
-                        caption: 'Hide',
-                        onTap: () async {
-                          MarkingServices.changeMarkingsVisibility(token,marking_lists[index]['id']).then((response){
-                            print(response);
-                            if(response!=null){
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.green ,
-                                content: Text('Visibility Changed'),
-                              ));
-                              setState(() {
-                                marking_lists.removeAt(index);
-                              });
+          child: Scrollbar(
+            child: ListView.builder(itemCount:marking_lists!=null?marking_lists.length:temp.length,itemBuilder: (context,int index){
+              return Column(
+                children: <Widget>[
+                  Slidable(
+                      actionPane: SlidableDrawerActionPane(),
+                      actionExtentRatio: 0.20,
+                      secondaryActions: <Widget>[
+                        IconSlideAction(
+                          icon: Icons.edit,
+                          color: Colors.blue,
+                          caption: 'Update',
+                          onTap: () async {
+                            print(marking_lists[index]);
+                            Navigator.push(context,MaterialPageRoute(builder: (context)=>update_marking(token,marking_lists[index])));
+                          },
+                        ),
+                      ],
+                      actions: <Widget>[
+                        IconSlideAction(
+                          icon: Icons.visibility_off,
+                          color: Colors.red,
+                          caption: 'Hide',
+                          onTap: () async {
+                            MarkingServices.changeMarkingsVisibility(token,marking_lists[index]['id']).then((response){
+                              print(response);
+                              if(response!=null){
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor:Colors.green ,
+                                  content: Text('Visibility Changed'),
+                                ));
+                                setState(() {
+                                  marking_lists.removeAt(index);
+                                });
 
-                            }else{
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.red ,
-                                content: Text('Failed'),
-                              ));
-                            }
-                          });
-                        },
-                      ),
-                    ],
-                    child: FadeAnimation(2.0,
-                       ListTile(
-                        title: Text(marking_lists!=null?marking_lists[index]['name']:''),
-                        //subtitle: Text(marking_lists!=null?marking_lists[index]['type'].toString():''),
-                        //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
-                        onTap: (){
-                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
-                        },
-                      ),
-                    )
-                ),
-                Divider(),
-              ],
-            );
-          }),
+                              }else{
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor:Colors.red ,
+                                  content: Text('Failed'),
+                                ));
+                              }
+                            });
+                          },
+                        ),
+                      ],
+                      child: FadeAnimation(2.0,
+                         ListTile(
+                          title: Text(marking_lists!=null?marking_lists[index]['name']:''),
+                          //subtitle: Text(marking_lists!=null?marking_lists[index]['type'].toString():''),
+                          //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
+                          onTap: (){
+                            // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                          },
+                        ),
+                      )
+                  ),
+                  Divider(),
+                ],
+              );
+            }),
+          ),
         ),
       ),
     );

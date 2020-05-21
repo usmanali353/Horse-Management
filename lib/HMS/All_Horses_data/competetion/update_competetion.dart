@@ -296,10 +296,8 @@ class _state_add_farrier extends State<update_competetion>{
                             pd.show();
                             competetion_services.competetionSave(competetionlist['createdBy'],token,competetionlist['competitionId'], competetiondropdown['horseDropDown'][selected_horse_id]['id'],select_date, competetiondropdown['performanceTypeDropDown'][selected_performance_id]['id'],eventName.text,city.text,category.text,result.text,rider.text,1,comment.text).then((response){
                               pd.dismiss();
-                              if(response !=null) {
+                              if(response !=null)
                                 print("Successfully lab test added");
-                                Navigator.of(context).pop();
-                              }
                               else{
                                 print("data not added");}
                             });

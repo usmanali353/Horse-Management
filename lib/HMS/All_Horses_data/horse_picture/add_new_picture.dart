@@ -1,12 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 class add_new_picture extends StatefulWidget{
@@ -47,7 +45,7 @@ class _add_new_picture extends State<add_new_picture>{
       });
     });
   }
-  File _image;
+
 
   @override
   Widget build(BuildContext context) {
@@ -134,36 +132,24 @@ class _add_new_picture extends State<add_new_picture>{
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.all(16),
-                              height: 100,
-                              width: 80,
-                              child: _image == null ? Text('No image selected.') : Image.file(_image),
-                            ),
-                            MaterialButton(
-                              color: Colors.teal,
-                              onPressed: ()async{
-                                 Utils.getImage().then((image_file){
-                                   if(image_file!=null){
-                                     image_file.readAsBytes().then((image){
-                                        if(image!=null){
-                                          setState(() {
-                                            this.picked_image=image;
-                                            _image = image_file;
-                                          });
-                                        }
-                                     });
-                                   }else{
-
-                                   }
+                        child: MaterialButton(
+                          color: Colors.teal,
+                          onPressed: (){
+                             Utils.getImage().then((image_file){
+                               if(image_file!=null){
+                                 image_file.readAsBytes().then((image){
+                                    if(image!=null){
+                                      setState(() {
+                                        this.picked_image=image;
+                                      });
+                                    }
                                  });
-                              },
-                              child: Text("Select Image",style: TextStyle(color: Colors.white),),
-                            ),
-                          ],
+                               }else{
+
+                               }
+                             });
+                          },
+                          child: Text("Select Image",style: TextStyle(color: Colors.white),),
                         ),
                   ),
               ],
