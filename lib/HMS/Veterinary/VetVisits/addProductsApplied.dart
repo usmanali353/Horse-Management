@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:horse_management/HMS/Veterinary/VetVisits/vetVisitsList.dart';
 import 'package:horse_management/HMS/Veterinary/VetVisits/veterniaryServices.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
@@ -103,15 +106,22 @@ class addProductsAppliedState extends State<addProductsApplied> {
                         .then((response) {
                       pd.hide();
                       if (response != null) {
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                          backgroundColor: Colors.green,
-                          content: Text("Vet Visit Added Sucessfully"),
-                        ));
+                        print("object");
+//                        Scaffold.of(context).showSnackBar(SnackBar(
+//                          backgroundColor: Colors.green,
+//                          content: Text("Vet Visit Added Sucessfully"),
+//                        ));
+                        sleep(Duration(seconds: 3));
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) {
+                          return vetVisitList(token);     }));
+                       // Navigator.pop(context);
                       }else{
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                          backgroundColor: Colors.red,
-                          content: Text("Vet Visit not Added"),
-                        ));
+                        print("don not save");
+
+//                        Scaffold.of(context).showSnackBar(SnackBar(
+//                          backgroundColor: Colors.red,
+//                          content: Text("Vet Visit not Added"),
+//                        ));
                       }
                     });
                   } else {

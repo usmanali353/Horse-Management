@@ -33,6 +33,7 @@ class _add_horse_state extends State<update_labTest>{
   List<String> contact=[];
   var labDropdown;
   Uint8List picked_image;
+  File _image;
   sqlite_helper local_db;
   bool isPositive;
   var positiveinitial;
@@ -421,24 +422,36 @@ class _add_horse_state extends State<update_labTest>{
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: MaterialButton(
-                          color: Colors.teal,
-                          onPressed: (){
-                            Utils.getImage().then((image_file){
-                              if(image_file!=null){
-                                image_file.readAsBytes().then((image){
-                                  if(image!=null){
-                                    setState(() {
-                                      this.picked_image=image;
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.all(16),
+                              height: 100,
+                              width: 80,
+                              child: _image == null ? Text('No image selected.') : Image.file(_image),
+                            ),
+                            MaterialButton(
+                              color: Colors.teal,
+                              onPressed: (){
+                                Utils.getImage().then((image_file){
+                                  if(image_file!=null){
+                                    image_file.readAsBytes().then((image){
+                                      if(image!=null){
+                                        setState(() {
+                                          this.picked_image=image;
+                                          _image = image_file;
+                                        });
+                                      }
                                     });
+                                  }else{
+
                                   }
                                 });
-                              }else{
-
-                              }
-                            });
-                          },
-                          child: Text("Select Image",style: TextStyle(color: Colors.white),),
+                              },
+                              child: Text("Select Image",style: TextStyle(color: Colors.white),),
+                            ),
+                          ],
                         ),
                       ),
                       //ImagePickerExample(),
