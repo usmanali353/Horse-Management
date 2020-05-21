@@ -122,6 +122,23 @@ class _pictures_list_state extends State<pictures_list>{
                           title: Text(picture_list!=null?picture_list[index]['horseName']['name']:''),
                           subtitle: Text(picture_list!=null?picture_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
                           leading: picture_list[index]['image']!=null?Image.memory(base64.decode(picture_list[index]['image'])):Text(''),
+                          onTap: (){
+                                return showDialog<Null>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'Preview',
+              style: TextStyle(
+                  fontWeight: FontWeight.w300,
+                  letterSpacing: 1.1
+              ),
+            ),
+            content: Image.memory(base64.decode(picture_list[index]['image'])),
+          );
+        }
+    );
+                          },
                         ),
                       ),
                       Divider(),
