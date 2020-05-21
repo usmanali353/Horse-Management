@@ -145,10 +145,10 @@ class add_picture_button extends StatelessWidget {
                     IronBrandServices.addIronBrand(token,picture_data['brandId'],title.text,picture_data['createdBy'],picked_image).then((response){
                       pd.dismiss();
                       if(response!=null){
-//                        Scaffold.of(context).showSnackBar(SnackBar(
-//                          content: Text("Updated"),
-//                          backgroundColor: Colors.green,
-//                        ));
+                        Scaffold.of(context).showSnackBar(SnackBar(
+                          content: Text("Updated"),
+                          backgroundColor: Colors.green,
+                        ));
                       }else{
                         Scaffold.of(context).showSnackBar(SnackBar(
                           content: Text("Not Updated"),

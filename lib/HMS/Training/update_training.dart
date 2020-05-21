@@ -523,11 +523,13 @@ class add_training_button extends StatelessWidget {
                       backgroundColor: Colors.green,
                       content: Text("Training Updated Sucessfully"),
                     ));
+                    Navigator.pop(context);
                   }else{
                     Scaffold.of(context).showSnackBar(SnackBar(
                       backgroundColor: Colors.red,
                       content: Text("Training not Updated"),
                     ));
+                    Navigator.pop(context);
                   }
                 });
               }else{

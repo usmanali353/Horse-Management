@@ -57,7 +57,7 @@ class _sire_list extends State<sire_list>{
               color: Colors.white,
             ),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => add_sire(token)),);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => AddSire(token)),);
             },
           )
 //          IconButton(
@@ -116,7 +116,7 @@ class _sire_list extends State<sire_list>{
                         caption: 'Update',
                         onTap: () async {
                           print(sire_lists[index]);
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_sire(token,sire_lists[index])));
+                         Navigator.push(context,MaterialPageRoute(builder: (context)=>UpdateSire(token,sire_lists[index])));
                         },
                       ),
                     ],

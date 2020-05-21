@@ -127,16 +127,18 @@ class _update_location extends State<update_location>{
                                 pd.show();
                                 LocationServices.addLocation(token,specificlocation['id'],location_name.text,description.text,specificlocation['createdBy']).then((respons){
                                   pd.dismiss();
-                                  setState(() {
-                                    var parsedjson  = jsonDecode(respons);
-                                    if(parsedjson != null){
-                                      if(parsedjson['isSuccess'] == true){
-                                        print("Successfully data updated");
-                                      }else
-                                        print("not saved");
-                                    }else
-                                      print("json response null");
-                                  });
+                                  if(respons!=null){
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Location Updated"),
+                                      backgroundColor: Colors.green,
+                                    ));
+                                    Navigator.pop(context);
+                                  }else{
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Location not Updated"),
+                                      backgroundColor: Colors.red,
+                                    ));
+                                  }
                                 });
                               }
                             });

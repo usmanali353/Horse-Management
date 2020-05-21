@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:horse_management/HMS/All_Horses_data/Marking/Marking.dart';
 import 'package:horse_management/HMS/my_horses/HypotheticPedegree/Pedigree.dart';
 import 'package:horse_management/HMS/my_horses/HypotheticPedegree/hypothetic_pedegree_page.dart';
 import 'package:horse_management/HMS/my_horses/add_horse/update_horse.dart';
@@ -233,6 +234,15 @@ class _Profile_Page_State extends State<horse_detail> {
                 onTap: () {
                   print(horsedata);
                   Navigator.push(context, MaterialPageRoute(builder: (context) => hypothetic_pedegree_page(horsedata)));
+                },
+              ),
+              ListTile(
+                title: Text("Marking"),
+                subtitle: Text("Add Marking"),
+                leading: Icon(FontAwesomeIcons.marker,size: 40,),
+                trailing: Icon(Icons.arrow_right),
+                onTap: (){
+                  Navigator.push(context,MaterialPageRoute(builder: (context)=>Marking(horsedata)));
                 },
               ),
 //              ListTile(

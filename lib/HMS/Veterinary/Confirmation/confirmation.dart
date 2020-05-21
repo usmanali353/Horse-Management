@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:horse_management/HMS/Configuration/Sire/add_sire.dart';
-import 'package:horse_management/HMS/Configuration/Sire/sire_json.dart';
-import 'package:horse_management/HMS/Configuration/Sire/update_sire.dart';
 import 'dart:convert';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:horse_management/HMS/Paddock/add_paddock_form.dart';
-import 'package:horse_management/HMS/Paddock/padocks_json.dart';
-import 'package:horse_management/HMS/Paddock/show_horses_in_paddock_list.dart';
-import 'package:horse_management/HMS/Paddock/update_paddock.dart';
 import 'package:horse_management/HMS/Veterinary/Confirmation/confirmation_json.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';

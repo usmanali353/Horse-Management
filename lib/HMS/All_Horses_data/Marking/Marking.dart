@@ -5,17 +5,23 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:horse_management/HMS/All_Horses_data/services/marking_services.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class Marking extends StatefulWidget {
+  var horseData;
+  Marking(this.horseData);
   @override
   State<StatefulWidget> createState() {
-    return MarkingState();
+    return MarkingState(horseData);
   }
 }
 
 class MarkingState extends State<Marking> {
   GlobalKey<SignatureState> signatureKey = GlobalKey();
   var image;
-
+  var horseData;
+  MarkingState(this.horseData);
   @override
   void initState() {
     super.initState();
@@ -56,22 +62,35 @@ class MarkingState extends State<Marking> {
     var byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     Uint8List pngBytes = byteData.buffer.asUint8List();
     String bs64 = base64Encode(pngBytes);
-    debugPrint(bs64);
-    return showDialog<Null>(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(
-              'Please check your device\'s Signature folder',
-              style: TextStyle(
-                  fontWeight: FontWeight.w300,
-                  letterSpacing: 1.1
-              ),
-            ),
-            content: Image.memory(base64Decode(bs64)),
-          );
+    print("Horse Id"+horseData['horseId'].toString());
+    SharedPreferences.getInstance().then((prefs){
+      ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+      pd.show();
+      MarkingService.markingSave(prefs.getString('token'),horseData['horseId'], bs64).then((response){
+        pd.dismiss();
+        if(response!=null){
+
+        }else{
+
         }
-    );
+      });
+    });
+
+//    return showDialog<Null>(
+//        context: context,
+//        builder: (BuildContext context) {
+//          return AlertDialog(
+//            title: Text(
+//              'Please check your device\'s Signature folder',
+//              style: TextStyle(
+//                  fontWeight: FontWeight.w300,
+//                  letterSpacing: 1.1
+//              ),
+//            ),
+//            content: Image.memory(base64Decode(bs64)),
+//          );
+//        }
+//    );
   }
 }
 

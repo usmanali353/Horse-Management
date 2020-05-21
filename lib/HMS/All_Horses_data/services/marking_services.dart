@@ -5,10 +5,10 @@ import 'package:horse_management/Utils.dart';
 import 'package:http/http.dart' as http;
 
 
-class Add_horse_services {
+class MarkingService {
 
 
-  static Future<String> markingSave(String token, int horseid, Uint8List marking) async {
+  static Future<String> markingSave(String token, int horseid, String marking) async {
     Map<String, String> headers = {
       HttpHeaders.contentTypeHeader: 'application/json',
       HttpHeaders.authorizationHeader: 'Bearer ' + token
@@ -22,6 +22,7 @@ class Add_horse_services {
         body: body
     );
     print(response.body);
+    print(response.statusCode);
     if (response.statusCode == 200) {
       return response.body;
     } else

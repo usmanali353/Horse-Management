@@ -214,7 +214,7 @@ class _update_dam extends State<update_dam>{
                               initialValue: get_color_by_id(specificdam['colorId'])!= null ?get_color_by_id(specificdam['colorId']):null,
                               validators: [FormBuilderValidators.required()],
                               hint: Text("Color"),
-                              items:breed!=null?breed.map((horse)=>DropdownMenuItem(
+                              items:color!=null?color.map((horse)=>DropdownMenuItem(
                                 child: Text(horse),
                                 value: horse,
                               )).toList():[""].map((name) => DropdownMenuItem(
@@ -320,6 +320,7 @@ class _update_dam extends State<update_dam>{
                                         DamServices.addDam(token, specificdam['horseId'], name.text, true, true, true, dam_response['breedDropDown'][selected_breed_id]['id'], dam_response['colorDropDown'][selected_color_id]['id'], select_DOB, number.text, microchip.text, specificdam['createdBy']).then((respons){
                                           pd.dismiss();
                                           if(respons!=null){
+                                            Navigator.pop(context);
                                             Scaffold.of(context).showSnackBar(SnackBar(
                                               content: Text("Updated sucessfully"),
                                               backgroundColor: Colors.green,

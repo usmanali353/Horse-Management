@@ -289,16 +289,18 @@ class _update_accountcategories extends State<update_accountcategories>{
                                     AccountCategoriesServices.addAccountCategory(token, specificcategory['id'], code.text, name.text, description.text, specificcategory['createdBy'], selected_isIncome_id, selected_isActive_id)
                                         .then((respons){
                                       pd.dismiss();
-                                      setState(() {
-                                        var parsedjson  = jsonDecode(respons);
-                                        if(parsedjson != null){
-                                          if(parsedjson['isSuccess'] == true){
-                                            print("Successfully data updated");
-                                          }else
-                                            print("not saved");
-                                        }else
-                                          print("json response null");
-                                      });
+                                      if(respons!=null){
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text("Account Categories Updated"),
+                                          backgroundColor: Colors.green,
+                                        ));
+                                        Navigator.pop(context);
+                                      }else{
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text("Account Categories not Updated"),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                      }
                                     });
                                   }
                                 });

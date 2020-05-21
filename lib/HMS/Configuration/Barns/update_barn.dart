@@ -6,8 +6,6 @@ import 'dart:convert';
 
 import '../../../Utils.dart';
 
-
-
 class update_barn extends StatefulWidget{
   final token;
   var specificBarn;
@@ -107,16 +105,18 @@ class _update_barn extends State<update_barn>{
                                 pd.show();
                                 BarnServices.addBarn(token,specificBarn['barnId'],barn.text,specificBarn['createdBy']).then((respons){
                                   pd.dismiss();
-                                  setState(() {
-                                    var parsedjson  = jsonDecode(respons);
-                                    if(parsedjson != null){
-                                      if(parsedjson['isSuccess'] == true){
-                                        print("Successfully data updated");
-                                      }else
-                                        print("not saved");
-                                    }else
-                                      print("json response null");
-                                  });
+                                  if(respons!=null){
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Barns Updated"),
+                                      backgroundColor: Colors.green,
+                                    ));
+                                    Navigator.pop(context);
+                                  }else{
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Barns not Updated"),
+                                      backgroundColor: Colors.red,
+                                    ));
+                                  }
                                 });
                               }
                             });

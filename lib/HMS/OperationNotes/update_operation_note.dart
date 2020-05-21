@@ -194,16 +194,18 @@ class _update_opertation_note extends State<update_opertation_note>{
                             OperationNotesServices.add_Operation_Notes(specificnote['createdBy'],token,specificnote['operationNoteId'],DateTime.now(),notes_response['generalCategoeyDropDown'][selected_notes_id]['id'], details.text)
                                 .then((respons){
                               pd.dismiss();
-                              setState(() {
-                                var parsedjson  = jsonDecode(respons);
-                                if(parsedjson != null){
-                                  if(parsedjson['isSuccess'] == true){
-                                    print("Successfully data updated");
-                                  }else
-                                    print("not saved");
-                                }else
-                                  print("json response null");
-                              });
+                              if(respons!=null){
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text("Operational Noted Updated"),
+                                  backgroundColor: Colors.green,
+                                ));
+                                Navigator.pop(context);
+                              }else{
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text("Operational Noted not Updated"),
+                                  backgroundColor: Colors.red,
+                                ));
+                              }
                             });
                           }
                         });

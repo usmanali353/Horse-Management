@@ -171,16 +171,18 @@ class _update_marking extends State<update_marking>{
                                     pd.show();
                                     MarkingServices.addMarkings(token, specificmarking['id'],name.text,abbreviation.text, specificmarking['createdBy'],selected_marking_id).then((respons){
                                       pd.dismiss();
-                                      setState(() {
-                                        var parsedjson  = jsonDecode(respons);
-                                        if(parsedjson != null){
-                                          if(parsedjson['isSuccess'] == true){
-                                            print("Successfully data updated");
-                                          }else
-                                            print("not saved");
-                                        }else
-                                          print("json response null");
-                                      });
+                                      if(respons!=null){
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text("Marking Updated"),
+                                          backgroundColor: Colors.green,
+                                        ));
+                                        Navigator.pop(context);
+                                      }else{
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text("Marking not Updated"),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                      }
                                     });
                                   }
                                 });
