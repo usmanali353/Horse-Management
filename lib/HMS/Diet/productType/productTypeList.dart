@@ -81,7 +81,8 @@ class _notes_list_state extends State<productList>{
                 if(response!=null){
                   setState(() {
                     isvisible=true;
-                    itemList=json.decode(response);
+                    var load_list=json.decode(response);
+                    itemList = load_list['response'];
                   });
 
                 }else{
@@ -151,16 +152,23 @@ class _notes_list_state extends State<productList>{
                   child: ListTile(
                     title: Text(itemList!=null?itemList[index]['name']:''),
                     subtitle: Text(itemList[index]['costPerUnit']!=null?"Cost: "+itemList[index]['costPerUnit'].toString():''),
-                    leading: Icon(FontAwesomeIcons.pizzaSlice,size: 40,color: Colors.teal,),
+                    leading: Icon(FontAwesomeIcons.box,size: 40,color: Colors.teal,),
                     trailing: Text(itemList[index]['unit'] != null ? itemList[index]['unit'].toString():""),
                     onTap: (){
-                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>training_details_page(training_list[index],get_training_type_by_id(training_list[index]['trainingType']))));
                     },
                   ),
 
-
                 ),
                 Divider(),
+                Text("Foarge"),
+                ListTile(
+                  title: Text(itemList!=null?itemList[index]['name']:''),
+                  subtitle: Text(itemList[index]['costPerUnit']!=null?"Cost: "+itemList[index]['costPerUnit'].toString():''),
+                  leading: Icon(FontAwesomeIcons.box,size: 40,color: Colors.teal,),
+                  trailing: Text(itemList[index]['unit'] != null ? itemList[index]['unit'].toString():""),
+                  onTap: (){
+                  },
+                ),
               ],
 
             );
