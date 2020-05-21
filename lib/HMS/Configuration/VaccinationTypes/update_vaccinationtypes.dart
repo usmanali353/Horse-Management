@@ -93,7 +93,7 @@ class _update_vaccinationtypes extends State<update_vaccinationtypes>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Vaccination Type"),),
+        appBar: AppBar(title: Text("Update Vaccination Type"),),
         body: ListView(
             children: <Widget>[
               Column(
@@ -162,44 +162,92 @@ class _update_vaccinationtypes extends State<update_vaccinationtypes>{
                       ],
                     ),
                   ),
-                  Center(
-                      child:Padding(
-                          padding: const EdgeInsets.all(16),
-                          child:MaterialButton(
-                            color: Colors.teal,
-                            child: Text("Update",style: TextStyle(color: Colors.white),),
+                  Builder(
+                      builder:(BuildContext context){
+                        return Center(
+                            child:Padding(
+                                padding: const EdgeInsets.all(16),
+                                child:MaterialButton(
+                                  color: Colors.teal,
+                                  child: Text("Update",style: TextStyle(color: Colors.white),),
+                                  onPressed: (){
+                                    if (_fbKey.currentState.validate()) {
+                                      Utils.check_connectivity().then((result){
+                                        if(result){
+                                          ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                          pd.show();
+                                          VaccinationTypesServices.addVaccinationType(token, specifictype['vaccinationTypeId'], name.text, selected_canDelayed_id,specifictype['createdBy'] ).then((respons){
+                                            pd.dismiss();
+                                            if(respons!=null){
+                                              Scaffold.of(context).showSnackBar(SnackBar(
+                                                content: Text("Vaccinations Type Updated Successfully",
+                                                  style: TextStyle(
+                                                      color: Colors.red
+                                                  ),
+                                                ),
+                                                backgroundColor: Colors.green,
+                                              ));
+                                              Navigator.pop(context);
+                                            }else{
+                                              Scaffold.of(context).showSnackBar(SnackBar(
+                                                content: Text("Vaccinations Type Updated Failed",
+                                                  style: TextStyle(
+                                                      color: Colors.white
+                                                  ),
+                                                ),
+                                                backgroundColor: Colors.red,
+                                              ));
+                                            }
+                                          });
+                                        }
+                                      });
+                                    }
+                                  },
 
-                            onPressed: (){
-                              if (_fbKey.currentState.validate()) {
-                                _fbKey.currentState.save();
-                                Utils.check_connectivity().then((result){
-                                  if(result){
-                                    ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                                    pd.show();
-                                    VaccinationTypesServices.addVaccinationType(token, specifictype['vaccinationTypeId'], name.text, selected_canDelayed_id,specifictype['createdBy'] )
-                                        .then((respons){
-                                      pd.dismiss();
-                                      if(respons!=null){
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Vaccination Type Updated"),
-                                          backgroundColor: Colors.green,
-                                        ));
-                                        Navigator.pop(context);
-                                      }else{
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Vaccination Type not Updated"),
-                                          backgroundColor: Colors.red,
-                                        ));
-                                      }
-                                    });
-                                  }
-                                });
-                              }
-                            },
+                                )
+                            )
+                        );
+                      }
 
-                          )
-                      )
-                  )
+                  ),
+//                  Center(
+//                      child:Padding(
+//                          padding: const EdgeInsets.all(16),
+//                          child:MaterialButton(
+//                            color: Colors.teal,
+//                            child: Text("Update",style: TextStyle(color: Colors.white),),
+//
+//                            onPressed: (){
+//                              if (_fbKey.currentState.validate()) {
+//                                _fbKey.currentState.save();
+//                                Utils.check_connectivity().then((result){
+//                                  if(result){
+//                                    ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+//                                    pd.show();
+//                                    VaccinationTypesServices.addVaccinationType(token, specifictype['vaccinationTypeId'], name.text, selected_canDelayed_id,specifictype['createdBy'] )
+//                                        .then((respons){
+//                                      pd.dismiss();
+//                                      if(respons!=null){
+//                                        Scaffold.of(context).showSnackBar(SnackBar(
+//                                          content: Text("Vaccination Type Updated"),
+//                                          backgroundColor: Colors.green,
+//                                        ));
+//                                        Navigator.pop(context);
+//                                      }else{
+//                                        Scaffold.of(context).showSnackBar(SnackBar(
+//                                          content: Text("Vaccination Type not Updated"),
+//                                          backgroundColor: Colors.red,
+//                                        ));
+//                                      }
+//                                    });
+//                                  }
+//                                });
+//                              }
+//                            },
+//
+//                          )
+//                      )
+//                  )
                 ],
               )
             ]

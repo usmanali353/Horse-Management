@@ -118,13 +118,21 @@ class _add_currency extends State<add_currency>{
                                           pd.dismiss();
                                            if(respons!=null){
                                              Scaffold.of(context).showSnackBar(SnackBar(
-                                               content: Text("Currency Added"),
+                                               content: Text("Currency Added",
+                                                 style: TextStyle(
+                                                     color: Colors.red
+                                                 ),
+                                               ),
                                                backgroundColor: Colors.green,
                                              ));
                                              Navigator.pop(context);
                                            }else{
                                              Scaffold.of(context).showSnackBar(SnackBar(
-                                               content: Text("Currency not Added"),
+                                               content: Text("Currency not Added",
+                                                 style: TextStyle(
+                                                     color: Colors.white
+                                                 ),
+                                               ),
                                                backgroundColor: Colors.red,
                                              ));
                                            }

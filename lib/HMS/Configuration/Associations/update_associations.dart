@@ -96,37 +96,55 @@ class _update_associations extends State<update_associations>{
 
                         ),
                       ),
-                      MaterialButton(
-                        onPressed: (){
-                          if (_fbKey.currentState.validate()) {
-                            _fbKey.currentState.save();
-                            Utils.check_connectivity().then((result){
-                              if(result){
-                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                                pd.show();
-                                AssociationServices.addAssociations(token,specificname['id'],name.text,specificname['createdBy']).then((respons){
-                                  pd.dismiss();
-                                  if(respons!=null){
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Associations Updated"),
-                                      backgroundColor: Colors.green,
-                                    ));
-                                    Navigator.pop(context);
-                                  }else{
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Associations not Updated"),
-                                      backgroundColor: Colors.red,
-                                    ));
+
+
+                      Center(
+                          child:Padding(
+                              padding: const EdgeInsets.all(16),
+                              child:Builder(
+                                  builder: (BuildContext context){
+                                    return  MaterialButton(
+                                      color: Colors.teal,
+                                      child: Text("Update",style: TextStyle(color: Colors.white),),
+                                      onPressed: (){
+                                        if (_fbKey.currentState.validate()) {
+                                          Utils.check_connectivity().then((result){
+                                            if(result){
+                                              ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                              pd.show();
+                                              AssociationServices.addAssociations(token,specificname['id'],name.text,specificname['createdBy']).then((respons){
+                                                pd.dismiss();
+                                                if(respons!=null){
+                                                  Navigator.pop(context);
+                                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                                    content: Text("Association Updated Successfully",
+                                                      style: TextStyle(
+                                                      color: Colors.red
+                                                    ),
+                                                    ),
+                                                    backgroundColor: Colors.green,
+                                                  ));
+                                                }else{
+                                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                                    content: Text("Association not Update",
+                                                      style: TextStyle(
+                                                      color: Colors.white
+                                                    ),
+                                                    ),
+                                                    backgroundColor: Colors.red,
+                                                  ));
+                                                }
+                                              });
+                                            }
+                                          });
+                                        }
+                                      },
+                                    );
                                   }
-                                });
-                              }
-                            });
-                          }
-                        },
-                        child: Text("Update",style: TextStyle(color: Colors.white),
-                        ),
-                        color: Colors.teal,
-                      ),
+
+                              )
+                          )
+                      )
                     ],
                     ),
                   ),

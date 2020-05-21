@@ -103,7 +103,7 @@ class _update_accountcategories extends State<update_accountcategories>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Account Categories"),),
+        appBar: AppBar(title: Text("Update Account Categories"),),
         body: ListView(
             children: <Widget>[
               Column(
@@ -272,44 +272,94 @@ class _update_accountcategories extends State<update_accountcategories>{
                       ],
                     ),
                   ),
-                  Center(
-                      child:Padding(
-                          padding: const EdgeInsets.all(16),
-                          child:MaterialButton(
-                            color: Colors.teal,
-                            child: Text("Update",style: TextStyle(color: Colors.white),),
+                  Builder(
+                      builder:(BuildContext context){
+                        return Center(
+                            child:Padding(
+                                padding: const EdgeInsets.all(16),
+                                child:MaterialButton(
+                                  color: Colors.teal,
+                                  child: Text("Update",style: TextStyle(color: Colors.white),),
 
-                            onPressed: (){
-                              if (_fbKey.currentState.validate()) {
-                                _fbKey.currentState.save();
-                                Utils.check_connectivity().then((result){
-                                  if(result){
-                                    ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                                    pd.show();
-                                    AccountCategoriesServices.addAccountCategory(token, specificcategory['id'], code.text, name.text, description.text, specificcategory['createdBy'], selected_isIncome_id, selected_isActive_id)
-                                        .then((respons){
-                                      pd.dismiss();
-                                      if(respons!=null){
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Account Categories Updated"),
-                                          backgroundColor: Colors.green,
-                                        ));
-                                        Navigator.pop(context);
-                                      }else{
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Account Categories not Updated"),
-                                          backgroundColor: Colors.red,
-                                        ));
-                                      }
-                                    });
-                                  }
-                                });
-                              }
-                            },
+                                  onPressed: (){
+                                    if (_fbKey.currentState.validate()) {
+                                      Utils.check_connectivity().then((result){
+                                        if(result){
+                                          ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                          pd.show();
+                                          AccountCategoriesServices.addAccountCategory(token, specificcategory['id'], code.text, name.text, description.text, specificcategory['createdBy'], selected_isIncome_id, selected_isActive_id)
+                                              .then((respons){
+                                            pd.dismiss();
+                                            if(respons!=null){
+                                              Scaffold.of(context).showSnackBar(SnackBar(
+                                                content: Text("Account Categories Updated Successfully",
+                                                  style: TextStyle(
+                                                      color: Colors.red
+                                                  ),
+                                                ),
+                                                backgroundColor: Colors.green,
+                                              ));
+                                              Navigator.pop(context);
+                                            }else{
+                                              Scaffold.of(context).showSnackBar(SnackBar(
+                                                content: Text("Account Categories Updated Failed",
+                                                  style: TextStyle(
+                                                      color: Colors.white
+                                                  ),
+                                                ),
+                                                backgroundColor: Colors.red,
+                                              ));
+                                            }
+                                          });
+                                        }
+                                      });
+                                    }
+                                  },
 
-                          )
-                      )
-                  )
+                                )
+                            )
+                        );
+                      }
+
+                  ),
+//                  Center(
+//                      child:Padding(
+//                          padding: const EdgeInsets.all(16),
+//                          child:MaterialButton(
+//                            color: Colors.teal,
+//                            child: Text("Update",style: TextStyle(color: Colors.white),),
+//
+//                            onPressed: (){
+//                              if (_fbKey.currentState.validate()) {
+//                                _fbKey.currentState.save();
+//                                Utils.check_connectivity().then((result){
+//                                  if(result){
+//                                    ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+//                                    pd.show();
+//                                    AccountCategoriesServices.addAccountCategory(token, specificcategory['id'], code.text, name.text, description.text, specificcategory['createdBy'], selected_isIncome_id, selected_isActive_id)
+//                                        .then((respons){
+//                                      pd.dismiss();
+//                                      if(respons!=null){
+//                                        Scaffold.of(context).showSnackBar(SnackBar(
+//                                          content: Text("Account Categories Updated"),
+//                                          backgroundColor: Colors.green,
+//                                        ));
+//                                        Navigator.pop(context);
+//                                      }else{
+//                                        Scaffold.of(context).showSnackBar(SnackBar(
+//                                          content: Text("Account Categories not Updated"),
+//                                          backgroundColor: Colors.red,
+//                                        ));
+//                                      }
+//                                    });
+//                                  }
+//                                });
+//                              }
+//                            },
+//
+//                          )
+//                      )
+//                  )
                 ],
               )
             ]

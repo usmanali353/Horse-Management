@@ -514,40 +514,87 @@ class _add_vaccines extends State<add_vaccines> {
                       ),
                     ),
                   ),
+                  Builder(
+                      builder:(BuildContext context){
+                        return Center(
+                            child:Padding(
+                                padding: const EdgeInsets.all(16),
+                                child:MaterialButton(
+                                  color: Colors.teal,
+                                  child: Text("Save",style: TextStyle(color: Colors.white),),
+                                  onPressed: (){
+                                    if (_fbKey.currentState.validate()) {
+                                      Utils.check_connectivity().then((result){
+                                        if(result){
+                                          ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                          pd.show();
+                                          VaccinesServices.addVaccines(token, 0, name.text, comments.text,selected_reminder_id, usage_id, primaryvaccination.text, booster.text, revaccination.text, firstdose.text, seconddose.text, thirddose.text, null).then((respons){
+                                            pd.dismiss();
+                                            if(respons!=null){
+                                              Scaffold.of(context).showSnackBar(SnackBar(
+                                                content: Text("Vaccines Added Successfully",
+                                                  style: TextStyle(
+                                                      color: Colors.red
+                                                  ),
+                                                ),
+                                                backgroundColor: Colors.green,
+                                              ));
+                                              Navigator.pop(context);
+                                            }else{
+                                              Scaffold.of(context).showSnackBar(SnackBar(
+                                                content: Text("Vaccines Added Failed",
+                                                  style: TextStyle(
+                                                      color: Colors.white
+                                                  ),
+                                                ),
+                                                backgroundColor: Colors.red,
+                                              ));
+                                            }
+                                          });
+                                        }
+                                      });
+                                    }
+                                  },
+
+                                )
+                            )
+                        );
+                      }
+
+                  ),
 
 
 
-
-            MaterialButton(
-              onPressed: () {
-                if (_fbKey.currentState.validate()) {
-                  Utils.check_connectivity().then((result){
-                    if(result){
-                      ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                      pd.show();
-                      VaccinesServices.addVaccines(token, 0, name.text, comments.text,selected_reminder_id, usage_id, primaryvaccination.text, booster.text, revaccination.text, firstdose.text, seconddose.text, thirddose.text, null)                                      .then((respons){
-                        pd.dismiss();
-                        if(respons!=null){
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text("Vaccine Added"),
-                            backgroundColor: Colors.green,
-                          ));
-                          Navigator.pop(context);
-                        }else{
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text("Vaccine not Added"),
-                            backgroundColor: Colors.red,
-                          ));
-                        }
-                      });
-                    }
-                  });
-                }
-              },
-              child: Text("Save", style: TextStyle(color: Colors.white),
-              ),
-              color: Colors.teal,
-            ),
+//            MaterialButton(
+//              onPressed: () {
+//                if (_fbKey.currentState.validate()) {
+//                  Utils.check_connectivity().then((result){
+//                    if(result){
+//                      ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+//                      pd.show();
+//                      VaccinesServices.addVaccines(token, 0, name.text, comments.text,selected_reminder_id, usage_id, primaryvaccination.text, booster.text, revaccination.text, firstdose.text, seconddose.text, thirddose.text, null)                                      .then((respons){
+//                        pd.dismiss();
+//                        if(respons!=null){
+//                          Scaffold.of(context).showSnackBar(SnackBar(
+//                            content: Text("Vaccine Added"),
+//                            backgroundColor: Colors.green,
+//                          ));
+//                          Navigator.pop(context);
+//                        }else{
+//                          Scaffold.of(context).showSnackBar(SnackBar(
+//                            content: Text("Vaccine not Added"),
+//                            backgroundColor: Colors.red,
+//                          ));
+//                        }
+//                      });
+//                    }
+//                  });
+//                }
+//              },
+//              child: Text("Save", style: TextStyle(color: Colors.white),
+//              ),
+//              color: Colors.teal,
+//            ),
           ],
         ),
       ),

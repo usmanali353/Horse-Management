@@ -116,38 +116,85 @@ class _update_color extends State<update_color>{
 
                         ),
                       ),
+                      Builder(
+                          builder:(BuildContext context){
+                            return Center(
+                                child:Padding(
+                                    padding: const EdgeInsets.all(16),
+                                    child:MaterialButton(
+                                      color: Colors.teal,
+                                      child: Text("Update",style: TextStyle(color: Colors.white),),
+                                      onPressed: (){
+                                        if (_fbKey.currentState.validate()) {
+                                          Utils.check_connectivity().then((result){
+                                            if(result){
+                                              ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                              pd.show();
+                                              ColorsServices.addColor(token,specificColor['id'],color_name.text,abbreviation.text,specificColor['createdBy'],).then((respons){
+                                                pd.dismiss();
+                                                if(respons!=null){
+                                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                                    content: Text("Color Updated Successfully",
+                                                      style: TextStyle(
+                                                          color: Colors.red
+                                                      ),
+                                                    ),
+                                                    backgroundColor: Colors.green,
+                                                  ));
+                                                  Navigator.pop(context);
+                                                }else{
+                                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                                    content: Text("Color Updated Failed",
+                                                      style: TextStyle(
+                                                          color: Colors.white
+                                                      ),
+                                                    ),
+                                                    backgroundColor: Colors.red,
+                                                  ));
+                                                }
+                                              });
+                                            }
+                                          });
+                                        }
+                                      },
 
-                      MaterialButton(
-                        onPressed: (){
-                          if (_fbKey.currentState.validate()) {
-                            _fbKey.currentState.save();
-                            Utils.check_connectivity().then((result){
-                              if(result){
-                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                                pd.show();
-                                ColorsServices.addColor(token,specificColor['id'],color_name.text,abbreviation.text,specificColor['createdBy'],).then((respons){
-                                  pd.dismiss();
-                                  if(respons!=null){
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Color Updated"),
-                                      backgroundColor: Colors.green,
-                                    ));
-                                    Navigator.pop(context);
-                                  }else{
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Color not Updated"),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                  }
-                                });
-                              }
-                            });
+                                    )
+                                )
+                            );
                           }
-                        },
-                        child: Text("Update",style: TextStyle(color: Colors.white),
-                        ),
-                        color: Colors.teal,
+
                       ),
+//                      MaterialButton(
+//                        onPressed: (){
+//                          if (_fbKey.currentState.validate()) {
+//                            _fbKey.currentState.save();
+//                            Utils.check_connectivity().then((result){
+//                              if(result){
+//                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+//                                pd.show();
+//                                ColorsServices.addColor(token,specificColor['id'],color_name.text,abbreviation.text,specificColor['createdBy'],).then((respons){
+//                                  pd.dismiss();
+//                                  if(respons!=null){
+//                                    Scaffold.of(context).showSnackBar(SnackBar(
+//                                      content: Text("Color Updated"),
+//                                      backgroundColor: Colors.green,
+//                                    ));
+//                                    Navigator.pop(context);
+//                                  }else{
+//                                    Scaffold.of(context).showSnackBar(SnackBar(
+//                                      content: Text("Color not Updated"),
+//                                      backgroundColor: Colors.red,
+//                                    ));
+//                                  }
+//                                });
+//                              }
+//                            });
+//                          }
+//                        },
+//                        child: Text("Update",style: TextStyle(color: Colors.white),
+//                        ),
+//                        color: Colors.teal,
+//                      ),
                     ],
                     ),
                   ),

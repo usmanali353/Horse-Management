@@ -235,12 +235,20 @@ class _add_dam extends State<add_dam>{
                                           if(respons!=null){
                                             Navigator.pop(context);
                                             Scaffold.of(context).showSnackBar(SnackBar(
-                                              content: Text("Dam Added"),
+                                              content: Text("Dam Added",
+                                                style: TextStyle(
+                                                    color: Colors.red
+                                                ),
+                                              ),
                                               backgroundColor: Colors.green,
                                             ));
                                           }else{
                                             Scaffold.of(context).showSnackBar(SnackBar(
-                                              content: Text("Dam not Added"),
+                                              content: Text("Dam not Added",
+                                                style: TextStyle(
+                                                    color: Colors.white
+                                                ),
+                                              ),
                                               backgroundColor: Colors.red,
                                             ));
                                           }

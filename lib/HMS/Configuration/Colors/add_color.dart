@@ -107,37 +107,85 @@ class _add_color extends State<add_color>{
 
                         ),
                       ),
-                      MaterialButton(
-                        onPressed: (){
-                          if (_fbKey.currentState.validate()) {
-                            Utils.check_connectivity().then((result){
-                              if(result){
-                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                                pd.show();
-                                ColorsServices.addColor(token,0,color_name.text,abbreviation.text,null)
-                                    .then((respons){
-                                  pd.dismiss();
-                                  if(respons!=null){
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Color Added"),
-                                      backgroundColor: Colors.green,
-                                    ));
-                                    Navigator.pop(context);
-                                  }else{
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Color not Added"),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                  }
-                                });
-                              }
-                            });
+                      Builder(
+                          builder:(BuildContext context){
+                            return Center(
+                                child:Padding(
+                                    padding: const EdgeInsets.all(16),
+                                    child:MaterialButton(
+                                      color: Colors.teal,
+                                      child: Text("Save",style: TextStyle(color: Colors.white),),
+                                      onPressed: (){
+                                        if (_fbKey.currentState.validate()) {
+                                          Utils.check_connectivity().then((result){
+                                            if(result){
+                                              ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                              pd.show();
+                                              ColorsServices.addColor(token,0,color_name.text,abbreviation.text,null).then((respons){
+                                                pd.dismiss();
+                                                if(respons!=null){
+                                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                                    content: Text("Color Added Successfully",
+                                                      style: TextStyle(
+                                                          color: Colors.red
+                                                      ),
+                                                    ),
+                                                    backgroundColor: Colors.green,
+                                                  ));
+                                                  Navigator.pop(context);
+                                                }else{
+                                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                                    content: Text("Color not Added",
+                                                      style: TextStyle(
+                                                          color: Colors.white
+                                                      ),
+                                                    ),
+                                                    backgroundColor: Colors.red,
+                                                  ));
+                                                }
+                                              });
+                                            }
+                                          });
+                                        }
+                                      },
+
+                                    )
+                                )
+                            );
                           }
-                        },
-                        child: Text("Save",style: TextStyle(color: Colors.white),
-                        ),
-                        color: Colors.teal,
+
                       ),
+//                      MaterialButton(
+//                        onPressed: (){
+//                          if (_fbKey.currentState.validate()) {
+//                            Utils.check_connectivity().then((result){
+//                              if(result){
+//                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+//                                pd.show();
+//                                ColorsServices.addColor(token,0,color_name.text,abbreviation.text,null)
+//                                    .then((respons){
+//                                  pd.dismiss();
+//                                  if(respons!=null){
+//                                    Scaffold.of(context).showSnackBar(SnackBar(
+//                                      content: Text("Color Added"),
+//                                      backgroundColor: Colors.green,
+//                                    ));
+//                                    Navigator.pop(context);
+//                                  }else{
+//                                    Scaffold.of(context).showSnackBar(SnackBar(
+//                                      content: Text("Color not Added"),
+//                                      backgroundColor: Colors.red,
+//                                    ));
+//                                  }
+//                                });
+//                              }
+//                            });
+//                          }
+//                        },
+//                        child: Text("Save",style: TextStyle(color: Colors.white),
+//                        ),
+//                        color: Colors.teal,
+//                      ),
                     ],
                     ),
                   ),

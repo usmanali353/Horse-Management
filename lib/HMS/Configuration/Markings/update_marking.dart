@@ -82,7 +82,7 @@ class _update_marking extends State<update_marking>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Markings"),),
+        appBar: AppBar(title: Text("Update Markings"),),
         body: ListView(
             children: <Widget>[
               Column(
@@ -156,41 +156,89 @@ class _update_marking extends State<update_marking>{
                       ],
                     ),
                   ),
-                  Center(
-                      child:Padding(
-                          padding: const EdgeInsets.all(16),
-                          child:MaterialButton(
-                            color: Colors.teal,
-                            child: Text("Save",style: TextStyle(color: Colors.white),),
-                            onPressed: (){
-                              if (_fbKey.currentState.validate()) {
-                                _fbKey.currentState.save();
-                                Utils.check_connectivity().then((result){
-                                  if(result){
-                                    ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                                    pd.show();
-                                    MarkingServices.addMarkings(token, specificmarking['id'],name.text,abbreviation.text, specificmarking['createdBy'],selected_marking_id).then((respons){
-                                      pd.dismiss();
-                                      if(respons!=null){
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Marking Updated"),
-                                          backgroundColor: Colors.green,
-                                        ));
-                                        Navigator.pop(context);
-                                      }else{
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Marking not Updated"),
-                                          backgroundColor: Colors.red,
-                                        ));
-                                      }
-                                    });
-                                  }
-                                });
-                              }
-                            },
-                          )
-                      )
-                  )
+                  Builder(
+                      builder:(BuildContext context){
+                        return Center(
+                            child:Padding(
+                                padding: const EdgeInsets.all(16),
+                                child:MaterialButton(
+                                  color: Colors.teal,
+                                  child: Text("Update",style: TextStyle(color: Colors.white),),
+                                  onPressed: (){
+                                    if (_fbKey.currentState.validate()) {
+                                      Utils.check_connectivity().then((result){
+                                        if(result){
+                                          ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                          pd.show();
+                                          MarkingServices.addMarkings(token, specificmarking['id'],name.text,abbreviation.text, specificmarking['createdBy'],selected_marking_id).then((respons){
+                                            pd.dismiss();
+                                            if(respons!=null){
+                                              Scaffold.of(context).showSnackBar(SnackBar(
+                                                content: Text("Marking Updated Successfully",
+                                                  style: TextStyle(
+                                                      color: Colors.red
+                                                  ),
+                                                ),
+                                                backgroundColor: Colors.green,
+                                              ));
+                                              Navigator.pop(context);
+                                            }else{
+                                              Scaffold.of(context).showSnackBar(SnackBar(
+                                                content: Text("Marking Updated Failed",
+                                                  style: TextStyle(
+                                                      color: Colors.white
+                                                  ),
+                                                ),
+                                                backgroundColor: Colors.red,
+                                              ));
+                                            }
+                                          });
+                                        }
+                                      });
+                                    }
+                                  },
+
+                                )
+                            )
+                        );
+                      }
+
+                  ),
+//                  Center(
+//                      child:Padding(
+//                          padding: const EdgeInsets.all(16),
+//                          child:MaterialButton(
+//                            color: Colors.teal,
+//                            child: Text("Save",style: TextStyle(color: Colors.white),),
+//                            onPressed: (){
+//                              if (_fbKey.currentState.validate()) {
+//                                _fbKey.currentState.save();
+//                                Utils.check_connectivity().then((result){
+//                                  if(result){
+//                                    ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+//                                    pd.show();
+//                                    MarkingServices.addMarkings(token, specificmarking['id'],name.text,abbreviation.text, specificmarking['createdBy'],selected_marking_id).then((respons){
+//                                      pd.dismiss();
+//                                      if(respons!=null){
+//                                        Scaffold.of(context).showSnackBar(SnackBar(
+//                                          content: Text("Marking Updated"),
+//                                          backgroundColor: Colors.green,
+//                                        ));
+//                                        Navigator.pop(context);
+//                                      }else{
+//                                        Scaffold.of(context).showSnackBar(SnackBar(
+//                                          content: Text("Marking not Updated"),
+//                                          backgroundColor: Colors.red,
+//                                        ));
+//                                      }
+//                                    });
+//                                  }
+//                                });
+//                              }
+//                            },
+//                          )
+//                      )
+//                  )
                 ],
               )
             ]

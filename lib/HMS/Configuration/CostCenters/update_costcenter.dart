@@ -115,38 +115,85 @@ class _update_costcenter extends State<update_costcenter>{
 
                         ),
                       ),
-                      
-                      MaterialButton(
-                        onPressed: (){
-                          if (_fbKey.currentState.validate()) {
-                            _fbKey.currentState.save();
-                            Utils.check_connectivity().then((result){
-                              if(result){
-                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                                pd.show();
-                                CostCenterServices.addCostCenter(token,specificCostcenter['id'],costcenter_name.text,description.text,specificCostcenter['createdBy'],).then((respons){
-                                  pd.dismiss();
-                                  if(respons!=null){
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Cost Center Updated"),
-                                      backgroundColor: Colors.green,
-                                    ));
-                                    Navigator.pop(context);
-                                  }else{
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Cost Center not Updated"),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                  }
-                                });
-                              }
-                            });
+                      Builder(
+                          builder:(BuildContext context){
+                            return Center(
+                                child:Padding(
+                                    padding: const EdgeInsets.all(16),
+                                    child:MaterialButton(
+                                      color: Colors.teal,
+                                      child: Text("Update",style: TextStyle(color: Colors.white),),
+                                      onPressed: (){
+                                        if (_fbKey.currentState.validate()) {
+                                          Utils.check_connectivity().then((result){
+                                            if(result){
+                                              ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                              pd.show();
+                                              CostCenterServices.addCostCenter(token,specificCostcenter['id'],costcenter_name.text,description.text,specificCostcenter['createdBy'],).then((respons){
+                                                pd.dismiss();
+                                                if(respons!=null){
+                                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                                    content: Text("Cost Center Updated Successfully",
+                                                      style: TextStyle(
+                                                          color: Colors.red
+                                                      ),
+                                                    ),
+                                                    backgroundColor: Colors.green,
+                                                  ));
+                                                  Navigator.pop(context);
+                                                }else{
+                                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                                    content: Text("Cost Center Updated Failed",
+                                                      style: TextStyle(
+                                                          color: Colors.white
+                                                      ),
+                                                    ),
+                                                    backgroundColor: Colors.red,
+                                                  ));
+                                                }
+                                              });
+                                            }
+                                          });
+                                        }
+                                      },
+
+                                    )
+                                )
+                            );
                           }
-                        },
-                        child: Text("Update",style: TextStyle(color: Colors.white),
-                        ),
-                        color: Colors.teal,
+
                       ),
+//                      MaterialButton(
+//                        onPressed: (){
+//                          if (_fbKey.currentState.validate()) {
+//                            _fbKey.currentState.save();
+//                            Utils.check_connectivity().then((result){
+//                              if(result){
+//                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+//                                pd.show();
+//                                CostCenterServices.addCostCenter(token,specificCostcenter['id'],costcenter_name.text,description.text,specificCostcenter['createdBy'],).then((respons){
+//                                  pd.dismiss();
+//                                  if(respons!=null){
+//                                    Scaffold.of(context).showSnackBar(SnackBar(
+//                                      content: Text("Cost Center Updated"),
+//                                      backgroundColor: Colors.green,
+//                                    ));
+//                                    Navigator.pop(context);
+//                                  }else{
+//                                    Scaffold.of(context).showSnackBar(SnackBar(
+//                                      content: Text("Cost Center not Updated"),
+//                                      backgroundColor: Colors.red,
+//                                    ));
+//                                  }
+//                                });
+//                              }
+//                            });
+//                          }
+//                        },
+//                        child: Text("Update",style: TextStyle(color: Colors.white),
+//                        ),
+//                        color: Colors.teal,
+//                      ),
                     ],
                     ),
                   ),
