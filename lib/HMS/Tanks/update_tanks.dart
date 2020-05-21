@@ -258,37 +258,42 @@ class _update_tanks_form extends State<update_tanks_form>{
                         ),),
                     ),
                   ),
-                  MaterialButton(
-                    onPressed: (){
-                      if (_fbKey.currentState.validate()) {
-                        _fbKey.currentState.save();
-                        Utils.check_connectivity().then((result){
-                          if(result){
-                            ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                            pd.show();
-                            TanksServices.add_Tanks(specifictank['createdBy'],token,specifictank['id'],name.text,tanks_response['locationDropDown'][selected_tanks_id]['locationId'], capacity.text,lastfill_date,nextfill_date,policynumber.text,policydue_date)
-                                .then((respons){
-                              pd.dismiss();
-                              if(respons!=null){
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text("Tank Updated"),
-                                  backgroundColor: Colors.green,
-                                ));
-                                Navigator.pop(context);
-                              }else{
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text("Tank not Updated"),
-                                  backgroundColor: Colors.red,
-                                ));
+                  Builder(
+                    builder: (BuildContext context){
+                      return  MaterialButton(
+                        onPressed: (){
+                          if (_fbKey.currentState.validate()) {
+                            _fbKey.currentState.save();
+                            Utils.check_connectivity().then((result){
+                              if(result){
+                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                pd.show();
+                                TanksServices.add_Tanks(specifictank['createdBy'],token,specifictank['id'],name.text,tanks_response['locationDropDown'][selected_tanks_id]['locationId'], capacity.text,lastfill_date,nextfill_date,policynumber.text,policydue_date)
+                                    .then((respons){
+                                  pd.dismiss();
+                                  if(respons!=null){
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Tank Updated"),
+                                      backgroundColor: Colors.green,
+                                    ));
+                                    Navigator.pop(context);
+                                  }else{
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Tank not Updated"),
+                                      backgroundColor: Colors.red,
+                                    ));
+                                  }
+                                });
                               }
                             });
                           }
-                        });
-                      }
+                        },
+                        child: Text("Update",style: TextStyle(color: Colors.white),
+                        ),
+                        color: Colors.teal,
+                      );
                     },
-                    child: Text("Update",style: TextStyle(color: Colors.white),
-                    ),
-                    color: Colors.teal,
+
                   ),
                 ],
                 ),

@@ -436,8 +436,10 @@ class _update_embryo_stock extends State<update_embryo_stock>{
                       ],
                     ),
                   ),
-                  Center(
-                      child:Padding(
+                  Builder(
+                    builder: (BuildContext context){
+                      return  Center(
+                        child:Padding(
                           padding: const EdgeInsets.all(16),
                           child:MaterialButton(
                             color: Colors.teal,
@@ -450,18 +452,20 @@ class _update_embryo_stock extends State<update_embryo_stock>{
                                     ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                                     pd.show();
                                     EmbryoStockServices.add_embryo_stock(stock_data['createdBy'],token, stock_data['id'],stock_response['horseDropDown'][selected_horse_id]['id'], stock_response['tankDropDown'][selected_tank_id]['id'], stock_response['sireDropDown'][selected_sire_id]['id'], selected_gender_id, Collection_date,selected_on_sale_id, price.text, grade.text, stage.text, status.text, comments.text)
-                                  .then((response){
+                                        .then((response){
                                       pd.dismiss();
-                                      setState(() {
-                                        var parsedjson  = jsonDecode(response);
-                                        if(parsedjson != null){
-                                          if(parsedjson['isSuccess'] == true){
-                                            print("Successfully data updated");
-                                          }else
-                                            print("not saved");
-                                        }else
-                                          print("json response null");
-                                      });
+                                      if(response!=null){
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text("Embryo Stock Updated"),
+                                          backgroundColor: Colors.green,
+                                        ));
+                                        Navigator.pop(context);
+                                      }else{
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text("Embryo Stock not Updated"),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                      }
                                     });
                                   }
                                 });
@@ -469,7 +473,10 @@ class _update_embryo_stock extends State<update_embryo_stock>{
                               }
                             },
                           ),
-                      ),
+                        ),
+                      );
+                    }
+
                   ),
                 ],
               )

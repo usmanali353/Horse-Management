@@ -183,37 +183,42 @@ class _update_opertation_note extends State<update_opertation_note>{
                     ),
                   ),
 
-                  MaterialButton(
-                    onPressed: (){
-                      if (_fbKey.currentState.validate()) {
-                        _fbKey.currentState.save();
-                        Utils.check_connectivity().then((result){
-                          if(result){
-                            ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                            pd.show();
-                            OperationNotesServices.add_Operation_Notes(specificnote['createdBy'],token,specificnote['operationNoteId'],DateTime.now(),notes_response['generalCategoeyDropDown'][selected_notes_id]['id'], details.text)
-                                .then((respons){
-                              pd.dismiss();
-                              if(respons!=null){
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text("Operational Noted Updated"),
-                                  backgroundColor: Colors.green,
-                                ));
-                                Navigator.pop(context);
-                              }else{
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text("Operational Noted not Updated"),
-                                  backgroundColor: Colors.red,
-                                ));
+                  Builder(
+                    builder: (BuildContext context){
+                      return MaterialButton(
+                        onPressed: (){
+                          if (_fbKey.currentState.validate()) {
+                            _fbKey.currentState.save();
+                            Utils.check_connectivity().then((result){
+                              if(result){
+                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                pd.show();
+                                OperationNotesServices.add_Operation_Notes(specificnote['createdBy'],token,specificnote['operationNoteId'],DateTime.now(),notes_response['generalCategoeyDropDown'][selected_notes_id]['id'], details.text)
+                                    .then((respons){
+                                  pd.dismiss();
+                                  if(respons!=null){
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Operational Noted Updated"),
+                                      backgroundColor: Colors.green,
+                                    ));
+                                    Navigator.pop(context);
+                                  }else{
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Operational Noted not Updated"),
+                                      backgroundColor: Colors.red,
+                                    ));
+                                  }
+                                });
                               }
                             });
                           }
-                        });
-                      }
+                        },
+                        child: Text("Save",style: TextStyle(color: Colors.white),
+                        ),
+                        color: Colors.teal,
+                      );
                     },
-                    child: Text("Save",style: TextStyle(color: Colors.white),
-                    ),
-                    color: Colors.teal,
+
                   ),
                 ],
                 ),

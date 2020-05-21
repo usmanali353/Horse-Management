@@ -789,37 +789,43 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                       },
                     ),
                   ),
-
-                  MaterialButton(
-                    onPressed: (){
-                      if (_fbKey.currentState.validate()) {
-                         _fbKey.currentState.save();
-                        Utils.check_connectivity().then((result){
-                          if(result){
-                            ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                            pd.show();
-                            BreedingSalesServices.add_breeding_sales(specificsales['createdBy'],token,specificsales['id'],sale_response['horseDropDown'][selected_horse_id]['id'],DateTime.now(), sale_response['customerDropDown'][selected_customer_id]['id'],sale_response['assignedVetDropDown'][selected_vet_id]['id'],Payment_date,payment_reference.text, selected_semen_id,selected_frozen_id,selected_cashpaymemt_id,selected_gift_id,selected_status_id, contract_no.text, report_no.text, comments.text,amount.text, sale_response['currencyDropDown'][selected_currency_id]['id'], sale_response['categoryDropDown'][selected_category_id]['id'], sale_response['costCenterDropDown'][selected_costcenter_id]['id'], sale_response['contactsDropDown'][selected_contact_id]['id'],  ).then((response){
-                              pd.dismiss();
-                              setState(() {
-                                var parsedjson  = jsonDecode(response);
-                                if(parsedjson != null){
-                                  if(parsedjson['isSuccess'] == true){
-                                    print("Successfully data updated");
-                                  }else
-                                    print("not saved");
-                                }else
-                                  print("json response null");
-                              });
+                  Builder(
+                    builder:(BuildContext context){
+                      return  MaterialButton(
+                        onPressed: (){
+                          if (_fbKey.currentState.validate()) {
+                            _fbKey.currentState.save();
+                            Utils.check_connectivity().then((result){
+                              if(result){
+                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                pd.show();
+                                BreedingSalesServices.add_breeding_sales(specificsales['createdBy'],token,specificsales['id'],sale_response['horseDropDown'][selected_horse_id]['id'],DateTime.now(), sale_response['customerDropDown'][selected_customer_id]['id'],sale_response['assignedVetDropDown'][selected_vet_id]['id'],Payment_date,payment_reference.text, selected_semen_id,selected_frozen_id,selected_cashpaymemt_id,selected_gift_id,selected_status_id, contract_no.text, report_no.text, comments.text,amount.text, sale_response['currencyDropDown'][selected_currency_id]['id'], sale_response['categoryDropDown'][selected_category_id]['id'], sale_response['costCenterDropDown'][selected_costcenter_id]['id'], sale_response['contactsDropDown'][selected_contact_id]['id'],  ).then((response){
+                                  pd.dismiss();
+                                  if(response!=null){
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Breeding Sales Updated"),
+                                      backgroundColor: Colors.green,
+                                    ));
+                                    Navigator.pop(context);
+                                  }else{
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Breeding Sales not Updated"),
+                                      backgroundColor: Colors.red,
+                                    ));
+                                  }
+                                });
+                              }
                             });
-                          }
-                        });
 
-                      }
-                    },
-                    child: Text("Update",style: TextStyle(color: Colors.white),
-                    ),
-                    color: Colors.teal,
-                  ),
+                          }
+                        },
+                        child: Text("Update",style: TextStyle(color: Colors.white),
+                        ),
+                        color: Colors.teal,
+                      );
+                    }
+                  )
+
                 ],
                 ),
               ),

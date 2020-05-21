@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
-import 'package:horse_management/Network_Operations.dart';
-import 'package:http/http.dart' as http;
-import 'dart:async';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import  'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-
 import '../../../Utils.dart';
 import 'utils/breeding_services_json.dart';
 
@@ -639,53 +634,60 @@ class _breeding_service_form extends State<breeding_service_form> {
             ),
 
 
-            MaterialButton(
-              onPressed: () {
-                if (_fbKey.currentState.validate()) {
-                  Utils.check_connectivity().then((result){
-                    if(result){
-                      ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                      pd.show();
-                      BreedingServicesJson.update_and_add_breeding_service(
-                          null,
-                          token,
-                          0,
-                          breeddropdown['horseDropDown'][horse_id]['id'],
-                          selected_date,
-                          its_programmed_service_id,
-                          selected_flushed_id,
-                          breeddropdown['damDropDown'][dam_id]['id'],
-                          breeddropdown['sireDropDown'][sire_id]['id'],
-                          service_type_id,
-                          semen_type_id,
-                          embryo_age.text,
-                          breeddropdown['donorDropDown'][donor_id]['id'],
-                          amount.text,
-                          breeddropdown['currencyDropDown'][currency_id]['id'],
-                          breeddropdown['categoryDropDown'][category_id]['id'],
-                          breeddropdown['costCenterDropDown'][category_id]['id'],
-                          breeddropdown['contactsDropDown'][category_id]['id'],
-                          comments.text).then((response) {
+            Builder(
+              builder: (BuildContext context){
+                return  MaterialButton(
+                  onPressed: () {
+                    if (_fbKey.currentState.validate()) {
+                      Utils.check_connectivity().then((result){
+                        if(result){
+                          ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                          pd.show();
+                          BreedingServicesJson.update_and_add_breeding_service(
+                              null,
+                              token,
+                              0,
+                              breeddropdown['horseDropDown'][horse_id]['id'],
+                              selected_date,
+                              its_programmed_service_id,
+                              selected_flushed_id,
+                              breeddropdown['damDropDown'][dam_id]['id'],
+                              breeddropdown['sireDropDown'][sire_id]['id'],
+                              service_type_id,
+                              semen_type_id,
+                              embryo_age.text,
+                              breeddropdown['donorDropDown'][donor_id]['id'],
+                              amount.text,
+                              breeddropdown['currencyDropDown'][currency_id]['id'],
+                              breeddropdown['categoryDropDown'][category_id]['id'],
+                              breeddropdown['costCenterDropDown'][category_id]['id'],
+                              breeddropdown['contactsDropDown'][category_id]['id'],
+                              comments.text).then((response) {
                             pd.dismiss();
-                        setState(() {
-                          var parsedjson = jsonDecode(response);
-                          if (parsedjson != null) {
-                            if (parsedjson['isSuccess'] == true) {
-                              print("Successfully data saved");
-                            } else
-                              print("not saved");
-                          } else
-                            print("json response null");
-                        });
+                            if(response!=null){
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text("Breeding Service Added"),
+                                backgroundColor: Colors.green,
+                              ));
+                              Navigator.pop(context);
+                            }else{
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text("Breeding Sales not Added"),
+                                backgroundColor: Colors.red,
+                              ));
+                            }
+                          });
+                        }
                       });
-                    }
-                  });
 
-                }
+                    }
+                  },
+                  child: Text("Save", style: TextStyle(color: Colors.white),
+                  ),
+                  color: Colors.teal,
+                );
               },
-              child: Text("Save", style: TextStyle(color: Colors.white),
-              ),
-              color: Colors.teal,
+
             ),
           ],
         ),

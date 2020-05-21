@@ -389,6 +389,7 @@ class add_semen_stock_button extends StatelessWidget {
                     content: Text("Saved "),
                     backgroundColor: Colors.green,
                   ));
+                  Navigator.pop(context);
                 }else{
                   Scaffold.of(context).showSnackBar(SnackBar(
                     content: Text("Not Saved "),

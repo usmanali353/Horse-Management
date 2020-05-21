@@ -144,35 +144,40 @@ class _add_new_opertation_note extends State<add_new_opertation_note>{
                     ),
                   ),
 
-                  MaterialButton(
-                    onPressed: (){
-                      if (_fbKey.currentState.validate()) {
-                        Utils.check_connectivity().then((result){
-                          if(result){
-                            ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                            pd.show();
-                            OperationNotesServices.add_Operation_Notes(null,token,0,DateTime.now(),notes_response['generalCategoeyDropDown'][selected_notes_id]['id'], details.text)                                .then((respons){
-                              pd.dismiss();
-                              if(respons!=null){
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text("Operational Notes Added"),
-                                  backgroundColor: Colors.green,
-                                ));
-                                Navigator.pop(context);
-                              }else{
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text("Operational Notes not Added"),
-                                  backgroundColor: Colors.red,
-                                ));
+                  Builder(
+                    builder: (BuildContext context){
+                      return MaterialButton(
+                        onPressed: (){
+                          if (_fbKey.currentState.validate()) {
+                            Utils.check_connectivity().then((result){
+                              if(result){
+                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                pd.show();
+                                OperationNotesServices.add_Operation_Notes(null,token,0,DateTime.now(),notes_response['generalCategoeyDropDown'][selected_notes_id]['id'], details.text)                                .then((respons){
+                                  pd.dismiss();
+                                  if(respons!=null){
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Operational Notes Added"),
+                                      backgroundColor: Colors.green,
+                                    ));
+                                    Navigator.pop(context);
+                                  }else{
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Operational Notes not Added"),
+                                      backgroundColor: Colors.red,
+                                    ));
+                                  }
+                                });
                               }
                             });
                           }
-                        });
-                      }
+                        },
+                        child: Text("Save",style: TextStyle(color: Colors.white),
+                        ),
+                        color: Colors.teal,
+                      );
                     },
-                    child: Text("Save",style: TextStyle(color: Colors.white),
-                    ),
-                    color: Colors.teal,
+
                   ),
                 ],
                 ),

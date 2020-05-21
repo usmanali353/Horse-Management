@@ -426,10 +426,11 @@ class update_semen_stock_button extends StatelessWidget {
               network_operations.add_semen_collection(token, semen_collection_data['semenCollectionId'], selected_date, selected_horse, semen_collection_list['horseDropDown'][selected_horse_id]['id'],semen_collection_data['createdBy'], toFreeze, semen_collection_list['inChargeDropDown'][selected_incharge_id]['id'], comments.text,int.parse(extracted_volume.text) ,int.parse(concentration.text) , int.parse(general.text),int.parse(progressive.text), selected_incharge,selected_incharge).then((respons){
                 pd.dismiss();
                 if(respons!=null){
-//                  Scaffold.of(context).showSnackBar(SnackBar(
-//                    content: Text("Updated"),
-//                    backgroundColor: Colors.green,
-//                  ));
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text("Updated"),
+                    backgroundColor: Colors.green,
+                  ));
+                  Navigator.pop(context);
                 }else{
                   Scaffold.of(context).showSnackBar(SnackBar(
                     content: Text("Not Updated"),

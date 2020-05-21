@@ -291,41 +291,46 @@ class _add_paddock extends State<add_paddock>{
                       ],
                     ),
                   ),
-                  Center(
-                      child:Padding(
-                          padding: const EdgeInsets.all(16),
-                          child:MaterialButton(
-                            color: Colors.teal,
-                            child: Text("Save",style: TextStyle(color: Colors.white),),
-                            onPressed: (){
-                              if (_fbKey.currentState.validate()) {
-                                Utils.check_connectivity().then((result){
-                                  if(result){
-                                    ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                                    pd.show();
-                                    PaddockServices.addPaddock(token, 0, name.text, mainUse.text, paddock_response['locationDropDown'][selected_location_id]['id'], area.text, selected_hasShade_id, selected_hasWater_id, selected_grass_id,selected_otherAnimals_id, comments.text, null,)
-                                        .then((respons){
-                                      pd.dismiss();
-                                      if(respons!=null){
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Paddock Added"),
-                                          backgroundColor: Colors.green,
-                                        ));
-                                        Navigator.pop(context);
-                                      }else{
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Paddock not Added"),
-                                          backgroundColor: Colors.red,
-                                        ));
+                  Builder(
+                    builder: (BuildContext context){
+                      return  Center(
+                          child:Padding(
+                              padding: const EdgeInsets.all(16),
+                              child:MaterialButton(
+                                color: Colors.teal,
+                                child: Text("Save",style: TextStyle(color: Colors.white),),
+                                onPressed: (){
+                                  if (_fbKey.currentState.validate()) {
+                                    Utils.check_connectivity().then((result){
+                                      if(result){
+                                        ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                        pd.show();
+                                        PaddockServices.addPaddock(token, 0, name.text, mainUse.text, paddock_response['locationDropDown'][selected_location_id]['id'], area.text, selected_hasShade_id, selected_hasWater_id, selected_grass_id,selected_otherAnimals_id, comments.text, null,)
+                                            .then((respons){
+                                          pd.dismiss();
+                                          if(respons!=null){
+                                            Scaffold.of(context).showSnackBar(SnackBar(
+                                              content: Text("Paddock Added"),
+                                              backgroundColor: Colors.green,
+                                            ));
+                                            Navigator.pop(context);
+                                          }else{
+                                            Scaffold.of(context).showSnackBar(SnackBar(
+                                              content: Text("Paddock not Added"),
+                                              backgroundColor: Colors.red,
+                                            ));
+                                          }
+                                        });
                                       }
                                     });
                                   }
-                                });
-                              }
-                            },
+                                },
 
+                              )
                           )
-                      )
+                      );
+                    },
+
                   )
                 ],
               )

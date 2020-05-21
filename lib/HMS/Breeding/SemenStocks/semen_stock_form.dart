@@ -326,40 +326,47 @@ class _semen_stock_form extends State<semen_stock_form>{
                           ],
                         ),
                       ),
-                      Center(
-                          child:Padding(
-                              padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                              child:MaterialButton(
-                                color: Colors.teal,
-                                child: Text("Save",style: TextStyle(color: Colors.white),),
+                      Builder(
+                        builder: (BuildContext context){
+                          return  Center(
+                              child:Padding(
+                                  padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                                  child:MaterialButton(
+                                    color: Colors.teal,
+                                    child: Text("Save",style: TextStyle(color: Colors.white),),
 
-                                onPressed: (){
-                                  if (_fbKey.currentState.validate()) {
-                                    Utils.check_connectivity().then((result){
-                                      if(result){
-                                        ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                                        pd.show();
-                                        SemenStockServices.add_semen_dose(token, 0, dose_response['horseDropDown'][selected_horse_id]['id'], dose_response['tankDropDown'][selected_tank_id]['id'], DateTime.now(), DateTime.now(), quantity.text, cannister.text, price.text, serial_number.text, batch_number.text, selected_was_bought_id, selected_on_sale_id,null)
-                                       .then((respons){
-                                          pd.dismiss();
-                                          setState(() {
-                                            var parsedjson  = jsonDecode(respons);
-                                            if(parsedjson != null){
-                                              if(parsedjson['isSuccess'] == true){
-                                                print("Successfully data updated");
-                                              }else
-                                                print("not saved");
-                                            }else
-                                              print("json response null");
-                                          });
+                                    onPressed: (){
+                                      if (_fbKey.currentState.validate()) {
+                                        Utils.check_connectivity().then((result){
+                                          if(result){
+                                            ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                            pd.show();
+                                            SemenStockServices.add_semen_dose(token, 0, dose_response['horseDropDown'][selected_horse_id]['id'], dose_response['tankDropDown'][selected_tank_id]['id'], DateTime.now(), DateTime.now(), quantity.text, cannister.text, price.text, serial_number.text, batch_number.text, selected_was_bought_id, selected_on_sale_id,null)
+                                                .then((respons){
+                                              pd.dismiss();
+                                              if(respons!=null){
+                                                Scaffold.of(context).showSnackBar(SnackBar(
+                                                  content: Text("Semen Stock Added"),
+                                                  backgroundColor: Colors.green,
+                                                ));
+                                                Navigator.pop(context);
+                                              }else{
+                                                Scaffold.of(context).showSnackBar(SnackBar(
+                                                  content: Text("Semen Stock not Added"),
+                                                  backgroundColor: Colors.red,
+                                                ));
+                                              }
+                                            });
+                                          }
                                         });
                                       }
-                                    });
-                                  }
-                                },
+                                    },
 
+                                  )
                               )
-                          )
+                          );
+                        },
+
                       )
                     ],
                   )
