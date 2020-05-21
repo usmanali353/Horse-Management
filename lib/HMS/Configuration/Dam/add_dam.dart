@@ -77,7 +77,7 @@ class _add_dam extends State<add_dam>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Dam"),),
+        appBar: AppBar(title: Text("Add Dams"),),
         body: ListView(
             children: <Widget>[
               Column(

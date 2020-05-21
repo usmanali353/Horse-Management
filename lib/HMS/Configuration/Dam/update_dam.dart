@@ -142,7 +142,7 @@ class _update_dam extends State<update_dam>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Update Dam"),),
+        appBar: AppBar(title: Text("Update Dams"),),
         body: ListView(
             children: <Widget>[
               Column(
