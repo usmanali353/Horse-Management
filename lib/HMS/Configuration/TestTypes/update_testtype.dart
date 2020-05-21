@@ -222,16 +222,18 @@ class _update_testtype extends State<update_testtype>{
                                     TestTypesServices.addTestTypes(token, specifictype['id'], name.text, validity.text, selected_reminder_id, showReminders.text, specifictype['createdBy'],)
                                         .then((respons){
                                       pd.dismiss();
-                                      setState(() {
-                                        var parsedjson  = jsonDecode(respons);
-                                        if(parsedjson != null){
-                                          if(parsedjson['isSuccess'] == true){
-                                            print("Successfully data updated");
-                                          }else
-                                            print("not saved");
-                                        }else
-                                          print("json response null");
-                                      });
+                                      if(respons!=null){
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text("Test Type Updated"),
+                                          backgroundColor: Colors.green,
+                                        ));
+                                        Navigator.pop(context);
+                                      }else{
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text("Test Type not Updated"),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                      }
                                     });
                                   }
                                 });

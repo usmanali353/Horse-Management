@@ -269,16 +269,18 @@ class _update_tanks_form extends State<update_tanks_form>{
                             TanksServices.add_Tanks(specifictank['createdBy'],token,specifictank['id'],name.text,tanks_response['locationDropDown'][selected_tanks_id]['locationId'], capacity.text,lastfill_date,nextfill_date,policynumber.text,policydue_date)
                                 .then((respons){
                               pd.dismiss();
-                              setState(() {
-                                var parsedjson  = jsonDecode(respons);
-                                if(parsedjson != null){
-                                if(parsedjson['isSuccess'] == true){
-                                print("Successfully data updated");
-                                }else
-                                  print("not saved");
-                                }else
-                                  print("json response null");
-                              });
+                              if(respons!=null){
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text("Tank Updated"),
+                                  backgroundColor: Colors.green,
+                                ));
+                                Navigator.pop(context);
+                              }else{
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text("Tank not Updated"),
+                                  backgroundColor: Colors.red,
+                                ));
+                              }
                             });
                           }
                         });

@@ -135,13 +135,14 @@ class add_picture_button extends StatelessWidget {
                     IronBrandServices.addIronBrand(token,0,title.text,null,picked_image).then((response){
                       pd.dismiss();
                       if(response!=null){
-//                        Scaffold.of(context).showSnackBar(SnackBar(
-//                          content: Text("Saved"),
-//                          backgroundColor: Colors.green,
-//                        ));
+                        Scaffold.of(context).showSnackBar(SnackBar(
+                          content: Text("Iron Brand Added"),
+                          backgroundColor: Colors.green,
+                        ));
+                        Navigator.pop(context);
                       }else{
                         Scaffold.of(context).showSnackBar(SnackBar(
-                          content: Text("Not Saved"),
+                          content: Text("Iron Brand not Added"),
                           backgroundColor: Colors.red,
                         ));
                       }

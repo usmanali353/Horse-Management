@@ -153,16 +153,18 @@ class _add_new_opertation_note extends State<add_new_opertation_note>{
                             pd.show();
                             OperationNotesServices.add_Operation_Notes(null,token,0,DateTime.now(),notes_response['generalCategoeyDropDown'][selected_notes_id]['id'], details.text)                                .then((respons){
                               pd.dismiss();
-                              setState(() {
-                                var parsedjson  = jsonDecode(respons);
-                                if(parsedjson != null){
-                                  if(parsedjson['isSuccess'] == true){
-                                    print("Successfully data updated");
-                                  }else
-                                    print("not saved");
-                                }else
-                                  print("json response null");
-                              });
+                              if(respons!=null){
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text("Operational Notes Added"),
+                                  backgroundColor: Colors.green,
+                                ));
+                                Navigator.pop(context);
+                              }else{
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text("Operational Notes not Added"),
+                                  backgroundColor: Colors.red,
+                                ));
+                              }
                             });
                           }
                         });

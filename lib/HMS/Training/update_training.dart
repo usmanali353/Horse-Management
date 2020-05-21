@@ -528,6 +528,7 @@ class add_training_button extends StatelessWidget {
                       backgroundColor: Colors.red,
                       content: Text("Training not Updated"),
                     ));
+                    Navigator.pop(context);
                   }
                 });
               }else{

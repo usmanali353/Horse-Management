@@ -108,16 +108,18 @@ class _update_horsecategory extends State<update_horsecategory>{
                                 pd.show();
                                 HorseCategoryServices.addHorseCategory(token,specificcategory['id'],name.text,specificcategory['createdBy']).then((respons){
                                   pd.dismiss();
-                                  setState(() {
-                                    var parsedjson  = jsonDecode(respons);
-                                    if(parsedjson != null){
-                                      if(parsedjson['isSuccess'] == true){
-                                        print("Successfully data updated");
-                                      }else
-                                        print("not saved");
-                                    }else
-                                      print("json response null");
-                                  });
+                                  if(respons!=null){
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Horse Categories Updated"),
+                                      backgroundColor: Colors.green,
+                                    ));
+                                    Navigator.pop(context);
+                                  }else{
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Horse Categories not Updated"),
+                                      backgroundColor: Colors.red,
+                                    ));
+                                  }
                                 });
                               }
                             });

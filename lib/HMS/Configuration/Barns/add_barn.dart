@@ -99,16 +99,18 @@ class _add_barn extends State<add_barn>{
                                 BarnServices.addBarn(token,0,barn.text,null)
                                     .then((respons){
                                   pd.dismiss();
-                                  setState(() {
-                                    var parsedjson  = jsonDecode(respons);
-                                    if(parsedjson != null){
-                                      if(parsedjson['isSuccess'] == true){
-                                        print("Successfully data updated");
-                                      }else
-                                        print("not saved");
-                                    }else
-                                      print("json response null");
-                                  });
+                                  if(respons!=null){
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Barn Addedd"),
+                                      backgroundColor: Colors.green,
+                                    ));
+                                    Navigator.pop(context);
+                                  }else{
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Barn not Addedd"),
+                                      backgroundColor: Colors.red,
+                                    ));
+                                  }
                                 });
                               }
                             });

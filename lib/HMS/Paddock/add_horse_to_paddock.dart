@@ -117,16 +117,18 @@ class _add_horse_to_paddock extends State<add_horse_to_paddock>{
                                     PaddockServices.save_horses_to_paddock_dropdowns(token, 0, paddockId, selected_horse_id, '')
                                         .then((respons){
                                       pd.dismiss();
-                                      setState(() {
-                                        var parsedjson  = jsonDecode(respons);
-                                        if(parsedjson != null){
-                                          if(parsedjson['isSuccess'] == true){
-                                            print("Successfully data updated");
-                                          }else
-                                            print("not saved");
-                                        }else
-                                          print("json response null");
-                                      });
+                                      if(respons!=null){
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text("Paddock Horse Added"),
+                                          backgroundColor: Colors.green,
+                                        ));
+                                        Navigator.pop(context);
+                                      }else{
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text("Paddock Horse not Added"),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                      }
                                     });
                                   }
                                 });

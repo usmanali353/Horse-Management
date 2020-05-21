@@ -126,16 +126,18 @@ class _update_costcenter extends State<update_costcenter>{
                                 pd.show();
                                 CostCenterServices.addCostCenter(token,specificCostcenter['id'],costcenter_name.text,description.text,specificCostcenter['createdBy'],).then((respons){
                                   pd.dismiss();
-                                  setState(() {
-                                    var parsedjson  = jsonDecode(respons);
-                                    if(parsedjson != null){
-                                      if(parsedjson['isSuccess'] == true){
-                                        print("Successfully data updated");
-                                      }else
-                                        print("not saved");
-                                    }else
-                                      print("json response null");
-                                  });
+                                  if(respons!=null){
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Cost Center Updated"),
+                                      backgroundColor: Colors.green,
+                                    ));
+                                    Navigator.pop(context);
+                                  }else{
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Cost Center not Updated"),
+                                      backgroundColor: Colors.red,
+                                    ));
+                                  }
                                 });
                               }
                             });

@@ -560,16 +560,18 @@ class _update_vaccines extends State<update_vaccines> {
                                   pd.show();
                                   VaccinesServices.addVaccines(token, specificvaccine['id'], name.text, comments.text,selected_reminder_id, usage_id, primaryvaccination.text, booster.text, revaccination.text, firstdose.text, seconddose.text, thirddose.text, specificvaccine['createdBy'])                                      .then((respons){
                                     pd.dismiss();
-                                    setState(() {
-                                      var parsedjson  = jsonDecode(respons);
-                                      if(parsedjson != null){
-                                        if(parsedjson['isSuccess'] == true){
-                                          print("Successfully data updated");
-                                        }else
-                                          print("not saved");
-                                      }else
-                                        print("json response null");
-                                    });
+                                    if(respons!=null){
+                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                        content: Text("Vaccine Updated"),
+                                        backgroundColor: Colors.green,
+                                      ));
+                                      Navigator.pop(context);
+                                    }else{
+                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                        content: Text("Vaccine not Updated"),
+                                        backgroundColor: Colors.red,
+                                      ));
+                                    }
                                   });
                                 }
                               });
