@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:horse_management/HMS/All_Horses_data/Horse_Videos/preview_testing.dart';
 
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
@@ -136,6 +137,8 @@ class _horse_videos_list_page_state extends State<horse_videos_list>{
                         color: Colors.teal,
                       ),
                       onTap: (){
+                       // Navigator.push(context, MaterialPageRoute(builder: (context)=>YoutubePlayerDemoApp()));
+
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>video_details(videos_list[index]['link'])));
                       },
                     )
