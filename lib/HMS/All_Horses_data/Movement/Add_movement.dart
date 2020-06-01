@@ -1,12 +1,11 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/HMS/All_Horses_data/services/incomeExpense_services.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:horse_management/HMS/All_Horses_data/services/movement_services.dart';
-//import 'package:flushbar/flushbar.dart';
-
 
 
 class add_movement extends StatefulWidget{
@@ -22,7 +21,6 @@ class add_movement extends StatefulWidget{
 
 }
 class _state_add_farrier extends State<add_movement>{
-
   int selected_horse_id,selected_reason_id,selected_transport_id,select_fromlocation_id,select_tolocation_id,selected_category_id,selected_costcenter_id,selected_currency_id,selected_contact_id;
   String selected_horse,selected_reason,selected_transport,select_fromlocation,select_tolocation,selected_category,selected_costcenter,selected_currency,selected_contact,selected_account;
   List<String> horse=[];
@@ -47,9 +45,6 @@ class _state_add_farrier extends State<add_movement>{
 
     movement_services.movement_Dropdown(token).then((response){
       setState(() {
-        if(departure_date == return_date || return_date.isBefore(departure_date)){
-          Scaffold.of(context).showSnackBar(SnackBar(content: Text("return date after depature"),backgroundColor: Colors.red,));
-        }
         print(token);
         movementDropdown=json.decode(response);
 
@@ -141,7 +136,6 @@ class _state_add_farrier extends State<add_movement>{
                         padding: EdgeInsets.only(top:16,left: 16,right: 16),
                         child:FormBuilderDateTimePicker(
                           attribute: "ddate",
-                          
                           style: Theme.of(context).textTheme.body1,
                           inputType: InputType.date,
                           validators: [FormBuilderValidators.required()],
@@ -485,63 +479,25 @@ class _state_add_farrier extends State<add_movement>{
                       child: MaterialButton(
                         color: Colors.teal,
                         onPressed: (){
-                          if(departure_date.isBefore(return_date) || select_fromlocation != select_tolocation) {
-                            if (_fbKey.currentState.validate()) {
-                              print(_fbKey.currentState.value);
-                              print(token);
-                              print(amount.text);
-                              print(description.text);
-                              print(
-                                  movementDropdown['currency'][selected_currency_id]['id']);
-                              print(
-                                  movementDropdown['category'][selected_category_id]['id']);
-                              print(
-                                  movementDropdown['costCenter'][selected_costcenter_id]['id']);
-                              print(
-                                  movementDropdown['toLocation'][select_tolocation_id]['id']);
-                              print(
-                                  movementDropdown['horseDropDown'][selected_horse_id]['id']);
+                          if (_fbKey.currentState.validate()) {
+                            print(_fbKey.currentState.value);
+                            print(token);print(amount.text);print(description.text);print(movementDropdown['currency'][selected_currency_id]['id']);
+                            print(movementDropdown['category'][selected_category_id]['id']);print(movementDropdown['costCenter'][selected_costcenter_id]['id']);print( movementDropdown['toLocation'][select_tolocation_id]['id']);
+                            print(movementDropdown['horseDropDown'][selected_horse_id]['id']);
 
-                              ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);pd.show();
-                              movement_services.movementSave(
-                                  null,
-                                  token,
-                                  0,
-                                  movementDropdown['horseDropDown'][selected_horse_id]['id'],
-                                  departure_date,
-                                  return_date,
-                                  isroundtrip,
-                                  selected_transport_id,
-                                  selected_reason_id,
-                                  movementDropdown['fromLocation'][select_fromlocation_id]['id'],
-                                  movementDropdown['toLocation'][select_tolocation_id]['id'],
-                                  amount.text,
-                                  responsible.text,
-                                  description.text,
-                                  movementDropdown['category'][selected_category_id]['id'],
-                                  movementDropdown['currency'][selected_currency_id]['id'],
-                                  movementDropdown['costCenter'][selected_costcenter_id]['id'])
-                                  .then((response) {
-                                pd.dismiss();
-                                if (response != null)
-                                  print("Successfully income  added");
-                                else {
-                                  print("data not added");
-                                }
-                              });
+                            ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                            pd.show();
+                            movement_services.movementSave(null, token, 0, movementDropdown['horseDropDown'][selected_horse_id]['id'], departure_date, return_date, isroundtrip, selected_transport_id, selected_reason_id,movementDropdown['fromLocation'][select_fromlocation_id]['id'], movementDropdown['toLocation'][select_tolocation_id]['id'], amount.text, responsible.text, description.text, movementDropdown['category'][selected_category_id]['id'] ,  movementDropdown['currency'][selected_currency_id]['id'],  movementDropdown['costCenter'][selected_costcenter_id]['id']).then((response){
+
+                              pd.dismiss();
+                              if(response !=null)
+                                print("Successfully income  added");
+                              else{
+                                print("data not added");}
+                            });
                             }
-                          }else {
-                            print("change date & location");
-                            // Scaffold.of(context).showSnackBar(SnackBar(content: Text("Plz check the return date"),backgroundColor: Colors.red,));
-                           // Clipboard.setData(new ClipboardData(text: ruleGroup['label'] + " "  + ruleGroup['details']));
-//                            Flushbar(
-//                              title:  "Hey Ninja",
-//                              message:  "Plz check Date And Location",
-//                              duration:  Duration(seconds: 3),
-//                            )..show(context);
-                          }
-                          },
-                        child:Text("Add Movement",style: TextStyle(color: Colors.white),),
+                        },
+                        child:Text("Add Horse",style: TextStyle(color: Colors.white),),
                       ),
                     )
                 )
@@ -552,5 +508,4 @@ class _state_add_farrier extends State<add_movement>{
     );
   }
 
-  
 }

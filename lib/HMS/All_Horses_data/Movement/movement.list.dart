@@ -110,7 +110,6 @@ class _Profile_Page_State extends State<movement_list>{
                   },color: Colors.blue,icon: Icons.border_color,caption: 'update',)
                 ],
                 child: ListTile(
-                  enabled: swabbinglist[index]['isActive']!=null?swabbinglist[index]['isActive']:true,
                   //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                   title: Text(swabbinglist!=null?(swabbinglist[index]['horseName']['name']):'Horse Name'),
                   subtitle: Text(swabbinglist!=null?'From location:'+(swabbinglist[index]['fromLocationName']['name']):'From not showing'),

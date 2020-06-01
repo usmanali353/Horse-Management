@@ -48,7 +48,7 @@ class _add_ironbrand extends State<add_ironbrand>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Horse Picture"),),
+        appBar: AppBar(title: Text("Add Iron Brand"),),
         body: ListView(
             children: <Widget>[
               Column(

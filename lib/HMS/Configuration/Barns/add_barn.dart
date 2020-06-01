@@ -89,36 +89,55 @@ class _add_barn extends State<add_barn>{
 
                         ),
                       ),
-                      MaterialButton(
-                        onPressed: (){
-                          if (_fbKey.currentState.validate()) {
-                            Utils.check_connectivity().then((result){
-                              if(result){
-                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                                pd.show();
-                                BarnServices.addBarn(token,0,barn.text,null)
-                                    .then((respons){
-                                  pd.dismiss();
-                                  if(respons!=null){
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Barn Addedd"),
-                                      backgroundColor: Colors.green,
-                                    ));
-                                    Navigator.pop(context);
-                                  }else{
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Barn not Addedd"),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                  }
-                                });
-                              }
-                            });
+
+                      Builder(
+                          builder:(BuildContext context){
+                            return Center(
+                                child:Padding(
+                                    padding: const EdgeInsets.all(16),
+                                    child:MaterialButton(
+                                      color: Colors.teal,
+                                      child: Text("Save",style: TextStyle(color: Colors.white),),
+                                      onPressed: (){
+                                        if (_fbKey.currentState.validate()) {
+                                          Utils.check_connectivity().then((result){
+                                            if(result){
+                                              ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                              pd.show();
+                                              BarnServices.addBarn(token,0,barn.text,null)
+                                                  .then((respons){
+                                                pd.dismiss();
+                                                if(respons!=null){
+                                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                                    content: Text("Barn Added Succesfully",
+                                                      style: TextStyle(
+                                                          color: Colors.red
+                                                      ),
+                                                    ),
+                                                    backgroundColor: Colors.green,
+                                                  ));
+                                                  Navigator.pop(context);
+                                                }else{
+                                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                                    content: Text("Barn not Added",
+                                                      style: TextStyle(
+                                                          color: Colors.white
+                                                      ),
+                                                    ),
+                                                    backgroundColor: Colors.red,
+                                                  ));
+                                                }
+                                              });
+                                            }
+                                          });
+                                        }
+                                      },
+
+                                    )
+                                )
+                            );
                           }
-                        },
-                        child: Text("Save",style: TextStyle(color: Colors.white),
-                        ),
-                        color: Colors.teal,
+
                       ),
                     ],
                     ),

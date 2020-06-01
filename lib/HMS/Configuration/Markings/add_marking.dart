@@ -135,42 +135,90 @@ class _add_marking extends State<add_marking>{
                       ],
                     ),
                   ),
-                  Center(
-                      child:Padding(
-                          padding: const EdgeInsets.all(16),
-                          child:MaterialButton(
-                            color: Colors.teal,
-                            child: Text("Save",style: TextStyle(color: Colors.white),),
+                  Builder(
+                      builder:(BuildContext context){
+                        return Center(
+                            child:Padding(
+                                padding: const EdgeInsets.all(16),
+                                child:MaterialButton(
+                                  color: Colors.teal,
+                                  child: Text("Save",style: TextStyle(color: Colors.white),),
+                                  onPressed: (){
+                                    if (_fbKey.currentState.validate()) {
+                                      Utils.check_connectivity().then((result){
+                                        if(result){
+                                          ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                          pd.show();
+                                          MarkingServices.addMarkings(token, 0,name.text,abbreviation.text, null,selected_marking_id).then((respons){
+                                            pd.dismiss();
+                                            if(respons!=null){
+                                              Scaffold.of(context).showSnackBar(SnackBar(
+                                                content: Text("Marking Added Successfully",
+                                                  style: TextStyle(
+                                                      color: Colors.red
+                                                  ),
+                                                ),
+                                                backgroundColor: Colors.green,
+                                              ));
+                                              Navigator.pop(context);
+                                            }else{
+                                              Scaffold.of(context).showSnackBar(SnackBar(
+                                                content: Text("Marking Added Failed",
+                                                  style: TextStyle(
+                                                      color: Colors.white
+                                                  ),
+                                                ),
+                                                backgroundColor: Colors.red,
+                                              ));
+                                            }
+                                          });
+                                        }
+                                      });
+                                    }
+                                  },
 
-                            onPressed: (){
-                              if (_fbKey.currentState.validate()) {
-                                Utils.check_connectivity().then((result){
-                                  if(result){
-                                    ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                                    pd.show();
-                                    MarkingServices.addMarkings(token, 0,name.text,abbreviation.text, null,selected_marking_id)
-                                        .then((respons){
-                                      pd.dismiss();
-                                      if(respons!=null){
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Marking Added"),
-                                          backgroundColor: Colors.green,
-                                        ));
-                                        Navigator.pop(context);
-                                      }else{
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text("Marking not Added"),
-                                          backgroundColor: Colors.red,
-                                        ));
-                                      }
-                                    });
-                                  }
-                                });
-                              }
-                            },
-                          )
-                      )
-                  )
+                                )
+                            )
+                        );
+                      }
+
+                  ),
+//                  Center(
+//                      child:Padding(
+//                          padding: const EdgeInsets.all(16),
+//                          child:MaterialButton(
+//                            color: Colors.teal,
+//                            child: Text("Save",style: TextStyle(color: Colors.white),),
+//
+//                            onPressed: (){
+//                              if (_fbKey.currentState.validate()) {
+//                                Utils.check_connectivity().then((result){
+//                                  if(result){
+//                                    ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+//                                    pd.show();
+//                                    MarkingServices.addMarkings(token, 0,name.text,abbreviation.text, null,selected_marking_id)
+//                                        .then((respons){
+//                                      pd.dismiss();
+//                                      if(respons!=null){
+//                                        Scaffold.of(context).showSnackBar(SnackBar(
+//                                          content: Text("Marking Added"),
+//                                          backgroundColor: Colors.green,
+//                                        ));
+//                                        Navigator.pop(context);
+//                                      }else{
+//                                        Scaffold.of(context).showSnackBar(SnackBar(
+//                                          content: Text("Marking not Added"),
+//                                          backgroundColor: Colors.red,
+//                                        ));
+//                                      }
+//                                    });
+//                                  }
+//                                });
+//                              }
+//                            },
+//                          )
+//                      )
+//                  )
                 ],
               )
             ]

@@ -227,16 +227,12 @@ class addWeightButton extends StatelessWidget {
           pd.show();
 
           weight_hieght_services.weight_hieghtSave(null,token, 0,weightHieghtdropdown['horseDropDown'][selected_horse_id]['id'], Select_date,
-            weight.text,height.text,bodyindex.text,comment.text).then((response){
+            weight.text,height.toString(),bodyindex.text,comment.text).then((response){
             pd.dismiss();
-            if(response !=null) {
+            if(response !=null)
               print("Successfully income  added");
-            Scaffold.of(context).showSnackBar(SnackBar(content: Text("Successfully Added"),backgroundColor: Colors.green,));
-            Navigator.of(context).pop();
-            }else{
-              print("data not added");
-              Scaffold.of(context).showSnackBar(SnackBar(content: Text("Failed to Add"),backgroundColor: Colors.red,));
-            }
+            else{
+              print("data not added");}
           });
 
 

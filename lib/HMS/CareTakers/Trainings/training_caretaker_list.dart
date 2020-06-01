@@ -99,13 +99,14 @@ class _training_caretaker_list_state extends State<training_caretaker_list>{
               },
               child: Visibility(
                 visible: isvisible,
-                child: ListView.builder(itemCount:training_list!=null?training_list.length:temp.length,itemBuilder: (context,int index){
-                return  Column(
-                      children: <Widget>[
-                        Slidable(
-                          actionPane: SlidableDrawerActionPane(),
-                          actionExtentRatio: 0.20,
-                          actions: <Widget>[
+                child: Scrollbar(
+                  child: ListView.builder(itemCount:training_list!=null?training_list.length:temp.length,itemBuilder: (context,int index){
+                  return  Column(
+                        children: <Widget>[
+                          Slidable(
+                            actionPane: SlidableDrawerActionPane(),
+                            actionExtentRatio: 0.20,
+                            actions: <Widget>[
 //                            IconSlideAction(
 //                              icon: Icons.visibility_off,
 //                              color: Colors.red,
@@ -149,109 +150,68 @@ class _training_caretaker_list_state extends State<training_caretaker_list>{
 //                                });
 //                              },
 //                            ),
-                            IconSlideAction(
-                              color: Colors.green,
-                              caption: "End Training",
-                              icon: FontAwesomeIcons.check,
-                              onTap: () async {
-                                Utils.check_connectivity().then((result) {
-                                  if (result) {
-                                    var pd = ProgressDialog(context,
-                                        type: ProgressDialogType.Normal,
-                                        isDismissible: true);
-                                    pd.show();
-                                    network_operations.end_training(token,
-                                        training_list[index]['trainingId'])
-                                        .then((response) {
-                                      pd.dismiss();
-                                      if (response != null) {
-                                        WidgetsBinding.instance
-                                            .addPostFrameCallback((_) =>
-                                            _refreshIndicatorKey.currentState
-                                                .show());
-                                        Scaffold.of(context).showSnackBar(
-                                            SnackBar(
-                                              content: Text("Training Ended"),
-                                              backgroundColor: Colors.green,
-                                            ));
-                                      } else {
-                                        Scaffold.of(context).showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                  "Training not Ended"),
-                                              backgroundColor: Colors.red,
-                                            ));
-                                      }
-                                    });
-                                  } else {
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Network not Available"),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                  }
-                                });
-                              },
-                            ),
-                            IconSlideAction(
-                              icon: Icons.timer,
-                              color: Colors.deepOrange,
-                              caption: 'Start',
-                              onTap: () async {
-                                Utils.check_connectivity().then((result){
-                                  if(result){
-                                    ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                                    pd.show();
-                                    TrainingCareTakerServices.start_training(token, training_list[index]['trainingId']).then((response){
-                                      pd.dismiss();
-                                      if(response!=null){
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          backgroundColor:Colors.green ,
-                                          content: Text('Process Started'),
-                                        ));
-//                                  setState(() {
-//                                    control_list.removeAt(index);
-//                                  });
-                                      }else{
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                          backgroundColor:Colors.red ,
-                                          content: Text('Process Failed'),
-                                        ));
-                                      }
-                                    });
-                                  }else{
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Network not Available"),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                  }
-                                });
-
-                              },
-                            ),
-                            IconSlideAction(
-                              icon: Icons.done_all,
-                              color: Colors.green,
-                              caption: 'Complete',
-                              onTap: () async {
-                                print(training_list[index]);
-                                print(DateTime.parse(training_list[index]['endDate']));
-                                if(DateTime.now().isAfter(DateTime.parse(training_list[index]['endDate'])) )
-                                  Navigator.push(context,MaterialPageRoute(builder: (context)=>training_late_reason(token, training_list[index]['trainingId'])));
-                                else{
+                              IconSlideAction(
+                                color: Colors.green,
+                                caption: "End Training",
+                                icon: FontAwesomeIcons.check,
+                                onTap: () async {
+                                  Utils.check_connectivity().then((result) {
+                                    if (result) {
+                                      var pd = ProgressDialog(context,
+                                          type: ProgressDialogType.Normal,
+                                          isDismissible: true);
+                                      pd.show();
+                                      network_operations.end_training(token,
+                                          training_list[index]['trainingId'])
+                                          .then((response) {
+                                        pd.dismiss();
+                                        if (response != null) {
+                                          WidgetsBinding.instance
+                                              .addPostFrameCallback((_) =>
+                                              _refreshIndicatorKey.currentState
+                                                  .show());
+                                          Scaffold.of(context).showSnackBar(
+                                              SnackBar(
+                                                content: Text("Training Ended"),
+                                                backgroundColor: Colors.green,
+                                              ));
+                                        } else {
+                                          Scaffold.of(context).showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                    "Training not Ended"),
+                                                backgroundColor: Colors.red,
+                                              ));
+                                        }
+                                      });
+                                    } else {
+                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                        content: Text("Network not Available"),
+                                        backgroundColor: Colors.red,
+                                      ));
+                                    }
+                                  });
+                                },
+                              ),
+                              IconSlideAction(
+                                icon: Icons.timer,
+                                color: Colors.deepOrange,
+                                caption: 'Start',
+                                onTap: () async {
                                   Utils.check_connectivity().then((result){
                                     if(result){
                                       ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
                                       pd.show();
-                                      TrainingCareTakerServices.complete_training(token, training_list[index]['trainingId']).then((response){
+                                      TrainingCareTakerServices.start_training(token, training_list[index]['trainingId']).then((response){
                                         pd.dismiss();
                                         if(response!=null){
                                           Scaffold.of(context).showSnackBar(SnackBar(
                                             backgroundColor:Colors.green ,
-                                            content: Text('Completed'),
+                                            content: Text('Process Started'),
                                           ));
-                                          setState(() {
-                                            //  control_list.removeAt(index);
-                                          });
+//                                  setState(() {
+//                                    control_list.removeAt(index);
+//                                  });
                                         }else{
                                           Scaffold.of(context).showSnackBar(SnackBar(
                                             backgroundColor:Colors.red ,
@@ -266,8 +226,49 @@ class _training_caretaker_list_state extends State<training_caretaker_list>{
                                       ));
                                     }
                                   });
-                                }
-                              },
+
+                                },
+                              ),
+                              IconSlideAction(
+                                icon: Icons.done_all,
+                                color: Colors.green,
+                                caption: 'Complete',
+                                onTap: () async {
+                                  print(training_list[index]);
+                                  print(DateTime.parse(training_list[index]['endDate']));
+                                  if(DateTime.now().isAfter(DateTime.parse(training_list[index]['endDate'])) )
+                                    Navigator.push(context,MaterialPageRoute(builder: (context)=>training_late_reason(token, training_list[index]['trainingId'])));
+                                  else{
+                                    Utils.check_connectivity().then((result){
+                                      if(result){
+                                        ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                                        pd.show();
+                                        TrainingCareTakerServices.complete_training(token, training_list[index]['trainingId']).then((response){
+                                          pd.dismiss();
+                                          if(response!=null){
+                                            Scaffold.of(context).showSnackBar(SnackBar(
+                                              backgroundColor:Colors.green ,
+                                              content: Text('Completed'),
+                                            ));
+                                            setState(() {
+                                              //  control_list.removeAt(index);
+                                            });
+                                          }else{
+                                            Scaffold.of(context).showSnackBar(SnackBar(
+                                              backgroundColor:Colors.red ,
+                                              content: Text('Process Failed'),
+                                            ));
+                                          }
+                                        });
+                                      }else{
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text("Network not Available"),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                      }
+                                    });
+                                  }
+                                },
 //                              onTap: () async {
 //                                Utils.check_connectivity().then((result){
 //                                  if(result){
@@ -299,7 +300,7 @@ class _training_caretaker_list_state extends State<training_caretaker_list>{
 //                                });
 //
 //                              },
-                            ),
+                              ),
 //                            IconSlideAction(
 //                              icon: Icons.edit,
 //                              color: Colors.blue,
@@ -310,38 +311,39 @@ class _training_caretaker_list_state extends State<training_caretaker_list>{
 //                                        token, training_list[index])));
 //                              },
 //                            ),
-                          ],
-                          child: FadeAnimation(2.0,
-                            ListTile(
-                              title: Text(training_list != null
-                                  ? training_list[index]['horseName']['name']
-                                  : ''),
-                              trailing:Text(training_list!=null?get_status_by_id(training_list[index]['status']):''),
+                            ],
+                            child: FadeAnimation(2.0,
+                              ListTile(
+                                title: Text(training_list != null
+                                    ? training_list[index]['horseName']['name']
+                                    : ''),
+                                trailing:Text(training_list!=null?get_status_by_id(training_list[index]['status']):''),
 
 //                              trailing: Text(training_list != null
 //                                  ? training_list[index]['startDate']
 //                                  .toString()
 //                                  .replaceAll("T00:00:00", '')
 //                                  : ''),
-                              subtitle: Text(training_list != null
-                                  ? get_training_type_by_id(
-                                  training_list[index]['trainingType'])
-                                  : ''),
-                              leading: Icon(Icons.fitness_center, size: 40,
-                                color: Colors.teal,),
-                              onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => training_details_page(training_list[index], get_training_type_by_id(training_list[index]['trainingType']))));
-                              },
+                                subtitle: Text(training_list != null
+                                    ? get_training_type_by_id(
+                                    training_list[index]['trainingType'])
+                                    : ''),
+                                leading: Icon(Icons.fitness_center, size: 40,
+                                  color: Colors.teal,),
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => training_details_page(training_list[index], get_training_type_by_id(training_list[index]['trainingType']))));
+                                },
+                              ),
                             ),
+
+
                           ),
+                          Divider(),
+                        ],
 
-
-                        ),
-                        Divider(),
-                      ],
-
-                    );
-                }),
+                      );
+                  }),
+                ),
               ),
             ),
     );

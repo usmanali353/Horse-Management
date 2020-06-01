@@ -47,7 +47,23 @@ class ConfirmationServices {
       "createdBy": createdBy,
       "createdOn":DateTime.now(),
       "isActive":true,
-      "conformationDetails":confirmationDetails
+      "conformationDetails": [
+        {
+          "conformationDetailsId": 0,
+          "limb": 1,
+          "foreLimbJoint": 3,
+          "hindLimbJoint": 0,
+          "conformationStation": 4,
+          "scoreStation": 1,
+          "conformationMovement": 1,
+          "scoreMovement": 1,
+          "lesion": 1,
+          "treatment": null,
+          "response": 1,
+          "createdOn": DateTime.now(),
+          "isActive": true,
+        },
+      ]
     },toEncodable: Utils.myEncode);
     var response=await http.post("http://192.236.147.77:8083/api/Veterinary/ConformationSave",
         headers: headers,

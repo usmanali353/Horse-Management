@@ -142,7 +142,7 @@ class _update_dam extends State<update_dam>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Update Dam"),),
+        appBar: AppBar(title: Text("Update Dams"),),
         body: ListView(
             children: <Widget>[
               Column(
@@ -322,12 +322,20 @@ class _update_dam extends State<update_dam>{
                                           if(respons!=null){
                                             Navigator.pop(context);
                                             Scaffold.of(context).showSnackBar(SnackBar(
-                                              content: Text("Updated sucessfully"),
+                                              content: Text("Updated sucessfully",
+                                                style: TextStyle(
+                                                    color: Colors.red
+                                                ),
+                                              ),
                                               backgroundColor: Colors.green,
                                             ));
                                           }else{
                                             Scaffold.of(context).showSnackBar(SnackBar(
-                                              content: Text("Not Updated sucessfully"),
+                                              content: Text("Not Updated sucessfully",
+                                                style: TextStyle(
+                                                    color: Colors.red
+                                                ),
+                                              ),
                                               backgroundColor: Colors.red,
                                             ));
                                           }

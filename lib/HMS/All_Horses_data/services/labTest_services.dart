@@ -51,7 +51,7 @@ class labtest_services {
     }else
       return null;
   }
-  static Future<String> labTestSave (String createdby,int id,String token, int horseid, DateTime date, int testtypeid, bool positive, int responsibleid, String lab, String result, String amount, int currencyid, int categoryId, int costcenterid, int contactid,Uint8List lab_image) async {
+  static Future<String> labTestSave (String createdby,int id,String token, int horseid, DateTime date, int testtypeid, bool positive, int responsibleid, String lab, String result, String amount, int currencyid, int categoryId, int costcenterid, int contactid,Uint8List labreportimage) async {
     Map<String, String> headers = {
       HttpHeaders.contentTypeHeader: 'application/json',
       HttpHeaders.authorizationHeader: 'Bearer '+ token
@@ -65,7 +65,7 @@ class labtest_services {
       "CreatedBy": createdby,
       "Result": result,
       "isPositive": positive, "responsible": responsibleid, "lab": lab,
-       "costCenterId": costcenterid, "contactId": contactid, "currencyId": currencyid, "labTestReportImage": null,
+       "costCenterId": costcenterid, "contactId": contactid, "currencyId": currencyid, "labTestReportImage": labreportimage,
       "isActive":true
     },toEncodable: Utils.myEncode);
     final response = await http.post(

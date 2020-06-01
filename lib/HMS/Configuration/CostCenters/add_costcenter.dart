@@ -106,37 +106,85 @@ class _add_costcenter extends State<add_costcenter>{
 
                         ),
                       ),
-                      MaterialButton(
-                        onPressed: (){
-                          if (_fbKey.currentState.validate()) {
-                            Utils.check_connectivity().then((result){
-                              if(result){
-                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                                pd.show();
-                                CostCenterServices.addCostCenter(token,0,costcenter_name.text,description.text,null)
-                                    .then((respons){
-                                  pd.dismiss();
-                                  if(respons!=null){
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Cost Center Addedd"),
-                                      backgroundColor: Colors.green,
-                                    ));
-                                    Navigator.pop(context);
-                                  }else{
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Cost Center not Addedd"),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                  }
-                                });
-                              }
-                            });
+                      Builder(
+                          builder:(BuildContext context){
+                            return Center(
+                                child:Padding(
+                                    padding: const EdgeInsets.all(16),
+                                    child:MaterialButton(
+                                      color: Colors.teal,
+                                      child: Text("Save",style: TextStyle(color: Colors.white),),
+                                      onPressed: (){
+                                        if (_fbKey.currentState.validate()) {
+                                          Utils.check_connectivity().then((result){
+                                            if(result){
+                                              ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                              pd.show();
+                                              CostCenterServices.addCostCenter(token,0,costcenter_name.text,description.text,null).then((respons){
+                                                pd.dismiss();
+                                                if(respons!=null){
+                                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                                    content: Text("Cost Center Added",
+                                                      style: TextStyle(
+                                                          color: Colors.red
+                                                      ),
+                                                    ),
+                                                    backgroundColor: Colors.green,
+                                                  ));
+                                                  Navigator.pop(context);
+                                                }else{
+                                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                                    content: Text("Cost Center not Added",
+                                                      style: TextStyle(
+                                                          color: Colors.white
+                                                      ),
+                                                    ),
+                                                    backgroundColor: Colors.red,
+                                                  ));
+                                                }
+                                              });
+                                            }
+                                          });
+                                        }
+                                      },
+
+                                    )
+                                )
+                            );
                           }
-                        },
-                        child: Text("Save",style: TextStyle(color: Colors.white),
-                        ),
-                        color: Colors.teal,
+
                       ),
+//                      MaterialButton(
+//                        onPressed: (){
+//                          if (_fbKey.currentState.validate()) {
+//                            Utils.check_connectivity().then((result){
+//                              if(result){
+//                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+//                                pd.show();
+//                                CostCenterServices.addCostCenter(token,0,costcenter_name.text,description.text,null)
+//                                    .then((respons){
+//                                  pd.dismiss();
+//                                  if(respons!=null){
+//                                    Scaffold.of(context).showSnackBar(SnackBar(
+//                                      content: Text("Cost Center Addedd"),
+//                                      backgroundColor: Colors.green,
+//                                    ));
+//                                    Navigator.pop(context);
+//                                  }else{
+//                                    Scaffold.of(context).showSnackBar(SnackBar(
+//                                      content: Text("Cost Center not Addedd"),
+//                                      backgroundColor: Colors.red,
+//                                    ));
+//                                  }
+//                                });
+//                              }
+//                            });
+//                          }
+//                        },
+//                        child: Text("Save",style: TextStyle(color: Colors.white),
+//                        ),
+//                        color: Colors.teal,
+//                      ),
                     ],
                     ),
                   ),

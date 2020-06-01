@@ -457,10 +457,8 @@ class _health_record_form extends State<update_health>{
                                 healthdropdown['contactsDropDown'][selected_contact_id]['id'])
                                 .then((response) {
                               pd.dismiss();
-                              if (response != null) {
+                              if (response != null)
                                 print("Successfully  added");
-                                Navigator.of(context).pop();
-                              }
                               else {
                                 print("data not added");
                               }

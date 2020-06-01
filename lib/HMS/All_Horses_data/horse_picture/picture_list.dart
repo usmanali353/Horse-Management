@@ -5,6 +5,7 @@ import 'package:horse_management/HMS/All_Horses_data/horse_picture/add_new_pictu
 import 'package:horse_management/HMS/All_Horses_data/horse_picture/update_picture.dart';
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 class pictures_list extends StatefulWidget{
   String token;
 
@@ -46,7 +47,10 @@ class _pictures_list_state extends State<pictures_list>{
               onRefresh: (){
                 return  Utils.check_connectivity().then((result){
                   if(result){
+                    ProgressDialog pd=ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                    pd.show();
                     network_operations.get_all_pictures(token).then((response){
+                      pd.dismiss();
                       if(response!=null){
                         setState(() {
                           isvisible=true;

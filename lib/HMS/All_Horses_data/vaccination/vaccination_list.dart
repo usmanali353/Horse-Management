@@ -136,7 +136,6 @@ class _Profile_Page_State extends State<vaccination_list>{
 
                 ],
                 child: ListTile(
-                  enabled: vaccinationlist[index]['isActive']!=null?vaccinationlist[index]['isActive']:true,
                   //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                   title: Text(vaccinationlist!=null?(vaccinationlist[index]['horseName']['name']):' '),
                   subtitle: Text(vaccinationlist!=null?'Vaccine: '+(vaccinationlist[index]['vaccineName']['name']):'farrier name not showing'),

@@ -287,12 +287,19 @@ class _UpdateSire extends State<UpdateSire>{
                                           if(respons!=null){
                                             Navigator.pop(context);
                                             Scaffold.of(context).showSnackBar(SnackBar(
-                                              content: Text("Updated sucessfully"),
+                                              content: Text("Sire Updated Failed",
+                                                style: TextStyle(
+                                                    color: Colors.red
+                                                ),
+                                              ),
                                               backgroundColor: Colors.green,
                                             ));
                                           }else{
                                             Scaffold.of(context).showSnackBar(SnackBar(
-                                              content: Text("Not Updated sucessfully"),
+                                              content: Text("Sire Updated Failed",
+                                                style: TextStyle(
+                                                    color: Colors.white
+                                                ),),
                                               backgroundColor: Colors.red,
                                             ));
                                           }

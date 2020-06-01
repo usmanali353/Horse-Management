@@ -63,67 +63,69 @@ class _already_trained_horses_list_state extends State<already_trained_horses_li
         },
         child: Visibility(
           visible: isvisible,
-          child: ListView.builder(itemCount:already_trained_list!=null?already_trained_list.length:temp.length,itemBuilder: (context,int index){
-            return Column(
-              children: <Widget>[
-                Slidable(
-                  actionPane: SlidableDrawerActionPane(),
-                  actionExtentRatio: 0.20,
-                  actions: <Widget>[
-                    IconSlideAction(
-                      icon: Icons.delete,
-                      color: Colors.red,
-                      caption: 'Delete',
-                      onTap: () async {
-                        Utils.check_connectivity().then((result){
-                          if(result){
-                            ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                            pd.show();
-                            network_operations.delete_already_trained_horses(token, already_trained_list[index]['trainingId']).then((response){
-                              pd.dismiss();
-                              if(response!=null){
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  backgroundColor:Colors.green ,
-                                  content: Text('Horse Deleted'),
-                                ));
-                                WidgetsBinding.instance
-                                    .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-                              }else{
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  backgroundColor:Colors.red ,
-                                  content: Text('Failed'),
-                                ));
-                              }
-                            });
-                          }else{
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text("Network not Available"),
-                              backgroundColor: Colors.red,
-                            ));
-                          }
-                        });
+          child: Scrollbar(
+            child: ListView.builder(itemCount:already_trained_list!=null?already_trained_list.length:temp.length,itemBuilder: (context,int index){
+              return Column(
+                children: <Widget>[
+                  Slidable(
+                    actionPane: SlidableDrawerActionPane(),
+                    actionExtentRatio: 0.20,
+                    actions: <Widget>[
+                      IconSlideAction(
+                        icon: Icons.delete,
+                        color: Colors.red,
+                        caption: 'Delete',
+                        onTap: () async {
+                          Utils.check_connectivity().then((result){
+                            if(result){
+                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                              pd.show();
+                              network_operations.delete_already_trained_horses(token, already_trained_list[index]['trainingId']).then((response){
+                                pd.dismiss();
+                                if(response!=null){
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.green ,
+                                    content: Text('Horse Deleted'),
+                                  ));
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                                }else{
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.red ,
+                                    content: Text('Failed'),
+                                  ));
+                                }
+                              });
+                            }else{
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text("Network not Available"),
+                                backgroundColor: Colors.red,
+                              ));
+                            }
+                          });
 
+                        },
+                      ),
+                    ],
+                    child: ListTile(
+                      title: Text(already_trained_list!=null?already_trained_list[index]['horseName']['name']:''),
+                      trailing: Text(already_trained_list!=null?already_trained_list[index]['startDate'].replaceAll("T00:00:00",''):''),
+                      subtitle: Text(already_trained_list!=null?get_training_type_by_id(already_trained_list[index]['trainingType']):''),
+                      leading: Image.asset("assets/horse_icon.png"),
+                      onTap: (){
+                       Navigator.push(context, MaterialPageRoute(builder: (context)=>training_details_page(already_trained_list[index],'')));
                       },
                     ),
-                  ],
-                  child: ListTile(
-                    title: Text(already_trained_list!=null?already_trained_list[index]['horseName']['name']:''),
-                    trailing: Text(already_trained_list!=null?already_trained_list[index]['startDate'].replaceAll("T00:00:00",''):''),
-                    subtitle: Text(already_trained_list!=null?get_training_type_by_id(already_trained_list[index]['trainingType']):''),
-                    leading: Image.asset("assets/horse_icon.png"),
-                    onTap: (){
-                     Navigator.push(context, MaterialPageRoute(builder: (context)=>training_details_page(already_trained_list[index],'')));
-                    },
+
+
                   ),
+                  Divider(),
+                ],
 
+              );
 
-                ),
-                Divider(),
-              ],
-
-            );
-
-          }),
+            }),
+          ),
         ),
       ),
     );

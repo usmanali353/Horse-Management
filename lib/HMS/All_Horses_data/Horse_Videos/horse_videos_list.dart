@@ -1,11 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
-
+import 'package:progress_dialog/progress_dialog.dart';
 import 'add_new_videos.dart';
 import 'update_videos.dart';
 import 'video_details.dart';
@@ -55,7 +53,10 @@ class _horse_videos_list_page_state extends State<horse_videos_list>{
         onRefresh: (){
          return Utils.check_connectivity().then((result){
              if(result){
+               ProgressDialog pd=ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+               pd.show();
                network_operations.get_all_videos(token).then((response){
+               pd.dismiss();
                  if(response!=null){
                    setState(() {
                      load_list=json.decode(response);
@@ -128,8 +129,6 @@ class _horse_videos_list_page_state extends State<horse_videos_list>{
                       ),
                     ],
                     child: ListTile(
-                      enabled: videos_list[index]['isActive']!=null?videos_list[index]['isActive']:true,
-
                       title: Text(videos_list!=null?videos_list[index]['horseName']['name']:''),
                       subtitle: Text(videos_list!=null?videos_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
                       leading: Icon(
@@ -138,6 +137,8 @@ class _horse_videos_list_page_state extends State<horse_videos_list>{
                         color: Colors.teal,
                       ),
                       onTap: (){
+                       // Navigator.push(context, MaterialPageRoute(builder: (context)=>YoutubePlayerDemoApp()));
+
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>video_details(videos_list[index]['link'])));
                       },
                     )

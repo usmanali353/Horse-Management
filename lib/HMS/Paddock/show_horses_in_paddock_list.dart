@@ -21,7 +21,7 @@ class show_horses_in_paddock extends StatefulWidget{
 class _show_horses_in_paddock extends State<show_horses_in_paddock>{
   String token;
   var paddock_data;
-  var horse_list;
+  var horse_list, load_list;
   var already_trained_list=[];
   var temp=['',''];
   bool isvisible=false;
@@ -46,7 +46,8 @@ class _show_horses_in_paddock extends State<show_horses_in_paddock>{
                   print(response);
                   setState(() {
                     isvisible=true;
-                    horse_list=json.decode(response);
+                    load_list=json.decode(response);
+                    horse_list = load_list['response'];
                   });
 
                 }else{

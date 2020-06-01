@@ -211,13 +211,21 @@ class _add_accountcategories extends State<add_accountcategories>{
                                           pd.dismiss();
                                           if(respons!=null){
                                             Scaffold.of(context).showSnackBar(SnackBar(
-                                              content: Text("Account Categories Addedd"),
+                                              content: Text("Account Categories Added Successfully",
+                                                style: TextStyle(
+                                                    color: Colors.red
+                                                ),
+                                              ),
                                               backgroundColor: Colors.green,
                                             ));
                                             Navigator.pop(context);
                                           }else{
                                             Scaffold.of(context).showSnackBar(SnackBar(
-                                              content: Text("Account Categories not Addedd"),
+                                              content: Text("Account Categories Added Failed",
+                                                style: TextStyle(
+                                                    color: Colors.white
+                                                ),
+                                              ),
                                               backgroundColor: Colors.red,
                                             ));
                                           }
@@ -232,7 +240,7 @@ class _add_accountcategories extends State<add_accountcategories>{
                       );
                     }
 
-                  )
+                  ),
                 ],
               )
             ]

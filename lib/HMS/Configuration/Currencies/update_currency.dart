@@ -186,13 +186,21 @@ class _update_currency extends State<update_currency>{
                                           pd.dismiss();
                                           if(respons!=null){
                                             Scaffold.of(context).showSnackBar(SnackBar(
-                                              content: Text("Currency Updated"),
+                                              content: Text("Currency Updated",
+                                                style: TextStyle(
+                                                    color: Colors.red
+                                                ),
+                                              ),
                                               backgroundColor: Colors.green,
                                             ));
                                             Navigator.pop(context);
                                           }else{
                                             Scaffold.of(context).showSnackBar(SnackBar(
-                                              content: Text("Currency not Updated"),
+                                              content: Text("Currency not Updated",
+                                                style: TextStyle(
+                                                    color: Colors.white
+                                                ),
+                                              ),
                                               backgroundColor: Colors.red,
                                             ));
                                           }

@@ -94,13 +94,14 @@ class _Profile_Page_State extends State<vaccination_caretaker_list>{
             },
           )
         ],),
-        body: ListView.builder(itemCount:vaccinationlist!=null?vaccinationlist.length:temp.length,itemBuilder: (context,int index){
-          return Column(
-            children: <Widget>[
-              Slidable(
-                actionPane: SlidableDrawerActionPane(),
-                actionExtentRatio: 0.20,
-                actions: <Widget>[
+        body: Scrollbar(
+          child: ListView.builder(itemCount:vaccinationlist!=null?vaccinationlist.length:temp.length,itemBuilder: (context,int index){
+            return Column(
+              children: <Widget>[
+                Slidable(
+                  actionPane: SlidableDrawerActionPane(),
+                  actionExtentRatio: 0.20,
+                  actions: <Widget>[
 //                  IconSlideAction(onTap: ()async{
 //                    prefs = await SharedPreferences.getInstance();
 //                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_vaccination(vaccinationlist[index],prefs.get('token'),prefs.get('createdBy'))));
@@ -133,66 +134,25 @@ class _Profile_Page_State extends State<vaccination_caretaker_list>{
 //                      });
 //                    },
 //                  ),
-                  IconSlideAction(
-                    icon: Icons.timer,
-                    color: Colors.deepOrange,
-                    caption: 'Start',
-                    onTap: () async {
-                      Utils.check_connectivity().then((result){
-                        if(result){
-                          ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                          pd.show();
-                          VaccinationCareTakerServices.start_vaccination(token, vaccinationlist[index]['id']).then((response){
-                            pd.dismiss();
-                            if(response!=null){
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.green ,
-                                content: Text('Process Started'),
-                              ));
-//                                  setState(() {
-//                                    control_list.removeAt(index);
-//                                  });
-                            }else{
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.red ,
-                                content: Text('Process Failed'),
-                              ));
-                            }
-                          });
-                        }else{
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text("Network not Available"),
-                            backgroundColor: Colors.red,
-                          ));
-                        }
-                      });
-
-                    },
-                  ),
-                  IconSlideAction(
-                    icon: Icons.done_all,
-                    color: Colors.green,
-                    caption: 'Complete',
-                    onTap: () async {
-                      print(vaccinationlist[index]);
-                      print(DateTime.parse(vaccinationlist[index]['date']));
-                      if(DateTime.now().isAfter(DateTime.parse(vaccinationlist[index]['date'])) )
-                        Navigator.push(context,MaterialPageRoute(builder: (context)=>vaccination_late_reason(token, vaccinationlist[index]['id'])));
-                      else{
+                    IconSlideAction(
+                      icon: Icons.timer,
+                      color: Colors.deepOrange,
+                      caption: 'Start',
+                      onTap: () async {
                         Utils.check_connectivity().then((result){
                           if(result){
                             ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
                             pd.show();
-                            VaccinationCareTakerServices.complete_vaccination(token, vaccinationlist[index]['id']).then((response){
+                            VaccinationCareTakerServices.start_vaccination(token, vaccinationlist[index]['id']).then((response){
                               pd.dismiss();
                               if(response!=null){
                                 Scaffold.of(context).showSnackBar(SnackBar(
                                   backgroundColor:Colors.green ,
-                                  content: Text('Completed'),
+                                  content: Text('Process Started'),
                                 ));
-                                setState(() {
-                                  //  control_list.removeAt(index);
-                                });
+//                                  setState(() {
+//                                    control_list.removeAt(index);
+//                                  });
                               }else{
                                 Scaffold.of(context).showSnackBar(SnackBar(
                                   backgroundColor:Colors.red ,
@@ -207,8 +167,49 @@ class _Profile_Page_State extends State<vaccination_caretaker_list>{
                             ));
                           }
                         });
-                      }
-                    },
+
+                      },
+                    ),
+                    IconSlideAction(
+                      icon: Icons.done_all,
+                      color: Colors.green,
+                      caption: 'Complete',
+                      onTap: () async {
+                        print(vaccinationlist[index]);
+                        print(DateTime.parse(vaccinationlist[index]['date']));
+                        if(DateTime.now().isAfter(DateTime.parse(vaccinationlist[index]['date'])) )
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>vaccination_late_reason(token, vaccinationlist[index]['id'])));
+                        else{
+                          Utils.check_connectivity().then((result){
+                            if(result){
+                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                              pd.show();
+                              VaccinationCareTakerServices.complete_vaccination(token, vaccinationlist[index]['id']).then((response){
+                                pd.dismiss();
+                                if(response!=null){
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.green ,
+                                    content: Text('Completed'),
+                                  ));
+                                  setState(() {
+                                    //  control_list.removeAt(index);
+                                  });
+                                }else{
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.red ,
+                                    content: Text('Process Failed'),
+                                  ));
+                                }
+                              });
+                            }else{
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text("Network not Available"),
+                                backgroundColor: Colors.red,
+                              ));
+                            }
+                          });
+                        }
+                      },
 //                    onTap: () async {
 //                      Utils.check_connectivity().then((result){
 //                        if(result){
@@ -240,33 +241,34 @@ class _Profile_Page_State extends State<vaccination_caretaker_list>{
 //                      });
 //
 //                    },
+                    ),
+
+                  ],
+                  child: ListTile(
+                    //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
+                    title: Text(vaccinationlist!=null?(vaccinationlist[index]['horseName']['name']):' '),
+                    subtitle: Text(vaccinationlist!=null?'Vaccine: '+(vaccinationlist[index]['vaccineName']['name']):'farrier name not showing'),
+                    trailing:Text(vaccinationlist!=null?get_status_by_id(vaccinationlist[index]['status']):''),
+
+                    //trailing: Text(vaccinationlist[index]['vetId']!=null?'Vet: '+(vaccinationlist[index]['vetName']['contactName']['name']):'Vet name empty'),
+                    onTap: ()async{
+                      prefs = await SharedPreferences.getInstance();
+                      print((vaccinationlist[index]));
+                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_labTest(lablist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
+                    },
                   ),
+                  secondaryActions: <Widget>[
 
-                ],
-                child: ListTile(
-                  //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
-                  title: Text(vaccinationlist!=null?(vaccinationlist[index]['horseName']['name']):' '),
-                  subtitle: Text(vaccinationlist!=null?'Vaccine: '+(vaccinationlist[index]['vaccineName']['name']):'farrier name not showing'),
-                  trailing:Text(vaccinationlist!=null?get_status_by_id(vaccinationlist[index]['status']):''),
+                  ],
 
-                  //trailing: Text(vaccinationlist[index]['vetId']!=null?'Vet: '+(vaccinationlist[index]['vetName']['contactName']['name']):'Vet name empty'),
-                  onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    print((vaccinationlist[index]));
-                    // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_labTest(lablist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
-                  },
                 ),
-                secondaryActions: <Widget>[
+                Divider(),
+              ],
 
-                ],
+            );
 
-              ),
-              Divider(),
-            ],
-
-          );
-
-        })
+          }),
+        )
     );
   }
   String get_status_by_id(int id){

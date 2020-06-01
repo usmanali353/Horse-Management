@@ -273,10 +273,8 @@ class _state_add_farrier extends State<add_competetion>{
                             pd.show();
                             competetion_services.competetionSave(null,token,0, competetiondropdown['horseDropDown'][selected_horse_id]['id'],select_date, competetiondropdown['performanceTypeDropDown'][selected_performance_id]['id'],eventName.text,city.text,category.text,result.text,rider.text,int.parse(judges.text),comment.text).then((response){
                               pd.dismiss();
-                              if(response !=null) {
+                              if(response !=null)
                                 print("Successfully lab test added");
-                                Navigator.of(context).pop();
-                              }
                               else{
                                 print("data not added");}
                             });
@@ -290,7 +288,7 @@ class _state_add_farrier extends State<add_competetion>{
 
                           }
                         },
-                        child:Text("Add Competetion",style: TextStyle(color: Colors.white),),
+                        child:Text("Add Horse",style: TextStyle(color: Colors.white),),
                       ),
                     )
                 )

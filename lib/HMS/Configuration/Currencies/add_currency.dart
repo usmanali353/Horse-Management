@@ -39,8 +39,8 @@ class _add_currency extends State<add_currency>{
             print(response);
             setState(() {
               currency_response=json.decode(response);
-              for(int i=0;i<currency_response['currencySymbolsDropDown'].length;i++)
-                currency.add(currency_response['currencySymbolsDropDown'][i]['name']);
+              for(int i=0;i<currency_response['response']['currencySymbolsDropDown'].length;i++)
+                currency.add(currency_response['response']['currencySymbolsDropDown'][i]['name']);
 
              // stocks_loaded=true;
             });
@@ -118,13 +118,21 @@ class _add_currency extends State<add_currency>{
                                           pd.dismiss();
                                            if(respons!=null){
                                              Scaffold.of(context).showSnackBar(SnackBar(
-                                               content: Text("Currency Added"),
+                                               content: Text("Currency Added",
+                                                 style: TextStyle(
+                                                     color: Colors.red
+                                                 ),
+                                               ),
                                                backgroundColor: Colors.green,
                                              ));
                                              Navigator.pop(context);
                                            }else{
                                              Scaffold.of(context).showSnackBar(SnackBar(
-                                               content: Text("Currency not Added"),
+                                               content: Text("Currency not Added",
+                                                 style: TextStyle(
+                                                     color: Colors.white
+                                                 ),
+                                               ),
                                                backgroundColor: Colors.red,
                                              ));
                                            }

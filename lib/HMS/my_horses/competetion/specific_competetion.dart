@@ -49,7 +49,7 @@ class _Profile_Page_State extends State<competetion_list>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Vet Visit"),
+        appBar: AppBar(title: Text("Competetion"),
         ),
         body: ListView.builder(itemCount:specificvetvisit!=null?specificvetvisit.length:temp.length,itemBuilder: (context,int index){
           return Column(

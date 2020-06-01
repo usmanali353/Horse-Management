@@ -249,6 +249,21 @@ class Add_horse_services{
     }else
       return null;
   }
+  static Future<String> horsesaveReq(String token,int horseid,String name,int genderid,bool ishorse,String number,String microChip,DateTime dateofbirth,int colorId,int breedId,int sireid,int damid,int barnid,int vet,int breeder) async{
+    Map<String,String> headers = {
+      HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.authorizationHeader : 'Bearer '+token
+    };
+    final body = jsonEncode({"horseId":horseid,"name":name,"genderId":genderid,"IsHorse":ishorse,"number":number,"microchipNo":"123456","dateOfBirth":dateofbirth,"colorId":colorId,"breedId":breedId,"sireId":sireid,"damId":damid, "HorseDetails": {"breederId": breeder, "vetId": vet,}},toEncodable: Utils.myEncode);
+
+    final response = await http.post('http://192.236.147.77:8083/api/horse/HorseSave', headers: headers, body: body
+    );
+    print(response.body);
+    if(response.statusCode==200){
+      return response.body;
+    }else
+      return null;
+  }
  // ,int headmarkid,int bodymarkid,int legmarkid,int dietid,int barnid,int ironbrandid,int riderid,int inchargeid,int associationid
   static Future<String> horseupdate(String token,int horseid,String name,int genderid,bool ishorse,String number,String passportNo,String microChip,DateTime dateofbirth,int colorId,int breedId,int categoryId,int sireid,int damid,String dna,) async{
 ////  static Future<String> horsesave(String token,int horseid,String name,int genderid,bool ishorse,DateTime dateofbirth,String number,String passportNo,int colorId,int breedId,int categoryId,String microChip,int sireid,int damid,int headmarkid,int bodymarkid,int legmarkid,int dietid,int barnid,int ironbrandid,int riderid,int inchargeid,String dna) async{

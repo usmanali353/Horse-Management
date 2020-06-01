@@ -71,7 +71,7 @@ class _update_performancetype extends State<update_performancetype>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Cost Center"),),
+        appBar: AppBar(title: Text("Update Performance Type"),),
         body:  Padding(
           padding: EdgeInsets.all(10),
           child: SingleChildScrollView(
@@ -98,38 +98,85 @@ class _update_performancetype extends State<update_performancetype>{
 
                         ),
                       ),
+                      Builder(
+                          builder:(BuildContext context){
+                            return Center(
+                                child:Padding(
+                                    padding: const EdgeInsets.all(16),
+                                    child:MaterialButton(
+                                      color: Colors.teal,
+                                      child: Text("Update",style: TextStyle(color: Colors.white),),
+                                      onPressed: (){
+                                        if (_fbKey.currentState.validate()) {
+                                          Utils.check_connectivity().then((result){
+                                            if(result){
+                                              ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                              pd.show();
+                                              PerformanceTypesServices.addPerformanceType(token,specifictype['performanceId'],type.text,specifictype['createdBy']).then((respons){
+                                                pd.dismiss();
+                                                if(respons!=null){
+                                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                                    content: Text("Performance Type Added Successfully",
+                                                      style: TextStyle(
+                                                          color: Colors.red
+                                                      ),
+                                                    ),
+                                                    backgroundColor: Colors.green,
+                                                  ));
+                                                  Navigator.pop(context);
+                                                }else{
+                                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                                    content: Text("Performance Type Added Failed",
+                                                      style: TextStyle(
+                                                          color: Colors.white
+                                                      ),
+                                                    ),
+                                                    backgroundColor: Colors.red,
+                                                  ));
+                                                }
+                                              });
+                                            }
+                                          });
+                                        }
+                                      },
 
-                      MaterialButton(
-                        onPressed: (){
-                          if (_fbKey.currentState.validate()) {
-                            _fbKey.currentState.save();
-                            Utils.check_connectivity().then((result){
-                              if(result){
-                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                                pd.show();
-                                PerformanceTypesServices.addPerformanceType(token,specifictype['performanceId'],type.text,specifictype['createdBy']).then((respons){
-                                  pd.dismiss();
-                                  if(respons!=null){
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Performance Type Updated"),
-                                      backgroundColor: Colors.green,
-                                    ));
-                                    Navigator.pop(context);
-                                  }else{
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Performance Type not Updated"),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                  }
-                                });
-                              }
-                            });
+                                    )
+                                )
+                            );
                           }
-                        },
-                        child: Text("Update",style: TextStyle(color: Colors.white),
-                        ),
-                        color: Colors.teal,
+
                       ),
+//                      MaterialButton(
+//                        onPressed: (){
+//                          if (_fbKey.currentState.validate()) {
+//                            _fbKey.currentState.save();
+//                            Utils.check_connectivity().then((result){
+//                              if(result){
+//                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+//                                pd.show();
+//                                PerformanceTypesServices.addPerformanceType(token,specifictype['performanceId'],type.text,specifictype['createdBy']).then((respons){
+//                                  pd.dismiss();
+//                                  if(respons!=null){
+//                                    Scaffold.of(context).showSnackBar(SnackBar(
+//                                      content: Text("Performance Type Updated"),
+//                                      backgroundColor: Colors.green,
+//                                    ));
+//                                    Navigator.pop(context);
+//                                  }else{
+//                                    Scaffold.of(context).showSnackBar(SnackBar(
+//                                      content: Text("Performance Type not Updated"),
+//                                      backgroundColor: Colors.red,
+//                                    ));
+//                                  }
+//                                });
+//                              }
+//                            });
+//                          }
+//                        },
+//                        child: Text("Update",style: TextStyle(color: Colors.white),
+//                        ),
+//                        color: Colors.teal,
+//                      ),
                     ],
                     ),
                   ),

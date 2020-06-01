@@ -228,12 +228,19 @@ class _AddSire extends State<AddSire>{
                                             if(respons!=null){
                                               Navigator.pop(context);
                                               Scaffold.of(context).showSnackBar(SnackBar(
-                                                content: Text("Sire Added"),
+                                                content: Text("Sire Added Succeddfully",
+                                                  style: TextStyle(
+                                                      color: Colors.red
+                                                  ),
+                                                ),
                                                 backgroundColor: Colors.green,
                                               ));
                                             }else{
                                               Scaffold.of(context).showSnackBar(SnackBar(
-                                                content: Text("Sire not Added"),
+                                                content: Text("Sire Added Failed",
+                                                  style: TextStyle(
+                                                      color: Colors.white
+                                                  ),),
                                                 backgroundColor: Colors.red,
                                               ));
                                             }

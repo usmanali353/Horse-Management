@@ -120,7 +120,7 @@ class _update_vaccines extends State<update_vaccines> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Vaccines"),),
+        appBar: AppBar(title: Text("Update Vaccines"),),
         body: SingleChildScrollView(
             child: Column(
                 children: <Widget>[
@@ -547,40 +547,87 @@ class _update_vaccines extends State<update_vaccines> {
                           ),
                         ),
 
+                        Builder(
+                            builder:(BuildContext context){
+                              return Center(
+                                  child:Padding(
+                                      padding: const EdgeInsets.all(16),
+                                      child:MaterialButton(
+                                        color: Colors.teal,
+                                        child: Text("Update",style: TextStyle(color: Colors.white),),
+                                        onPressed: (){
+                                          if (_fbKey.currentState.validate()) {
+                                            Utils.check_connectivity().then((result){
+                                              if(result){
+                                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                                pd.show();
+                                                VaccinesServices.addVaccines(token, specificvaccine['id'], name.text, comments.text,selected_reminder_id, usage_id, primaryvaccination.text, booster.text, revaccination.text, firstdose.text, seconddose.text, thirddose.text, specificvaccine['createdBy'])              .then((respons){
+                                                  pd.dismiss();
+                                                  if(respons!=null){
+                                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                                      content: Text("Vaccines Updated Successfully",
+                                                        style: TextStyle(
+                                                            color: Colors.red
+                                                        ),
+                                                      ),
+                                                      backgroundColor: Colors.green,
+                                                    ));
+                                                    Navigator.pop(context);
+                                                  }else{
+                                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                                      content: Text("Vaccines Updated Failed",
+                                                        style: TextStyle(
+                                                            color: Colors.white
+                                                        ),
+                                                      ),
+                                                      backgroundColor: Colors.red,
+                                                    ));
+                                                  }
+                                                });
+                                              }
+                                            });
+                                          }
+                                        },
 
-
-
-                        MaterialButton(
-                          onPressed: () {
-                            if (_fbKey.currentState.validate()) {
-                              _fbKey.currentState.save();
-                              Utils.check_connectivity().then((result){
-                                if(result){
-                                  ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                                  pd.show();
-                                  VaccinesServices.addVaccines(token, specificvaccine['id'], name.text, comments.text,selected_reminder_id, usage_id, primaryvaccination.text, booster.text, revaccination.text, firstdose.text, seconddose.text, thirddose.text, specificvaccine['createdBy'])                                      .then((respons){
-                                    pd.dismiss();
-                                    if(respons!=null){
-                                      Scaffold.of(context).showSnackBar(SnackBar(
-                                        content: Text("Vaccine Updated"),
-                                        backgroundColor: Colors.green,
-                                      ));
-                                      Navigator.pop(context);
-                                    }else{
-                                      Scaffold.of(context).showSnackBar(SnackBar(
-                                        content: Text("Vaccine not Updated"),
-                                        backgroundColor: Colors.red,
-                                      ));
-                                    }
-                                  });
-                                }
-                              });
+                                      )
+                                  )
+                              );
                             }
-                          },
-                          child: Text("Update", style: TextStyle(color: Colors.white),
-                          ),
-                          color: Colors.teal,
+
                         ),
+
+
+//                        MaterialButton(
+//                          onPressed: () {
+//                            if (_fbKey.currentState.validate()) {
+//                              _fbKey.currentState.save();
+//                              Utils.check_connectivity().then((result){
+//                                if(result){
+//                                  ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+//                                  pd.show();
+//                                  VaccinesServices.addVaccines(token, specificvaccine['id'], name.text, comments.text,selected_reminder_id, usage_id, primaryvaccination.text, booster.text, revaccination.text, firstdose.text, seconddose.text, thirddose.text, specificvaccine['createdBy'])                                      .then((respons){
+//                                    pd.dismiss();
+//                                    if(respons!=null){
+//                                      Scaffold.of(context).showSnackBar(SnackBar(
+//                                        content: Text("Vaccine Updated"),
+//                                        backgroundColor: Colors.green,
+//                                      ));
+//                                      Navigator.pop(context);
+//                                    }else{
+//                                      Scaffold.of(context).showSnackBar(SnackBar(
+//                                        content: Text("Vaccine not Updated"),
+//                                        backgroundColor: Colors.red,
+//                                      ));
+//                                    }
+//                                  });
+//                                }
+//                              });
+//                            }
+//                          },
+//                          child: Text("Update", style: TextStyle(color: Colors.white),
+//                          ),
+//                          color: Colors.teal,
+//                        ),
                       ],
                     ),
                   ),

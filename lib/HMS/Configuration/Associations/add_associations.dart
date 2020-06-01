@@ -91,35 +91,50 @@ class _add_associations extends State<add_associations>{
 
                         ),
                       ),
-                      MaterialButton(
-                        onPressed: (){
-                          if (_fbKey.currentState.validate()) {
-                            Utils.check_connectivity().then((result){
-                              if(result){
-                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                                pd.show();
-                                AssociationServices.addAssociations(token,0,name.text,null)                                    .then((respons){
-                                  pd.dismiss();
-                                  if(respons!=null){
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Associations Added"),
-                                      backgroundColor: Colors.green,
-                                    ));
-                                    Navigator.pop(context);
-                                  }else{
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Association not Addedd"),
-                                      backgroundColor: Colors.red,
-                                    ));
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Builder(
+                            builder:(BuildContext context){
+                              return MaterialButton(
+                                onPressed: (){
+                                  if (_fbKey.currentState.validate()) {
+                                    Utils.check_connectivity().then((result){
+                                      if(result){
+                                        ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                        pd.show();
+                                        AssociationServices.addAssociations(token,0,name.text,null).then((respons){
+                                          pd.dismiss();
+                                          if(respons!=null){
+                                            Scaffold.of(context).showSnackBar(SnackBar(
+                                              content: Text("Associations Added Successfully",  style: TextStyle(
+                                                  color: Colors.red
+                                              ),),
+                                              backgroundColor: Colors.green,
+                                            ));
+                                            Navigator.pop(context);
+                                          }else{
+                                            Scaffold.of(context).showSnackBar(SnackBar(
+                                              content: Text("Association not Addedd",
+                                                style: TextStyle(
+                                                  color: Colors.white
+                                              ),
+                                              ),
+                                              backgroundColor: Colors.red,
+                                            ));
+                                          }
+                                        });
+                                      }
+                                    });
                                   }
-                                });
-                              }
-                            });
-                          }
-                        },
-                        child: Text("Save",style: TextStyle(color: Colors.white),
+                                },
+                                child: Text("Save",style: TextStyle(color: Colors.white),
+                                ),
+                                color: Colors.teal,
+                              );
+                            }
+                          ),
                         ),
-                        color: Colors.teal,
                       ),
                     ],
                     ),

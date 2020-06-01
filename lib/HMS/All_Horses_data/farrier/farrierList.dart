@@ -124,7 +124,6 @@ class _Profile_Page_State extends State<farrier_list>{
 
                 ],
                 child: ListTile(
-                  enabled: farrierlist[index]['isActive']!=null? farrierlist[index]['isActive']:true,
                   //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                   title: Text(farrierlist!=null?(farrierlist[index]['horseName']['name']):''),
                   subtitle: Text(farrierlist!=null?"Farrier: "+(farrierlist[index]['farrierName']['contactName']['name']):'farrier name not showing'),

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Configuration/Sire/add_sire.dart';
 import 'package:horse_management/HMS/Configuration/Sire/sire_json.dart';
@@ -5,6 +6,7 @@ import 'package:horse_management/HMS/Configuration/Sire/update_sire.dart';
 import 'dart:convert';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/Paddock/add_paddock_form.dart';
+import 'package:horse_management/HMS/Paddock/paddock_details.dart';
 import 'package:horse_management/HMS/Paddock/padocks_json.dart';
 import 'package:horse_management/HMS/Paddock/show_horses_in_paddock_list.dart';
 import 'package:horse_management/HMS/Paddock/update_paddock.dart';
@@ -108,83 +110,87 @@ class _paddocks_list extends State<paddocks_list>{
         },
         child: Visibility(
           visible: isVisible,
-          child: ListView.builder(itemCount:paddock_lists!=null?paddock_lists.length:temp.length,itemBuilder: (context,int index){
-            return Column(
-              children: <Widget>[
-                Slidable(
-                    actionPane: SlidableDrawerActionPane(),
-                    actionExtentRatio: 0.20,
-                    secondaryActions: <Widget>[
-                      IconSlideAction(
-                        icon: Icons.edit,
-                        color: Colors.blue,
-                        caption: 'Update',
-                        onTap: () async {
-                          print(paddock_lists[index]);
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_paddock(token,paddock_lists[index])));
-                        },
-                      ),
-                      IconSlideAction(
-                        icon: Icons.add,
-                        color: Colors.deepPurple,
-                        caption: 'Add Horse',
-                        onTap: () async {
-                          print(paddock_lists[index]);
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>add_horse_to_paddock(token,paddock_lists[index]['id'])));
-                        },
-                      ),
-                      IconSlideAction(
-                        icon: Icons.account_balance,
-                        color: Colors.deepOrangeAccent,
-                        caption: 'Show Horses',
-                        onTap: () async {
-                          print(paddock_lists[index]);
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>show_horses_in_paddock(token,paddock_lists[index])));
-                        },
-                      ),
-                    ],
-                    actions: <Widget>[
-                      IconSlideAction(
-                        icon: Icons.visibility_off,
-                        color: Colors.red,
-                        caption: 'Hide',
-                        onTap: () async {
-                          SireServices.changeSireVisibility(token, paddock_lists[index]['id']).then((response){
-                            print(response);
-                            if(response!=null){
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.green ,
-                                content: Text('Visibility Changed'),
-                              ));
-                              setState(() {
-                                paddock_lists.removeAt(index);
-                              });
+          child: Scrollbar(
 
-                            }else{
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor:Colors.red ,
-                                content: Text('Failed'),
-                              ));
-                            }
-                          });
-                        },
-                      ),
-                    ],
-                    child: FadeAnimation(2.0,
-                       ListTile(
-                        title: Text(paddock_lists!=null?paddock_lists[index]['name']:''),
-                        subtitle: Text(paddock_lists!=null?"Area: "+paddock_lists[index]['area'].toString():''),
-                        trailing: Text(paddock_lists[index]['hasShade'] == true ?"Has Shade: "+"Yes":"No"),
-                        onTap: (){
-                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
-                        },
-                      ),
-                    )
-                ),
-                Divider(),
-              ],
-            );
-          }),
+            child: ListView.builder(itemCount:paddock_lists!=null?paddock_lists.length:temp.length,itemBuilder: (context,int index){
+              return Column(
+                children: <Widget>[
+                  Slidable(
+                      actionPane: SlidableDrawerActionPane(),
+                      actionExtentRatio: 0.20,
+                      secondaryActions: <Widget>[
+                        IconSlideAction(
+                          icon: Icons.edit,
+                          color: Colors.blue,
+                          caption: 'Update',
+                          onTap: () async {
+                            print(paddock_lists[index]);
+                            Navigator.push(context,MaterialPageRoute(builder: (context)=>update_paddock(token,paddock_lists[index])));
+                          },
+                        ),
+                        IconSlideAction(
+                          icon: Icons.add,
+                          color: Colors.deepPurple,
+                          caption: 'Add Horse',
+                          onTap: () async {
+                            print(paddock_lists[index]);
+                            Navigator.push(context,MaterialPageRoute(builder: (context)=>add_horse_to_paddock(token,paddock_lists[index]['id'])));
+                          },
+                        ),
+                        IconSlideAction(
+                          icon: Icons.account_balance,
+                          color: Colors.deepOrangeAccent,
+                          caption: 'Show Horses',
+                          onTap: () async {
+                            print(paddock_lists[index]);
+                            Navigator.push(context,MaterialPageRoute(builder: (context)=>show_horses_in_paddock(token,paddock_lists[index])));
+                          },
+                        ),
+                      ],
+                      actions: <Widget>[
+                        IconSlideAction(
+                          icon: Icons.visibility_off,
+                          color: Colors.red,
+                          caption: 'Hide',
+                          onTap: () async {
+                            SireServices.changeSireVisibility(token, paddock_lists[index]['id']).then((response){
+                              print(response);
+                              if(response!=null){
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor:Colors.green ,
+                                  content: Text('Visibility Changed'),
+                                ));
+                                setState(() {
+                                  paddock_lists.removeAt(index);
+                                });
+
+                              }else{
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor:Colors.red ,
+                                  content: Text('Failed'),
+                                ));
+                              }
+                            });
+                          },
+                        ),
+                      ],
+                      child: FadeAnimation(2.0,
+                        ListTile(
+                          title: Text(paddock_lists!=null?paddock_lists[index]['name']:''),
+                          subtitle: Text(paddock_lists!=null?"Area: "+paddock_lists[index]['area'].toString():''),
+                          trailing: Text(paddock_lists[index]['hasShade'] == true ?"Has Shade: "+"Yes":"No"),
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => paddock_details_page(paddock_lists[index])));
+                            // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                          },
+                        ),
+                      )
+                  ),
+                  Divider(),
+                ],
+              );
+            })
+          )
         ),
       ),
     );

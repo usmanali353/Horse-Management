@@ -101,15 +101,17 @@ class _audit_log extends State<audit_log>{
               );
             },
               alwaysVisibleScrollThumb: true,
-            child: ListView.builder(controller: customController,itemCount:auditLogs!=null?auditLogs.length:temp.length,itemBuilder: (context,int index){
 
-              return Column(
-                children: <Widget>[
 
-                  Slidable(
-                      actionPane: SlidableDrawerActionPane(),
-                      actionExtentRatio: 0.20,
-                      secondaryActions: <Widget>[
+          child: ListView.builder(controller: customController,itemCount:auditLogs!=null?auditLogs.length:temp.length,itemBuilder: (context,int index){
+
+            return Column(
+              children: <Widget>[
+
+                Slidable(
+                    actionPane: SlidableDrawerActionPane(),
+                    actionExtentRatio: 0.20,
+                    secondaryActions: <Widget>[
 //                      IconSlideAction(
 //                        icon: Icons.edit,
 //                        color: Colors.blue,
@@ -119,7 +121,7 @@ class _audit_log extends State<audit_log>{
 //                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_barn(token,barn_lists[index])));
 //                        },
 //                      ),
-                      ],
+                    ],
 //                    actions: <Widget>[
 //                      IconSlideAction(
 //                        icon: Icons.visibility_off,
@@ -147,21 +149,21 @@ class _audit_log extends State<audit_log>{
 //                        },
 //                      ),
 //                    ],
-                      child: FadeAnimation(2.0,
-                        ListTile(
-                          title: Text(auditLogs!=null?auditLogs[index]['activityName']:''),
-                          subtitle: Text(auditLogs!=null?auditLogs[index]['action']:''),
+                    child: FadeAnimation(2.0,
+                      ListTile(
+                        title: Text(auditLogs!=null?auditLogs[index]['activityName']:''),
+                        subtitle: Text(auditLogs!=null?auditLogs[index]['action']:''),
 //                        trailing: Text(auditLogs!=null?auditLogs[index]['createdOn']:''),
-                          onTap: (){
-                             Navigator.push(context, MaterialPageRoute(builder: (context)=>audit_log_details_page(auditLogs[index])));
-                          },
-                        ),
-                      )
-                  ),
-                  Divider(),
-                ],
-              );
-            }),
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>audit_log_details_page(auditLogs[index])));
+                        },
+                      ),
+                    )
+                ),
+                Divider(),
+              ],
+            );
+          }),
           ),
         ),
       ),
@@ -171,7 +173,67 @@ class _audit_log extends State<audit_log>{
 
 }
 
-
+//child: ListView.builder(controller: customController,itemCount:auditLogs!=null?auditLogs.length:temp.length,itemBuilder: (context,int index){
+//
+//return Column(
+//children: <Widget>[
+//
+//Slidable(
+//actionPane: SlidableDrawerActionPane(),
+//actionExtentRatio: 0.20,
+//secondaryActions: <Widget>[
+////                      IconSlideAction(
+////                        icon: Icons.edit,
+////                        color: Colors.blue,
+////                        caption: 'Update',
+////                        onTap: () async {
+////                          print(barn_lists[index]);
+////                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_barn(token,barn_lists[index])));
+////                        },
+////                      ),
+//],
+////                    actions: <Widget>[
+////                      IconSlideAction(
+////                        icon: Icons.visibility_off,
+////                        color: Colors.red,
+////                        caption: 'Hide',
+////                        onTap: () async {
+////                          BarnServices.changeBarnVisibility(token, barn_lists[index]['barnId']).then((response){
+////                            print(response);
+////                            if(response!=null){
+////                              Scaffold.of(context).showSnackBar(SnackBar(
+////                                backgroundColor:Colors.green ,
+////                                content: Text('Visibility Changed'),
+////                              ));
+////                              setState(() {
+////                                barn_lists.removeAt(index);
+////                              });
+////
+////                            }else{
+////                              Scaffold.of(context).showSnackBar(SnackBar(
+////                                backgroundColor:Colors.red ,
+////                                content: Text('Failed'),
+////                              ));
+////                            }
+////                          });
+////                        },
+////                      ),
+////                    ],
+//child: FadeAnimation(2.0,
+//ListTile(
+//title: Text(auditLogs!=null?auditLogs[index]['activityName']:''),
+//subtitle: Text(auditLogs!=null?auditLogs[index]['action']:''),
+////                        trailing: Text(auditLogs!=null?auditLogs[index]['createdOn']:''),
+//onTap: (){
+//Navigator.push(context, MaterialPageRoute(builder: (context)=>audit_log_details_page(auditLogs[index])));
+//},
+//),
+//)
+//),
+//Divider(),
+//],
+//);
+//}),
 
 
 

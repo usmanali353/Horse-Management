@@ -145,192 +145,194 @@ class graphsState extends State<graphs>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              Visibility(
-                visible: isVisible,
-                child: Container(
-                  margin: EdgeInsets.all(8),
-                  child: Card(
-                    elevation:5.0,
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(top:8,bottom:8),
-                          child:Center(child: Text("Horses by Gender",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20))),
-                        ),
-                        PieChart(
-                          dataMap: dataMap,
-                          animationDuration: Duration(milliseconds: 800),
-                          chartLegendSpacing: 32.0,
-                          chartRadius: MediaQuery.of(context).size.width / 2.7,
-                          showChartValuesInPercentage: true,
-                          showChartValues: true,
-                          showChartValuesOutside: false,
-                          chartValueBackgroundColor: Colors.grey[200],
-                          colorList: colorList,
-                          showLegends: true,
-                          legendPosition: LegendPosition.right,
-                          decimalPlaces: 1,
-                          showChartValueLabel: true,
-                          initialAngle: 0,
-                          chartValueStyle: defaultChartValueStyle.copyWith(
-                            color: Colors.blueGrey[900].withOpacity(0.9),
+      body: Scrollbar(
+        child: ListView(
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                Visibility(
+                  visible: isVisible,
+                  child: Container(
+                    margin: EdgeInsets.all(8),
+                    child: Card(
+                      elevation:5.0,
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(top:8,bottom:8),
+                            child:Center(child: Text("Horses by Gender",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20))),
                           ),
-                          chartType: ChartType.disc,
-                        ),
-                      ],
+                          PieChart(
+                            dataMap: dataMap,
+                            animationDuration: Duration(milliseconds: 800),
+                            chartLegendSpacing: 32.0,
+                            chartRadius: MediaQuery.of(context).size.width / 2.7,
+                            showChartValuesInPercentage: true,
+                            showChartValues: true,
+                            showChartValuesOutside: false,
+                            chartValueBackgroundColor: Colors.grey[200],
+                            colorList: colorList,
+                            showLegends: true,
+                            legendPosition: LegendPosition.right,
+                            decimalPlaces: 1,
+                            showChartValueLabel: true,
+                            initialAngle: 0,
+                            chartValueStyle: defaultChartValueStyle.copyWith(
+                              color: Colors.blueGrey[900].withOpacity(0.9),
+                            ),
+                            chartType: ChartType.disc,
+                          ),
+                        ],
 
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Visibility(
-                visible: isVisible,
-                child: Container(
-                  margin: EdgeInsets.all(8),
-                  height:MediaQuery.of(context).size.height/2.7,
-                  child: Card(
-                    elevation:5.0,
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(top:8,bottom:8),
-                          child:Center(child: Text("Horses by Trainings",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20))),
-                        ),
-                         Expanded(
-                           child: charts.BarChart(
-                             seriesList,
-                             animate: true,
-                             vertical: true,
-                             domainAxis:  charts.OrdinalAxisSpec(
-                                 renderSpec:  charts.SmallTickRendererSpec(
-                                   // Tick and Label styling here.
-                                     labelStyle:  charts.TextStyleSpec(// size in Pts.
-                                         color: charts.ColorUtil.fromDartColor(Colors.grey)),
-
-                                     // Change the line colors to match text color.
-                                     lineStyle: new charts.LineStyleSpec(
-                                         color: charts.ColorUtil.fromDartColor(Colors.grey)))),
-                               primaryMeasureAxis: new charts.NumericAxisSpec(
-                                   renderSpec: new charts.GridlineRendererSpec(
+                Visibility(
+                  visible: isVisible,
+                  child: Container(
+                    margin: EdgeInsets.all(8),
+                    height:MediaQuery.of(context).size.height/2.7,
+                    child: Card(
+                      elevation:5.0,
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(top:8,bottom:8),
+                            child:Center(child: Text("Horses by Trainings",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20))),
+                          ),
+                           Expanded(
+                             child: charts.BarChart(
+                               seriesList,
+                               animate: true,
+                               vertical: true,
+                               domainAxis:  charts.OrdinalAxisSpec(
+                                   renderSpec:  charts.SmallTickRendererSpec(
                                      // Tick and Label styling here.
-                                       labelStyle: new charts.TextStyleSpec(
+                                       labelStyle:  charts.TextStyleSpec(// size in Pts.
                                            color: charts.ColorUtil.fromDartColor(Colors.grey)),
+
                                        // Change the line colors to match text color.
                                        lineStyle: new charts.LineStyleSpec(
                                            color: charts.ColorUtil.fromDartColor(Colors.grey)))),
-                           )
-                         ),
+                                 primaryMeasureAxis: new charts.NumericAxisSpec(
+                                     renderSpec: new charts.GridlineRendererSpec(
+                                       // Tick and Label styling here.
+                                         labelStyle: new charts.TextStyleSpec(
+                                             color: charts.ColorUtil.fromDartColor(Colors.grey)),
+                                         // Change the line colors to match text color.
+                                         lineStyle: new charts.LineStyleSpec(
+                                             color: charts.ColorUtil.fromDartColor(Colors.grey)))),
+                             )
+                           ),
 
-                      ],
+                        ],
 
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Visibility(
-                visible: isVisible,
-                child: Container(
-                  margin: EdgeInsets.all(8),
-                  height:MediaQuery.of(context).size.height/2.7,
-                  child: Card(
-                    elevation:5.0,
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(top:8,bottom:8),
-                          child:Center(child: Text("Horses by Breeding",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20))),
-                        ),
-                        Expanded(
-                            child: charts.BarChart(
-                              seriesList2,
-                              animate: true,
-                              vertical: false,
-                              domainAxis:  charts.OrdinalAxisSpec(
-                                  renderSpec:  charts.SmallTickRendererSpec(
-                                    // Tick and Label styling here.
-                                      labelStyle:  charts.TextStyleSpec(// size in Pts.
-                                          color: charts.ColorUtil.fromDartColor(Colors.grey)),
+                Visibility(
+                  visible: isVisible,
+                  child: Container(
+                    margin: EdgeInsets.all(8),
+                    height:MediaQuery.of(context).size.height/2.7,
+                    child: Card(
+                      elevation:5.0,
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(top:8,bottom:8),
+                            child:Center(child: Text("Horses by Breeding",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20))),
+                          ),
+                          Expanded(
+                              child: charts.BarChart(
+                                seriesList2,
+                                animate: true,
+                                vertical: false,
+                                domainAxis:  charts.OrdinalAxisSpec(
+                                    renderSpec:  charts.SmallTickRendererSpec(
+                                      // Tick and Label styling here.
+                                        labelStyle:  charts.TextStyleSpec(// size in Pts.
+                                            color: charts.ColorUtil.fromDartColor(Colors.grey)),
 
-                                      // Change the line colors to match text color.
-                                      lineStyle: new charts.LineStyleSpec(
-                                          color: charts.ColorUtil.fromDartColor(Colors.grey)))),
-                              primaryMeasureAxis: new charts.NumericAxisSpec(
-                                  renderSpec: new charts.GridlineRendererSpec(
-                                    // Tick and Label styling here.
-                                      labelStyle: new charts.TextStyleSpec(
-                                          color: charts.ColorUtil.fromDartColor(Colors.grey)),
-                                      // Change the line colors to match text color.
-                                      lineStyle: new charts.LineStyleSpec(
-                                          color: charts.ColorUtil.fromDartColor(Colors.grey)))),
-                            )
-                        ),
+                                        // Change the line colors to match text color.
+                                        lineStyle: new charts.LineStyleSpec(
+                                            color: charts.ColorUtil.fromDartColor(Colors.grey)))),
+                                primaryMeasureAxis: new charts.NumericAxisSpec(
+                                    renderSpec: new charts.GridlineRendererSpec(
+                                      // Tick and Label styling here.
+                                        labelStyle: new charts.TextStyleSpec(
+                                            color: charts.ColorUtil.fromDartColor(Colors.grey)),
+                                        // Change the line colors to match text color.
+                                        lineStyle: new charts.LineStyleSpec(
+                                            color: charts.ColorUtil.fromDartColor(Colors.grey)))),
+                              )
+                          ),
 
-                      ],
+                        ],
 
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Visibility(
-                visible: isVisible,
-                child: Container(
-                  margin: EdgeInsets.all(8),
-                  height:MediaQuery.of(context).size.height/2.7,
-                  child: Card(
-                    elevation:5.0,
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(top:8,bottom:8),
-                          child:Center(child: Text("Income and Expenses",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20))),
-                        ),
-                        Expanded(
-                            child: charts.LineChart(
-                              seriesLineList,
-                              animate: true,
-                                behaviors: [
-                                new charts.ChartTitle('Months',titleStyleSpec: charts.TextStyleSpec(color: charts.ColorUtil.fromDartColor(Colors.grey)),
-                                behaviorPosition: charts.BehaviorPosition.bottom,
-                                titleOutsideJustification:charts.OutsideJustification.middleDrawArea),
-                                  new charts.ChartTitle('Income Expenses',titleStyleSpec: charts.TextStyleSpec(color: charts.ColorUtil.fromDartColor(Colors.grey)),
-                                      behaviorPosition: charts.BehaviorPosition.start,
-                                      titleOutsideJustification: charts.OutsideJustification.middleDrawArea),
-                                ],
-                              domainAxis:  charts.NumericAxisSpec(
-                                  renderSpec:  charts.SmallTickRendererSpec(
-                                    // Tick and Label styling here.
-                                      labelStyle:  charts.TextStyleSpec(// size in Pts.
-                                          color: charts.ColorUtil.fromDartColor(Colors.grey)),
+                Visibility(
+                  visible: isVisible,
+                  child: Container(
+                    margin: EdgeInsets.all(8),
+                    height:MediaQuery.of(context).size.height/2.7,
+                    child: Card(
+                      elevation:5.0,
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(top:8,bottom:8),
+                            child:Center(child: Text("Income and Expenses",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20))),
+                          ),
+                          Expanded(
+                              child: charts.LineChart(
+                                seriesLineList,
+                                animate: true,
+                                  behaviors: [
+                                  new charts.ChartTitle('Months',titleStyleSpec: charts.TextStyleSpec(color: charts.ColorUtil.fromDartColor(Colors.grey)),
+                                  behaviorPosition: charts.BehaviorPosition.bottom,
+                                  titleOutsideJustification:charts.OutsideJustification.middleDrawArea),
+                                    new charts.ChartTitle('Income Expenses',titleStyleSpec: charts.TextStyleSpec(color: charts.ColorUtil.fromDartColor(Colors.grey)),
+                                        behaviorPosition: charts.BehaviorPosition.start,
+                                        titleOutsideJustification: charts.OutsideJustification.middleDrawArea),
+                                  ],
+                                domainAxis:  charts.NumericAxisSpec(
+                                    renderSpec:  charts.SmallTickRendererSpec(
+                                      // Tick and Label styling here.
+                                        labelStyle:  charts.TextStyleSpec(// size in Pts.
+                                            color: charts.ColorUtil.fromDartColor(Colors.grey)),
 
-                                      // Change the line colors to match text color.
-                                      lineStyle: new charts.LineStyleSpec(
-                                          color: charts.ColorUtil.fromDartColor(Colors.grey)))),
-                              primaryMeasureAxis: new charts.NumericAxisSpec(
-                                  renderSpec: new charts.GridlineRendererSpec(
-                                    // Tick and Label styling here.
-                                      labelStyle: new charts.TextStyleSpec(
-                                          color: charts.ColorUtil.fromDartColor(Colors.grey)),
-                                      // Change the line colors to match text color.
-                                      lineStyle: new charts.LineStyleSpec(
-                                          color: charts.ColorUtil.fromDartColor(Colors.grey)))),
-                            )
-                        ),
+                                        // Change the line colors to match text color.
+                                        lineStyle: new charts.LineStyleSpec(
+                                            color: charts.ColorUtil.fromDartColor(Colors.grey)))),
+                                primaryMeasureAxis: new charts.NumericAxisSpec(
+                                    renderSpec: new charts.GridlineRendererSpec(
+                                      // Tick and Label styling here.
+                                        labelStyle: new charts.TextStyleSpec(
+                                            color: charts.ColorUtil.fromDartColor(Colors.grey)),
+                                        // Change the line colors to match text color.
+                                        lineStyle: new charts.LineStyleSpec(
+                                            color: charts.ColorUtil.fromDartColor(Colors.grey)))),
+                              )
+                          ),
 
-                      ],
+                        ],
 
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
 
-        ],
+          ],
 
+        ),
       )
     );
   }

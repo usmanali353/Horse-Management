@@ -101,67 +101,68 @@ class _breeding_control_list extends State< breeding_control_list>{
         },
         child: Visibility(
           visible: isVisible,
-          child: ListView.builder(itemCount:control_list!=null?control_list.length:temp.length,itemBuilder: (context,int index){
-            return Column(
-              children: <Widget>[
-                Slidable(
-                    actionPane: SlidableDrawerActionPane(),
-                    actionExtentRatio: 0.20,
-                    secondaryActions: <Widget>[
-                      IconSlideAction(
-                        icon: Icons.edit,
-                        color: Colors.blue,
-                        caption: 'Update',
-                        onTap: () async {
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_breeding_control(token,control_list[index])));
-                        },
-                      ),
-                      IconSlideAction(
-                        icon: Icons.access_time,
-                        color: Colors.deepPurple,
-                        caption: 'Next Check',
-                        onTap: () async {
-                          print(control_list[index]);
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>next_breeding_check(token, control_list[index]['breedingControlId'])));
-                        },
-                      ),
-                    ],
-                    actions: <Widget>[
-                      IconSlideAction(
-                        icon: Icons.visibility_off,
-                        color: Colors.red,
-                        caption: 'Hide',
-                        onTap: () async {
-                          Utils.check_connectivity().then((result){
-                            if(result){
-                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                              pd.show();
-                              network_operations.change_breeding_control_visibility(token, control_list[index]['breedingControlId']).then((response){
-                                pd.dismiss();
-                                if(response!=null){
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    backgroundColor:Colors.green ,
-                                    content: Text('Visibility Changed'),
-                                  ));
-                                  setState(() {
-                                    control_list.removeAt(index);
+          child: Scrollbar(
+              child: ListView.builder(itemCount:control_list!=null?control_list.length:temp.length,itemBuilder: (context,int index){
+                return Column(
+                  children: <Widget>[
+                    Slidable(
+                        actionPane: SlidableDrawerActionPane(),
+                        actionExtentRatio: 0.20,
+                        secondaryActions: <Widget>[
+                          IconSlideAction(
+                            icon: Icons.edit,
+                            color: Colors.blue,
+                            caption: 'Update',
+                            onTap: () async {
+                              Navigator.push(context,MaterialPageRoute(builder: (context)=>update_breeding_control(token,control_list[index])));
+                            },
+                          ),
+                          IconSlideAction(
+                            icon: Icons.access_time,
+                            color: Colors.deepPurple,
+                            caption: 'Next Check',
+                            onTap: () async {
+                              print(control_list[index]);
+                              Navigator.push(context,MaterialPageRoute(builder: (context)=>next_breeding_check(token, control_list[index]['breedingControlId'])));
+                            },
+                          ),
+                        ],
+                        actions: <Widget>[
+                          IconSlideAction(
+                            icon: Icons.visibility_off,
+                            color: Colors.red,
+                            caption: 'Hide',
+                            onTap: () async {
+                              Utils.check_connectivity().then((result){
+                                if(result){
+                                  ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                                  pd.show();
+                                  network_operations.change_breeding_control_visibility(token, control_list[index]['breedingControlId']).then((response){
+                                    pd.dismiss();
+                                    if(response!=null){
+                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                        backgroundColor:Colors.green ,
+                                        content: Text('Visibility Changed'),
+                                      ));
+                                      setState(() {
+                                        control_list.removeAt(index);
+                                      });
+                                    }else{
+                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                        backgroundColor:Colors.red ,
+                                        content: Text('Failed'),
+                                      ));
+                                    }
                                   });
                                 }else{
                                   Scaffold.of(context).showSnackBar(SnackBar(
-                                    backgroundColor:Colors.red ,
-                                    content: Text('Failed'),
+                                    content: Text("Network not Available"),
+                                    backgroundColor: Colors.red,
                                   ));
                                 }
                               });
-                            }else{
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                content: Text("Network not Available"),
-                                backgroundColor: Colors.red,
-                              ));
-                            }
-                          });
-                        },
-                      ),
+                            },
+                          ),
 //                      IconSlideAction(
 //                        icon: Icons.timer,
 //                        color: Colors.deepOrange,
@@ -234,23 +235,24 @@ class _breeding_control_list extends State< breeding_control_list>{
 //
 //                        },
 //                      ),
-                    ],
-                    child: FadeAnimation(2.0,
-                      ListTile(
-                        trailing:Text(control_list!=null?control_list[index]['date']:''),
-                        title: Text(control_list!=null?control_list[index]['horseName']['name']:''),
-                        subtitle: Text(control_list!=null?get_check_method_by_id(control_list[index]['check_Method']):''),
-                        //leading: Icon(Icons.pets,size: 40,color: Colors.teal,),
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => breeding_control_details_page(control_list[index], get_check_method_by_id(control_list[index]['check_Method']))));
-                        },
-                      ),
-                    )
-                ),
-                Divider(),
-              ],
-            );
-          }),
+                        ],
+                        child: FadeAnimation(2.0,
+                          ListTile(
+                            trailing:Text(control_list!=null?control_list[index]['date']:''),
+                            title: Text(control_list!=null?control_list[index]['horseName']['name']:''),
+                            subtitle: Text(control_list!=null?get_check_method_by_id(control_list[index]['check_Method']):''),
+                            //leading: Icon(Icons.pets,size: 40,color: Colors.teal,),
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => breeding_control_details_page(control_list[index], get_check_method_by_id(control_list[index]['check_Method']))));
+                            },
+                          ),
+                        )
+                    ),
+                    Divider(),
+                  ],
+                );
+              }),
+          )
         ),
       ),
     );

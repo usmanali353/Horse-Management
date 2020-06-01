@@ -29,7 +29,7 @@ class _training_list_state extends State<HorseListInGroup>{
   var groupid;
   _training_list_state (this.token,this.groupid);
   SharedPreferences prefs;
-  var horse_list;
+  var horse_list, load_list, load_list1;
   bool isdynamic=true;
   var temp=[];
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
@@ -53,15 +53,14 @@ class _training_list_state extends State<HorseListInGroup>{
         ProgressDialog pd = ProgressDialog(
             context, isDismissible: true, type: ProgressDialogType.Normal);
         pd.show();
-        Add_horsegroup_services.gethorselistOfGroup(token,groupid['id']).then((respons){
+        Add_horsegroup_services.gethorselistOfGroup(token,groupid['id']).then((response){
           pd.dismiss();
           // print(response.length.toString());
-          if(respons!=null){
+          if(response!=null){
             setState(() {
-              var loadlist;
               //var parsedjson = jsonDecode(response);
-              loadlist = jsonDecode(respons);
-              horse_list = loadlist['response'];
+              load_list  = jsonDecode(response);
+              horse_list = load_list['response'];
               print(horse_list);
               //print(horse_list['createdBy']);
             });
@@ -84,7 +83,7 @@ class _training_list_state extends State<HorseListInGroup>{
 
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text(" Horses in Group"),actions: <Widget>[
+        appBar: AppBar(title: Text("Horses in Group"),actions: <Widget>[
          // Center(child: Text("Add New",textScaleFactor: 1.3,)),
           Visibility(
             visible: isdynamic,
@@ -105,14 +104,14 @@ class _training_list_state extends State<HorseListInGroup>{
           onRefresh: (){
             return Utils.check_connectivity().then((result){
               if(result){
-                Add_horsegroup_services.gethorselistOfGroup(token,groupid['id']).then((respons){
+                Add_horsegroup_services.gethorselistOfGroup(token,groupid['id']).then((response){
                   // print(response.length.toString());
-                  if(respons!=null){
+                  if(response!=null){
                     setState(() {
-                      var loadlist;
                       //var parsedjson = jsonDecode(response);
-                      loadlist = jsonDecode(respons);
-                      horse_list = loadlist['response'];
+                      load_list1  = jsonDecode(response);
+                      horse_list = load_list1['response'];
+
                       print(horse_list);
                       //print(horse_list['createdBy']);
                     });

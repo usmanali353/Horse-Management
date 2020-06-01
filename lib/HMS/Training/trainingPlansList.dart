@@ -80,76 +80,78 @@ class trainingPlanListState extends State<trainingPlanList>{
         },
         child: Visibility(
           visible: isvisible,
-          child: ListView.builder(itemCount:training_list!=null?training_list.length:temp.length,itemBuilder: (context,int index){
-            return Column(
-              children: <Widget>[
-                Slidable(
-                  actionPane: SlidableDrawerActionPane(),
-                  actionExtentRatio: 0.20,
-                  actions: <Widget>[
-                    IconSlideAction(
-                      icon: Icons.visibility_off,
-                      color: Colors.red,
-                      caption: 'Hide',
-                      onTap: () async {
-                        Utils.check_connectivity().then((result){
-                          if(result){
-                            ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                            pd.show();
-                            network_operations.changeTrainingPlanVisibility(token, training_list[index]['planId']).then((response){
-                              pd.dismiss();
-                              if(response!=null){
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  backgroundColor:Colors.green ,
-                                  content: Text('Visibility Changed'),
-                                ));
-                                setState(() {
-                                  training_list.removeAt(index);
-                                });
-                              }else{
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  backgroundColor:Colors.red ,
-                                  content: Text('Failed'),
-                                ));
-                              }
-                            });
-                          }else{
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text("Network not Available"),
-                              backgroundColor: Colors.red,
-                            ));
-                          }
-                        });
+          child: Scrollbar(
+            child: ListView.builder(itemCount:training_list!=null?training_list.length:temp.length,itemBuilder: (context,int index){
+              return Column(
+                children: <Widget>[
+                  Slidable(
+                    actionPane: SlidableDrawerActionPane(),
+                    actionExtentRatio: 0.20,
+                    actions: <Widget>[
+                      IconSlideAction(
+                        icon: Icons.visibility_off,
+                        color: Colors.red,
+                        caption: 'Hide',
+                        onTap: () async {
+                          Utils.check_connectivity().then((result){
+                            if(result){
+                              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+                              pd.show();
+                              network_operations.changeTrainingPlanVisibility(token, training_list[index]['planId']).then((response){
+                                pd.dismiss();
+                                if(response!=null){
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.green ,
+                                    content: Text('Visibility Changed'),
+                                  ));
+                                  setState(() {
+                                    training_list.removeAt(index);
+                                  });
+                                }else{
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    backgroundColor:Colors.red ,
+                                    content: Text('Failed'),
+                                  ));
+                                }
+                              });
+                            }else{
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text("Network not Available"),
+                                backgroundColor: Colors.red,
+                              ));
+                            }
+                          });
 
+                        },
+                      ),
+                      IconSlideAction(
+                        icon: Icons.edit,
+                        color: Colors.blue,
+                        caption: 'Update',
+                        onTap: () async {
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_training(token,training_list[index])));
+                        },
+                      ),
+                    ],
+                    child: ListTile(
+                      title: Text(training_list!=null?training_list[index]['name']:''),
+                      //trailing: Text(training_list!=null?training_list[index]['startDate'].toString().replaceAll("T00:00:00",''):''),
+                     // subtitle: Text(training_list!=null?get_training_type_by_id(training_list[index]['trainingType']):''),
+                      leading: Icon(Icons.fitness_center,size: 40,color: Colors.teal,),
+                      onTap: (){
+                       // Navigator.push(context, MaterialPageRoute(builder: (context)=>training_details_page(training_list[index],get_training_type_by_id(training_list[index]['trainingType']))));
                       },
                     ),
-                    IconSlideAction(
-                      icon: Icons.edit,
-                      color: Colors.blue,
-                      caption: 'Update',
-                      onTap: () async {
-                        Navigator.push(context,MaterialPageRoute(builder: (context)=>update_training(token,training_list[index])));
-                      },
-                    ),
-                  ],
-                  child: ListTile(
-                    title: Text(training_list!=null?training_list[index]['name']:''),
-                    //trailing: Text(training_list!=null?training_list[index]['startDate'].toString().replaceAll("T00:00:00",''):''),
-                   // subtitle: Text(training_list!=null?get_training_type_by_id(training_list[index]['trainingType']):''),
-                    leading: Icon(Icons.fitness_center,size: 40,color: Colors.teal,),
-                    onTap: (){
-                     // Navigator.push(context, MaterialPageRoute(builder: (context)=>training_details_page(training_list[index],get_training_type_by_id(training_list[index]['trainingType']))));
-                    },
+
+
                   ),
+                  Divider(),
+                ],
 
+              );
 
-                ),
-                Divider(),
-              ],
-
-            );
-
-          }),
+            }),
+          ),
         ),
       ),
     );
