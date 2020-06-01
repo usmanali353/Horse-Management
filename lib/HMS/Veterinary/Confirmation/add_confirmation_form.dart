@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Utils.dart';
+import 'addlimbs.dart';
 
 class add_confirmation extends StatefulWidget{
   String token;
@@ -26,14 +27,18 @@ class add_confirmationState extends State<add_confirmation>{
   Map<String, String> _lfdata = {};
   Map<String, String> _rhdata = {};
   Map<String, String> _lhdata = {};
+
   var _rflist = List<Widget>();
   var _lflist = List<Widget>();
   var _rhlist = List<Widget>();
   var _lhlist = List<Widget>();
+
   int _rfindex = 1;
   int _lfindex = 1;
   int _rhindex = 1;
   int _lhindex = 1;
+
+  List<Map> rfadd=[];
   add_confirmationState(this.token);
 
   DateTime date=DateTime.now();
@@ -909,6 +914,7 @@ class add_confirmationState extends State<add_confirmation>{
                 padding: EdgeInsets.only(top: 16),
                 child: MaterialButton(
                   onPressed: () async{
+
                     print(_rfdata);
                     print(_lfdata);
                     print(_rhdata);

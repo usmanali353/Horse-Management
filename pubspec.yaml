@@ -47,6 +47,7 @@ dependencies:
   charts_flutter:
   pie_chart:
   draggable_scrollbar: ^0.0.4
+  fab_circular_menu: ^1.0.0
 
 
 

@@ -282,7 +282,7 @@ class _update_horse_state extends State<update_horse>{
                         Padding(
                           padding: const EdgeInsets.only(left: 16,right: 16),
                           child: FormBuilderDropdown(
-                           initialValue:horsedata['barnId'] != null ? get_barn_by_id(barnid):null,
+                           initialValue:horsedata['barnId'] != null ? get_barn_by_id(barnid):Text(""),
                             attribute: "Barn",
                             hint: Text("Barn"),
                             items: barn.map((name) => DropdownMenuItem(
@@ -346,7 +346,7 @@ class _update_horse_state extends State<update_horse>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Breed",
-                           initialValue:horsedata['breedId'] != null ? horsedata['breedName']['name']:null,
+                           initialValue:horsedata['breedId'] != null ? horsedata['breedName']['name']:Text(''),
                             hint: Text("Breed"),
                             items: breeding.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
@@ -412,7 +412,7 @@ class _update_horse_state extends State<update_horse>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Color",
-                            initialValue: horsedata['colorId'] != null ? horsedata['colorName']['name']:null,
+                            initialValue: horsedata['colorId'] != null ? horsedata['colorName']['name']:Text(''),
                             hint: Text("Color"),
                             items: colors.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
@@ -444,7 +444,7 @@ class _update_horse_state extends State<update_horse>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Category",
-                            initialValue: getinfo['categoryName']['name']!= null?getinfo['categoryName']['name']:null,
+                           // initialValue: getinfo['categoryName']['name']!= null?getinfo['categoryName']['name']:Text(''),
                             hint: Text("Category"),
                             items: category.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
@@ -668,7 +668,7 @@ class _update_horse_state extends State<update_horse>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Breeder",
-                            initialValue: getinfo['horseDetails']['breederId'] != null ? getinfo['horseDetail']['breederName']['contactName']['name']:null,
+                           // initialValue: getinfo['horseDetails']['breederId'] != null ? getinfo['horseDetail']['breederName']['contactName']['name']:null,
                             hint: Text("Breeder"),
                             items: breeder.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
@@ -922,6 +922,107 @@ class _update_horse_state extends State<update_horse>{
     }else
       return null;
   }
+
+  String get_legmark_by_id(int id){
+    var plan_name;
+    if(horsedata!=null&&getHorses['legMarkingsDropDown']!=null&&id!=null){
+      for(int i=0;i<barn.length;i++){
+        if(getHorses['legMarkingsDropDown'][i]['id']==id){
+          plan_name=getHorses['legMarkingsDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+
+  String get_headmark_by_id(int id){
+    var plan_name;
+    if(horsedata!=null&&getHorses['headMarkingsDropDown']!=null&&id!=null){
+      for(int i=0;i<barn.length;i++){
+        if(getHorses['headMarkingsDropDown'][i]['id']==id){
+          plan_name=getHorses['headMarkingsDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+  String get_diet_by_id(int id){
+    var plan_name;
+    if(horsedata!=null&&getHorses['dietDropDown']!=null&&id!=null){
+      for(int i=0;i<barn.length;i++){
+        if(getHorses['dietDropDown'][i]['id']==id){
+          plan_name=getHorses['dietDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+  String get_category_by_id(int id){
+    var plan_name;
+    if(horsedata!=null&&getHorses['horseCategoryDropDown']!=null&&id!=null){
+      for(int i=0;i<barn.length;i++){
+        if(getHorses['horseCategoryDropDown'][i]['id']==id){
+          plan_name=getHorses['horseCategoryDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+  String get_breeder_by_id(int id){
+    var plan_name;
+    if(horsedata!=null&&getHorses['breederDropDown']!=null&&id!=null){
+      for(int i=0;i<barn.length;i++){
+        if(getHorses['breederDropDown'][i]['id']==id){
+          plan_name=getHorses['breederDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+  String get_vet_by_id(int id){
+    var plan_name;
+    if(horsedata!=null&&getHorses['vetDropDown']!=null&&id!=null){
+      for(int i=0;i<barn.length;i++){
+        if(getHorses['vetDropDown'][i]['id']==id){
+          plan_name=getHorses['vetDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+  String get_rider_by_id(int id){
+    var plan_name;
+    if(horsedata!=null&&getHorses['riderDropDown']!=null&&id!=null){
+      for(int i=0;i<barn.length;i++){
+        if(getHorses['riderDropDown'][i]['id']==id){
+          plan_name=getHorses['riderDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+  String get_association_by_id(int id){
+    var plan_name;
+    if(horsedata!=null&&getHorses['associationDropDown']!=null&&id!=null){
+      for(int i=0;i<barn.length;i++){
+        if(getHorses['associationDropDown'][i]['id']==id){
+          plan_name=getHorses['associationDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+
+
+
 }
 
 
