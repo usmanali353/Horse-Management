@@ -317,7 +317,7 @@ class add_confirmationState extends State<add_confirmation>{
             ),
           ),
           ListTile(
-            title: FormBuilderDropdown(attribute: "Horse",
+            title: FormBuilderDropdown(attribute: "Horses",
               hint: Text("Response"),
               items:respons!=null?respons.map((horse)=>DropdownMenuItem(
                 child: Text(horse),
