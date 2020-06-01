@@ -8,7 +8,6 @@ import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'income_and_expenses.dart';
 import 'update_income_expense.dart';
 
@@ -30,9 +29,12 @@ class income_expense_list extends StatefulWidget{
 
 }
 class _incomeExpense_list_state extends State<income_expense_list>{
-  var list,incomelist, load_list;
+  var list,incomelist, load_list,pagelist,pageloadlist;
+
   int horseId;String token;
   var temp=['',''];
+  int pagenum = 1;
+  int total_page;
   SharedPreferences prefs;
 
   _incomeExpense_list_state (this.token);
@@ -49,8 +51,7 @@ class _incomeExpense_list_state extends State<income_expense_list>{
 
     Utils.check_connectivity().then((result){
       if(result) {
-        ProgressDialog pd = ProgressDialog(
-            context, isDismissible: true, type: ProgressDialogType.Normal);
+        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
         pd.show();
         income_expense_services.income_expenselist(token).then((
             response) {
@@ -59,6 +60,8 @@ class _incomeExpense_list_state extends State<income_expense_list>{
             print(response);
             load_list = json.decode(response);
             list = load_list['response'];
+            total_page=load_list['totalPages'];
+            print(total_page);
           });
         });
       }else
@@ -74,7 +77,10 @@ class _incomeExpense_list_state extends State<income_expense_list>{
 
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Income & Expense "),actions: <Widget>[
+        appBar: AppBar(title: Text("Income & Expense "),
+
+          actions: <Widget>[
+
           Center(child: Text("Add New",textScaleFactor: 1.3,)),
           IconButton(
 
@@ -88,6 +94,76 @@ class _incomeExpense_list_state extends State<income_expense_list>{
             },
           )
         ],),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton:
+        Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
+
+                if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                 Utils.check_connectivity().then((result){
+                    if(result) {
+                       ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                  income_expense_services.income_expenselistbypage(token, pagenum).then((response) {
+                        pd.dismiss();
+                    setState(() {
+                      print(response);
+                      load_list= json.decode(response);
+                      list = load_list['response'];
+                      print(list);
+                    });
+                  });
+                    }else
+                      print("network nahi hai");
+                 });
+                }
+                else{
+                  print("list empty");
+                  //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                }
+                if(pagenum > 1){
+               pagenum = pagenum - 1;
+                }
+                print(pagenum);
+              }),
+              FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                print(load_list['hasNext']);
+                if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                  Utils.check_connectivity().then((result){
+                    if(result) {
+                      ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                      pd.show();
+                      income_expense_services.income_expenselistbypage(
+                          token, pagenum).then((response) {
+                        pd.dismiss();
+                        setState(() {
+                          print(response);
+                          load_list = json.decode(response);
+                          list = load_list['response'];
+                          print(list);
+                        });
+                      });
+                    }else
+                      print("network nahi hai");
+                  });
+                }
+                else{
+                  print("list empty");
+                  //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                }
+                if(pagenum < total_page) {
+                  pagenum = pagenum + 1;
+                }
+                print(pagenum);
+
+              })
+            ]
+            )
+        ),
         body:ListView.builder(itemCount:list!=null?list.length:temp.length,itemBuilder: (context,int index){
           return Column(
             children: <Widget>[
@@ -129,7 +205,7 @@ class _incomeExpense_list_state extends State<income_expense_list>{
           //['categoryName']['name']
                   title: Text(list != null ? list[index]['horseName']['name']:""),
                   subtitle: Text(list != null ? "Account: "+list[index]['categoryName']['name']:""),
-                  trailing: Text(list != null ? "Date: "+list[index]['date'].toString().substring(0,10):""),
+                  trailing: Text(list[index]['date'] != null ? "Date: "+list[index]['date'].toString().substring(0,10):""),
                 // leading: Text(list != null ? 'Amount '+list[index]['amount'].toString():""),
                   children: <Widget>[
                 Divider(),
@@ -144,6 +220,7 @@ class _incomeExpense_list_state extends State<income_expense_list>{
                 ),
               ),
               Divider(),
+
             ],
 
           );

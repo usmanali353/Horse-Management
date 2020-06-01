@@ -27,7 +27,16 @@ class healthServices{
     }else
       return null;
   }
-
+  static Future<String> healthRecordTestlistbypage(String token,int pagenum) async{
+    Map<String,String> headers = {'Authorization':'Bearer '+token};
+    final response = await http.get('http://192.236.147.77:8083/api/horse/GetAllHealthRecords?pageNumber='+pagenum.toString()+'&pageSize=10',
+      headers: headers,
+    );
+    if(response.statusCode==200){
+      return response.body;
+    }else
+      return null;
+  }
   static Future<String> healthdropdown(String token) async{
     Map<String,String> headers = {'Authorization':'Bearer '+token};
     final response = await http.get('http://192.236.147.77:8083/api/horse/GetHealthRecordById/1',

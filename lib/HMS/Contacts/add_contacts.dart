@@ -213,6 +213,7 @@ class _add_contacts_state extends State<add_contacts>{
                           controller: email,
                           attribute: "Email",
                           keyboardType: TextInputType.emailAddress,
+                          validators: [FormBuilderValidators.required()],
                           decoration: InputDecoration(labelText: "Email",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),

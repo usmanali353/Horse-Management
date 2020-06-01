@@ -27,6 +27,16 @@ class farrier_services{
     }else
       return null;
   }
+  static Future<String> farrierlistbypage(String token,int pagenum) async{
+    Map<String,String> headers = {'Authorization':'Bearer '+token};
+    final response = await http.get('http://192.236.147.77:8083/api/horse/GetAllFarriers?pageNumber='+pagenum.toString()+'&pageSize=10',
+      headers: headers,
+    );
+    if(response.statusCode==200){
+      return response.body;
+    }else
+      return null;
+  }
 
   static Future<String> farrierDropdown(String token) async{
     Map<String,String> headers = {'Authorization':'Bearer '+token};
