@@ -39,6 +39,7 @@ class ConfirmationServices {
   static Future<String> add_confirmation(String token,int confirmationId,int horseId,DateTime date,int vetId,int opinion, String createdBy,List<Map>confirmationDetails) async{
     Map<String,String> headers = {'Content-Type':'application/json',"Authorization":"Bearer "+token};
     final body = jsonEncode({
+      "date":date,
       "conformationId":confirmationId,
       "horseId":horseId,
       "vetId":vetId,
@@ -52,6 +53,7 @@ class ConfirmationServices {
         headers: headers,
         body:body);
     print(response.body);
+    print(body);
     if(response.statusCode==200){
       return response.body;
     }else

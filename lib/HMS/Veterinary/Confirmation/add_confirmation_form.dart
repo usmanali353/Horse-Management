@@ -220,7 +220,10 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _lfdata['foreLimbJoint${keyValue - 1}']=forejoint.indexOf(value).toString();
+                    _lfdata['conformationDetailId']='0';
+                   _lfdata['limb']='2';
+                   _lfdata['hindLimbJoint']='0';
+                  _lfdata['foreLimbJoint']=(forejoint.indexOf(value)+1).toString();
                 });
               },
             ),
@@ -244,7 +247,7 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _lfdata['conformationStation${keyValue - 1}']=confirmationstation.indexOf(value).toString();
+                  _lfdata['conformationStation']=confirmationstation.indexOf(value).toString();
                 });
               },
             ),
@@ -268,7 +271,7 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _lfdata['conformationMovement${keyValue - 1}']=confirmatioonmovement.indexOf(value).toString();
+                  _lfdata['conformationMovement']=confirmatioonmovement.indexOf(value).toString();
                 });
               },
             ),
@@ -292,7 +295,7 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _lfdata['lesion${keyValue - 1}']=lession.indexOf(value).toString();
+                  _lfdata['lesion']=lession.indexOf(value).toString();
                 });
               },
             ),
@@ -303,7 +306,7 @@ class add_confirmationState extends State<add_confirmation>{
               attribute: "treatment",
               validators: [FormBuilderValidators.required()],
               onChanged: (val) {
-                _lfdata['treatment${keyValue - 1}'] = val;
+                _lfdata['treatment'] = val;
               },
               decoration: InputDecoration(labelText: "Treatment",
                 border: OutlineInputBorder(
@@ -332,7 +335,7 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _lfdata['response${keyValue - 1}']=respons.indexOf(value).toString();
+                  _lfdata['response']=respons.indexOf(value).toString();
                 });
               },
             ),
@@ -908,11 +911,20 @@ class add_confirmationState extends State<add_confirmation>{
               padding: EdgeInsets.only(top: 16),
               child: MaterialButton(
                 onPressed: () async{
-                  print(_rfdata);
+                 // print(_rfdata);
                   print(_lfdata);
-                  print(_rhdata);
-                  print(_lhdata);
+                 // print(_rhdata);
+                 // print(_lhdata);
+                  List<Map> confirmationDetails=[];
+                  confirmationDetails.add(_lfdata);
 
+                  ConfirmationServices.add_confirmation(token, 0,confirmationDropdowns['horseDropDown'][selected_horse_id]['id'], date,confirmationDropdowns['vetDropDown'][selected_vet_id]['id'], selected_opinion_id, '', confirmationDetails).then((response){
+                    if(response!=null){
+
+                    }else{
+
+                    }
+                  });
                   SharedPreferences prefs= await SharedPreferences.getInstance();
                   if(_fbKey.currentState.validate()){
                    // Navigator.push(context, MaterialPageRoute(builder: (context)=>addProductsApplied(prefs.getString("token"),date,selected_horse_id,selected_vet_id,selected_opinion_id,confirmationDropdowns['conformationDetail']['foreLimbJointDropDown'])));
