@@ -34,7 +34,7 @@ class _training_list_state extends State<training_list>{
   var temp=['',''];
   bool isvisible=false;
   var trainingListBox;
-  int pagenum=1,total_page;
+
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   @override
   Widget build(BuildContext context) {
