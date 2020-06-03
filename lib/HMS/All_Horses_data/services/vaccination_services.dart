@@ -19,6 +19,18 @@ class vaccination_services {
       return null;
   }
 
+  static Future<String> vaccination_listbypage (String token,int pagenum) async {
+    Map<String, String> headers = {'Authorization': 'Bearer '+token};
+    final response = await http.get(
+      'http://192.236.147.77:8083/api/horse/GetAllVaccinations?pageNumber='+pagenum.toString()+'&pageSize=10',
+      headers: headers,
+    );
+    if (response.statusCode == 200) {
+      return response.body;
+    } else
+      return null;
+  }
+
   static Future<String> vaccinationDropdown (String token) async {
     Map<String, String> headers = {'Authorization': 'Bearer ' + token};
     final response = await http.get(

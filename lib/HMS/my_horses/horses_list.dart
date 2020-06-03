@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/my_horses/add_horse/add_horse_new.dart';
+import 'package:horse_management/HMS/my_horses/add_horse/add_horse_req.dart';
 import 'package:horse_management/HMS/my_horses/services/add_horse_services.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -39,7 +40,7 @@ class _training_list_state extends State<horse_list>{
               color: Colors.white,
             ),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => add_newHorse(token)),);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => add_HorseNew(token)),);
             },
           )
         ],),

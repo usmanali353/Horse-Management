@@ -39,18 +39,18 @@ class _Profile_Page_State extends State<all_horse_data>{
 
   @override
   void initState () {
-    Add_horse_services.horselist(token).then((response){
-      // print(response.length.toString());
-      if(response!=null){
-        setState(() {
-          //var parsedjson = jsonDecode(response);
-          parsedjson  = jsonDecode(response);
-          print(parsedjson);
-          //print(horse_list['createdBy']);
-        });
-
-      }
-    });
+//    Add_horse_services.horselist(token).then((response){
+//      // print(response.length.toString());
+//      if(response!=null){
+//        setState(() {
+//          //var parsedjson = jsonDecode(response);
+//          parsedjson  = jsonDecode(response);
+//          print(parsedjson);
+//          //print(horse_list['createdBy']);
+//        });
+//
+//      }
+//    });
   }
 
   @override

@@ -31,19 +31,93 @@ class _training_list_state extends State<training_list>{
   var temp=['',''];
   bool isvisible=false;
   var trainingListBox;
+  int pagenum=1,total_page;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_training(token)));
-        },
+//      appBar: AppBar(title: Text("Health Record"),actions: <Widget>[
+//        Center(child: Text("Add New",textScaleFactor: 1.3,)),
+//        IconButton(
+//
+//          icon: Icon(
+//            Icons.add,
+//            color: Colors.white,
+//          ),
+//          onPressed: () {
+//            Navigator.push(context, MaterialPageRoute(builder: (context) => add_training(token)),);
+//          },
+//        )
+//      ],),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton:
+      Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
 
+                  if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        network_operations.get_training(token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list= json.decode(response);
+                            training_list = load_list['response'];
+                            print(training_list);
+                          });
+                        });
+                      }else
+                        print("network nahi hai");
+                    });
+                  }
+                  else{
+                    print("list empty");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum > 1){
+                    pagenum = pagenum - 1;
+                  }
+                  print(pagenum);
+                }),
+                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                  print(load_list['hasNext']);
+                  if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        network_operations.get_training(
+                            token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list = json.decode(response);
+                            training_list = load_list['response'];
+                            print(training_list);
+                          });
+                        });
+                      }else
+                        print("network nahi hai");
+                    });
+                  }
+                  else{
+                    print("list empty");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum < total_page) {
+                    pagenum = pagenum + 1;
+                  }
+                  print(pagenum);
+
+                })
+              ]
+          )
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
@@ -53,7 +127,7 @@ class _training_list_state extends State<training_list>{
               if(result){
                 ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
                 pd.show();
-                network_operations.get_training(token).then((response){
+                network_operations.get_training(token,1).then((response){
                   pd.dismiss();
                   if(response!=null){
                     setState(() {

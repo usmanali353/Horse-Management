@@ -6,6 +6,7 @@ import 'package:horse_management/HMS/All_Horses_data/Horse_Notes/update_notes.da
 
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 class notes_list extends StatefulWidget{
   String token;
@@ -25,34 +26,112 @@ class _notes_list_state extends State<notes_list>{
   var notes_list=[], load_list;
   var temp=['',''];
   bool isvisible=false;
+  int pagenum=1,total_page;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   @override
   Widget build(BuildContext context) {
 
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Notes")),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(
+      appBar: AppBar(title: Text("Notes"),actions: <Widget>[
+        Center(child: Text("Add New",textScaleFactor: 1.3,)),
+        IconButton(
+
+          icon: Icon(
             Icons.add,
             color: Colors.white,
           ),
-          onPressed: (){
+          onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (context)=>add_new_note(token)));
           },
+        )
+      ],),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton:
+      Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
 
-        ),
+                  if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        network_operations.get_all_notes(token,pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list= json.decode(response);
+                            notes_list = load_list['response'];
+                            print(notes_list);
+                          });
+                        });
+                      }else
+                        print("network nahi hai");
+                    });
+                  }
+                  else{
+                    print("list empty");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum > 1){
+                    pagenum = pagenum - 1;
+                  }
+                  print(pagenum);
+                }),
+                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                  print(load_list['hasNext']);
+                  if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        network_operations.get_all_notes(
+                            token,pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list = json.decode(response);
+                            notes_list = load_list['response'];
+                            print(notes_list);
+                          });
+                        });
+                      }else
+                        print("network nahi hai");
+                    });
+                  }
+                  else{
+                    print("list empty");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum < total_page) {
+                    pagenum = pagenum + 1;
+                  }
+                  print(pagenum);
+
+                })
+              ]
+          )
+      ),
+
         body: RefreshIndicator(
               key: _refreshIndicatorKey,
               onRefresh: (){
                 return  Utils.check_connectivity().then((result){
                   if(result){
-                    network_operations.get_all_notes(token).then((response){
+                    ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                    pd.show();
+                    network_operations.get_all_notes(token,1).then((response){
+                      pd.dismiss();
                       if(response!=null){
                         setState(() {
                           isvisible=true;
                           load_list=json.decode(response);
                           notes_list = load_list['response'];
+                          total_page=load_list['totalPages'];
                         });
 
                       }else{

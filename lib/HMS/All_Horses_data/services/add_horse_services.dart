@@ -194,16 +194,16 @@ class Add_horse_services{
       return null;
   }
 
-  static Future<String> horselist(String token) async{
-    Map<String,String> headers = {'Authorization':'Bearer '+token};
-    final response = await http.get('http://192.236.147.77:8083/api/horse/GetHorses',
-      headers: headers,
-    );
-    if(response.statusCode==200){
-      return response.body;
-    }else
-      return null;
-  }
+//  static Future<String> horselist(String token) async{
+//    Map<String,String> headers = {'Authorization':'Bearer '+token};
+//    final response = await http.get('http://192.236.147.77:8083/api/horse/GetHorses',
+//      headers: headers,
+//    );
+//    if(response.statusCode==200){
+//      return response.body;
+//    }else
+//      return null;
+//  }
 
   static Future<String> horsesdropdown(String token) async{
     Map<String,String> headers = {'Authorization':'Bearer '+token};

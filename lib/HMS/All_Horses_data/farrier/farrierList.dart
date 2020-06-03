@@ -31,6 +31,7 @@ class _Profile_Page_State extends State<farrier_list>{
   String token;
   var farrierlist, load_list;
   var temp=[];
+  int pagenum=1,total_page;
 
 
   @override
@@ -60,6 +61,7 @@ class _Profile_Page_State extends State<farrier_list>{
             print(response);
             load_list = json.decode(response);
             farrierlist = load_list['response'];
+            total_page=load_list['totalPages'];
           });
         });
       }else
@@ -85,6 +87,76 @@ class _Profile_Page_State extends State<farrier_list>{
             },
           )
         ],),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton:
+        Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
+
+                    if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                      Utils.check_connectivity().then((result){
+                        if(result) {
+                          ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                          pd.show();
+                          farrier_services.farrierlistbypage(token, pagenum).then((response) {
+                            pd.dismiss();
+                            setState(() {
+                              print(response);
+                              load_list= json.decode(response);
+                              farrierlist = load_list['response'];
+                              print(farrierlist);
+                            });
+                          });
+                        }else
+                          print("network nahi hai");
+                      });
+                    }
+                    else{
+                      print("list empty");
+                      //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                    }
+                    if(pagenum > 1){
+                      pagenum = pagenum - 1;
+                    }
+                    print(pagenum);
+                  }),
+                  FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                    print(load_list['hasNext']);
+                    if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                      Utils.check_connectivity().then((result){
+                        if(result) {
+                          ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                          pd.show();
+                          farrier_services.farrierlistbypage(
+                              token, pagenum).then((response) {
+                            pd.dismiss();
+                            setState(() {
+                              print(response);
+                              load_list = json.decode(response);
+                              farrierlist = load_list['response'];
+                              print(farrierlist);
+                            });
+                          });
+                        }else
+                          print("network nahi hai");
+                      });
+                    }
+                    else{
+                      print("list empty");
+                      //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                    }
+                    if(pagenum < total_page) {
+                      pagenum = pagenum + 1;
+                    }
+                    print(pagenum);
+
+                  })
+                ]
+            )
+        ),
         body: ListView.builder(itemCount:farrierlist!=null?farrierlist.length:temp.length,itemBuilder: (context,int index){
           return Column(
             children: <Widget>[

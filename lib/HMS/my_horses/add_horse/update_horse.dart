@@ -43,7 +43,7 @@ class _update_horse_state extends State<update_horse>{
   List<String> breeder=[];List<String> vet=[];List<String> rider=[];List<String> location=[];List<String> incharge=[];List<String> association=[];
   var getHorses,genderlist;
   int horseId,barnid;
-  String intaial_gender_value;
+  String intaial_gender_value,createdBy;
   sqlite_helper local_db;
   var getinfo;
   bool _isvisible=false;
@@ -160,7 +160,7 @@ class _update_horse_state extends State<update_horse>{
     setState(() {
       print(horsedata);
        horseId = horsedata['horseId'];
-
+       createdBy = horsedata['createdBy'];
        name.text = horsedata['name'];
        number.text = horsedata['number'] != null ?horsedata['number'].toString():null;
        passport.text = horsedata['passportNo'] != null ?horsedata['passportNo'].toString():null;
@@ -860,7 +860,7 @@ class _update_horse_state extends State<update_horse>{
                       Padding(
                         padding: const EdgeInsets.all(16),
 //                      child: add_horse_button(fbKey: _fbKey,select_gender_id:select_gender_id,name: name ,token: token,number: number.text,passport: passport.text,microchip: passport.text,dateofbirth: Select_date,colorid: select_color_id,breedid: select_breed_id,categoryid: select_category_id,sireid: select_sire_id,damid: select_dam_id,headmarkid: select_headmark_id,bodymarkid: select_bodymark_id,legmarkid: select_legmark_id,dietid: select_diet_id,barnid: select_barn_id,ironbrandid:select_ironbrand_id,riderid: select_rider_id,inchargeid: select_incharge_id,associationid:select_associate_id,dna: name.text,genderlist: genderlist,getHorses:getHorses),
-                        child: add_horse_button(fbKey: _fbKey,token: token,horseId: horseId,name: name ,select_gender_id: select_gender_id,genderlist: genderlist,getHorses: getHorses,number: number.text,passport: passport.text,microchip: chip.text,dateofbirth: Select_date,colorid: select_color_id,breedid: select_breed_id,categoryid: select_category_id,sireid: select_sire_id,damid: select_dam_id,dna: dna.text),
+                        child: add_horse_button(fbKey: _fbKey,token: token,createdBy: createdBy,horseId: horseId,name: name ,select_gender_id: select_gender_id,genderlist: genderlist,getHorses: getHorses,number: number.text,passport: passport.text,microchip: chip.text,dateofbirth: Select_date,colorid: select_color_id,breedid: select_breed_id,categoryid: select_category_id,sireid: select_sire_id,damid: select_dam_id,dna: dna.text),
 
 //                      child: add_horse_button(fbKey: _fbKey,getHorses:getHorses,genderlist: genderlist,select_gender_id:select_gender_id,name: name ,token: token,number: number.text,passport: passport.text,microchip: passport.text,breedid: select_breed_id,categoryid: select_category_id,colorid: select_color_id,dateofbirth: Select_date,bodymarkid: select_bodymark_id,headmarkid: select_headmark_id,damid: select_dam_id,dietid: select_diet_id,barnid: select_barn_id,sireid: select_sire_id,dna: name.text,inchargeid: select_incharge_id,legmarkid: select_legmark_id,ironbrandid:select_associate_id,riderid: select_rider_id,),
                       )
@@ -1033,6 +1033,7 @@ class add_horse_button extends StatelessWidget {
   const add_horse_button({
     @required GlobalKey<FormBuilderState> fbKey,
     @required this.token,
+    @required this.createdBy,
     @required this.horseId,
      this.name,
      this.select_gender_id,
@@ -1063,7 +1064,7 @@ class add_horse_button extends StatelessWidget {
 
 
   }) : _fbKey = fbKey, super();
-  final String token;
+  final String token,createdBy;
   final GlobalKey<FormBuilderState> _fbKey;
   final int select_gender_id,horseId;
   final TextEditingController name;
@@ -1096,7 +1097,7 @@ class add_horse_button extends StatelessWidget {
           _fbKey.currentState.save();
 //          Add_horse_services.horsesave(token, 0, name.text,genderlist[select_gender_id]['id'], true,dateofbirth,number,passport,getHorses['colorDropDown'][colorid]['id'],getHorses['breedDropDown'][breedid]['id'],getHorses['horseCategoryDropDown'][categoryid]['id'],getHorses['sireDropDown'][sireid]['id'],getHorses['damDropDown'][damid]['id'],getHorses['headMarkDropDown'][headmarkid]['id'],getHorses['bodyMarkDropDown'][bodymarkid]['id'],getHorses['legMarkDropDown'][legmarkid]['id'],getHorses['dietDropDown'][dietid]['id'],getHorses['barnDropDown'][barnid]['id'],getHorses['ironBrandDropDown'][ironbrandid]['id'],getHorses['riderDropDown'][riderid]['id'],getHorses['inchargeDropDown'][inchargeid]['id'],dna).then((
        // ,getHorses['headMarkDropDown'][headmarkid]['id'],getHorses['bodyMarkDropDown'][bodymarkid]['id'],getHorses['legMarkDropDown'][legmarkid]['id'],getHorses['dietDropDown'][dietid]['id'],getHorses['barnDropDown'][barnid]['id'],getHorses['ironBrandDropDown'][ironbrandid]['id'],riderid,inchargeid,associtaionid
-          Add_horse_services.horseupdate(token,horseId , name.text,3, true,number,passport,microchip,dateofbirth,getHorses['colorDropDown'][colorid]['id'],getHorses['breedDropDown'][breedid]['id'],getHorses['horseCategoryDropDown'][categoryid]['id'],getHorses['sireDropDown'][sireid]['id'],getHorses['damDropDown'][damid]['id'],dna).then((
+          Add_horse_services.horseupdate(token,createdBy,horseId , name.text,1, true,number,passport,microchip,dateofbirth,getHorses['colorDropDown'][colorid]['id'],getHorses['breedDropDown'][breedid]['id'],getHorses['horseCategoryDropDown'][categoryid]['id'],getHorses['sireDropDown'][sireid]['id'],getHorses['damDropDown'][damid]['id'],dna).then((
               response) {
             if (response != null) {
               Scaffold.of(context).showSnackBar(SnackBar(

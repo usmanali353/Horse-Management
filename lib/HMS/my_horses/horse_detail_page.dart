@@ -8,6 +8,7 @@ import 'package:horse_management/HMS/my_horses/HypotheticPedegree/hypothetic_ped
 import 'package:horse_management/HMS/my_horses/add_horse/update_horse.dart';
 import 'package:horse_management/HMS/my_horses/breeding_sale/breeding_sales_specific.dart';
 import 'package:horse_management/HMS/my_horses/competetion/specific_competetion.dart';
+import 'package:horse_management/HMS/my_horses/diet/diet_list_dash.dart';
 import 'package:horse_management/HMS/my_horses/services/add_horse_services.dart';
 import 'package:horse_management/HMS/my_horses/training/tariningList_specific.dart';
 import 'package:horse_management/HMS/my_horses/vaccination/vaccination_list.dart';
@@ -246,8 +247,8 @@ class _Profile_Page_State extends State<horse_detail> {
                 },
               ),
 //              ListTile(
-//                title: Text("Notes"),
-//                subtitle: Text("manage note on horse"),
+//                title: Text("Diet"),
+//                subtitle: Text("See the Horse diet"),
 //                leading: Icon(
 //                  Icons.speaker_notes,
 //                  size: 40,
@@ -255,7 +256,7 @@ class _Profile_Page_State extends State<horse_detail> {
 //                trailing: Icon(Icons.arrow_right),
 //                onTap: () {
 //                  Navigator.push(context,
-//                      MaterialPageRoute(builder: (context) => add_new_note()));
+//                      MaterialPageRoute(builder: (context) => diet_listspecific(token,horsedata != null ? horsedata['allDiets']:null)));
 //                },
 //              ),
 //              ListTile(

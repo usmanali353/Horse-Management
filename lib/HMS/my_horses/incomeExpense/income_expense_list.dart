@@ -80,8 +80,8 @@ class _incomeExpense_list_state extends State<income_expense_list>{
             children: <Widget>[
               ExpansionTile(
           //['categoryName']['name']
-                title: Text(list[index]['categoryName']['name']),
-                trailing: Text(list[index]['date'].toString()),
+                title: Text("Account: \n"+list[index]['categoryName']['name']),
+                trailing: Text(list[index]['date'].toString().substring(0,10) ),
 
                 children: <Widget>[
 //

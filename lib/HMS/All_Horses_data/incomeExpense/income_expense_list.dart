@@ -205,14 +205,16 @@ class _incomeExpense_list_state extends State<income_expense_list>{
           //['categoryName']['name']
                   title: Text(list != null ? list[index]['horseName']['name']:""),
                   subtitle: Text(list != null ? "Account: "+list[index]['categoryName']['name']:""),
-                  trailing: Text(list[index]['date'] != null ? "Date: "+list[index]['date'].toString().substring(0,10):""),
+                  trailing: Text(list != null ? "Date: "+list[index]['date'].toString().substring(0,10):""),
                 // leading: Text(list != null ? 'Amount '+list[index]['amount'].toString():""),
                   children: <Widget>[
+
                 Divider(),
+
                 ListTile(
                   title: Text("Amount"),
                   trailing: Text(list != null ? list[index]['amount'].toString():""),
-                )
+                ),
 
                   ],
 

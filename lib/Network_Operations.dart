@@ -58,9 +58,9 @@ static Future<String> Reset_Password(String email,String token,String password) 
   }else
     return null;
 }
-static Future<String> get_training(String token) async{
+static Future<String> get_training(String token,int pagenum) async{
   Map<String,String> headers = {'Authorization':'Bearer '+token};
-  var response =await http.get('http://192.236.147.77:8083/api/Training/GetTrainings',headers: headers);
+  var response =await http.get('http://192.236.147.77:8083/api/Training/GetTrainings?pageNumber='+pagenum.toString()+'&pageSize=10',headers: headers);
   print(response.body);
   if(response.statusCode==200){
      return response.body;
@@ -222,9 +222,9 @@ static Future<String> change_notes_visibility(String token,int id) async{
   }else
     return null;
 }
-static Future<String> get_all_notes(String token) async{
+static Future<String> get_all_notes(String token,int pagenum) async{
   Map<String,String> headers = {'Authorization':'Bearer '+token};
-  final response = await http.get('http://192.236.147.77:8083/api/horse/GetAllNotes', headers: headers,);
+  final response = await http.get('http://192.236.147.77:8083/api/horse/GetAllNotes?pageNumber='+pagenum.toString()+'&pageSize=10', headers: headers,);
   if(response.statusCode==200){
     return response.body;
   }else

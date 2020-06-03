@@ -31,7 +31,7 @@ class _Profile_Page_State extends State<weight_hieght_list>{
   String token;
   var weightlist, load_list;
   var temp=['',''];
-
+  int pagenum=1,total_page;
 
   @override
   void initState () {
@@ -60,7 +60,7 @@ class _Profile_Page_State extends State<weight_hieght_list>{
             print(response);
             load_list =json.decode(response);
             weightlist = load_list['response'];
-
+            total_page=load_list['totalPages'];
           });
 
         });
@@ -89,6 +89,76 @@ class _Profile_Page_State extends State<weight_hieght_list>{
             },
           )
         ],),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton:
+        Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
+
+                    if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                      Utils.check_connectivity().then((result){
+                        if(result) {
+                          ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                          pd.show();
+                          weight_hieght_services.weight_hieght_listbypage(token, pagenum).then((response) {
+                            pd.dismiss();
+                            setState(() {
+                              print(response);
+                              load_list= json.decode(response);
+                              weightlist = load_list['response'];
+                              print(weightlist);
+                            });
+                          });
+                        }else
+                          print("network nahi hai");
+                      });
+                    }
+                    else{
+                      print("list empty");
+                      //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                    }
+                    if(pagenum > 1){
+                      pagenum = pagenum - 1;
+                    }
+                    print(pagenum);
+                  }),
+                  FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                    print(load_list['hasNext']);
+                    if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                      Utils.check_connectivity().then((result){
+                        if(result) {
+                          ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                          pd.show();
+                          weight_hieght_services.weight_hieght_listbypage(
+                              token, pagenum).then((response) {
+                            pd.dismiss();
+                            setState(() {
+                              print(response);
+                              load_list = json.decode(response);
+                              weightlist = load_list['response'];
+                              print(weightlist);
+                            });
+                          });
+                        }else
+                          print("network nahi hai");
+                      });
+                    }
+                    else{
+                      print("list empty");
+                      //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                    }
+                    if(pagenum < total_page) {
+                      pagenum = pagenum + 1;
+                    }
+                    print(pagenum);
+
+                  })
+                ]
+            )
+        ),
         body: ListView.builder(itemCount:weightlist!=null?weightlist.length:temp.length,itemBuilder: (context,int index){
           return Column(
             children: <Widget>[

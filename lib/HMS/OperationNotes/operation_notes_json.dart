@@ -10,9 +10,9 @@ import '../../Utils.dart';
 
 class OperationNotesServices{
 
-  static Future<String> get_Operation_Notes(String token) async{
+  static Future<String> get_Operation_Notes(String token,int pagenum) async{
     Map<String,String> headers = {'Authorization':'Bearer '+token};
-    var response =await http.get('http://192.236.147.77:8083/api/OperationNotes/GetAllOperationNotes',headers: headers);
+    var response =await http.get('http://192.236.147.77:8083/api/OperationNotes/GetAllOperationNotes?pageNumber='+pagenum.toString()+'&pageSize=10',headers: headers);
     print(response.body);
     if(response.statusCode==200){
       return response.body;

@@ -69,8 +69,8 @@ class _Profile_Page_State extends State<healthRecord_list>{
             children: <Widget>[
               ExpansionTile(
                 //['categoryName']['name']
-                title: Text(specificHealthRecord[index]['date']),
-                trailing: Text(specificHealthRecord[index]['status'].toString()),
+                title: Text(specificHealthRecord[index]['date']!= null ? specificHealthRecord[index]['date'].toString().substring(0,10):"Date not found"),
+                trailing: Text(get_status_by_id(specificHealthRecord[index]['status'])),
 
                 children: <Widget>[
                   ListTile(
@@ -109,7 +109,19 @@ class _Profile_Page_State extends State<healthRecord_list>{
         })
     );
   }
-
+  String get_status_by_id(int id){
+    var status;
+    if(specificHealthRecord!=null && id!=null){
+      if(id == 2)
+        status = "Good";
+      else if(id == 1)
+        status = "Fair";
+      else if(id == 0)
+        status = "Bad";
+      return status;
+    }else
+      return null;
+  }
 }
 
 

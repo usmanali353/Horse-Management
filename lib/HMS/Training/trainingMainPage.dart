@@ -4,6 +4,8 @@ import 'package:horse_management/HMS/Training/trainingPlansList.dart';
 import 'package:horse_management/HMS/Training/training_list.dart';
 import 'package:horse_management/HMS/Training/training_plans.dart';
 
+import 'Add_training.dart';
+
 class trainingMainPage extends StatefulWidget{
   String token;
 
@@ -18,6 +20,7 @@ class trainingMainPage extends StatefulWidget{
 }
 class trainingMainPageState extends State<trainingMainPage>{
   String token;
+  bool isvisible = true;
 
   trainingMainPageState(this.token);
 
@@ -27,7 +30,22 @@ class trainingMainPageState extends State<trainingMainPage>{
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: AppBar(title: Text("Trainings"),
+        appBar: AppBar(title: Text("Trainings"),actions: <Widget>[
+          Center(child: Text("Add New",textScaleFactor: 1.3,)),
+          Visibility(
+            visible: isvisible,
+            child: IconButton(
+
+              icon: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => add_training(token)),);
+              },
+            ),
+          )
+        ],
           bottom: TabBar(
             tabs: <Widget>[
               Tab(text: "Ongoing Trainings",),

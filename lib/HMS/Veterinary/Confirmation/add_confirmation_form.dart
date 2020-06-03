@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/HMS/Veterinary/Confirmation/confirmation_json.dart';
@@ -71,7 +72,10 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _rfdata['foreLimbJoint${keyValue - 1}']=forejoint.indexOf(value).toString();
+                  _lfdata['conformationDetailId']='0';
+                  _lfdata['limb']='1';
+                  _lfdata['hindLimbJoint']='0';
+                  _rfdata['foreLimbJoint']=(forejoint.indexOf(value)+1).toString();
                 });
               },
             ),
@@ -95,7 +99,7 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _rfdata['conformationStation${keyValue - 1}']=confirmationstation.indexOf(value).toString();
+                  _rfdata['conformationStation']=(confirmationstation.indexOf(value)+1).toString();
                 });
               },
             ),
@@ -119,7 +123,7 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _rfdata['conformationMovement${keyValue - 1}']=confirmatioonmovement.indexOf(value).toString();
+                  _rfdata['conformationMovement']=(confirmatioonmovement.indexOf(value)+1).toString();
                 });
               },
             ),
@@ -143,7 +147,7 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _rfdata['lesion${keyValue - 1}']=lession.indexOf(value).toString();
+                  _rfdata['lesion']=(lession.indexOf(value)+1).toString();
                 });
               },
             ),
@@ -154,7 +158,7 @@ class add_confirmationState extends State<add_confirmation>{
               attribute: "treatment",
               validators: [FormBuilderValidators.required()],
               onChanged: (val) {
-                _rfdata['treatment${keyValue - 1}'] = val;
+                _rfdata['treatment'] = val;
               },
               decoration: InputDecoration(labelText: "Treatment",
                 border: OutlineInputBorder(
@@ -183,7 +187,7 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _rfdata['response${keyValue - 1}']=respons.indexOf(value).toString();
+                  _rfdata['response']=(respons.indexOf(value)+1).toString();
                 });
               },
             ),
@@ -247,7 +251,7 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _lfdata['conformationStation']=confirmationstation.indexOf(value).toString();
+                  _lfdata['conformationStation']=(confirmationstation.indexOf(value)+1).toString();
                 });
               },
             ),
@@ -271,7 +275,7 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _lfdata['conformationMovement']=confirmatioonmovement.indexOf(value).toString();
+                  _lfdata['conformationMovement']=(confirmatioonmovement.indexOf(value)+1).toString();
                 });
               },
             ),
@@ -295,7 +299,7 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _lfdata['lesion']=lession.indexOf(value).toString();
+                  _lfdata['lesion']=(lession.indexOf(value)+1).toString();
                 });
               },
             ),
@@ -335,7 +339,7 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _lfdata['response']=respons.indexOf(value).toString();
+                  _lfdata['response']=(respons.indexOf(value)+1).toString();
                 });
               },
             ),
@@ -372,7 +376,10 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _rhdata['hindLimbJoint${keyValue - 1}']=hindjoint.indexOf(value).toString();
+                  _lfdata['conformationDetailId']='0';
+                  _lfdata['limb']='3';
+                  _lfdata['foreLimbJoint']='0';
+                  _rhdata['hindLimbJoint']=(hindjoint.indexOf(value)+1).toString();
                 });
               },
             ),
@@ -396,7 +403,7 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _rhdata['conformationStation${keyValue - 1}']=confirmationstation.indexOf(value).toString();
+                  _rhdata['conformationStation']=(confirmationstation.indexOf(value)+1).toString();
                 });
               },
             ),
@@ -420,7 +427,7 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _rhdata['conformationMovement${keyValue - 1}']=confirmatioonmovement.indexOf(value).toString();
+                  _rhdata['conformationMovement']=(confirmatioonmovement.indexOf(value)+1).toString();
                 });
               },
             ),
@@ -444,7 +451,7 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _rhdata['lesion${keyValue - 1}']=lession.indexOf(value).toString();
+                  _rhdata['lesion']=(lession.indexOf(value)+1).toString();
                 });
               },
             ),
@@ -455,7 +462,7 @@ class add_confirmationState extends State<add_confirmation>{
               attribute: "treatment",
               validators: [FormBuilderValidators.required()],
               onChanged: (val) {
-                _rhdata['treatment${keyValue - 1}'] = val;
+                _rhdata['treatment'] = val;
               },
               decoration: InputDecoration(labelText: "Treatment",
                 border: OutlineInputBorder(
@@ -484,7 +491,7 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _rhdata['response${keyValue - 1}']=respons.indexOf(value).toString();
+                  _rhdata['response']=(respons.indexOf(value)+1).toString();
                 });
               },
             ),
@@ -521,7 +528,11 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _lhdata['hindLimbJoint${keyValue - 1}']=hindjoint.indexOf(value).toString();
+                  _lfdata['conformationDetailId']='0';
+                  _lfdata['limb']='4';
+                  _lfdata['foreLimbJoint']='0';
+//                  _lhdata['hindLimbJoint${keyValue - 1}']=hindjoint.indexOf(value).toString();
+                  _lhdata['hindLimbJoint']=(hindjoint.indexOf(value)+1).toString();
                 });
               },
             ),
@@ -545,7 +556,7 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _lhdata['conformationStation${keyValue - 1}']=confirmationstation.indexOf(value).toString();
+                  _lhdata['conformationStation']=(confirmationstation.indexOf(value)+1).toString();
                 });
               },
             ),
@@ -569,7 +580,7 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _lhdata['conformationMovement${keyValue - 1}']=confirmatioonmovement.indexOf(value).toString();
+                  _lhdata['conformationMovement']=(confirmatioonmovement.indexOf(value)+1).toString();
                 });
               },
             ),
@@ -593,7 +604,7 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _lhdata['lesion${keyValue - 1}']=lession.indexOf(value).toString();
+                  _lhdata['lesion']=(lession.indexOf(value)+1).toString();
                 });
               },
             ),
@@ -604,7 +615,7 @@ class add_confirmationState extends State<add_confirmation>{
               attribute: "treatment",
               validators: [FormBuilderValidators.required()],
               onChanged: (val) {
-                _lhdata['treatment${keyValue - 1}'] = val;
+                _lhdata['treatment'] = val;
               },
               decoration: InputDecoration(labelText: "Treatment",
                 border: OutlineInputBorder(
@@ -633,7 +644,7 @@ class add_confirmationState extends State<add_confirmation>{
               onChanged: (value){
                 setState(() {
                   //_rfdata['name${keyValue - 1}']=value;
-                  _lhdata['response${keyValue - 1}']=respons.indexOf(value).toString();
+                  _lhdata['response']=(respons.indexOf(value)+1).toString();
                 });
               },
             ),
@@ -857,6 +868,7 @@ class add_confirmationState extends State<add_confirmation>{
                 ListView(
                   shrinkWrap: true,
                   children: _rflist,
+                  physics: ClampingScrollPhysics(),
                 ),
                 Padding(padding: EdgeInsets.only(top:30,right: 250),
                     child: Text("Left Forelimb", style: TextStyle(color: Colors.teal,fontSize: 20, fontWeight: FontWeight.bold),)
@@ -873,6 +885,7 @@ class add_confirmationState extends State<add_confirmation>{
                   shrinkWrap: true,
 
                   children: _lflist,
+                  physics: BouncingScrollPhysics(),
                 ),
                 Padding(padding: EdgeInsets.only(top:30,right: 250),
                     child: Text("Right Hindlimb", style: TextStyle(color: Colors.teal,fontSize: 20, fontWeight: FontWeight.bold),)
@@ -888,6 +901,7 @@ class add_confirmationState extends State<add_confirmation>{
                 ListView(
                   shrinkWrap: true,
                   children: _rhlist,
+                  physics: NeverScrollableScrollPhysics(),
                 ),
                 Padding(padding: EdgeInsets.only(top:30,right: 250),
                     child: Text("Left Hindlimb", style: TextStyle(color: Colors.teal,fontSize: 20, fontWeight: FontWeight.bold),)
@@ -902,6 +916,7 @@ class add_confirmationState extends State<add_confirmation>{
                 ListView(
                   shrinkWrap: true,
                   children: _lhlist,
+                  physics: NeverScrollableScrollPhysics(),
                 ),
               ],
             ),
@@ -911,12 +926,15 @@ class add_confirmationState extends State<add_confirmation>{
               padding: EdgeInsets.only(top: 16),
               child: MaterialButton(
                 onPressed: () async{
-                 // print(_rfdata);
+                  print(_rfdata);
                   print(_lfdata);
-                 // print(_rhdata);
-                 // print(_lhdata);
+                  print(_rhdata);
+                  print(_lhdata);
                   List<Map> confirmationDetails=[];
+                  confirmationDetails.add(_rfdata);
                   confirmationDetails.add(_lfdata);
+                  confirmationDetails.add(_rhdata);
+                  confirmationDetails.add(_lhdata);
 
                   ConfirmationServices.add_confirmation(token, 0,confirmationDropdowns['horseDropDown'][selected_horse_id]['id'], date,confirmationDropdowns['vetDropDown'][selected_vet_id]['id'], selected_opinion_id, '', confirmationDetails).then((response){
                     if(response!=null){
