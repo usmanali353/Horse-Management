@@ -38,7 +38,7 @@ class _breeding_services_details_page extends State<breeding_services_details_pa
                 ),
                 ListTile(
                   title: Text("Date:"),
-                  trailing: Text(breeding_services_data['serviceDate'].toString()!=null?breeding_services_data['serviceDate'].toString():''),
+                  trailing: Text(breeding_services_data['serviceDate'].toString()!=null?breeding_services_data['serviceDate'].toString().substring(0,10):''),
                 ),
                 ListTile(
                   title: Text("Sire:"),

@@ -38,7 +38,7 @@ class _flushes_details_page extends State<flushes_details_page>{
                 ),
                 ListTile(
                   title: Text("Date:"),
-                  trailing: Text(flushes_data['date'].toString()!=null?flushes_data['date'].toString():''),
+                  trailing: Text(flushes_data['date'].toString()!=null?flushes_data['date'].toString().substring(0,10):''),
                 ),
                 ListTile(
                   title: Text("Vet:"),

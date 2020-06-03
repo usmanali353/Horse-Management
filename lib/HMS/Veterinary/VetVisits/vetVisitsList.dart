@@ -6,6 +6,7 @@ import 'package:horse_management/HMS/Diet/diet_services.dart';
 import 'package:horse_management/HMS/Training/training_plans.dart';
 import 'package:horse_management/HMS/Training/update_training.dart';
 import 'package:horse_management/HMS/Veterinary/VetVisits/addVetVisits.dart';
+import 'package:horse_management/HMS/Veterinary/VetVisits/vet_visit_details.dart';
 import 'package:horse_management/HMS/Veterinary/VetVisits/veterniaryServices.dart';
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
@@ -25,10 +26,15 @@ class vetVisitList extends StatefulWidget{
 }
 class vetVisitListState extends State<vetVisitList>{
   String token;
-  var vetvisits_list=[], load_list;
+  var vetvisits_list=[], load_list, pagelist, pageloadlist;
+  int pagenum = 1;
+  int total_page;
   var temp=['',''];
   bool isvisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,8 +55,80 @@ class vetVisitListState extends State<vetVisitList>{
 //            icon: Icon(Icons.picture_as_pdf),
 //           // onPressed: () => _generatePdfAndView(context),
 //          ),
-        ],),
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton:
+      Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FloatingActionButton(
+                    //backgroundColor: Colors.transparent,
+                    child: Icon(Icons.arrow_back, color: Colors.black,),heroTag: "btn2", onPressed: () {
 
+                  if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        vieterniaryServices.vetvisit_by_page(token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list= json.decode(response);
+                            vetvisits_list = load_list['response'];
+                            print(vetvisits_list);
+                          });
+                        });
+                      }else
+                        print("Network Not Available");
+                    });
+                  }
+                  else{
+                    print("Empty List");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum > 1){
+                    pagenum = pagenum - 1;
+                  }
+                  print(pagenum);
+                }),
+                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                  print(load_list['hasNext']);
+                  if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        vieterniaryServices.vetvisit_by_page(
+                            token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list = json.decode(response);
+                            vetvisits_list = load_list['response'];
+                            print(vetvisits_list);
+                          });
+                        });
+                      }else
+                        print("Network Not Available");
+                    });
+                  }
+                  else{
+                    print("Empty List");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum < total_page) {
+                    pagenum = pagenum + 1;
+                  }
+                  print(pagenum);
+
+                })
+              ]
+          )
+      ),
 //      floatingActionButton: FloatingActionButton(
 //        child: Icon(
 //          Icons.add,
@@ -75,6 +153,8 @@ class vetVisitListState extends State<vetVisitList>{
                     isvisible=true;
                     load_list=json.decode(response);
                     vetvisits_list = load_list['response'];
+                    total_page=load_list['totalPages'];
+                    print(total_page);
                   });
 
                 }else{
@@ -151,9 +231,13 @@ class vetVisitListState extends State<vetVisitList>{
                       ),
                     ],
                     child: ListTile(
+                      trailing:Text(vetvisits_list[index]['visitDate']!=null?vetvisits_list[index]['visitDate'].toString().substring(0,10):''),
+
                       title: Text(vetvisits_list!=null?vetvisits_list[index]['horseName']['name']:''),
                       //leading: Icon(Icons.local_hospital,size: 40,color: Colors.teal,),
                       onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => vet_visit_details_page(vetvisits_list[index])));
+
                       },
                     ),
 

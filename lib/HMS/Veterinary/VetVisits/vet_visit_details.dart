@@ -36,21 +36,21 @@ class _vet_visit_details_page extends State<vet_visit_details_page>{
                 trailing: Text(vet_visit_data['horseName']['name'].toString()!=null?vet_visit_data['horseName']['name'].toString():''),
               ),
               ListTile(
-                title: Text("Date:"),
-                trailing: Text(vet_visit_data['date'].toString()!=null?vet_visit_data['date'].toString():''),
+                title: Text("Visit Date:"),
+                trailing: Text(vet_visit_data['visitDate'].toString()!=null?vet_visit_data['visitDate'].toString().substring(0,10) :''),
               ),
               ListTile(
                 title: Text("Vet:"),
                 trailing: Text(vet_visit_data['vetName']['contactName']['name']!=null?vet_visit_data['vetName']['contactName']['name']:''),
               ),
               ListTile(
-                title: Text("Comments:"),
-                trailing: Text(vet_visit_data['comments']!=null?vet_visit_data['comments']:''),
+                title: Text("Responsible:"),
+                trailing: Text(vet_visit_data['responsibleName']['contactName']['name']!=null?vet_visit_data['responsibleName']['contactName']['name']:''),
               ),
-              ListTile(
-                title: Text("Embryos:"),
-                trailing: Text(vet_visit_data['embryos'].toString()!=null?vet_visit_data['embryos'].toString():''),
-              ),
+//              ListTile(
+//                title: Text("Products:"),
+//                trailing: Text(vet_visit_data['vetVisitsProducts']['inventoryProductName']['name']!=null?vet_visit_data['vetVisitsProducts']['inventoryProductName']['name']:''),
+//              ),
               Divider(),
             ],
           ),

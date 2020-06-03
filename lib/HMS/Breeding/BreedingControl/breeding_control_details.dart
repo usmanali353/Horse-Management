@@ -38,7 +38,7 @@ class _breeding_control_details_page extends State<breeding_control_details_page
                   ),
                   ListTile(
                     title: Text("Date:"),
-                    trailing: Text(breeding_control_data['date'].toString()!=null?breeding_control_data['date'].toString():''),
+                    trailing: Text(breeding_control_data['date'].toString()!=null?breeding_control_data['date'].toString().substring(0,10):''),
                   ),
                   ListTile(
                     title: Text("Time:"),

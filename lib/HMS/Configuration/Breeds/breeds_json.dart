@@ -6,6 +6,20 @@ import '../../../Utils.dart';
 
 class BreedsServices{
 
+  static Future<String> breeds_by_page (String token,int pagenum) async {
+    Map<String, String> headers = {'Authorization': 'Bearer '+token};
+    final response = await http.get(
+      //'http://192.236.147.77:8083/api/horse/GetAllIncomeAndExpenses?pageNumber=2&pageSize=10',
+
+      'http://192.236.147.77:8083/api/configuration/GetAllBreeds?pageNumber='+pagenum.toString()+'&pageSize=10',
+      headers: headers,
+    );
+    if (response.statusCode == 200) {
+      return response.body;
+    } else
+      return null;
+  }
+
   static Future<String> addBreed(String token,int id,String name,String createdBy) async{
     Map<String,String> headers = {'Authorization':'Bearer '+token,'Content-Type':'application/json'};
     final body = jsonEncode({"id":id,"name":name,"createdBy":createdBy,"createdOn":DateTime.now(),"isActive":true},toEncodable: Utils.myEncode);

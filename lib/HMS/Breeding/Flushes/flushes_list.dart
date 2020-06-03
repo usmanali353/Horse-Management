@@ -30,7 +30,9 @@ class _flushes_list extends State<flushes_list>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var flushes_list, load_list;
+  var flushes_list, load_list, pagelist, pageloadlist;
+  int pagenum = 1;
+  int total_page;
 
   @override
   void initState() {
@@ -69,6 +71,76 @@ class _flushes_list extends State<flushes_list>{
 //          ),
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton:
+      Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
+
+                  if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        FlushesServicesJson.flushes_by_page(token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list= json.decode(response);
+                            flushes_list = load_list['response'];
+                            print(flushes_list);
+                          });
+                        });
+                      }else
+                        print("Network Not Available");
+                    });
+                  }
+                  else{
+                    print("Empty List");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum > 1){
+                    pagenum = pagenum - 1;
+                  }
+                  print(pagenum);
+                }),
+                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                  print(load_list['hasNext']);
+                  if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        FlushesServicesJson.flushes_by_page(
+                            token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list = json.decode(response);
+                            flushes_list = load_list['response'];
+                            print(flushes_list);
+                          });
+                        });
+                      }else
+                        print("Network Not Available");
+                    });
+                  }
+                  else{
+                    print("Empty List");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum < total_page) {
+                    pagenum = pagenum + 1;
+                  }
+                  print(pagenum);
+
+                })
+              ]
+          )
+      ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: (){
@@ -84,7 +156,9 @@ class _flushes_list extends State<flushes_list>{
                       isVisible=true;
                       load_list=json.decode(response);
                       flushes_list = load_list['response'];
-                      Hive.box("FlushesList").put("offline_flushes_list",flushes_list);
+                      total_page=load_list['totalPages'];
+                      print(total_page);
+                      //Hive.box("FlushesList").put("offline_flushes_list",flushes_list);
                     });
 
                   }else{
@@ -160,7 +234,7 @@ class _flushes_list extends State<flushes_list>{
                         ListTile(
                           title: Text(flushes_list!=null?flushes_list[index]['horseName']['name']:''),
                           subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
-                          trailing: Text(flushes_list!=null?flushes_list[index]['date']:''),
+                          trailing: Text(flushes_list[index]['date']!=null?flushes_list[index]['date'].toString().substring(0,10):''),
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context) => flushes_details_page(flushes_list[index])));
                             // Navigator.push(context, MaterialPageRoute(builder: (context) => hypothetic_pedegree_page(flushes_list[index])));

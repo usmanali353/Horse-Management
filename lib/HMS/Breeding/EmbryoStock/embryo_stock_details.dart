@@ -42,7 +42,7 @@ class _embryo_stock_details_page extends State<embryo_stock_details_page>{
                 ),
                 ListTile(
                   title: Text("Collection Date:"),
-                  trailing: Text(embryo_stock_data['collectionDate'].toString()!=null?embryo_stock_data['collectionDate'].toString():''),
+                  trailing: Text(embryo_stock_data['collectionDate'].toString()!=null?embryo_stock_data['collectionDate'].toString().substring(0,10):''),
                 ),
                 ListTile(
                   title: Text("Stage:"),

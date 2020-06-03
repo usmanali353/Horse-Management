@@ -33,8 +33,9 @@ class _operational_noteList extends State<operational_noteList>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var notes_list, load_list;
-  int pagenum=1,total_page;
+  var notes_list,load_list, pagelist, pageloadlist;
+  int pagenum = 1;
+  int total_page;
 
 
   @override
@@ -88,7 +89,7 @@ class _operational_noteList extends State<operational_noteList>{
                       if(result) {
                         ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
                         pd.show();
-                        OperationNotesServices.get_Operation_Notes(token, pagenum).then((response) {
+                        OperationNotesServices.operationalNotes_by_page(token, pagenum).then((response) {
                           pd.dismiss();
                           setState(() {
                             print(response);
@@ -98,11 +99,11 @@ class _operational_noteList extends State<operational_noteList>{
                           });
                         });
                       }else
-                        print("network nahi hai");
+                        print("Network Not Available");
                     });
                   }
                   else{
-                    print("list empty");
+                    print("Empty List");
                     //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
                   }
                   if(pagenum > 1){
@@ -117,7 +118,7 @@ class _operational_noteList extends State<operational_noteList>{
                       if(result) {
                         ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
                         pd.show();
-                        OperationNotesServices.get_Operation_Notes(
+                        OperationNotesServices.operationalNotes_by_page(
                             token, pagenum).then((response) {
                           pd.dismiss();
                           setState(() {
@@ -128,11 +129,11 @@ class _operational_noteList extends State<operational_noteList>{
                           });
                         });
                       }else
-                        print("network nahi hai");
+                        print("Network Not Available");
                     });
                   }
                   else{
-                    print("list empty");
+                    print("Empty List");
                     //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
                   }
                   if(pagenum < total_page) {
@@ -151,13 +152,14 @@ class _operational_noteList extends State<operational_noteList>{
             if(result){
               ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
               pd.show();
-              OperationNotesServices.get_Operation_Notes(token,1).then((response){
+              OperationNotesServices.get_Operation_Notes(token).then((response){
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
-                     load_list=json.decode(response);
+                    load_list=json.decode(response);
                     notes_list = load_list['response'];
-                     total_page=load_list['totalPages'];
+                    total_page=load_list['totalPages'];
+                    print(total_page);
                     isVisible=true;
                   });
 
@@ -229,7 +231,7 @@ class _operational_noteList extends State<operational_noteList>{
                          ListTile(
                           title: Text(notes_list!=null?notes_list[index]['generalCategoryName']['name']:''),
                            subtitle: Text(notes_list!=null?notes_list[index]['details']:''),
-                          trailing: Text(notes_list!=null?notes_list[index]['date'].toString():''),
+                          trailing: Text(notes_list[index]['date']!=null?notes_list[index]['date'].toString().substring(0,10):''),
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context) => operation_notes_details_page(notes_list[index])));
                           },

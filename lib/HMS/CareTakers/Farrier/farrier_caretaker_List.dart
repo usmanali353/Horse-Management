@@ -31,7 +31,9 @@ class _Profile_Page_State extends State<careTakerFarrierList>{
   _Profile_Page_State (this.token);
 
   String token;
-  var farrierlist, load_list;
+  var farrierlist, load_list, pagelist, pageloadlist;
+  int pagenum = 1;
+  int total_page;
   var temp=[];
 
 
@@ -63,6 +65,8 @@ class _Profile_Page_State extends State<careTakerFarrierList>{
             print(response);
             load_list = json.decode(response);
             farrierlist = load_list['response'];
+            total_page=load_list['totalPages'];
+            print(total_page);
           });
         });
       }else
@@ -87,7 +91,79 @@ class _Profile_Page_State extends State<careTakerFarrierList>{
 //              Navigator.push(context, MaterialPageRoute(builder: (context) => add_farrier(token)),);
 //            },
 //          )
-        ],),
+        ],
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton:
+        Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
+
+                    if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                      Utils.check_connectivity().then((result){
+                        if(result) {
+                          ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                          pd.show();
+                          FarrierCareTakerServices.farrier_caretaker_by_page(token, pagenum).then((response) {
+                            pd.dismiss();
+                            setState(() {
+                              print(response);
+                              load_list= json.decode(response);
+                              farrierlist = load_list['response'];
+                              print(farrierlist);
+                            });
+                          });
+                        }else
+                          print("Network Not Available");
+                      });
+                    }
+                    else{
+                      print("Empty List");
+                      //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                    }
+                    if(pagenum > 1){
+                      pagenum = pagenum - 1;
+                    }
+                    print(pagenum);
+                  }),
+                  FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                    print(load_list['hasNext']);
+                    if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                      Utils.check_connectivity().then((result){
+                        if(result) {
+                          ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                          pd.show();
+                          FarrierCareTakerServices.farrier_caretaker_by_page(
+                              token, pagenum).then((response) {
+                            pd.dismiss();
+                            setState(() {
+                              print(response);
+                              load_list = json.decode(response);
+                              farrierlist = load_list['response'];
+                              print(farrierlist);
+                            });
+                          });
+                        }else
+                          print("Network Not Available");
+                      });
+                    }
+                    else{
+                      print("Empty List");
+                      //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                    }
+                    if(pagenum < total_page) {
+                      pagenum = pagenum + 1;
+                    }
+                    print(pagenum);
+
+                  })
+                ]
+            )
+        ),
+
         body: Scrollbar(
           child: ListView.builder(itemCount:farrierlist!=null?farrierlist.length:temp.length,itemBuilder: (context,int index){
             return Column(

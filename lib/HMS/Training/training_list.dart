@@ -27,7 +27,10 @@ class training_list extends StatefulWidget{
 class _training_list_state extends State<training_list>{
   String token;
   var horse_list;
-  var training_list=[],today_training_list=[], load_list;
+  var training_list=[],today_training_list=[], load_list, pagelist, pageloadlist;
+  int pagenum = 1;
+  int total_page;
+
   var temp=['',''];
   bool isvisible=false;
   var trainingListBox;

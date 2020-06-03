@@ -32,7 +32,9 @@ class _breeding_control_caretaker_list extends State<breeding_control_caretaker_
   bool isVisible=false;
   var temp=['','',''];
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var control_list, load_list;
+  var control_list, load_list, pagelist, pageloadlist;
+  int pagenum = 1;
+  int total_page;
 
   @override
   void initState() {
@@ -71,6 +73,76 @@ class _breeding_control_caretaker_list extends State<breeding_control_caretaker_
 //          ),
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton:
+      Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
+
+                  if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        BreedingControlCareTakerServices.breedingControl_caretaker_by_page(token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list= json.decode(response);
+                            control_list = load_list['response'];
+                            print(control_list);
+                          });
+                        });
+                      }else
+                        print("Network Not Available");
+                    });
+                  }
+                  else{
+                    print("Empty List");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum > 1){
+                    pagenum = pagenum - 1;
+                  }
+                  print(pagenum);
+                }),
+                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                  print(load_list['hasNext']);
+                  if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        BreedingControlCareTakerServices.breedingControl_caretaker_by_page(
+                            token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list = json.decode(response);
+                            control_list = load_list['response'];
+                            print(control_list);
+                          });
+                        });
+                      }else
+                        print("Network Not Available");
+                    });
+                  }
+                  else{
+                    print("Empty List");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum < total_page) {
+                    pagenum = pagenum + 1;
+                  }
+                  print(pagenum);
+
+                })
+              ]
+          )
+      ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: (){
@@ -84,6 +156,8 @@ class _breeding_control_caretaker_list extends State<breeding_control_caretaker_
                   setState(() {
                     load_list=json.decode(response);
                     control_list = load_list['response'];
+                    total_page=load_list['totalPages'];
+                    print(total_page);
                     isVisible=true;
                   });
 
@@ -285,7 +359,7 @@ class _breeding_control_caretaker_list extends State<breeding_control_caretaker_
                         ListTile(
                           trailing:Text(control_list!=null?get_status_by_id(control_list[index]['status']):''),
                           title: Text(control_list!=null?control_list[index]['horseName']['name']:''),
-                          subtitle: Text(control_list!=null?control_list[index]['date'].toString().substring(1,10):''),
+                          subtitle: Text(control_list!=null?control_list[index]['date'].toString().substring(0,10):''),
                           //leading: Icon(Icons.pets,size: 40,color: Colors.teal,),
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context) => breeding_control_details_page(control_list[index], get_check_method_by_id(control_list[index]['check_Method']))));

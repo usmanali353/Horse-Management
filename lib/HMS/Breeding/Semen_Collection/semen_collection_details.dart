@@ -38,7 +38,7 @@ class _semen_collection_details_page extends State<semen_collection_details_page
                 ),
                 ListTile(
                   title: Text("Date:"),
-                  trailing: Text(semen_collection_data['date'].toString()!=null?semen_collection_data['date'].toString():''),
+                  trailing: Text(semen_collection_data['date'].toString()!=null?semen_collection_data['date'].toString().substring(0,10):''),
                 ),
                 ListTile(
                   title: Text("In Charge:"),
