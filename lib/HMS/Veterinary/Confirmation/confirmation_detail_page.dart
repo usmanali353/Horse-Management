@@ -37,7 +37,7 @@ class _confirmation_details_page extends State<confirmation_details_page>{
               ),
               ListTile(
                 title: Text("Date:"),
-                trailing: Text(confirmation_data['date'].toString()!=null?confirmation_data['date'].toString():''),
+                trailing: Text(confirmation_data['date'].toString()!=null?confirmation_data['date'].toString().substring(0,10) :''),
               ),
               ListTile(
                 title: Text("Vet:"),

@@ -32,7 +32,9 @@ class _embryo_stock_list extends State< embryo_stock_list>{
   bool isVisible=false;
   var temp=['','',''];
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var embryo_list, load_list;
+  var embryo_list, load_list, pagelist, pageloadlist;
+  int pagenum = 1;
+  int total_page;
 
   @override
   void initState() {
@@ -71,6 +73,76 @@ class _embryo_stock_list extends State< embryo_stock_list>{
 //          ),
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton:
+      Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
+
+                  if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        EmbryoStockServices.embryo_stock_by_page(token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list= json.decode(response);
+                            embryo_list = load_list['response'];
+                            print(embryo_list);
+                          });
+                        });
+                      }else
+                        print("Network Not Available");
+                    });
+                  }
+                  else{
+                    print("Empty List");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum > 1){
+                    pagenum = pagenum - 1;
+                  }
+                  print(pagenum);
+                }),
+                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                  print(load_list['hasNext']);
+                  if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        EmbryoStockServices.embryo_stock_by_page(
+                            token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list = json.decode(response);
+                            embryo_list = load_list['response'];
+                            print(embryo_list);
+                          });
+                        });
+                      }else
+                        print("Network Not Available");
+                    });
+                  }
+                  else{
+                    print("Empty List");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum < total_page) {
+                    pagenum = pagenum + 1;
+                  }
+                  print(pagenum);
+
+                })
+              ]
+          )
+      ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: (){
@@ -84,6 +156,8 @@ class _embryo_stock_list extends State< embryo_stock_list>{
                   setState(() {
                     load_list=json.decode(response);
                     embryo_list = load_list['response'];
+                    total_page=load_list['totalPages'];
+                    print(total_page);
                     isVisible=true;
                   });
 
@@ -155,7 +229,7 @@ class _embryo_stock_list extends State< embryo_stock_list>{
                         ListTile(
                           title: Text(embryo_list!=null?embryo_list[index]['horseName']['name']:''),
                           subtitle: Text(embryo_list!=null?embryo_list[index]['sireName']['name']:''),
-                          trailing: Text(embryo_list!=null?embryo_list[index]['collectionDate']:''),
+                          trailing: Text(embryo_list[index]['collectionDate']!=null?embryo_list[index]['collectionDate'].toString().substring(0,10):''),
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context) => embryo_stock_details_page(embryo_list[index])));
                           },

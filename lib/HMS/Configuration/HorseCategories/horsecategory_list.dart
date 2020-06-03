@@ -27,7 +27,9 @@ class _horsecategory_list extends State<horsecategory_list>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var category_lists, load_list;
+  var category_lists, load_list, pagelist, pageloadlist;
+  int pagenum = 1;
+  int total_page;
 
   @override
   void initState() {
@@ -66,6 +68,76 @@ class _horsecategory_list extends State<horsecategory_list>{
 //          ),
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton:
+      Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
+
+                  if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        HorseCategoryServices.horseCategories_by_page(token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list= json.decode(response);
+                            category_lists = load_list['response'];
+                            print(category_lists);
+                          });
+                        });
+                      }else
+                        print("Network Not Available");
+                    });
+                  }
+                  else{
+                    print("Empty List");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum > 1){
+                    pagenum = pagenum - 1;
+                  }
+                  print(pagenum);
+                }),
+                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                  print(load_list['hasNext']);
+                  if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        HorseCategoryServices.horseCategories_by_page(
+                            token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list = json.decode(response);
+                            category_lists = load_list['response'];
+                            print(category_lists);
+                          });
+                        });
+                      }else
+                        print("Network Not Available");
+                    });
+                  }
+                  else{
+                    print("Empty List");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum < total_page) {
+                    pagenum = pagenum + 1;
+                  }
+                  print(pagenum);
+
+                })
+              ]
+          )
+      ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: (){
@@ -79,6 +151,8 @@ class _horsecategory_list extends State<horsecategory_list>{
                   setState(() {
                     load_list=json.decode(response);
                     category_lists = load_list['response'];
+                    total_page=load_list['totalPages'];
+                    print(total_page);
                     isVisible=true;
                   });
 

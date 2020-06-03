@@ -30,7 +30,9 @@ class _breeding_control_list extends State< breeding_control_list>{
   bool isVisible=false;
   var temp=['','',''];
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var control_list, load_list;
+  var control_list, load_list, pagelist, pageloadlist;
+  int pagenum = 1;
+  int total_page;
 
   @override
   void initState() {
@@ -50,7 +52,7 @@ class _breeding_control_list extends State< breeding_control_list>{
 //        child: Icon(Icons.add),
 //      ),
       appBar: AppBar(
-        title: Text("Breeding Control & Caretaker"),
+        title: Text("Breeding Control"),
         actions: <Widget>[
           Center(child: Text("Add New",textScaleFactor: 1.3,)),
           IconButton(
@@ -69,6 +71,76 @@ class _breeding_control_list extends State< breeding_control_list>{
 //          ),
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton:
+      Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
+
+                  if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        network_operations.breeding_control_by_page(token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list= json.decode(response);
+                            control_list = load_list['response'];
+                            print(control_list);
+                          });
+                        });
+                      }else
+                        print("Network Not Available");
+                    });
+                  }
+                  else{
+                    print("Empty List");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum > 1){
+                    pagenum = pagenum - 1;
+                  }
+                  print(pagenum);
+                }),
+                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                  print(load_list['hasNext']);
+                  if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        network_operations.breeding_control_by_page(
+                            token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list = json.decode(response);
+                            control_list = load_list['response'];
+                            print(control_list);
+                          });
+                        });
+                      }else
+                        print("Network Not Available");
+                    });
+                  }
+                  else{
+                    print("Empty List");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum < total_page) {
+                    pagenum = pagenum + 1;
+                  }
+                  print(pagenum);
+
+                })
+              ]
+          )
+      ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: (){
@@ -82,6 +154,8 @@ class _breeding_control_list extends State< breeding_control_list>{
                   setState(() {
                     load_list=json.decode(response);
                     control_list = load_list['response'];
+                    total_page=load_list['totalPages'];
+                    print(total_page);
                     isVisible=true;
                   });
 
@@ -238,7 +312,7 @@ class _breeding_control_list extends State< breeding_control_list>{
                         ],
                         child: FadeAnimation(2.0,
                           ListTile(
-                            trailing:Text(control_list!=null?control_list[index]['date']:''),
+                            trailing:Text(control_list[index]['date']!=null?control_list[index]['date'].toString().substring(0,10):''),
                             title: Text(control_list!=null?control_list[index]['horseName']['name']:''),
                             subtitle: Text(control_list!=null?get_check_method_by_id(control_list[index]['check_Method']):''),
                             //leading: Icon(Icons.pets,size: 40,color: Colors.teal,),

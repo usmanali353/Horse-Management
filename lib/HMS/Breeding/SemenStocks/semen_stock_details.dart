@@ -42,7 +42,7 @@ class _semen_stock_details_page extends State<semen_stock_details_page>{
                 ),
                 ListTile(
                   title: Text("Enter Date:"),
-                  trailing: Text(semen_stock_data['enterDate'].toString()!=null?semen_stock_data['enterDate'].toString():''),
+                  trailing: Text(semen_stock_data['enterDate'].toString()!=null?semen_stock_data['enterDate'].toString().substring(0,10):''),
                 ),
                 ListTile(
                   title: Text("Serial Number:"),

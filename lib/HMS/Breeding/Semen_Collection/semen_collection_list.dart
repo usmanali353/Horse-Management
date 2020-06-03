@@ -27,10 +27,14 @@ class semen_collection_list extends StatefulWidget{
 class _semen_collection_list_state extends State<semen_collection_list>{
   String token;
   var horse_list;
-  var siemen_col_list=[], load_list;
+  var siemen_col_list=[], load_list, pagelist, pageloadlist;
+  int pagenum = 1;
+  int total_page;
   var temp=['',''];
   bool isvisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -55,6 +59,76 @@ class _semen_collection_list_state extends State<semen_collection_list>{
 //          ),
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton:
+      Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
+
+                  if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        network_operations.semen_collection_by_page(token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list= json.decode(response);
+                            siemen_col_list = load_list['response'];
+                            print(siemen_col_list);
+                          });
+                        });
+                      }else
+                        print("Network Not Available");
+                    });
+                  }
+                  else{
+                    print("Empty List");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum > 1){
+                    pagenum = pagenum - 1;
+                  }
+                  print(pagenum);
+                }),
+                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                  print(load_list['hasNext']);
+                  if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        network_operations.semen_collection_by_page(
+                            token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list = json.decode(response);
+                            siemen_col_list = load_list['response'];
+                            print(siemen_col_list);
+                          });
+                        });
+                      }else
+                        print("Network Not Available");
+                    });
+                  }
+                  else{
+                    print("Empty List");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum < total_page) {
+                    pagenum = pagenum + 1;
+                  }
+                  print(pagenum);
+
+                })
+              ]
+          )
+      ),
 //        floatingActionButton: FloatingActionButton(
 //          child: Icon(
 //            Icons.add,
@@ -78,6 +152,8 @@ class _semen_collection_list_state extends State<semen_collection_list>{
                     isvisible=true;
                     load_list=json.decode(response);
                     siemen_col_list = load_list['response'];
+                    total_page=load_list['totalPages'];
+                    print(total_page);
                     // print('Training list Length'+training_list.length.toString());
                   });
 
@@ -147,7 +223,7 @@ class _semen_collection_list_state extends State<semen_collection_list>{
                     child: FadeAnimation(2.0,
                       ListTile(
                         title: Text(siemen_col_list!=null?siemen_col_list[index]['horseName']['name']:''),
-                        trailing: Text(siemen_col_list!=null?siemen_col_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
+                        trailing: Text(siemen_col_list[index]['date']!=null?siemen_col_list[index]['date'].toString().substring(0,10):''),
                         subtitle: Text(siemen_col_list!=null?siemen_col_list[index]['inChargeName']['contactName']['name']:''),
                         //leading: Image.asset("assets/horse_icon.png"),
                         onTap: (){

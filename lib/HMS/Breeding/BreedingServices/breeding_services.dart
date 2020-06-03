@@ -31,7 +31,10 @@ class _breeding_services_State extends State<breeding_services>{
   bool isVisible=false;
   var temp=['','',];
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var breeding_services_list, load_list;
+  var breeding_services_list, load_list, pagelist, pageloadlist;
+  int pagenum = 1;
+  int total_page;
+
 
   @override
   void initState() {
@@ -70,6 +73,76 @@ class _breeding_services_State extends State<breeding_services>{
 //          ),
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton:
+      Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
+
+                  if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        BreedingServicesJson.breeding_services_by_page(token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list= json.decode(response);
+                            breeding_services_list = load_list['response'];
+                            print(breeding_services_list);
+                          });
+                        });
+                      }else
+                        print("Network Not Available");
+                    });
+                  }
+                  else{
+                    print("Empty List");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum > 1){
+                    pagenum = pagenum - 1;
+                  }
+                  print(pagenum);
+                }),
+                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                  print(load_list['hasNext']);
+                  if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        BreedingServicesJson.breeding_services_by_page(
+                            token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list = json.decode(response);
+                            breeding_services_list = load_list['response'];
+                            print(breeding_services_list);
+                          });
+                        });
+                      }else
+                        print("Network Not Available");
+                    });
+                  }
+                  else{
+                    print("Empty List");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum < total_page) {
+                    pagenum = pagenum + 1;
+                  }
+                  print(pagenum);
+
+                })
+              ]
+          )
+      ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: (){
@@ -83,6 +156,8 @@ class _breeding_services_State extends State<breeding_services>{
                   setState(() {
                     load_list=json.decode(response);
                     breeding_services_list = load_list['response'];
+                    total_page=load_list['totalPages'];
+                    print(total_page);
                     isVisible=true;
                   });
 
@@ -154,7 +229,7 @@ class _breeding_services_State extends State<breeding_services>{
                          ListTile(
                           title: Text(breeding_services_list!=null?breeding_services_list[index]['horseName']['name']:''),
                           subtitle: Text(breeding_services_list!=null?breeding_services_list[index]['sireName']['name'].toString():''),
-                          trailing: Text(breeding_services_list!=null?breeding_services_list[index]['serviceDate'].toString().replaceAll("T00:00:00", ''):'') ,
+                          trailing: Text(breeding_services_list[index]['serviceDate']!=null?breeding_services_list[index]['serviceDate'].toString().substring(0,10):'') ,
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context) => breeding_services_details_page(breeding_services_list[index], get_check_service_by_id(breeding_services_list[index]['serviceType']))));
 //                          Navigator.push(context, MaterialPageRoute(builder: (context)=>update_breeding(token,breeding_services_list[index])));

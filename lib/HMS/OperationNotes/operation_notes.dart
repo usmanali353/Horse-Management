@@ -33,7 +33,9 @@ class _operational_noteList extends State<operational_noteList>{
   var temp=['','',''];
   bool isVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var notes_list;
+  var notes_list,load_list, pagelist, pageloadlist;
+  int pagenum = 1;
+  int total_page;
 
 
   @override
@@ -73,6 +75,76 @@ class _operational_noteList extends State<operational_noteList>{
 //          ),
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton:
+      Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
+
+                  if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        OperationNotesServices.operationalNotes_by_page(token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list= json.decode(response);
+                            notes_list = load_list['response'];
+                            print(notes_list);
+                          });
+                        });
+                      }else
+                        print("Network Not Available");
+                    });
+                  }
+                  else{
+                    print("Empty List");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum > 1){
+                    pagenum = pagenum - 1;
+                  }
+                  print(pagenum);
+                }),
+                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                  print(load_list['hasNext']);
+                  if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        OperationNotesServices.operationalNotes_by_page(
+                            token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list = json.decode(response);
+                            notes_list = load_list['response'];
+                            print(notes_list);
+                          });
+                        });
+                      }else
+                        print("Network Not Available");
+                    });
+                  }
+                  else{
+                    print("Empty List");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum < total_page) {
+                    pagenum = pagenum + 1;
+                  }
+                  print(pagenum);
+
+                })
+              ]
+          )
+      ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: (){
@@ -84,7 +156,10 @@ class _operational_noteList extends State<operational_noteList>{
                 pd.dismiss();
                 if(response!=null){
                   setState(() {
-                    notes_list=json.decode(response);
+                    load_list=json.decode(response);
+                    notes_list = load_list['response'];
+                    total_page=load_list['totalPages'];
+                    print(total_page);
                     isVisible=true;
                   });
 
@@ -156,7 +231,7 @@ class _operational_noteList extends State<operational_noteList>{
                          ListTile(
                           title: Text(notes_list!=null?notes_list[index]['generalCategoryName']['name']:''),
                            subtitle: Text(notes_list!=null?notes_list[index]['details']:''),
-                          trailing: Text(notes_list!=null?notes_list[index]['date'].toString():''),
+                          trailing: Text(notes_list[index]['date']!=null?notes_list[index]['date'].toString().substring(0,10):''),
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context) => operation_notes_details_page(notes_list[index])));
                           },
