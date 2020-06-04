@@ -56,7 +56,7 @@ class _Profile_Page_State extends State<vet_category>{
                   ListTile(
                     title: Text("Vet Visit"),
                     subtitle: Text("Add Vet Visit"),
-                    leading: FaIcon(FontAwesomeIcons.userMd, color: Colors.red.shade400, size: 30,),
+                    leading: FaIcon(FontAwesomeIcons.userMd, color: Colors.red.shade400, size: 35,),
                     //leading: Icon(Icons.speaker_notes,size: 40,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: ()async{

@@ -92,7 +92,7 @@ class _ContactHomeState extends State<ContactHome> {
             Navigator.push(context, MaterialPageRoute(builder: (context)=> SettingsPage()));
           } ,
           tooltip: 'Settings',
-          child: FaIcon(FontAwesomeIcons.whmcs, color: Colors.white, size: 40,),
+          child: FaIcon(FontAwesomeIcons.cogs, color: Colors.white, size: 40,),
 
         ),
       body: Padding(
