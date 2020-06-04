@@ -57,7 +57,7 @@ class _Profile_Page_State extends State<breeding_Category>{
                       ListTile(
                         title: Text("Breeding Services"),
                         subtitle: Text("All services about breeding"),
-                        leading: FaIcon(FontAwesomeIcons.empire, color: Color(0xFFd4af37), size: 40,),
+                        leading: FaIcon(FontAwesomeIcons.dharmachakra, color: Color(0xFFd4af37), size: 40,),
                         //leading: Icon(Icons.build,size: 40, color: Colors.black,),
                         trailing: Icon(Icons.arrow_right),
                         onTap: (){
