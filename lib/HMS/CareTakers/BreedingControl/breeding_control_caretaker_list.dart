@@ -1,14 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/breeding_control_details.dart';
-import 'package:horse_management/HMS/Breeding/BreedingControl/breeding_control_form.dart';
-import 'package:horse_management/HMS/Breeding/BreedingControl/next_breeding_check.dart';
-import 'package:horse_management/HMS/Breeding/BreedingControl/update_breeding_control.dart';
 import 'package:horse_management/HMS/CareTakers/BreedingControl/BreedingControlCaretaker.dart';
 import 'package:horse_management/HMS/CareTakers/BreedingControl/BreedingControlLateReason.dart';
-import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';

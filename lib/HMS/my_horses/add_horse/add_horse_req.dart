@@ -556,12 +556,12 @@ class add_horse_button extends StatelessWidget {
             if (response != null) {
               Scaffold.of(context).showSnackBar(SnackBar(
                 backgroundColor: Colors.green,
-                content: Text("Training Added Sucessfully"),
+                content: Text("Horse  Added Sucessfully"),
               ));
             } else {
               Scaffold.of(context).showSnackBar(SnackBar(
                 backgroundColor: Colors.red,
-                content: Text("Training not Added"),
+                content: Text("Horse not Added"),
               ));
             }
           });

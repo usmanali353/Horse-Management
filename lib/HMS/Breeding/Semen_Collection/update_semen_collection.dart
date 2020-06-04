@@ -1,14 +1,10 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/Network_Operations.dart';
-
 import 'package:intl/intl.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-
 import '../../../Utils.dart';
-
 
 
 class update_semen_collection extends StatefulWidget{

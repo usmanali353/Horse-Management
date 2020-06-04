@@ -82,7 +82,7 @@ class _audit_log extends State<audit_log>{
           child: DraggableScrollbar(
             controller: customController,
               heightScrollThumb: 38.0,
-              backgroundColor: Colors.teal,
+              backgroundColor: Colors.grey.shade400,
             scrollThumbBuilder: (
                 Color backgroundColor,
                 Animation<double> thumbAnimation,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Veterinary/VetVisits/vetVisitsList.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Confirmation/add_confirmation_form.dart';
@@ -44,7 +45,8 @@ class _Profile_Page_State extends State<vet_category>{
                   ListTile(
                     title: Text("Confirmation List"),
                     subtitle: Text("Add Confirmation"),
-                    leading: Icon(Icons.account_balance_wallet,size: 40,),
+                    leading: FaIcon(FontAwesomeIcons.laptopMedical, color: Colors.grey.shade400, size: 30,),
+                    //leading: Icon(Icons.account_balance_wallet,size: 40,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: ()async{
                       SharedPreferences prefs=await SharedPreferences.getInstance();
@@ -54,7 +56,8 @@ class _Profile_Page_State extends State<vet_category>{
                   ListTile(
                     title: Text("Vet Visit"),
                     subtitle: Text("Add Vet Visit"),
-                    leading: Icon(Icons.speaker_notes,size: 40,),
+                    leading: FaIcon(FontAwesomeIcons.userMd, color: Colors.red.shade400, size: 30,),
+                    //leading: Icon(Icons.speaker_notes,size: 40,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: ()async{
                       SharedPreferences prefs=await SharedPreferences.getInstance();

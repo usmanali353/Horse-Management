@@ -1,13 +1,10 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/Breeding/SemenStocks/semen_stock_details.dart';
 import 'package:horse_management/HMS/Breeding/SemenStocks/semen_stock_json.dart';
-import 'package:horse_management/HMS/Breeding/Semen_Collection/semen_collection_details.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-
 import '../../../Utils.dart';
 import 'semen_stock_form.dart';
 import 'update_semen_stock.dart';

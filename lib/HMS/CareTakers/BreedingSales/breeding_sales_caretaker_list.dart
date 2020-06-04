@@ -1,21 +1,13 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-//import 'package:horse_management/HMS/Breeding/BreedingSales/breeding_sales_caretaker_list_details.dart';
-//import 'package:horse_management/HMS/Breeding/BreedingSales/breeding_sales_caretaker_list_form.dart';
-//import 'package:horse_management/HMS/Breeding/BreedingSales/breeding_sales_caretaker_list_json.dart';
 import 'package:horse_management/HMS/Breeding/BreedingSales/breeding_sales_details.dart';
 import 'package:horse_management/HMS/Breeding/BreedingSales/breeding_sales_form.dart';
-//import 'package:horse_management/HMS/Breeding/BreedingSales/update_breeding_sales_caretaker_list.dart';
-import 'package:horse_management/HMS/Breeding/BreedingServices/breeding_service_form.dart';
 import 'package:horse_management/HMS/CareTakers/BreedingSales/BreedingSalesCaretaker.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-
 import '../../../Utils.dart';
 import 'BreedingSalesLateReason.dart';
-//import 'breeding_sales_caretaker_list_form.dart';
 
 
 class breeding_sales_caretaker_list extends StatefulWidget{

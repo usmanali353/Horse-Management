@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/Breeding/Semen_Collection/semen_collection_details.dart';
 import 'package:horse_management/HMS/Breeding/Semen_Collection/update_semen_collection.dart';
-import 'package:horse_management/HMS/Training/training_detail_page.dart';
-import 'package:horse_management/HMS/Training/update_training.dart';
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-
 import '../../../Utils.dart';
 import 'add_semen_collection.dart';
+
 
 class semen_collection_list extends StatefulWidget{
   String token;

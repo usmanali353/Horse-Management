@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/CareTakers/Confirmation/confirmation_caretaker_list.dart';
 import 'package:horse_management/HMS/CareTakers/Vaccination/vaccination_caretaker_list.dart';
 import 'package:horse_management/HMS/CareTakers/VetVisit/vetVisits_caretaker_List.dart';
@@ -46,7 +47,7 @@ class _Profile_Page_State extends State<vet_category_mainpage>{
                   ListTile(
                     title: Text("Confirmation Caretaker"),
                     subtitle: Text("Add Confirmation"),
-                    leading: Icon(Icons.account_balance_wallet,size: 40,),
+                    leading: FaIcon(FontAwesomeIcons.laptopMedical, color: Colors.grey.shade400, size: 30,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: ()async{
                       SharedPreferences prefs=await SharedPreferences.getInstance();
@@ -56,7 +57,7 @@ class _Profile_Page_State extends State<vet_category_mainpage>{
                   ListTile(
                     title: Text("Vet Visit Caretaker"),
                     subtitle: Text("Add & Show Vet Visit"),
-                    leading: Icon(Icons.speaker_notes,size: 40,),
+                    leading: FaIcon(FontAwesomeIcons.userMd, color: Colors.red.shade400, size: 30,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: ()async{
                       SharedPreferences prefs=await SharedPreferences.getInstance();

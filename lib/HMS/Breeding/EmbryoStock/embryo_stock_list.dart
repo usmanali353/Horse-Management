@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/Breeding/EmbryoStock/embryo_stock_details.dart';
 import 'package:horse_management/HMS/Breeding/EmbryoStock/update_embryo_stock.dart';
-
-import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';

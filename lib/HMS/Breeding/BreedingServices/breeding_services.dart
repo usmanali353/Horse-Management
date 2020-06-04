@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Breeding/BreedingServices/breeding_services_details.dart';
 import 'package:horse_management/HMS/Breeding/BreedingServices/update_breeding_services.dart';
-import 'package:horse_management/HMS/my_horses/services/add_horse_services.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'dart:async';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:horse_management/Network_Operations.dart';
 import '../../../Utils.dart';
 import 'breeding_service_form.dart';
 import 'utils/breeding_services_json.dart';

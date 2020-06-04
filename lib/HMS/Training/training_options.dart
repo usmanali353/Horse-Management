@@ -1,5 +1,6 @@
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Training/trainingMainPage.dart';
 import 'package:horse_management/HMS/Training/trainingPlansList.dart';
 import 'package:horse_management/HMS/Training/training_list.dart';
@@ -40,9 +41,10 @@ class _training_options_state extends State<training_options>{
                   shrinkWrap: true,
                   children: <Widget>[
                     ListTile(
-                      title: Text("Traing List"),
+                      title: Text("Training List"),
                       subtitle: Text("Add & Show Training List"),
-                      leading: Icon(Icons.list,size: 40,),
+                      leading: FaIcon(FontAwesomeIcons.list, color: Colors.lightBlueAccent.shade400, size: 30,),
+                      //leading: Icon(Icons.list,size: 40,),
                       trailing: Icon(Icons.arrow_right),
                       onTap: () async{
                         SharedPreferences prefs= await SharedPreferences.getInstance();
@@ -52,7 +54,7 @@ class _training_options_state extends State<training_options>{
                     ListTile(
                       title: Text("Training Plans"),
                       subtitle: Text("Add & Show Training Plans"),
-                      leading: Icon(Icons.featured_play_list,size: 40, color: Colors.yellow,),
+                      leading: Icon(Icons.assignment,size: 40, color: Colors.yellow.shade600,),
                       trailing: Icon(Icons.arrow_right),
                       onTap: ()async{
                         SharedPreferences prefs= await SharedPreferences.getInstance();

@@ -1,5 +1,6 @@
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Configuration/AccountCategories/accountcategories_list.dart';
 import 'package:horse_management/HMS/Configuration/Associations/associations_list.dart';
 import 'package:horse_management/HMS/Configuration/Barns/barn_list.dart';
@@ -51,7 +52,8 @@ class _configuration_Category extends State<configuration_Category>{
                       ListTile(
                         title: Text("Barn"),
                         subtitle: Text("Add Barn"),
-                        leading: Icon(Icons.home,size: 40,),
+                        leading: FaIcon(FontAwesomeIcons.houzz, color: Colors.grey.shade400, size: 30,),
+                        //leading: Icon(Icons.home,size: 40,),
                         trailing: Icon(Icons.arrow_right),
                         onTap: () async{
                           SharedPreferences prefs= await SharedPreferences.getInstance();
@@ -61,7 +63,8 @@ class _configuration_Category extends State<configuration_Category>{
                       ListTile(
                         title: Text("Sire"),
                         subtitle: Text("Add Sire"),
-                        leading: Icon(Icons.pets,size: 40, color: Colors.greenAccent,),
+                        leading: FaIcon(FontAwesomeIcons.horseHead, color: Colors.brown.shade300, size: 30,),
+                        //leading: Icon(Icons.pets,size: 40, color: Colors.greenAccent,),
                         trailing: Icon(Icons.arrow_right),
                         onTap: (){
                         Navigator.push(context,MaterialPageRoute(builder: (context)=>sire_list(token)));
@@ -70,7 +73,8 @@ class _configuration_Category extends State<configuration_Category>{
                       ListTile(
                         title: Text("Dam"),
                         subtitle: Text("Add Dam"),
-                        leading: Icon(Icons.local_convenience_store,size: 40, color: Colors.green,),
+                        leading: FaIcon(FontAwesomeIcons.horse, color: Colors.pink.shade200, size: 30,),
+                        //leading: Icon(Icons.local_convenience_store,size: 40, color: Colors.green,),
                         trailing: Icon(Icons.arrow_right),
                         onTap: (){
                          Navigator.push(context,MaterialPageRoute(builder: (context)=>dam_list(token)));
@@ -79,7 +83,8 @@ class _configuration_Category extends State<configuration_Category>{
                       ListTile(
                         title: Text("Breeds"),
                         subtitle: Text("Add Breed"),
-                        leading: Icon(Icons.all_inclusive,size: 40,color: Colors.amberAccent,),
+                        leading: FaIcon(FontAwesomeIcons.venusMars, color: Colors.purple.shade300, size: 30,),
+                        //leading: Icon(Icons.all_inclusive,size: 40,color: Colors.amberAccent,),
                         trailing: Icon(Icons.arrow_right),
                         onTap: (){
                           Navigator.push(context,MaterialPageRoute(builder: (context)=>breeds_list(token)));
@@ -88,7 +93,9 @@ class _configuration_Category extends State<configuration_Category>{
                       ListTile(
                         title: Text("Colors"),
                         subtitle: Text("Add Color"),
-                        leading: Icon(Icons.local_florist,size: 40,color: Colors.redAccent,),
+                        leading: FaIcon(FontAwesomeIcons.palette, color: Colors.red.shade400, size: 30,),
+
+                        //leading: Icon(Icons.local_florist,size: 40,color: Colors.redAccent,),
                         trailing: Icon(Icons.arrow_right),
                         onTap: (){
                          Navigator.push(context,MaterialPageRoute(builder: (context)=>colors_list(token)));
@@ -97,7 +104,9 @@ class _configuration_Category extends State<configuration_Category>{
                       ListTile(
                         title: Text("Markings"),
                         subtitle: Text("Add Markings"),
-                        leading: Icon(Icons.flag,size: 40, color: Colors.lightGreenAccent,),
+                        leading: FaIcon(FontAwesomeIcons.ribbon, color: Colors.blue.shade400, size: 30,),
+
+                        // leading: Icon(Icons.flag,size: 40, color: Colors.lightGreenAccent,),
                         trailing: Icon(Icons.arrow_right),
                         onTap: (){
                        Navigator.push(context,MaterialPageRoute(builder: (context)=>marking_list(token)));
@@ -115,7 +124,7 @@ class _configuration_Category extends State<configuration_Category>{
                       ListTile(
                         title: Text("Horse Categories"),
                         subtitle: Text("Add Horse Categories"),
-                        leading: Icon(Icons.format_list_numbered,size: 40, color: Colors.deepOrange,),
+                        leading: Icon(Icons.format_list_numbered,size: 40, color: Colors.deepOrange.shade300,),
                         trailing: Icon(Icons.arrow_right),
                         onTap: (){
                           Navigator.push(context,MaterialPageRoute(builder: (context)=>horsecategory_list(token)));
@@ -124,7 +133,7 @@ class _configuration_Category extends State<configuration_Category>{
                       ListTile(
                         title: Text("General Categories"),
                         subtitle: Text("Add General Categories"),
-                        leading: Icon(Icons.format_list_bulleted,size: 40, color: Colors.deepPurple,),
+                        leading: Icon(Icons.format_list_bulleted,size: 40, color: Colors.deepPurple.shade400,),
                         trailing: Icon(Icons.arrow_right),
                         onTap: (){
                           Navigator.push(context,MaterialPageRoute(builder: (context)=>generalcategory_list(token)));
@@ -133,7 +142,7 @@ class _configuration_Category extends State<configuration_Category>{
                       ListTile(
                         title: Text("Locations"),
                         subtitle: Text("Add Locations"),
-                        leading: Icon(Icons.location_on,size: 40, color: Colors.red,),
+                        leading: Icon(Icons.location_on,size: 40, color: Colors.red.shade800,),
                         trailing: Icon(Icons.arrow_right),
                         onTap: (){
                           Navigator.push(context,MaterialPageRoute(builder: (context)=>location_list(token)));
@@ -142,7 +151,8 @@ class _configuration_Category extends State<configuration_Category>{
                       ListTile(
                         title: Text("Vaccines"),
                         subtitle: Text("Add Vaccines"),
-                        leading: Icon(Icons.enhanced_encryption,size: 40, color: Colors.green,),
+                        leading: FaIcon(FontAwesomeIcons.syringe, color: Colors.limeAccent.shade400, size: 30,),
+                        //leading: Icon(Icons.enhanced_encryption,size: 40, color: Colors.green,),
                         trailing: Icon(Icons.arrow_right),
                         onTap: (){
                           Navigator.push(context,MaterialPageRoute(builder: (context)=>vaccines_list(token)));
@@ -151,7 +161,9 @@ class _configuration_Category extends State<configuration_Category>{
                       ListTile(
                         title: Text("Vaccination Types"),
                         subtitle: Text("Add Vaccination Types"),
-                        leading: Icon(Icons.local_hospital,size: 40, color: Colors.pinkAccent,),
+                        leading: FaIcon(FontAwesomeIcons.vials, color: Colors.pinkAccent.shade200, size: 30,),
+
+                        //leading: Icon(Icons.local_hospital,size: 40, color: Colors.pinkAccent,),
                         trailing: Icon(Icons.arrow_right),
                         onTap: (){
                           Navigator.push(context,MaterialPageRoute(builder: (context)=>vaccinationtypes_list(token)));
@@ -160,7 +172,7 @@ class _configuration_Category extends State<configuration_Category>{
                       ListTile(
                         title: Text("Test Types"),
                         subtitle: Text("Add Test Types"),
-                        leading: Icon(Icons.assignment,size: 40, color: Colors.brown,),
+                        leading: Icon(Icons.assignment,size: 40, color: Colors.brown.shade500,),
                         trailing: Icon(Icons.arrow_right),
                         onTap: (){
                           Navigator.push(context,MaterialPageRoute(builder: (context)=>testtype_list(token)));
@@ -169,7 +181,8 @@ class _configuration_Category extends State<configuration_Category>{
                       ListTile(
                         title: Text("Performance Types"),
                         subtitle: Text("Add Performance Types"),
-                        leading: Icon(Icons.library_books,size: 40, color: Colors.tealAccent,),
+                        leading: FaIcon(FontAwesomeIcons.superpowers, color: Colors.teal.shade200, size: 40,),
+                        //leading: Icon(Icons.library_books,size: 40, color: Colors.tealAccent,),
                         trailing: Icon(Icons.arrow_right),
                         onTap: (){
                           Navigator.push(context,MaterialPageRoute(builder: (context)=>performancetype_list(token)));
@@ -178,7 +191,9 @@ class _configuration_Category extends State<configuration_Category>{
                       ListTile(
                         title: Text("Associations"),
                         subtitle: Text("Add Associations"),
-                        leading: Icon(Icons.shopping_basket,size: 40, color: Colors.redAccent,),
+                        leading: FaIcon(FontAwesomeIcons.centos, color: Colors.redAccent.shade400, size: 40,),
+
+                        //leading: Icon(Icons.shopping_basket,size: 40, color: Colors.redAccent,),
                         trailing: Icon(Icons.arrow_right),
                         onTap: (){
                           Navigator.push(context,MaterialPageRoute(builder: (context)=>associations_list(token)));
@@ -187,7 +202,9 @@ class _configuration_Category extends State<configuration_Category>{
                       ListTile(
                         title: Text("Account Categories"),
                         subtitle: Text("Add Account Categories"),
-                        leading: Icon(Icons.category,size: 40, color: Colors.cyan,),
+                        leading: FaIcon(FontAwesomeIcons.moneyCheck, color: Colors.teal.shade400, size: 40,),
+
+                        //leading: Icon(Icons.category,size: 40, color: Colors.cyan,),
                         trailing: Icon(Icons.arrow_right),
                         onTap: (){
                           Navigator.push(context,MaterialPageRoute(builder: (context)=>accountcategories_list(token)));
@@ -196,7 +213,9 @@ class _configuration_Category extends State<configuration_Category>{
                       ListTile(
                         title: Text("Cost Centers"),
                         subtitle: Text("Add Cost Centers "),
-                        leading: Icon(Icons.polymer,size: 40, color: Colors.yellow,),
+                        leading: FaIcon(FontAwesomeIcons.moneyBillAlt, color: Colors.green, size: 40,),
+
+                        //leading: Icon(Icons.polymer,size: 40, color: Colors.yellow,),
                         trailing: Icon(Icons.arrow_right),
                         onTap: (){
                           Navigator.push(context,MaterialPageRoute(builder: (context)=>costcenter_list(token)));
@@ -205,7 +224,7 @@ class _configuration_Category extends State<configuration_Category>{
                       ListTile(
                         title: Text("Currencies"),
                         subtitle: Text("Add Currencies"),
-                        leading: Icon(Icons.monetization_on,size: 40, color: Colors.lightGreen,),
+                        leading: FaIcon(FontAwesomeIcons.coins, color: Color(0xFFd4af37), size: 40,),
                         trailing: Icon(Icons.arrow_right),
                         onTap: (){
                           Navigator.push(context,MaterialPageRoute(builder: (context)=>currency_list(token)));
