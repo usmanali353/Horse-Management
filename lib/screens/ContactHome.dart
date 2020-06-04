@@ -1,15 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:horse_management/HMS/Breeding/breeding_mainPage.dart';
-import 'package:horse_management/HMS/CareTakers/BreedingControl/breeding_control_caretaker_list.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/CareTakers/Farrier/farrier_caretaker_List.dart';
 import 'package:horse_management/HMS/CareTakers/Trainings/training_caretaker_list.dart';
 import 'package:horse_management/HMS/CareTakers/breeding_caretaker_mainpage.dart';
 import 'package:horse_management/HMS/CareTakers/veterinary_mainpage.dart';
-//import 'package:horse_management/HMS/CareTakers/BreedingControl/listwithTabstesting.dart';
-import 'package:horse_management/HMS/Training/training_options.dart';
-import 'package:horse_management/HMS/Veterinary/vet_mainPage.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:horse_management/screens/settings_page.dart';
 import 'package:horse_management/widgets/slide_item.dart';
@@ -79,7 +75,7 @@ class _ContactHomeState extends State<ContactHome> {
     return Scaffold(
       appBar: PreferredSize(
         child: Padding(
-          padding: EdgeInsets.only(top: 30.0, left: 10.0, right: 10.0),
+          padding: EdgeInsets.only(top: 65.0, left: 10.0, right: 10.0),
           child: Card(
             elevation: 6.0,
           ),
@@ -89,6 +85,16 @@ class _ContactHomeState extends State<ContactHome> {
           60.0,
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.teal,
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> SettingsPage()));
+          } ,
+          tooltip: 'Settings',
+          child: FaIcon(FontAwesomeIcons.whmcs, color: Colors.white, size: 40,),
+
+        ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(10.0,0,10.0,0),
         child: ListView(
@@ -165,15 +171,15 @@ class _ContactHomeState extends State<ContactHome> {
               padding: EdgeInsets.all(15),
             ),
             SizedBox(height: 10.0),
-            FloatingActionButton(
-              backgroundColor: Colors.teal,
-              onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> SettingsPage()));
-              } ,
-              tooltip: 'Settings',
-              child: Icon(Icons.settings, color: Colors.white,),
-
-            )
+//            FloatingActionButton(
+//              backgroundColor: Colors.teal,
+//              onPressed: (){
+//                Navigator.push(context, MaterialPageRoute(builder: (context)=> SettingsPage()));
+//              } ,
+//              tooltip: 'Settings',
+//              child: Icon(Icons.settings, color: Colors.white,),
+//
+//            )
           ],
         ),
       ),

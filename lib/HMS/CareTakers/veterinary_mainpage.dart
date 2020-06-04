@@ -67,7 +67,7 @@ class _Profile_Page_State extends State<vet_category_mainpage>{
                   ListTile(
                     title: Text("Vaccination Caretaker"),
                     subtitle: Text("Add & Show Vaccinations"),
-                    leading: Icon(Icons.speaker_notes,size: 40,),
+                    leading: FaIcon(FontAwesomeIcons.syringe, color: Colors.limeAccent.shade400, size: 30,),
                     trailing: Icon(Icons.arrow_right),
                     onTap: ()async{
                       SharedPreferences prefs=await SharedPreferences.getInstance();

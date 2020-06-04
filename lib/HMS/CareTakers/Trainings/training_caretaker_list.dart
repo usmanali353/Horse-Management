@@ -40,16 +40,35 @@ class _training_caretaker_list_state extends State<training_caretaker_list>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          child: Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
-          onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>add_training(token)));
-          },
+      appBar: AppBar(title: Text("Training Caretaker"),
+        actions: <Widget>[
+          Center(child: Text("Add New",textScaleFactor: 1.3,)),
+          IconButton(
 
-        ),
+            icon: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => add_training(token)),);
+            },
+          )
+//          IconButton(
+//            icon: Icon(Icons.picture_as_pdf),
+//           // onPressed: () => _generatePdfAndView(context),
+//          ),
+        ],
+      ),
+//        floatingActionButton: FloatingActionButton(
+//          child: Icon(
+//            Icons.add,
+//            color: Colors.white,
+//          ),
+//          onPressed: (){
+//            Navigator.push(context, MaterialPageRoute(builder: (context)=>add_training(token)));
+//          },
+//
+//        ),
         body: RefreshIndicator(
               key: _refreshIndicatorKey,
               onRefresh: (){

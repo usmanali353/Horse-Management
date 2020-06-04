@@ -49,7 +49,7 @@ class _breeding_control_caretaker_list extends State<breeding_control_caretaker_
 //        child: Icon(Icons.add),
 //      ),
       appBar: AppBar(
-        title: Text("Breeding Control & Caretaker"),
+        title: Text("Breeding Control Caretaker"),
         actions: <Widget>[
 //          Center(child: Text("Add New",textScaleFactor: 1.3,)),
 //          IconButton(

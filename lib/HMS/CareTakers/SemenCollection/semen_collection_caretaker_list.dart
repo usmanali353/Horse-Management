@@ -3,12 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/Breeding/Semen_Collection/add_semen_collection.dart';
 import 'package:horse_management/HMS/Breeding/Semen_Collection/semen_collection_details.dart';
-import 'package:horse_management/HMS/Breeding/Semen_Collection/update_semen_collection.dart';
 import 'package:horse_management/HMS/CareTakers/SemenCollection/SemenCollectionCaretaker.dart';
 import 'package:horse_management/HMS/CareTakers/SemenCollection/SemenCollectionLateReason.dart';
-import 'package:horse_management/HMS/Training/training_detail_page.dart';
-import 'package:horse_management/HMS/Training/update_training.dart';
-import 'package:horse_management/Network_Operations.dart';
+
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
@@ -40,7 +37,7 @@ class _semen_collection_caretaker_list_state extends State<semen_collection_care
 
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Semen Collection & Caretaker"),
+        appBar: AppBar(title: Text("Semen Collection Caretaker"),
           actions: <Widget>[
             Center(child: Text("Add New",textScaleFactor: 1.3,)),
             IconButton(

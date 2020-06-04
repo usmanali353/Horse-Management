@@ -3,13 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/CareTakers/VetVisit/VetVisitCaretaker.dart';
 import 'package:horse_management/HMS/CareTakers/VetVisit/VetVisitLateReason.dart';
-import 'package:horse_management/HMS/Diet/add_Diet.dart';
-import 'package:horse_management/HMS/Diet/diet_services.dart';
-import 'package:horse_management/HMS/Training/training_plans.dart';
-import 'package:horse_management/HMS/Training/update_training.dart';
 import 'package:horse_management/HMS/Veterinary/VetVisits/addVetVisits.dart';
-import 'package:horse_management/HMS/Veterinary/VetVisits/veterniaryServices.dart';
-import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
@@ -36,7 +30,7 @@ class vetVisit_caretaker_ListState extends State<vetVisit_caretaker_List>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Vet Visits & Caretaker"),
+      appBar: AppBar(title: Text("Vet Visits Caretaker"),
         actions: <Widget>[
           Center(child: Text("Add New",textScaleFactor: 1.3,)),
           IconButton(

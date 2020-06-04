@@ -57,7 +57,7 @@ class _flushes_caretaker_list extends State<flushes_caretaker_list>{
 //        child: Icon(Icons.add),
 //      ),
       appBar: AppBar(
-        title: Text("Flushes & Caretaker"),
+        title: Text("Flushes Caretaker"),
         actions: <Widget>[
           Center(child: Text("Add New",textScaleFactor: 1.3,)),
           IconButton(

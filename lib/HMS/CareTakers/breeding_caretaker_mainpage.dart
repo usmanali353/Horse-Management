@@ -46,7 +46,7 @@ class _breeding_caretaker_Category extends State<breeding_caretaker_Category>{
                     ListTile(
                       title: Text("Breeding Control"),
                       subtitle: Text("Control services"),
-                      leading: FaIcon(FontAwesomeIcons.cogs, color: Colors.grey.shade400, size: 40,),
+                      leading: FaIcon(FontAwesomeIcons.whmcs, color: Colors.grey.shade500, size: 40,),
                       trailing: Icon(Icons.arrow_right),
                       onTap: () async{
                         SharedPreferences prefs= await SharedPreferences.getInstance();
@@ -65,7 +65,7 @@ class _breeding_caretaker_Category extends State<breeding_caretaker_Category>{
                     ListTile(
                       title: Text("Flushes"),
                       subtitle: Text("Add Flushes"),
-                      leading: Icon(Icons.flag,size: 40, color: Colors.lightGreenAccent,),
+                      leading: FaIcon(FontAwesomeIcons.seedling, color: Colors.lightGreenAccent, size: 30,),
                       trailing: Icon(Icons.arrow_right),
                       onTap: (){
                         Navigator.push(context,MaterialPageRoute(builder: (context)=>flushes_caretaker_list(token)));
@@ -74,7 +74,7 @@ class _breeding_caretaker_Category extends State<breeding_caretaker_Category>{
                     ListTile(
                       title: Text("Semen Collection"),
                       subtitle: Text("Semen Collection"),
-                      leading: Icon(Icons.store,size: 40, color: Colors.blueAccent,),
+                      leading: FaIcon(FontAwesomeIcons.warehouse, color: Colors.lightBlueAccent, size: 30,),
                       trailing: Icon(Icons.arrow_right),
                       onTap: (){
                         Navigator.push(context,MaterialPageRoute(builder: (context)=>semen_collection_caretaker_list(token)));

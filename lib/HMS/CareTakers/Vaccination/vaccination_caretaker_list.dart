@@ -1,12 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:horse_management/HMS/All_Horses_data/farrier/add_farrier.dart';
-import 'package:horse_management/HMS/All_Horses_data/farrier/updateFarrier.dart';
-import 'package:horse_management/HMS/All_Horses_data/lab_reports/update_lab_reports.dart';
-import 'package:horse_management/HMS/All_Horses_data/services/vaccination_services.dart';
+
 import 'package:horse_management/HMS/All_Horses_data/vaccination/add_vaccination_form.dart';
-import 'package:horse_management/HMS/All_Horses_data/vaccination/update_vaccination.dart';
 import 'package:horse_management/HMS/CareTakers/Vaccination/VaccinationCaretaker.dart';
 import 'package:horse_management/HMS/CareTakers/Vaccination/VaccinationLateReason.dart';
 import 'package:horse_management/Utils.dart';
@@ -85,7 +81,7 @@ class _Profile_Page_State extends State<vaccination_caretaker_list>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Vaccination & Caretaker"),actions: <Widget>[
+        appBar: AppBar(title: Text("Vaccination Caretaker"),actions: <Widget>[
           Center(child: Text("Add New",textScaleFactor: 1.3,)),
           IconButton(
 

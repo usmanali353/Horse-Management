@@ -50,7 +50,7 @@ class _breeding_sales_caretaker_list extends State<breeding_sales_caretaker_list
 //        child: Icon(Icons.add),
 //      ),
       appBar: AppBar(
-        title: Text("Breeding Sales & Caretaker"),
+        title: Text("Breeding Sales Caretaker"),
         actions: <Widget>[
           Center(child: Text("Add New",textScaleFactor: 1.3,)),
           IconButton(
