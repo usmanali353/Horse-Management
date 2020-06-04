@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:horse_management/HMS/All_Horses_data/vaccination/add_vaccination_form.dart';
 import 'package:horse_management/HMS/CareTakers/Vaccination/VaccinationCaretaker.dart';
@@ -102,7 +103,10 @@ class _Profile_Page_State extends State<vaccination_caretaker_list>{
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
+                  FloatingActionButton(
+                      backgroundColor: Colors.transparent,
+                      splashColor: Colors.red,
+                      child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
 
                     if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
                       Utils.check_connectivity().then((result){
@@ -131,8 +135,11 @@ class _Profile_Page_State extends State<vaccination_caretaker_list>{
                     }
                     print(pagenum);
                   }),
-                  FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
-                    print(load_list['hasNext']);
+                  FloatingActionButton(
+                      backgroundColor: Colors.transparent,
+                      splashColor: Colors.red,
+                      child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
+                        print(load_list['hasNext']);
                     if(load_list['hasNext'] == true && pagenum >= 1 ) {
                       Utils.check_connectivity().then((result){
                         if(result) {
@@ -316,9 +323,12 @@ class _Profile_Page_State extends State<vaccination_caretaker_list>{
 
                   ],
                   child: ListTile(
+                    enabled: vaccinationlist[index]['isActive'],
+                    leading: FaIcon(FontAwesomeIcons.syringe, color: Colors.limeAccent.shade400, size: 30,),
+
                     //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                     title: Text(vaccinationlist!=null?(vaccinationlist[index]['horseName']['name']):' '),
-                    subtitle: Text(vaccinationlist!=null?'Vaccine: '+(vaccinationlist[index]['vaccineName']['name']):'farrier name not showing'),
+                    subtitle: Text(vaccinationlist!=null?'Vaccine: '+(vaccinationlist[index]['vaccineName']['name']):''),
                     trailing:Text(vaccinationlist!=null?get_status_by_id(vaccinationlist[index]['status']):''),
 
                     //trailing: Text(vaccinationlist[index]['vetId']!=null?'Vet: '+(vaccinationlist[index]['vetName']['contactName']['name']):'Vet name empty'),

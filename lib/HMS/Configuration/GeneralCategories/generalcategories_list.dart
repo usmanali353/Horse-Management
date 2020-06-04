@@ -77,8 +77,10 @@ class _generalcategory_list extends State<generalcategory_list>{
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
-
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
                   if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
                       if(result) {
@@ -106,7 +108,10 @@ class _generalcategory_list extends State<generalcategory_list>{
                   }
                   print(pagenum);
                 }),
-                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
                   print(load_list['hasNext']);
                   if(load_list['hasNext'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
@@ -225,6 +230,8 @@ class _generalcategory_list extends State<generalcategory_list>{
                       ],
                       child: FadeAnimation(2.0,
                         ListTile(
+                          enabled: generalcategory_lists[index]['isActive'],
+                          leading: Icon(Icons.format_list_bulleted,size: 40, color: Colors.deepPurple.shade400,),
                           title: Text(generalcategory_lists!=null?generalcategory_lists[index]['name']:''),
                            //subtitle: Text(generalcategory_lists!=null?generalcategory_lists[index]['description']:''),
                           //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),

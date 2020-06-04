@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Breeding/BreedingSales/breeding_sales_details.dart';
 import 'package:horse_management/HMS/Breeding/BreedingSales/breeding_sales_form.dart';
 import 'package:horse_management/HMS/CareTakers/BreedingSales/BreedingSalesCaretaker.dart';
@@ -76,8 +77,10 @@ class _breeding_sales_caretaker_list extends State<breeding_sales_caretaker_list
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
-
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
                   if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
                       if(result) {
@@ -105,8 +108,11 @@ class _breeding_sales_caretaker_list extends State<breeding_sales_caretaker_list
                   }
                   print(pagenum);
                 }),
-                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
-                  print(load_list['hasNext']);
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
+                      print(load_list['hasNext']);
                   if(load_list['hasNext'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
                       if(result) {
@@ -332,7 +338,9 @@ class _breeding_sales_caretaker_list extends State<breeding_sales_caretaker_list
                       ],
                       child: FadeAnimation(2.0,
                          ListTile(
-                          title: Text(sales_list!=null?sales_list[index]['horseName']['name']:''),
+                           enabled: sales_list[index]['isActive'],
+                           leading: FaIcon(FontAwesomeIcons.handHoldingUsd, color: Colors.green, size: 40,),
+                           title: Text(sales_list!=null?sales_list[index]['horseName']['name']:''),
                            trailing:Text(sales_list!=null?get_status_by_id(sales_list[index]['status']):''),
                            //subtitle: Text(sales_list!=null?sales_list[index]['status'].toString():''),
                          // subtitle: Text(sales_list!=null?sales_list[index]['customerName']['contactName']['name']:''),

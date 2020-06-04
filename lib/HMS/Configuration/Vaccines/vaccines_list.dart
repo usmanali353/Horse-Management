@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Configuration/Vaccines/add_vaccines.dart';
 import 'package:horse_management/HMS/Configuration/Vaccines/update_vaccines.dart';
 import 'package:horse_management/HMS/Configuration/Vaccines/vaccines_json.dart';
@@ -75,8 +76,10 @@ class _vaccines_list extends State<vaccines_list>{
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
-
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
                   if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
                       if(result) {
@@ -104,8 +107,11 @@ class _vaccines_list extends State<vaccines_list>{
                   }
                   print(pagenum);
                 }),
-                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
-                  print(load_list['hasNext']);
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
+                      print(load_list['hasNext']);
                   if(load_list['hasNext'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
                       if(result) {
@@ -222,7 +228,9 @@ class _vaccines_list extends State<vaccines_list>{
                     ],
                     child: FadeAnimation(2.0,
                        ListTile(
-                        title: Text(vaccine_lists!=null?vaccine_lists[index]['name']:''),
+                         enabled: vaccine_lists[index]['isActive'],
+                         leading: FaIcon(FontAwesomeIcons.syringe, color: Colors.limeAccent.shade400, size: 30,),
+                         title: Text(vaccine_lists!=null?vaccine_lists[index]['name']:''),
                         //subtitle: Text(category_lists!=null?category_lists[index]['description']:''),
                         //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
                         onTap: (){

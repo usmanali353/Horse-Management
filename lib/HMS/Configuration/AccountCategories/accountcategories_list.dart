@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Configuration/AccountCategories/accountcategories_json.dart';
 import 'package:horse_management/HMS/Configuration/AccountCategories/add_accountcategories.dart';
 import 'package:horse_management/HMS/Configuration/AccountCategories/update_accountcategories.dart';
@@ -75,8 +76,10 @@ class _accountcategories_list extends State<accountcategories_list>{
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
-
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
                   if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
                       if(result) {
@@ -104,7 +107,11 @@ class _accountcategories_list extends State<accountcategories_list>{
                   }
                   print(pagenum);
                 }),
-                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                FloatingActionButton(
+
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
                   print(load_list['hasNext']);
                   if(load_list['hasNext'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
@@ -224,6 +231,8 @@ class _accountcategories_list extends State<accountcategories_list>{
                       ],
                       child: FadeAnimation(2.0,
                         ListTile(
+                          enabled: category_lists[index]['isActive'],
+                          leading: FaIcon(FontAwesomeIcons.moneyCheck, color: Colors.teal.shade400, size: 40,),
                           title: Text(category_lists!=null?category_lists[index]['name']:''),
                           //subtitle: Text(category_lists!=null?category_lists[index]['description']:''),
                           //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),

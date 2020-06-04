@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Veterinary/Confirmation/confirmation_json.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -76,8 +77,10 @@ class _confirmation_list extends State<confirmation_list>{
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
-
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
                   if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
                       if(result) {
@@ -105,8 +108,11 @@ class _confirmation_list extends State<confirmation_list>{
                   }
                   print(pagenum);
                 }),
-                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
-                  print(load_list['hasNext']);
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
+                      print(load_list['hasNext']);
                   if(load_list['hasNext'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
                       if(result) {
@@ -226,6 +232,8 @@ class _confirmation_list extends State<confirmation_list>{
                       ],
                       child: FadeAnimation(2.0,
                         ListTile(
+                          enabled: confirmation_lists[index]['isActive'],
+                          leading: FaIcon(FontAwesomeIcons.laptopMedical, color: Colors.red.shade400, size: 30,),
                           title: Text(confirmation_lists!=null?confirmation_lists[index]['horseName']['name']:''),
                           //title: Text("data"),
                           subtitle: Text(confirmation_lists!=null?confirmation_lists[index]['vetName']['contactName']['name'].toString():''),

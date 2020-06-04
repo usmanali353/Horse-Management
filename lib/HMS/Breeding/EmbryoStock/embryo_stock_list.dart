@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Breeding/EmbryoStock/embryo_stock_details.dart';
 import 'package:horse_management/HMS/Breeding/EmbryoStock/update_embryo_stock.dart';
 import 'package:horse_management/Utils.dart';
@@ -78,7 +79,10 @@ class _embryo_stock_list extends State< embryo_stock_list>{
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
+                FloatingActionButton(
+                  backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
 
                   if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
@@ -107,7 +111,10 @@ class _embryo_stock_list extends State< embryo_stock_list>{
                   }
                   print(pagenum);
                 }),
-                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
                   print(load_list['hasNext']);
                   if(load_list['hasNext'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
@@ -225,6 +232,9 @@ class _embryo_stock_list extends State< embryo_stock_list>{
                       ],
                       child: FadeAnimation(2.0,
                         ListTile(
+                          enabled: embryo_list[index]['isActive'],
+                          leading: FaIcon(FontAwesomeIcons.dna, color: Colors.purpleAccent, size: 30,),
+                          //leading: Text((index+1).toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
                           title: Text(embryo_list!=null?embryo_list[index]['horseName']['name']:''),
                           subtitle: Text(embryo_list!=null?embryo_list[index]['sireName']['name']:''),
                           trailing: Text(embryo_list[index]['collectionDate']!=null?embryo_list[index]['collectionDate'].toString().substring(0,10):''),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:horse_management/HMS/Configuration/Breeds/add_breed.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Configuration/Breeds/breeds_json.dart';
-import 'package:horse_management/HMS/Configuration/Breeds/update_breed.dart';
 import 'package:horse_management/HMS/Configuration/Dam/add_dam.dart';
 import 'package:horse_management/HMS/Configuration/Dam/dam_json.dart';
 import 'package:horse_management/HMS/Configuration/Dam/update_dam.dart';
@@ -78,8 +77,10 @@ class _dam_list extends State<dam_list>{
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
-
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
                   if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
                       if(result) {
@@ -107,7 +108,10 @@ class _dam_list extends State<dam_list>{
                   }
                   print(pagenum);
                 }),
-                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
                   print(load_list['hasNext']);
                   if(load_list['hasNext'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
@@ -226,6 +230,8 @@ class _dam_list extends State<dam_list>{
                       ],
                       child: FadeAnimation(2.0,
                         ListTile(
+                          enabled: dam_lists[index]['isActive'],
+                          leading: FaIcon(FontAwesomeIcons.horse, color: Colors.pink.shade200, size: 30,),
                           title: Text(dam_lists!=null?dam_lists[index]['name']:''),
                           // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
                           //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),

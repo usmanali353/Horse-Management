@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Configuration/Markings/add_marking.dart';
 import 'package:horse_management/HMS/Configuration/Markings/marking_json.dart';
 import 'package:horse_management/HMS/Configuration/Markings/update_marking.dart';
@@ -76,8 +77,10 @@ class _marking_list extends State<marking_list>{
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
-
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
                   if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
                       if(result) {
@@ -105,7 +108,11 @@ class _marking_list extends State<marking_list>{
                   }
                   print(pagenum);
                 }),
-                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                FloatingActionButton(
+
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
                   print(load_list['hasNext']);
                   if(load_list['hasNext'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
@@ -224,8 +231,11 @@ class _marking_list extends State<marking_list>{
                       ],
                       child: FadeAnimation(2.0,
                          ListTile(
-                          title: Text(marking_lists!=null?marking_lists[index]['name']:''),
-                          //subtitle: Text(marking_lists!=null?marking_lists[index]['type'].toString():''),
+                           enabled: marking_lists[index]['isActive'],
+                           title: Text(marking_lists!=null?marking_lists[index]['name']:''),
+                           leading: FaIcon(FontAwesomeIcons.ribbon, color: Colors.blue.shade400, size: 30,),
+
+                           //subtitle: Text(marking_lists!=null?marking_lists[index]['type'].toString():''),
                           //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
                           onTap: (){
                             // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));

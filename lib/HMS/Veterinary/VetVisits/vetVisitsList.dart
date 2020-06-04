@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Diet/add_Diet.dart';
 import 'package:horse_management/HMS/Diet/diet_services.dart';
 import 'package:horse_management/HMS/Training/training_plans.dart';
@@ -66,8 +67,9 @@ class vetVisitListState extends State<vetVisitList>{
               children: <Widget>[
                 FloatingActionButton(
                     //backgroundColor: Colors.transparent,
-                    child: Icon(Icons.arrow_back, color: Colors.black,),heroTag: "btn2", onPressed: () {
-
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
                   if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
                       if(result) {
@@ -95,8 +97,11 @@ class vetVisitListState extends State<vetVisitList>{
                   }
                   print(pagenum);
                 }),
-                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
-                  print(load_list['hasNext']);
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
+                      print(load_list['hasNext']);
                   if(load_list['hasNext'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
                       if(result) {
@@ -231,8 +236,9 @@ class vetVisitListState extends State<vetVisitList>{
                       ),
                     ],
                     child: ListTile(
+                      enabled: vetvisits_list[index]['isActive'],
+                      leading: FaIcon(FontAwesomeIcons.userMd, color: Colors.blue.shade400, size: 35,),
                       trailing:Text(vetvisits_list[index]['visitDate']!=null?vetvisits_list[index]['visitDate'].toString().substring(0,10):''),
-
                       title: Text(vetvisits_list!=null?vetvisits_list[index]['horseName']['name']:''),
                       //leading: Icon(Icons.local_hospital,size: 40,color: Colors.teal,),
                       onTap: (){

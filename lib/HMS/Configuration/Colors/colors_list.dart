@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Configuration/Colors/add_color.dart';
 import 'package:horse_management/HMS/Configuration/Colors/colors_json.dart';
 import 'package:horse_management/HMS/Configuration/Colors/update_color.dart';
@@ -75,8 +76,10 @@ class _colors_list extends State<colors_list>{
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
-
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
                   if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
                       if(result) {
@@ -104,8 +107,11 @@ class _colors_list extends State<colors_list>{
                   }
                   print(pagenum);
                 }),
-                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
-                  print(load_list['hasNext']);
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
+                      print(load_list['hasNext']);
                   if(load_list['hasNext'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
                       if(result) {
@@ -223,7 +229,9 @@ class _colors_list extends State<colors_list>{
                       ],
                       child: FadeAnimation(2.0,
                          ListTile(
-                          title: Text(color_lists!=null?color_lists[index]['name']:''),
+                           enabled: color_lists[index]['isActive'],
+                           leading: FaIcon(FontAwesomeIcons.palette, color: Colors.red.shade400, size: 30,),
+                           title: Text(color_lists!=null?color_lists[index]['name']:''),
                           // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
                           //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
                           onTap: (){

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Breeding/BreedingServices/breeding_services_details.dart';
 import 'package:horse_management/HMS/Breeding/BreedingServices/update_breeding_services.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
@@ -76,7 +77,10 @@ class _breeding_services_State extends State<breeding_services>{
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
 
                   if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
@@ -105,7 +109,10 @@ class _breeding_services_State extends State<breeding_services>{
                   }
                   print(pagenum);
                 }),
-                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_forward, color:Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
                   print(load_list['hasNext']);
                   if(load_list['hasNext'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
@@ -223,7 +230,10 @@ class _breeding_services_State extends State<breeding_services>{
                       ],
                       child: FadeAnimation(2.0,
                          ListTile(
-                          title: Text(breeding_services_list!=null?breeding_services_list[index]['horseName']['name']:''),
+                           enabled: breeding_services_list[index]['isActive'],
+                           leading: FaIcon(FontAwesomeIcons.dharmachakra, color: Color(0xFFd4af37), size: 40,),
+                           //leading: Text((index+1).toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
+                           title: Text(breeding_services_list!=null?breeding_services_list[index]['horseName']['name']:''),
                           subtitle: Text(breeding_services_list!=null?breeding_services_list[index]['sireName']['name'].toString():''),
                           trailing: Text(breeding_services_list[index]['serviceDate']!=null?breeding_services_list[index]['serviceDate'].toString().substring(0,10):'') ,
                           onTap: (){

@@ -78,7 +78,7 @@ class _Profile_Page_State extends State<breeding_Category>{
                       ListTile(
                         title: Text("Semen Stock"),
                         subtitle: Text("Add Semen"),
-                        leading: FaIcon(FontAwesomeIcons.layerGroup, color: Colors.amberAccent.shade400, size: 40,),
+                        leading: FaIcon(FontAwesomeIcons.layerGroup, color:Colors.redAccent, size: 40,),
                        // leading: Icon(Icons.all_inclusive,size: 40,color: Colors.amberAccent,),
                         trailing: Icon(Icons.arrow_right),
                         onTap: (){
@@ -88,7 +88,8 @@ class _Profile_Page_State extends State<breeding_Category>{
                       ListTile(
                         title: Text("Embryo Stock"),
                         subtitle: Text("Add Embryo"),
-                        leading: Icon(Icons.local_florist,size: 40,color: Colors.redAccent, ),
+                        leading: FaIcon(FontAwesomeIcons.dna, color: Colors.purpleAccent, size: 30,),
+                        //leading: Icon(Icons.local_florist,size: 40,color: Colors.redAccent, ),
                         trailing: Icon(Icons.arrow_right),
                         onTap: (){
                           Navigator.push(context,MaterialPageRoute(builder: (context)=>embryo_stock_list(token)));

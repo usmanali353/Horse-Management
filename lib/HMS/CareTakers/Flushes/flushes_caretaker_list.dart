@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive/hive.dart';
 import 'package:horse_management/HMS/Breeding/Flushes/embryo_retrieval_form.dart';
 import 'package:horse_management/HMS/Breeding/Flushes/flushes_details.dart';
@@ -83,7 +84,10 @@ class _flushes_caretaker_list extends State<flushes_caretaker_list>{
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
 
                   if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
@@ -112,8 +116,11 @@ class _flushes_caretaker_list extends State<flushes_caretaker_list>{
                   }
                   print(pagenum);
                 }),
-                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
-                  print(load_list['hasNext']);
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
+                      print(load_list['hasNext']);
                   if(load_list['hasNext'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
                       if(result) {
@@ -348,7 +355,9 @@ class _flushes_caretaker_list extends State<flushes_caretaker_list>{
                       ],
                       child: FadeAnimation(2.0,
                          ListTile(
-                          title: Text(flushes_list!=null?flushes_list[index]['horseName']['name']:''),
+                           enabled: flushes_list[index]['isActive'],
+                           leading: FaIcon(FontAwesomeIcons.seedling, color: Colors.lightGreenAccent, size: 30,),
+                           title: Text(flushes_list!=null?flushes_list[index]['horseName']['name']:''),
                           subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
                            trailing:Text(flushes_list!=null?get_status_by_id(flushes_list[index]['status']):''),
 

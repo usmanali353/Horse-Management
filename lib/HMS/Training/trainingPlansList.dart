@@ -134,6 +134,7 @@ class trainingPlanListState extends State<trainingPlanList>{
                       ),
                     ],
                     child: ListTile(
+                      enabled: training_list[index]['isActive'],
                       title: Text(training_list!=null?training_list[index]['name']:''),
                       //trailing: Text(training_list!=null?training_list[index]['startDate'].toString().replaceAll("T00:00:00",''):''),
                      // subtitle: Text(training_list!=null?get_training_type_by_id(training_list[index]['trainingType']):''),

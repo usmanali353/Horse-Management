@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Breeding/Semen_Collection/semen_collection_details.dart';
 import 'package:horse_management/HMS/Breeding/Semen_Collection/update_semen_collection.dart';
 import 'package:horse_management/Network_Operations.dart';
@@ -64,7 +65,10 @@ class _semen_collection_list_state extends State<semen_collection_list>{
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
 
                   if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
@@ -93,7 +97,10 @@ class _semen_collection_list_state extends State<semen_collection_list>{
                   }
                   print(pagenum);
                 }),
-                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
                   print(load_list['hasNext']);
                   if(load_list['hasNext'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
@@ -220,6 +227,8 @@ class _semen_collection_list_state extends State<semen_collection_list>{
                     ],
                     child: FadeAnimation(2.0,
                       ListTile(
+                        enabled: siemen_col_list[index]['isActive'],
+                        leading: FaIcon(FontAwesomeIcons.warehouse, color: Colors.lightBlueAccent, size: 30,),
                         title: Text(siemen_col_list!=null?siemen_col_list[index]['horseName']['name']:''),
                         trailing: Text(siemen_col_list[index]['date']!=null?siemen_col_list[index]['date'].toString().substring(0,10):''),
                         subtitle: Text(siemen_col_list!=null?siemen_col_list[index]['inChargeName']['contactName']['name']:''),

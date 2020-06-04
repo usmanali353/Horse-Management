@@ -124,7 +124,8 @@ class _configuration_Category extends State<configuration_Category>{
                       ListTile(
                         title: Text("Horse Categories"),
                         subtitle: Text("Add Horse Categories"),
-                        leading: Icon(Icons.format_list_numbered,size: 40, color: Colors.deepOrange.shade300,),
+                        leading: FaIcon(FontAwesomeIcons.chessKnight, color: Colors.deepOrange.shade300, size: 30,),
+                        //leading: Icon(Icons.format_list_numbered,size: 40, color: Colors.deepOrange.shade300,),
                         trailing: Icon(Icons.arrow_right),
                         onTap: (){
                           Navigator.push(context,MaterialPageRoute(builder: (context)=>horsecategory_list(token)));

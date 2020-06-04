@@ -82,8 +82,10 @@ class _operational_noteList extends State<operational_noteList>{
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
-
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
                   if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
                       if(result) {
@@ -111,8 +113,11 @@ class _operational_noteList extends State<operational_noteList>{
                   }
                   print(pagenum);
                 }),
-                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
-                  print(load_list['hasNext']);
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
+                      print(load_list['hasNext']);
                   if(load_list['hasNext'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
                       if(result) {
@@ -229,7 +234,9 @@ class _operational_noteList extends State<operational_noteList>{
                       ],
                       child: FadeAnimation(2.0,
                          ListTile(
-                          title: Text(notes_list!=null?notes_list[index]['generalCategoryName']['name']:''),
+                           enabled: notes_list[index]['isActive'],
+                           leading: FaIcon(FontAwesomeIcons.solidStickyNote, color: Colors.blueGrey, size: 30,),
+                           title: Text(notes_list!=null?notes_list[index]['generalCategoryName']['name']:''),
                            subtitle: Text(notes_list!=null?notes_list[index]['details']:''),
                           trailing: Text(notes_list[index]['date']!=null?notes_list[index]['date'].toString().substring(0,10):''),
                           onTap: (){

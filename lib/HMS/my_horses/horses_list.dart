@@ -24,7 +24,9 @@ class _training_list_state extends State<horse_list>{
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   _training_list_state (this.token);
 
-  var horse_list, load_list;
+  var horse_list, load_list, pagelist, pageloadlist;
+  int pagenum = 1;
+  int total_page;
   var temp=[];
   @override
   Widget build(BuildContext context) {
@@ -40,10 +42,86 @@ class _training_list_state extends State<horse_list>{
               color: Colors.white,
             ),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => add_HorseNew(token)),);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => add_newHorse(token)),);
             },
           )
-        ],),
+        ],
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton:
+        Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  FloatingActionButton(
+                      backgroundColor: Colors.transparent,
+                      splashColor: Colors.red,
+                      child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
+                    if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                      Utils.check_connectivity().then((result){
+                        if(result) {
+                          ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                          pd.show();
+                          Add_horse_services.horselistbypage(token, pagenum).then((response) {
+                            pd.dismiss();
+                            setState(() {
+                              print(response);
+                              load_list= json.decode(response);
+                              horse_list = load_list['response'];
+                              print(horse_list);
+                            });
+                          });
+                        }else
+                          print("Network Not Available");
+                      });
+                    }
+                    else{
+                      print("Empty List");
+                      //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                    }
+                    if(pagenum > 1){
+                      pagenum = pagenum - 1;
+                    }
+                    print(pagenum);
+                  }),
+                  FloatingActionButton(
+                      backgroundColor: Colors.transparent,
+                      splashColor: Colors.red,
+                      child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
+                    print(load_list['hasNext']);
+                    if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                      Utils.check_connectivity().then((result){
+                        if(result) {
+                          ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                          pd.show();
+                          Add_horse_services.horselistbypage(
+                              token, pagenum).then((response) {
+                            pd.dismiss();
+                            setState(() {
+                              print(response);
+                              load_list = json.decode(response);
+                              horse_list = load_list['response'];
+                              print(horse_list);
+                            });
+                          });
+                        }else
+                          print("Network Not Available");
+                      });
+                    }
+                    else{
+                      print("Empty List");
+                      //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                    }
+                    if(pagenum < total_page) {
+                      pagenum = pagenum + 1;
+                    }
+                    print(pagenum);
+
+                  })
+                ]
+            )
+        ),
         body:ListView.builder(itemCount:horse_list!=null?horse_list.length:temp.length,itemBuilder: (context,int index){
           return Column(
             children: <Widget>[
@@ -118,7 +196,8 @@ class _training_list_state extends State<horse_list>{
               //var parsedjson = jsonDecode(response);
               load_list  = jsonDecode(response);
               horse_list = load_list['response'];
-              print(horse_list);
+              total_page=load_list['totalPages'];
+              print(total_page);
               //print(horse_list['createdBy']);
             });
 

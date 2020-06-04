@@ -76,8 +76,10 @@ class _ironbrand_list extends State<ironbrand_list>{
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
-
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
                   if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
                       if(result) {
@@ -105,7 +107,10 @@ class _ironbrand_list extends State<ironbrand_list>{
                   }
                   print(pagenum);
                 }),
-                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
                   print(load_list['hasNext']);
                   if(load_list['hasNext'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
@@ -224,7 +229,8 @@ class _ironbrand_list extends State<ironbrand_list>{
                       ],
                       child: FadeAnimation(2.0,
                          ListTile(
-                          title: Text(ironbrand_lists!=null?ironbrand_lists[index]['brandTitle']:''),
+                           enabled: ironbrand_lists[index]['isActive'],
+                           title: Text(ironbrand_lists!=null?ironbrand_lists[index]['brandTitle']:''),
                          leading: ironbrand_lists[index]['brandImage']!=null?Image.memory(base64.decode(ironbrand_lists[index]['brandImage'])):Text(''),
                           // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
                           //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),

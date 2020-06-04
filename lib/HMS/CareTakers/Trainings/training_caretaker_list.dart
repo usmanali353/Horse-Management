@@ -59,6 +59,82 @@ class _training_caretaker_list_state extends State<training_caretaker_list>{
 //          ),
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton:
+      Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FloatingActionButton(
+
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
+                  if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        network_operations.get_training(token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list= json.decode(response);
+                            training_list = load_list['response'];
+                            print(training_list);
+                          });
+                        });
+                      }else
+                        print("network nahi hai");
+                    });
+                  }
+                  else{
+                    print("list empty");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum > 1){
+                    pagenum = pagenum - 1;
+                  }
+                  print(pagenum);
+                }),
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
+                      print(load_list['hasNext']);
+                  if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        network_operations.get_training(
+                            token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list = json.decode(response);
+                            training_list = load_list['response'];
+                            print(training_list);
+                          });
+                        });
+                      }else
+                        print("No Network");
+                    });
+                  }
+                  else{
+                    print("list empty");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum < total_page) {
+                    pagenum = pagenum + 1;
+                  }
+                  print(pagenum);
+
+                })
+              ]
+          )
+      ),
 //        floatingActionButton: FloatingActionButton(
 //          child: Icon(
 //            Icons.add,
@@ -85,6 +161,8 @@ class _training_caretaker_list_state extends State<training_caretaker_list>{
                             isvisible=true;
                             load_list=json.decode(response);
                             training_list = load_list['response'];
+                            total_page=load_list['totalPages'];
+                            print(total_page);
 
                             for(int i=0;i<training_list.length;i++){
                               if(DateTime.parse(training_list[i]['startDate'])==DateTime.now()){
@@ -335,6 +413,7 @@ class _training_caretaker_list_state extends State<training_caretaker_list>{
                             ],
                             child: FadeAnimation(2.0,
                               ListTile(
+                                enabled: training_list[index]['isActive'],
                                 title: Text(training_list != null
                                     ? training_list[index]['horseName']['name']
                                     : ''),

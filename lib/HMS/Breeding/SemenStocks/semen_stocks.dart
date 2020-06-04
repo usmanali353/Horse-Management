@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Breeding/SemenStocks/semen_stock_details.dart';
 import 'package:horse_management/HMS/Breeding/SemenStocks/semen_stock_json.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
@@ -76,7 +77,10 @@ class _semen_stocks extends State<semen_stocks>{
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
 
                   if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
@@ -105,7 +109,10 @@ class _semen_stocks extends State<semen_stocks>{
                   }
                   print(pagenum);
                 }),
-                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
                   print(load_list['hasNext']);
                   if(load_list['hasNext'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
@@ -224,7 +231,9 @@ class _semen_stocks extends State<semen_stocks>{
                       ],
                       child: FadeAnimation(2.0,
                          ListTile(
-                          title: Text(semen_stock_list!=null?semen_stock_list[index]['horseName']['name']:''),
+                           enabled: semen_stock_list[index]['isActive'],
+                           leading: FaIcon(FontAwesomeIcons.layerGroup, color:Colors.redAccent, size: 40,),
+                           title: Text(semen_stock_list!=null?semen_stock_list[index]['horseName']['name']:''),
                          subtitle: Text(semen_stock_list!=null?semen_stock_list[index]['tankName']['name']:''),
                           trailing: Text(semen_stock_list[index]['enterDate']!=null?semen_stock_list[index]['enterDate'].toString().substring(0,10):''),
                           onTap: (){

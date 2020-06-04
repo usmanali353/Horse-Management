@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/breeding_control_details.dart';
 import 'package:horse_management/HMS/CareTakers/BreedingControl/BreedingControlCaretaker.dart';
 import 'package:horse_management/HMS/CareTakers/BreedingControl/BreedingControlLateReason.dart';
@@ -75,8 +76,10 @@ class _breeding_control_caretaker_list extends State<breeding_control_caretaker_
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
-
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
                   if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
                       if(result) {
@@ -104,7 +107,9 @@ class _breeding_control_caretaker_list extends State<breeding_control_caretaker_
                   }
                   print(pagenum);
                 }),
-                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                FloatingActionButton(  backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
                   print(load_list['hasNext']);
                   if(load_list['hasNext'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
@@ -352,6 +357,8 @@ class _breeding_control_caretaker_list extends State<breeding_control_caretaker_
                       ],
                       child: FadeAnimation(2.0,
                         ListTile(
+                          enabled: control_list[index]['isActive'],
+                          leading: FaIcon(FontAwesomeIcons.whmcs, color: Colors.grey.shade500, size: 40,),
                           trailing:Text(control_list!=null?get_status_by_id(control_list[index]['status']):''),
                           title: Text(control_list!=null?control_list[index]['horseName']['name']:''),
                           subtitle: Text(control_list!=null?control_list[index]['date'].toString().substring(0,10):''),

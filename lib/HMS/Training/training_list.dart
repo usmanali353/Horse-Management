@@ -289,6 +289,8 @@ class _training_list_state extends State<training_list>{
                   ],
                   child: FadeAnimation(2.0,
                     ListTile(
+                      enabled: training_list[index]['isActive'],
+
                       title: Text(training_list != null
                           ? training_list[index]['horseName']['name']
                           : ''),
