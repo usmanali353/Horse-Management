@@ -558,4 +558,51 @@ static Future<String> trainings_by_page (String token,int pagenum) async {
   } else
     return null;
 }
+static Future<String> trainingPlan_by_page (String token,int pagenum) async {
+  Map<String, String> headers = {'Authorization': 'Bearer '+token};
+  final response = await http.get(
+    //'http://192.236.147.77:8083/api/horse/GetAllIncomeAndExpenses?pageNumber=2&pageSize=10',
+
+    'http://192.236.147.77:8083/api/Training/GetAllTrainingPlans?pageNumber='+pagenum.toString()+'&pageSize=10',
+    headers: headers,
+  );
+  if (response.statusCode == 200) {
+    return response.body;
+  } else
+    return null;
+}
+static Future<String> sessions_by_page (String token,int pagenum) async {
+  Map<String, String> headers = {'Authorization': 'Bearer '+token};
+  final response = await http.get(
+    //'http://192.236.147.77:8083/api/horse/GetAllIncomeAndExpenses?pageNumber=2&pageSize=10',
+
+    'http://192.236.147.77:8083/api/Training/GetAllTrainingSessions?pageNumber='+pagenum.toString()+'&pageSize=10',
+    headers: headers,
+  );
+  if (response.statusCode == 200) {
+    return response.body;
+  } else
+    return null;
+}
+static Future<String> already_trainedHorses_by_page (String token,int pagenum) async {
+  Map<String, String> headers = {'Authorization': 'Bearer '+token};
+  final response = await http.get(
+    //'http://192.236.147.77:8083/api/horse/GetAllIncomeAndExpenses?pageNumber=2&pageSize=10',
+
+    'http://192.236.147.77:8083/api/Training/GetAllAlreadyTrainedHorses?pageNumber='+pagenum.toString()+'&pageSize=10',
+    headers: headers,
+  );
+  if (response.statusCode == 200) {
+    return response.body;
+  } else
+    return null;
+}
+//static Future<String> get_horses_already_trained(String token) async{
+//  Map<String,String> headers = {'Authorization':'Bearer '+token};
+//  final response = await http.get('http://192.236.147.77:8083/api/Training/GetAllAlreadyTrainedHorses', headers: headers,);
+//  if(response.statusCode==200){
+//    return response.body;
+//  }else
+//    return null;
+//}
 }

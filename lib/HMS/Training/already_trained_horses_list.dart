@@ -19,7 +19,9 @@ class already_trained_horses_list extends StatefulWidget{
 }
 class _already_trained_horses_list_state extends State<already_trained_horses_list>{
   String token;
-  var horse_list;
+  var horse_list, load_list , pagelist, pageloadlist;
+  int pagenum = 1;
+  int total_page;
   var already_trained_list=[];
   var temp=['',''];
   bool isvisible=false;
@@ -27,6 +29,81 @@ class _already_trained_horses_list_state extends State<already_trained_horses_li
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton:
+      Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
+                  if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        network_operations.sessions_by_page(token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list= json.decode(response);
+                            already_trained_list = load_list['response'];
+                            print(horse_list);
+                          });
+                        });
+                      }else
+                        print("network nahi hai");
+                    });
+                  }
+                  else{
+                    print("list empty");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum > 1){
+                    pagenum = pagenum - 1;
+                  }
+                  print(pagenum);
+                }),
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
+                  print(load_list['hasNext']);
+                  if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        network_operations.trainings_by_page(
+                            token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list = json.decode(response);
+                            already_trained_list = load_list['response'];
+                            print(horse_list);
+                          });
+                        });
+                      }else
+                        print("network nahi hai");
+                    });
+                  }
+                  else{
+                    print("list empty");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum < total_page) {
+                    pagenum = pagenum + 1;
+                  }
+                  print(pagenum);
+
+                })
+              ]
+          )
+      ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: (){
@@ -40,7 +117,10 @@ class _already_trained_horses_list_state extends State<already_trained_horses_li
                   print(response);
                   setState(() {
                     isvisible=true;
-                    already_trained_list=json.decode(response);
+                    load_list=json.decode(response);
+                    already_trained_list = load_list['response'];
+                    total_page=load_list['totalPages'];
+                    print(total_page);
                   });
 
                 }else{

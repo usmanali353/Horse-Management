@@ -33,8 +33,9 @@ class _training_session_list extends State< training_session_list>{
   bool isVisible=false;
   var temp=['',''];
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var control_list, load_list;
-
+  var control_list, load_list, pagelist, pageloadlist;
+  int pagenum = 1;
+  int total_page;
   @override
   void initState() {
     super.initState();
@@ -66,6 +67,81 @@ class _training_session_list extends State< training_session_list>{
 //          ),
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton:
+      Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
+                  if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        network_operations.sessions_by_page(token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list= json.decode(response);
+                            control_list = load_list['response'];
+                            print(control_list);
+                          });
+                        });
+                      }else
+                        print("network nahi hai");
+                    });
+                  }
+                  else{
+                    print("list empty");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum > 1){
+                    pagenum = pagenum - 1;
+                  }
+                  print(pagenum);
+                }),
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
+                  print(load_list['hasNext']);
+                  if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        network_operations.trainings_by_page(
+                            token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list = json.decode(response);
+                            control_list = load_list['response'];
+                            print(control_list);
+                          });
+                        });
+                      }else
+                        print("network nahi hai");
+                    });
+                  }
+                  else{
+                    print("list empty");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum < total_page) {
+                    pagenum = pagenum + 1;
+                  }
+                  print(pagenum);
+
+                })
+              ]
+          )
+      ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: (){
@@ -79,6 +155,8 @@ class _training_session_list extends State< training_session_list>{
                   setState(() {
                     load_list=json.decode(response);
                     control_list = load_list['response'];
+                    total_page=load_list['totalPages'];
+                    print(total_page);
                     isVisible=true;
                   });
 
@@ -126,7 +204,7 @@ class _training_session_list extends State< training_session_list>{
                     actions: <Widget>[
                       IconSlideAction(
                         icon: Icons.visibility_off,
-                        color: Colors.pinkAccent,
+                        color: Colors.redAccent,
                         caption: 'Hide',
                         onTap: () async {
                           Utils.check_connectivity().then((result){
@@ -199,6 +277,7 @@ class _training_session_list extends State< training_session_list>{
                     child: FadeAnimation(2.0,
                       ListTile(
                         enabled: control_list[index]['isActive']!=null?control_list[index]['isActive']:true,
+
                       //title: Text("Anc"),
                         trailing:Text(control_list!=null?control_list[index]['date'].toString().substring(0,10):''),
                         title: Text(control_list[index]['trainerId']!=null?control_list[index]['trainerName']['contactName']['name']:''),

@@ -39,19 +39,20 @@ class _training_list_state extends State<training_list>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//      appBar: AppBar(title: Text("Health Record"),actions: <Widget>[
-//        Center(child: Text("Add New",textScaleFactor: 1.3,)),
-//        IconButton(
-//
-//          icon: Icon(
-//            Icons.add,
-//            color: Colors.white,
-//          ),
-//          onPressed: () {
-//            Navigator.push(context, MaterialPageRoute(builder: (context) => add_training(token)),);
-//          },
-//        )
-//      ],),
+
+      appBar: AppBar(title: Text("Training List"),actions: <Widget>[
+        Center(child: Text("Add New",textScaleFactor: 1.3,)),
+        IconButton(
+
+          icon: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => add_training(token)),);
+          },
+        )
+      ],),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton:
       Padding(
@@ -59,14 +60,16 @@ class _training_list_state extends State<training_list>{
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
-
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
                   if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
                       if(result) {
                         ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
                         pd.show();
-                        network_operations.get_training(token, pagenum).then((response) {
+                        network_operations.trainings_by_page(token, pagenum).then((response) {
                           pd.dismiss();
                           setState(() {
                             print(response);
@@ -88,14 +91,17 @@ class _training_list_state extends State<training_list>{
                   }
                   print(pagenum);
                 }),
-                FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
-                  print(load_list['hasNext']);
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
+                      print(load_list['hasNext']);
                   if(load_list['hasNext'] == true && pagenum >= 1 ) {
                     Utils.check_connectivity().then((result){
                       if(result) {
                         ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
                         pd.show();
-                        network_operations.get_training(
+                        network_operations.trainings_by_page(
                             token, pagenum).then((response) {
                           pd.dismiss();
                           setState(() {
@@ -137,6 +143,8 @@ class _training_list_state extends State<training_list>{
                       isvisible=true;
                       load_list=json.decode(response);
                       training_list = load_list['response'];
+                      total_page=load_list['totalPages'];
+                      print(total_page);
 
                       for(int i=0;i<training_list.length;i++){
                         if(DateTime.parse(training_list[i]['startDate'])==DateTime.now()){

@@ -24,23 +24,119 @@ class trainingPlanList extends StatefulWidget{
 class trainingPlanListState extends State<trainingPlanList>{
   String token;
   var horse_list;
-  var training_list=[], load_list;
+  var training_list=[], load_list, pagelist, pageloadlist;
+  int pagenum = 1;
+  int total_page;
   var temp=['',''];
   bool isvisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Training Plans")),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>training_plan()));
-        },
+      appBar: AppBar(title: Text("Training Plans"),
+        actions: <Widget>[
+        Center(child: Text("Add New",textScaleFactor: 1.3,)),
+    IconButton(
 
+    icon: Icon(
+    Icons.add,
+    color: Colors.white,
+    ),
+    onPressed: () {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => training_plan()),);
+    },
+    )
+//          IconButton(
+//            icon: Icon(Icons.picture_as_pdf),
+//           // onPressed: () => _generatePdfAndView(context),
+//          ),
+    ],
+      ),
+
+//      floatingActionButton: FloatingActionButton(
+////        child: Icon(
+////          Icons.add,
+////          color: Colors.white,
+////        ),
+////        onPressed: (){
+////          Navigator.push(context, MaterialPageRoute(builder: (context)=>training_plan()));
+////        },
+////
+////      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton:
+      Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
+                  if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        network_operations.trainingPlan_by_page(token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list= json.decode(response);
+                            training_list = load_list['response'];
+                            print(training_list);
+                          });
+                        });
+                      }else
+                        print("network nahi hai");
+                    });
+                  }
+                  else{
+                    print("list empty");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum > 1){
+                    pagenum = pagenum - 1;
+                  }
+                  print(pagenum);
+                }),
+                FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.red,
+                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
+                  print(load_list['hasNext']);
+                  if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                    Utils.check_connectivity().then((result){
+                      if(result) {
+                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                        pd.show();
+                        network_operations.trainingPlan_by_page(
+                            token, pagenum).then((response) {
+                          pd.dismiss();
+                          setState(() {
+                            print(response);
+                            load_list = json.decode(response);
+                            training_list = load_list['response'];
+                            print(training_list);
+                          });
+                        });
+                      }else
+                        print("network nahi hai");
+                    });
+                  }
+                  else{
+                    print("list empty");
+                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                  }
+                  if(pagenum < total_page) {
+                    pagenum = pagenum + 1;
+                  }
+                  print(pagenum);
+
+                })
+              ]
+          )
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
@@ -56,6 +152,8 @@ class trainingPlanListState extends State<trainingPlanList>{
                     isvisible=true;
                     load_list=json.decode(response);
                     training_list = load_list['response'];
+                    total_page=load_list['totalPages'];
+                    print(total_page);
 
                     // print('Training list Length'+training_list.length.toString());
                   });
