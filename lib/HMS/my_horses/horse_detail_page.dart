@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/All_Horses_data/Marking/Marking.dart';
-import 'package:horse_management/HMS/my_horses/HypotheticPedegree/Pedigree.dart';
 import 'package:horse_management/HMS/my_horses/HypotheticPedegree/hypothetic_pedegree_page.dart';
 import 'package:horse_management/HMS/my_horses/add_horse/update_horse.dart';
 import 'package:horse_management/HMS/my_horses/breeding_sale/breeding_sales_specific.dart';
@@ -13,6 +12,7 @@ import 'package:horse_management/HMS/my_horses/services/add_horse_services.dart'
 import 'package:horse_management/HMS/my_horses/training/tariningList_specific.dart';
 import 'package:horse_management/HMS/my_horses/vaccination/vaccination_list.dart';
 import 'package:horse_management/HMS/my_horses/vet/vetList.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'health_record/health_record_list.dart';
 import 'incomeExpense/income_expense_list.dart';
 import 'package:horse_management/HMS/my_horses/lab_reports/lab_test_list.dart';
@@ -36,8 +36,70 @@ class _Profile_Page_State extends State<horse_detail> {
   var list,blist;
   String token;
   _Profile_Page_State(this.horsedata);
-
-
+  var getinfo;
+   String gender_value;
+  @override
+  void initState() {
+    if(horsedata != null) {
+      if (horsedata['genderId'] == 1) {
+        setState(() {
+          gender_value = 'Male';
+        });
+      }
+      else if (horsedata['genderId'] == 2) {
+        setState(() {
+          gender_value = 'Female';
+        });
+      }
+      else if (horsedata['genderId'] == 3) {
+        setState(() {
+          gender_value = 'Gielding';
+        });
+      }
+    }else{
+      gender_value = 'Empty';
+      print("genderlist null a");
+    }
+//    ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+//    pd.show();
+//        Add_horse_services.horseDashBoard(token,horsedata['horseId']).then((response){
+//      setState(() {
+//        getinfo = jsonDecode(response);
+//        print(getinfo['horseDetails']);
+////        pd.dismiss();
+////        _isvisible =true;
+//      });
+//    });
+  }
+  String get_colors(String color){
+    String colorId;
+    if(color== "red"){
+      setState(() {
+        colorId = "0xFFFF0000";
+      });
+    }
+   else if(color== "orange"){
+      setState(() {
+        colorId = "0xFFFFA500";
+      });
+    }
+   else if(color== "green"){
+      setState(() {
+        colorId = "0xFF008000";
+      });
+    }
+    else if(color== "#DBD9D9"){
+      setState(() {
+        colorId = "0xFF808080";
+      });
+    }
+    else {
+      setState(() {
+     colorId= "0xFF808080";
+      });
+    }
+    return colorId;
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -63,18 +125,102 @@ class _Profile_Page_State extends State<horse_detail> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              ListTile(
-                leading: Image.asset("Assets/horse_icon.png", fit: BoxFit.cover),
+              ExpansionTile(
+                leading: Image.asset("assets/horse_icon.png", fit: BoxFit.cover),
                 title: Text(horsedata['name']),
                 subtitle: Text(horsedata['dateOfBirth'] != null ?horsedata['dateOfBirth'].toString().substring(0,10):"date of birth empty" ),
                 // leading: Image.asset("Assets/horse_icon.png",width: 50,height: 50,),
-                trailing: Icon(FontAwesomeIcons.solidEdit),
-                onTap: () async {
-                  print(horsedata['horseId']);
-                  prefs = await SharedPreferences.getInstance();
-                  print(horsedata);
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => update_horse(prefs.get('token'), horsedata)));
-                },
+                trailing: InkWell(
+                  onTap:  () async {
+                    //print(horsedata['horseId']);
+                    prefs = await SharedPreferences.getInstance();
+                    print(horsedata);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => update_horse(prefs.get('token'), horsedata)));
+                  },
+                    child: Icon(FontAwesomeIcons.solidEdit)),
+//                onTap: () async {
+//                  print(horsedata['horseId']);
+//                  prefs = await SharedPreferences.getInstance();
+//                  print(horsedata);
+//                  Navigator.push(context, MaterialPageRoute(builder: (context) => update_horse(prefs.get('token'), horsedata)));
+//                },
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 18,right: 12),
+                  child: ListTile(
+                    subtitle: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text("Training Status"),
+                        Text("Breeding"),
+                        Text("Health Record"),
+                        Text("Vaccination"),
+
+                      ],
+                    ),
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Tooltip(message: horsedata['horseStatus']['trainingStatus'],child: CircleAvatar(radius: 25.0,backgroundColor: Color(int.parse(get_colors(horsedata['horseStatus']['trainingColor']))),)),
+                        Tooltip(message: horsedata['horseStatus']['breedingStatus'],child: CircleAvatar(radius: 25.0,backgroundColor: Color(int.parse(get_colors(horsedata['horseStatus']['breedingColor']))),)),
+                        Tooltip(message: horsedata['horseStatus']['healthRecordStatus'],child: CircleAvatar(radius: 25.0,backgroundColor: Color(int.parse(get_colors(horsedata['horseStatus']['healthRecordColor']))),)),
+                        Tooltip(message: horsedata['horseStatus']['vaccinationStatus']!= null? horsedata['horseStatus']['vaccinationStatus']:'empty',child: CircleAvatar(radius: 25.0,backgroundColor: Color(int.parse(get_colors(horsedata['horseStatus']['vaccinationColor']))),child: Text(horsedata['horseStatus']['vaccinationStatus']!= null ? horsedata['horseStatus']['vaccinationStatus']:''),)),
+                      ],
+                    ),
+
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 48,right: 12),
+                  child: ListTile(
+                    title: Text("abd"),
+                    onTap: (){
+                      print(horsedata['horseStatus']['healthRecordColor']);
+                      print(get_colors("green"));
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 48,right: 12),
+                  child: ListTile(
+                    title: Text("Gender"),
+                    trailing: Text(gender_value != null ? gender_value:""),
+                  ),
+                ),
+                Divider(),
+                Padding(
+                  padding: const EdgeInsets.only(left: 48,right: 12),
+                  child: ListTile(
+                    title: Text("Breed"),
+                    trailing: Text(horsedata['breedId'] != null ? horsedata['breedName']['name']:'') ,
+                  ),
+                ),
+                Divider(),
+                Padding(
+                  padding: const EdgeInsets.only(left: 48,right: 12),
+                  child: ListTile(
+                    title: Text("Color"),
+                    trailing: Text(horsedata['colorId'] != null ? horsedata['colorName']['name']:''),
+                  ),
+                ),
+                Divider(),
+                Padding(
+                  padding: const EdgeInsets.only(left: 48,right: 12),
+                  child: ListTile(
+                    title: Text("Sire"),
+                    trailing: Text(horsedata['sireId'] != null ? horsedata['sireName']['name']:''),
+                  ),
+                ),
+                Divider(),
+                Padding(
+                  padding: const EdgeInsets.only(left: 48,right: 12),
+                  child: ListTile(
+                    title: Text("Dam"),
+                    trailing: Text(horsedata['damId'] != null ? horsedata['damName']['name']:''),
+                  ),
+                ),
+
+              ],
               ),
               Divider(),
 //              Text(
