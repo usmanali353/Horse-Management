@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/HMS/Veterinary/VetVisits/vetVisitsList.dart';
@@ -125,17 +126,28 @@ class addProductsAppliedState extends State<addProductsApplied> {
                               .then((response) {
                             pd.dismiss();
                             if (response != null) {
-                              print("object");
+
 //                        Scaffold.of(context).showSnackBar(SnackBar(
 //                          backgroundColor: Colors.green,
 //                          content: Text("Vet Visit Added Sucessfully"),
 //                        ));
-                              sleep(Duration(seconds: 3));
+
+                            // sleep(Duration(seconds: 5));
+                             Flushbar(
+                               message:  "Vet Visits added",
+                               backgroundColor: Colors.green,
+                               duration:  Duration(seconds: 5),
+                             )..show(context);
                               Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) {
                                 return vetVisitList(token);     }));
+
                               // Navigator.pop(context);
                             }else{
-                              print("don not save");
+                              Flushbar(
+                                message:  "Vet Visits not added",
+                                backgroundColor: Colors.red,
+                                duration:  Duration(seconds: 5),
+                              )..show(context);
 
 //                        Scaffold.of(context).showSnackBar(SnackBar(
 //                          backgroundColor: Colors.red,

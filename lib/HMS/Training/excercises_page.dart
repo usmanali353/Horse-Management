@@ -1,3 +1,4 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
@@ -69,7 +70,11 @@ class _excercisesState extends State<excercises> {
          network_operations.addTrainingPlan(token, 111, entries,trainingPlanName, trainingPlanDescription).then((response){
            pd.dismiss();
             if(response!=null){
-              print("Training paln added");
+              Flushbar(
+                message:  "Training Plan added",
+                backgroundColor: Colors.green,
+                duration:  Duration(seconds: 5),
+              )..show(context);
               Navigator.push(context, MaterialPageRoute(builder: (context)=>trainingPlanList(token)));
              // Navigator.pop(context,trainingPlanList);
 //             Scaffold.of(context).showSnackBar(SnackBar(
@@ -77,11 +82,11 @@ class _excercisesState extends State<excercises> {
 //               backgroundColor: Colors.green,
 //             ));
             }else{
-              print("Traing plan no added");
-//              Scaffold.of(context).showSnackBar(SnackBar(
-//                content: Text("Training Plan not Added"),
-//                backgroundColor: Colors.red,
-//              ));
+              Flushbar(
+                message:  "Training Plan not added",
+                backgroundColor: Colors.red,
+                duration:  Duration(seconds: 5),
+              )..show(context);
             }
          });
       }else{
