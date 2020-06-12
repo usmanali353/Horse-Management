@@ -42,6 +42,7 @@ dependencies:
   flutter_slidable: 0.5.4
   intl: 0.16.1
   provider:
+  flushbar: ^1.10.4
   day_night_switch: ^0.0.2+1
   charts_flutter:
   pie_chart:
