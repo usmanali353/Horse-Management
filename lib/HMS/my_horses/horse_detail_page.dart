@@ -146,7 +146,7 @@ class _Profile_Page_State extends State<horse_detail> {
 //                },
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(left: 18,right: 12),
+                  padding: const EdgeInsets.only(left: 10,right: 12),
                   child: ListTile(
                     subtitle: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -161,9 +161,9 @@ class _Profile_Page_State extends State<horse_detail> {
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Tooltip(message: horsedata['horseStatus']['trainingStatus'],child: CircleAvatar(radius: 25.0,backgroundColor: Color(int.parse(get_colors(horsedata['horseStatus']['trainingColor']))),)),
-                        Tooltip(message: horsedata['horseStatus']['breedingStatus'],child: CircleAvatar(radius: 25.0,backgroundColor: Color(int.parse(get_colors(horsedata['horseStatus']['breedingColor']))),)),
-                        Tooltip(message: horsedata['horseStatus']['healthRecordStatus'],child: CircleAvatar(radius: 25.0,backgroundColor: Color(int.parse(get_colors(horsedata['horseStatus']['healthRecordColor']))),)),
+                        Tooltip(message: horsedata['horseStatus']['trainingStatus'] !=null ? horsedata['horseStatus']['trainingStatus']: 'empty',child: CircleAvatar(radius: 25.0,backgroundColor: Color(int.parse(get_colors(horsedata['horseStatus']['trainingColor']))),)),
+                        Tooltip(message: horsedata['horseStatus']['breedingStatus'] != null ?horsedata['horseStatus']['breedingStatus']:'empty',child: CircleAvatar(radius: 25.0,backgroundColor: Color(int.parse(get_colors(horsedata['horseStatus']['breedingColor']))),)),
+                        Tooltip(message: horsedata['horseStatus']['healthRecordStatus']!= null ?horsedata['horseStatus']['healthRecordStatus']:'empty',child: CircleAvatar(radius: 25.0,backgroundColor: Color(int.parse(get_colors(horsedata['horseStatus']['healthRecordColor']))),)),
                         Tooltip(message: horsedata['horseStatus']['vaccinationStatus']!= null? horsedata['horseStatus']['vaccinationStatus']:'empty',child: CircleAvatar(radius: 25.0,backgroundColor: Color(int.parse(get_colors(horsedata['horseStatus']['vaccinationColor']))),child: Text(horsedata['horseStatus']['vaccinationStatus']!= null ? horsedata['horseStatus']['vaccinationStatus']:''),)),
                       ],
                     ),
@@ -171,17 +171,7 @@ class _Profile_Page_State extends State<horse_detail> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 48,right: 12),
-                  child: ListTile(
-                    title: Text("abd"),
-                    onTap: (){
-                      print(horsedata['horseStatus']['healthRecordColor']);
-                      print(get_colors("green"));
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 48,right: 12),
+                  padding: const EdgeInsets.only(left: 12,right: 12),
                   child: ListTile(
                     title: Text("Gender"),
                     trailing: Text(gender_value != null ? gender_value:""),
@@ -189,7 +179,7 @@ class _Profile_Page_State extends State<horse_detail> {
                 ),
                 Divider(),
                 Padding(
-                  padding: const EdgeInsets.only(left: 48,right: 12),
+                  padding: const EdgeInsets.only(left: 12,right: 12),
                   child: ListTile(
                     title: Text("Breed"),
                     trailing: Text(horsedata['breedId'] != null ? horsedata['breedName']['name']:'') ,
@@ -197,7 +187,7 @@ class _Profile_Page_State extends State<horse_detail> {
                 ),
                 Divider(),
                 Padding(
-                  padding: const EdgeInsets.only(left: 48,right: 12),
+                  padding: const EdgeInsets.only(left: 12,right: 12),
                   child: ListTile(
                     title: Text("Color"),
                     trailing: Text(horsedata['colorId'] != null ? horsedata['colorName']['name']:''),
@@ -205,7 +195,7 @@ class _Profile_Page_State extends State<horse_detail> {
                 ),
                 Divider(),
                 Padding(
-                  padding: const EdgeInsets.only(left: 48,right: 12),
+                  padding: const EdgeInsets.only(left: 12,right: 12),
                   child: ListTile(
                     title: Text("Sire"),
                     trailing: Text(horsedata['sireId'] != null ? horsedata['sireName']['name']:''),
@@ -213,7 +203,7 @@ class _Profile_Page_State extends State<horse_detail> {
                 ),
                 Divider(),
                 Padding(
-                  padding: const EdgeInsets.only(left: 48,right: 12),
+                  padding: const EdgeInsets.only(left: 12,right: 12),
                   child: ListTile(
                     title: Text("Dam"),
                     trailing: Text(horsedata['damId'] != null ? horsedata['damName']['name']:''),

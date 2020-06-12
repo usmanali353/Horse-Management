@@ -32,9 +32,9 @@ class _update_horse_state extends State<update_horse>{
   _update_horse_state (this.token,this.horsedata);
   int select_gender_id,select_barn_id,select_trainer_id,select_color_id,select_category_id,select_sire_id,select_dam_id,select_headmark_id;
   int select_legmark_id,select_bodymark_id,select_diet_id,select_breeder_id,select_vet_id,select_incharge_id,select_associate_id,select_rider_id;
-  int select_breed_id,select_ironbrand_id;
+  int select_breed_id,select_ironbrand_id,select_location_id;
   String select_gender,selected_barn,selected_trainer,selected_color,selected_category,selected_sire,selected_dam,selected_headMark,selected_legMark;
-  String selected_diet,selected_ironbrand,selected_,selected_breeder,selected_vet,selected_incharge,selected_associate,selected_rider,selected_breed,selected_bodymark;
+  String selected_diet,selected_ironbrand,selected_location,selected_breeder,selected_vet,selected_incharge,selected_associate,selected_rider,selected_breed,selected_bodymark;
   DateTime Select_date = DateTime.now();
   TextEditingController name,number,chip,passport,dna;
 //   var colorlist,genderlist,genderidlist,barnlist,sirelist,categorylist,damlist,breedlist,dietlist,headmarklist,bodymarklist,legmarklist,ironbrandlist,breederlist,vetlist;
@@ -82,17 +82,9 @@ class _update_horse_state extends State<update_horse>{
 
 
     Add_horse_services.horsesdropdown(token).then((response){
-      pd.dismiss();
       setState(() {
-//       barnid = horsedata['barnId'];
-//       print(barnid);
-
-        //genderlist  = jsonDecode(response);
         print(response);
-
-
-
-        getHorses=json.decode(response);
+         getHorses=json.decode(response);
         for(int i=0;i<getHorses['damDropDown'].length;i++)
           dam.add(getHorses['damDropDown'][i]['name']);
         for(int i=0;i<getHorses['sireDropDown'].length;i++)
@@ -162,6 +154,7 @@ class _update_horse_state extends State<update_horse>{
         });
       }
     }else{
+      intaial_gender_value = null;
       print("genderlist null a");
     }
     setState(() {
@@ -241,7 +234,8 @@ class _update_horse_state extends State<update_horse>{
                           padding: const EdgeInsets.all(16),
                           child: FormBuilderDropdown(
                             attribute: "Gender",
-                            initialValue: get_gender_info_by_id(horsedata['genderId'] != null ? horsedata['genderId']:null),
+                            //initialValue: get_gender_info_by_id(horsedata['genderId'] != null ? horsedata['genderId']:null),
+                            initialValue: intaial_gender_value,
                             validators: [FormBuilderValidators.required()],
                             hint: Text("Gender"),
                             items: gender.map((name) => DropdownMenuItem(
@@ -744,27 +738,38 @@ class _update_horse_state extends State<update_horse>{
                             },
                           ),
                         ),
-//                      Padding(
-//                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-//                        child: FormBuilderDropdown(
-//                          attribute: "",
-//                          hint: Text("IronBrand"),
-//                          items: ironbrand.map((name) => DropdownMenuItem(
-//                              value: name, child: Text("$name")))
-//                              .toList(),
-//                          style: Theme.of(context).textTheme.body1,
-//                          decoration: InputDecoration(labelText: "Iron Brand",
-//                            border: OutlineInputBorder(
-//                                borderRadius: BorderRadius.circular(9.0),
-//                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
-//                            ),
-//                          ),
-//                          onChanged: (value){
-//                            this.selected_ironbrand=value;
-//                            this.select_ironbrand_id=ironbrand.indexOf(value);
-//                          },
-//                        ),
-//                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                        child: FormBuilderDropdown(
+                          attribute: "",
+                          initialValue: horsedata['brandId']!= null? get_ironbrand_by_id(horsedata['brandId']):null,
+                          hint: Text("IronBrand"),
+                          items: ironbrand.map((name) => DropdownMenuItem(
+                              value: name, child: Text("$name")))
+                              .toList(),
+                          style: Theme.of(context).textTheme.body1,
+                          decoration: InputDecoration(labelText: "Iron Brand",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(9.0),
+                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                            ),
+                          ),
+                          onChanged: (value){
+                            setState(() {
+                              this.selected_ironbrand=value;
+                              this.select_ironbrand_id=ironbrand.indexOf(value);
+                              print(selected_ironbrand);
+                            });
+                          },
+                          onSaved: (value){
+                            setState(() {
+                              this.selected_ironbrand=value;
+                              this.select_ironbrand_id=ironbrand.indexOf(value);
+                              print(selected_ironbrand);
+                            });
+                          },
+                        ),
+                      ),
                         Padding(
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
@@ -832,6 +837,36 @@ class _update_horse_state extends State<update_horse>{
                         Padding(
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
+                            attribute: "location",
+                            hint: Text("Location"),
+                            initialValue: horsedata['horseDetails']['locationId']!= null? get_location_by_id(horsedata['horseDetails']['locationId']):null,
+                            items: location.map((name) => DropdownMenuItem(
+                                value: name, child: Text("$name")))
+                                .toList(),
+                            style: Theme.of(context).textTheme.body1,
+                            decoration: InputDecoration(labelText: "Location",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                              ),
+                            ),
+                            onChanged: (value){
+                             setState(() {
+                               this.selected_location=value;
+                               this.select_location_id=location.indexOf(value);
+                             });
+                            },
+                            onSaved: (value){
+                              setState(() {
+                                this.selected_location=value;
+                                this.select_location_id=location.indexOf(value);
+
+                              });},
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                          child: FormBuilderDropdown(
                             attribute: "associ",
                             initialValue: horsedata['horseDetails']['associationId']!= null? get_association_by_id(horsedata['horseDetails']['associationId']):null,
                             //initialValue: horsedata['horseDetails']['associationId'] != null ?getinfo['horseDetails']['associationName']['name']:null,
@@ -883,7 +918,7 @@ class _update_horse_state extends State<update_horse>{
                       Padding(
                         padding: const EdgeInsets.all(16),
 //                      child: add_horse_button(fbKey: _fbKey,select_gender_id:select_gender_id,name: name ,token: token,number: number.text,passport: passport.text,microchip: passport.text,dateofbirth: Select_date,colorid: select_color_id,breedid: select_breed_id,categoryid: select_category_id,sireid: select_sire_id,damid: select_dam_id,headmarkid: select_headmark_id,bodymarkid: select_bodymark_id,legmarkid: select_legmark_id,dietid: select_diet_id,barnid: select_barn_id,ironbrandid:select_ironbrand_id,riderid: select_rider_id,inchargeid: select_incharge_id,associationid:select_associate_id,dna: name.text,genderlist: genderlist,getHorses:getHorses),
-                        child: add_horse_button(fbKey: _fbKey,token: token,createdBy: createdBy,horseId: horseId,name: name ,select_gender_id: select_gender_id,genderlist: genderlist,getHorses: getHorses,number: number.text,passport: passport.text,microchip: chip.text,dateofbirth: Select_date,colorid: select_color_id,breedid: select_breed_id,categoryid: select_category_id,sireid: select_sire_id,damid: select_dam_id,dna: dna.text),
+                        child: add_horse_button(fbKey: _fbKey,token: token,createdBy: createdBy,horseId: horseId,name: name ,select_gender_id: select_gender_id,genderlist: genderlist,getHorses: getHorses,number: number.text,passport: passport.text,microchip: chip.text,dateofbirth: Select_date,colorid: select_color_id,breedid: select_breed_id,categoryid: select_category_id,sireid: select_sire_id,damid: select_dam_id,headmarkid: select_headmark_id,legmarkid: select_legmark_id,bodymarkid: select_bodymark_id,barnid: select_barn_id,dietid: select_diet_id,breederid: select_breeder_id,vetid: select_vet_id,riderid: select_rider_id,inchargeid: select_incharge_id,ironbrandid: select_ironbrand_id,associationid: select_associate_id ,locationid: select_location_id,dna: dna.text),
 
 //                      child: add_horse_button(fbKey: _fbKey,getHorses:getHorses,genderlist: genderlist,select_gender_id:select_gender_id,name: name ,token: token,number: number.text,passport: passport.text,microchip: passport.text,breedid: select_breed_id,categoryid: select_category_id,colorid: select_color_id,dateofbirth: Select_date,bodymarkid: select_bodymark_id,headmarkid: select_headmark_id,damid: select_dam_id,dietid: select_diet_id,barnid: select_barn_id,sireid: select_sire_id,dna: name.text,inchargeid: select_incharge_id,legmarkid: select_legmark_id,ironbrandid:select_associate_id,riderid: select_rider_id,),
                       )
@@ -926,7 +961,8 @@ class _update_horse_state extends State<update_horse>{
 
   String get_gender_info_by_id(int genderid){
     var gender_name;
-    for(int i=0;i<genderlist.length;i++){
+    if(horsedata!=null&&genderlist!=null&&genderid!=null)
+    for(int i=0;i<gender.length;i++){
       if(genderlist[i]['id']==genderid){
         gender_name=genderlist[i]['name'];
       }
@@ -1067,8 +1103,30 @@ class _update_horse_state extends State<update_horse>{
     }else
       return null;
   }
-
-
+  String get_location_by_id(int id){
+    var plan_name;
+    if(horsedata!=null&&getHorses['locationDropDown']!=null&&id!=null){
+      for(int i=0;i<location.length;i++){
+        if(getHorses['locationDropDown'][i]['id']==id){
+          plan_name=getHorses['locationDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
+  String get_ironbrand_by_id(int id){
+    var plan_name;
+    if(horsedata!=null&&getHorses['ironBrandDropDown']!=null&&id!=null){
+      for(int i=0;i<ironbrand.length;i++){
+        if(getHorses['ironBrandDropDown'][i]['id']==id){
+          plan_name=getHorses['ironBrandDropDown'][i]['name'];
+        }
+      }
+      return plan_name;
+    }else
+      return null;
+  }
 
 }
 
@@ -1095,15 +1153,18 @@ class add_horse_button extends StatelessWidget {
      this.categoryid,
      this.sireid,
      this.damid,
-//     this.headmarkid,
-//     this.bodymarkid,
-//     this.legmarkid,
-//     this.dietid,
-//     this.barnid,
-//     this.ironbrandid,
-//     this.riderid,
-//     this.inchargeid,
-//     this.associationid,
+     this.headmarkid,
+     this.bodymarkid,
+     this.legmarkid,
+     this.dietid,
+     this.barnid,
+     this.ironbrandid,
+    this.vetid,
+    this.breederid,
+    this.locationid,
+     this.riderid,
+     this.inchargeid,
+     this.associationid,
      this.dna,
 
 
@@ -1119,8 +1180,8 @@ class add_horse_button extends StatelessWidget {
   final genderlist,getHorses;
 
   final String number,passport,microchip,dna;
-  final int colorid,breedid,categoryid,sireid,damid;
- // final int colorid,breedid,associationid,categoryid,sireid,damid,headmarkid,bodymarkid,legmarkid,dietid,ironbrandid,riderid,inchargeid,barnid;
+  final int colorid,breedid,categoryid,sireid,damid,vetid,breederid,locationid;
+  final int associationid,headmarkid,bodymarkid,legmarkid,dietid,ironbrandid,riderid,inchargeid,barnid;
 
   @override
   Widget build(BuildContext context) {
@@ -1130,6 +1191,7 @@ class add_horse_button extends StatelessWidget {
         //print(select_gender_id);
         print(dateofbirth);
         print(select_gender_id);
+        print(getHorses['barnDropDown'][barnid]['id']);
         print(number);
         print(passport);
         print(microchip);
@@ -1137,6 +1199,22 @@ class add_horse_button extends StatelessWidget {
         print(getHorses['damDropDown'][damid]['id']);
         print(getHorses['sireDropDown'][sireid]['id']);
         print(getHorses['horseCategoryDropDown'][categoryid]['id']);
+        print("abc");
+        print(getHorses['headMarkingsDropDown'][headmarkid]['id']);
+        print(getHorses['dietDropDown'][dietid]['id']);
+        print(getHorses['riderDropDown'][riderid]['id']);
+        print(riderid);
+        print(getHorses['associationDropDown'][associationid]['id']);
+        print(dna);
+        print(legmarkid);
+        print(locationid);
+        print("abc");
+        print(getHorses['locationDropDown'][locationid]['id']);
+        print(getHorses['barnDropDown'][barnid]['id']);
+        print(getHorses['legMarkingsDropDown'][legmarkid]['id']);
+        print(ironbrandid);
+
+        print("End");
 //        print(getHorses['colorDropDown'][colorid]['id']);
 //        //print(colorlist['colors']);
 //        print(genderlist[select_gender_id]['id']);
@@ -1144,7 +1222,7 @@ class add_horse_button extends StatelessWidget {
           _fbKey.currentState.save();
 //          Add_horse_services.horsesave(token, 0, name.text,genderlist[select_gender_id]['id'], true,dateofbirth,number,passport,getHorses['colorDropDown'][colorid]['id'],getHorses['breedDropDown'][breedid]['id'],getHorses['horseCategoryDropDown'][categoryid]['id'],getHorses['sireDropDown'][sireid]['id'],getHorses['damDropDown'][damid]['id'],getHorses['headMarkDropDown'][headmarkid]['id'],getHorses['bodyMarkDropDown'][bodymarkid]['id'],getHorses['legMarkDropDown'][legmarkid]['id'],getHorses['dietDropDown'][dietid]['id'],getHorses['barnDropDown'][barnid]['id'],getHorses['ironBrandDropDown'][ironbrandid]['id'],getHorses['riderDropDown'][riderid]['id'],getHorses['inchargeDropDown'][inchargeid]['id'],dna).then((
        // ,getHorses['headMarkDropDown'][headmarkid]['id'],getHorses['bodyMarkDropDown'][bodymarkid]['id'],getHorses['legMarkDropDown'][legmarkid]['id'],getHorses['dietDropDown'][dietid]['id'],getHorses['barnDropDown'][barnid]['id'],getHorses['ironBrandDropDown'][ironbrandid]['id'],riderid,inchargeid,associtaionid
-          Add_horse_services.horseupdate(token,createdBy,horseId , name.text,1, true,number,passport,microchip,dateofbirth,getHorses['colorDropDown'][colorid]['id'],getHorses['breedDropDown'][breedid]['id'],getHorses['horseCategoryDropDown'][categoryid]['id'],getHorses['sireDropDown'][sireid]['id'],getHorses['damDropDown'][damid]['id'],dna).then((
+          Add_horse_services.horseupdate(token,createdBy,horseId , name.text,select_gender_id, true,number,passport,microchip,dateofbirth,getHorses['colorDropDown'][colorid]['id'],getHorses['breedDropDown'][breedid]['id'],getHorses['horseCategoryDropDown'][categoryid]['id'],getHorses['sireDropDown'][sireid]['id'],getHorses['damDropDown'][damid]['id'],getHorses['headMarkingsDropDown'][headmarkid]['id'],getHorses['bodyMarkingsDropDown'][bodymarkid]['id'],getHorses['legMarkingsDropDown'][legmarkid]['id'],getHorses['dietDropDown'][dietid]['id'],getHorses['barnDropDown'][barnid]['id'],getHorses['ironBrandDropDown'][ironbrandid]['id'],getHorses['vetDropDown'][vetid]['id'],getHorses['breederDropDown'][breederid]['id'],getHorses['locationDropDown'][locationid]['id'],getHorses['riderDropDown'][riderid]['id'],getHorses['inchargeDropDown'][inchargeid]['id'],getHorses['associationDropDown'][associationid]['id'],dna).then((
               response) {
             if (response != null) {
               Scaffold.of(context).showSnackBar(SnackBar(

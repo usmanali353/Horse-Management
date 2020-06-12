@@ -96,6 +96,7 @@ class _add_marking extends State<add_marking>{
                                 setState(() {
                                   this.selected_marking=value;
                                   this.selected_marking_id=marking_type.indexOf(value);
+                                  print(selected_marking);
                                 });
                               },
                             ),

@@ -42,7 +42,7 @@ class _training_list_state extends State<horse_list>{
               color: Colors.white,
             ),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => add_newHorse(token)),);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => add_HorseNew(token)),);
             },
           )
         ],
