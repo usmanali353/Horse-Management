@@ -29,6 +29,7 @@ class _Profile_Page_State extends State<vaccination_list>{
   int id;
   SharedPreferences prefs;
   _Profile_Page_State (this.token);
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
   String token;
   var vaccinationlist, load_list;
@@ -37,6 +38,8 @@ class _Profile_Page_State extends State<vaccination_list>{
 
   @override
   void initState () {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
 //    labtest_services.horseIdLabtest(token, id).then((response){
 //      setState(() {
 //        print(response);
@@ -165,73 +168,95 @@ class _Profile_Page_State extends State<vaccination_list>{
                 ]
             )
         ),
-        body: ListView.builder(itemCount:vaccinationlist!=null?vaccinationlist.length:temp.length,itemBuilder: (context,int index){
-          return Column(
-            children: <Widget>[
-              Slidable(
-                actionPane: SlidableDrawerActionPane(),
-                actionExtentRatio: 0.20,
-                actions: <Widget>[
-                  IconSlideAction(onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_vaccination(vaccinationlist[index],prefs.get('token'),prefs.get('createdBy'))));
+        body: RefreshIndicator(
+            key: _refreshIndicatorKey,
+            onRefresh: (){
+              return Utils.check_connectivity().then((result){
+                if(result){
+                  vaccination_services.vaccination_listbypage(
+                      token, pagenum).then((response) {
+                    setState(() {
+                      print(response);
+                      load_list = json.decode(response);
+                      vaccinationlist = load_list['response'];
+                    });
+                  });
+                }else{
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    backgroundColor:Colors.red ,
+                    content: Text('Network Error'),
+                  ));
+                }
+              });
+            },
+          child: ListView.builder(itemCount:vaccinationlist!=null?vaccinationlist.length:temp.length,itemBuilder: (context,int index){
+            return Column(
+              children: <Widget>[
+                Slidable(
+                  actionPane: SlidableDrawerActionPane(),
+                  actionExtentRatio: 0.20,
+                  actions: <Widget>[
+                    IconSlideAction(onTap: ()async{
+                      prefs = await SharedPreferences.getInstance();
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>update_vaccination(vaccinationlist[index],prefs.get('token'),prefs.get('createdBy'))));
 
-                  },color: Colors.blue,icon: Icons.mode_edit,caption: 'update',),
-                  IconSlideAction(
-                    icon: Icons.visibility_off,
-                    color: Colors.red,
-                    caption: 'Hide',
-                    onTap: () async {
-                      vaccination_services.vaccinationVisibilty(token, vaccinationlist[index]['id']).then((response){
-                        //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
-                        print(response);
-                        if(response!=null){
+                    },color: Colors.blue,icon: Icons.mode_edit,caption: 'update',),
+                    IconSlideAction(
+                      icon: Icons.visibility_off,
+                      color: Colors.red,
+                      caption: 'Hide',
+                      onTap: () async {
+                        vaccination_services.vaccinationVisibilty(token, vaccinationlist[index]['id']).then((response){
+                          //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
+                          print(response);
+                          if(response!=null){
 
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            backgroundColor:Colors.green ,
-                            content: Text('Visibility Changed'),
-                          ));
-                          setState(() {
-                            vaccinationlist.removeAt(index);
-                          });
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              backgroundColor:Colors.green ,
+                              content: Text('Visibility Changed'),
+                            ));
+                            setState(() {
+                              vaccinationlist.removeAt(index);
+                            });
 
-                        }else{
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            backgroundColor:Colors.red ,
-                            content: Text('Failed'),
-                          ));
-                        }
-                      });
+                          }else{
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              backgroundColor:Colors.red ,
+                              content: Text('Failed'),
+                            ));
+                          }
+                        });
+                      },
+                    ),
+
+                  ],
+                  child: ListTile(
+                    //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
+                    title: Text(vaccinationlist!=null?(vaccinationlist[index]['horseName']['name']):' '),
+                    subtitle: Text(vaccinationlist!=null?'Vaccine: '+(vaccinationlist[index]['vaccineName']['name']):'farrier name not showing'),
+                    trailing: Text(vaccinationlist[index]['vetId']!=null?'Vet: '+(vaccinationlist[index]['vetName']['contactName']['name']):'Vet name empty'),
+                    onTap: ()async{
+                      prefs = await SharedPreferences.getInstance();
+                      print((vaccinationlist[index]));
+                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_labTest(lablist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
                     },
                   ),
+                  secondaryActions: <Widget>[
 
-                ],
-                child: ListTile(
-                  //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
-                  title: Text(vaccinationlist!=null?(vaccinationlist[index]['horseName']['name']):' '),
-                  subtitle: Text(vaccinationlist!=null?'Vaccine: '+(vaccinationlist[index]['vaccineName']['name']):'farrier name not showing'),
-                  trailing: Text(vaccinationlist[index]['vetId']!=null?'Vet: '+(vaccinationlist[index]['vetName']['contactName']['name']):'Vet name empty'),
-                  onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    print((vaccinationlist[index]));
-                    // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_labTest(lablist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
-                  },
+                  ],
+
                 ),
-                secondaryActions: <Widget>[
+                Divider(),
 
-                ],
+                Center(
+                  child: Text(vaccinationlist == null ? "No Data Found":"hello",textScaleFactor: 1.5, ),
+                ),
+              ],
 
-              ),
-              Divider(),
+            );
 
-              Center(
-                child: Text(vaccinationlist == null ? "No Data Found":"hello",textScaleFactor: 1.5, ),
-              ),
-            ],
-
-          );
-
-        })
+          }),
+        )
 
     );
   }

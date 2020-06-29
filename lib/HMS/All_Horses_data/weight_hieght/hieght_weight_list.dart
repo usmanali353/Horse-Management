@@ -27,7 +27,7 @@ class _Profile_Page_State extends State<weight_hieght_list>{
   int id;
   SharedPreferences prefs;
   _Profile_Page_State (this.token);
-
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   String token;
   var weightlist, load_list;
   var temp=['',''];
@@ -35,6 +35,8 @@ class _Profile_Page_State extends State<weight_hieght_list>{
 
   @override
   void initState () {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
 //    labtest_services.horseIdLabtest(token, id).then((response){
 //      setState(() {
 //        print(response);
@@ -159,66 +161,88 @@ class _Profile_Page_State extends State<weight_hieght_list>{
                 ]
             )
         ),
-        body: ListView.builder(itemCount:weightlist!=null?weightlist.length:temp.length,itemBuilder: (context,int index){
-          return Column(
-            children: <Widget>[
-              Slidable(
-                actionPane: SlidableDrawerActionPane(),
-                actionExtentRatio: 0.20,
-                actions: <Widget>[
-                  IconSlideAction(
-                    icon: Icons.visibility_off,
-                    color: Colors.red,
-                    caption: 'Hide',
-                    onTap: () async {
-                      weight_hieght_services.weight_hieghtvisibilty(token, weightlist[index]['whid']).then((response){
-                        //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
-                        print(response);
-                        if(response!=null){
+        body: RefreshIndicator(
+            key: _refreshIndicatorKey,
+            onRefresh: (){
+              return Utils.check_connectivity().then((result){
+                if(result){
+                  weight_hieght_services.weight_hieght_listbypage(
+                      token, pagenum).then((response) {
+                    setState(() {
+                      print(response);
+                      load_list = json.decode(response);
+                      weightlist = load_list['response'];
+                    });
+                  });
+                }else{
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    backgroundColor:Colors.red ,
+                    content: Text('Network Error'),
+                  ));
+                }
+              });
+            },
+          child: ListView.builder(itemCount:weightlist!=null?weightlist.length:temp.length,itemBuilder: (context,int index){
+            return Column(
+              children: <Widget>[
+                Slidable(
+                  actionPane: SlidableDrawerActionPane(),
+                  actionExtentRatio: 0.20,
+                  actions: <Widget>[
+                    IconSlideAction(
+                      icon: Icons.visibility_off,
+                      color: Colors.red,
+                      caption: 'Hide',
+                      onTap: () async {
+                        weight_hieght_services.weight_hieghtvisibilty(token, weightlist[index]['whid']).then((response){
+                          //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
+                          print(response);
+                          if(response!=null){
 
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            backgroundColor:Colors.green ,
-                            content: Text('Visibility Changed'),
-                          ));
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              backgroundColor:Colors.green ,
+                              content: Text('Visibility Changed'),
+                            ));
 
-                        }else{
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            backgroundColor:Colors.red ,
-                            content: Text('Failed'),
-                          ));
-                        }
-                      });
+                          }else{
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              backgroundColor:Colors.red ,
+                              content: Text('Failed'),
+                            ));
+                          }
+                        });
+                      },
+                    ),
+                    IconSlideAction(onTap: ()async{
+                      prefs = await SharedPreferences.getInstance();
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>update_weight_and_height(weightlist[index],prefs.get('token'))));
+
+                    },color: Colors.blue,icon: Icons.border_color,caption: 'update',)
+                  ],
+                  child: ListTile(
+                    //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
+                    title: Text(weightlist!=null?(weightlist[index]['horseName']['name']):''),
+                    subtitle: Text(weightlist[index]['weight']!=null?"Weight: "+(weightlist[index]['weight']).toString():'weight empty'),
+                    trailing: Text(weightlist[index]['height']!=null?"Height: "+(weightlist[index]['height']).toString():'hieght empty'),
+                    //leading: Image.asset("Assets/horses_icon.png"),
+                    onTap: ()async{
+                      prefs = await SharedPreferences.getInstance();
+                      print((weightlist[index]));
+                      //Navigator.push(context, MaterialPageRoute(builder: (context)=>update_weight_and_height(weightlist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
                     },
                   ),
-                  IconSlideAction(onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_weight_and_height(weightlist[index],prefs.get('token'))));
-
-                  },color: Colors.blue,icon: Icons.border_color,caption: 'update',)
-                ],
-                child: ListTile(
-                  //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
-                  title: Text(weightlist!=null?(weightlist[index]['horseName']['name']):''),
-                  subtitle: Text(weightlist[index]['weight']!=null?"Weight: "+(weightlist[index]['weight']).toString():'weight empty'),
-                  trailing: Text(weightlist[index]['height']!=null?"Height: "+(weightlist[index]['height']).toString():'hieght empty'),
-                  //leading: Image.asset("Assets/horses_icon.png"),
-                  onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    print((weightlist[index]));
-                    //Navigator.push(context, MaterialPageRoute(builder: (context)=>update_weight_and_height(weightlist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
-                  },
-                ),
 
 //               secondaryActions: <Widget>[
 //
 //               ],
-              ),
-              Divider(),
-            ],
+                ),
+                Divider(),
+              ],
 
-          );
+            );
 
-        })
+          }),
+        )
     );
   }
 

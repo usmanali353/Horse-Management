@@ -170,7 +170,8 @@ class _Profile_Page_State extends State<lab_list>{
                     if(response!=null){
                       setState(() {
                         //var parsedjson = jsonDecode(response);
-                        lablist  = jsonDecode(response);
+                        load_list = json.decode(response);
+                        lablist = load_list['response'];
                         print(lablist);
                         //print(horse_list['createdBy']);
                       });

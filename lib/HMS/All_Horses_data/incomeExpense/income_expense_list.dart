@@ -36,12 +36,15 @@ class _incomeExpense_list_state extends State<income_expense_list>{
   int pagenum = 1;
   int total_page;
   SharedPreferences prefs;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
   _incomeExpense_list_state (this.token);
 
 
   @override
   void initState () {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
 //    Add_horse_services.labdropdown(token).then((response){
 //      setState((){
 //        labdropDown = json.decode(response);
@@ -164,70 +167,92 @@ class _incomeExpense_list_state extends State<income_expense_list>{
             ]
             )
         ),
-        body:ListView.builder(itemCount:list!=null?list.length:temp.length,itemBuilder: (context,int index){
-          return Column(
-            children: <Widget>[
-              Slidable(
-                actionPane: SlidableDrawerActionPane(),
-                actionExtentRatio: 0.20,
-                actions: <Widget>[
-                  IconSlideAction(onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_IncomeExpense(list[index],prefs.get('token'),prefs.get('createdBy'))));
+        body:RefreshIndicator(
+          key: _refreshIndicatorKey,
+          onRefresh: (){
+            return Utils.check_connectivity().then((result){
+              if(result){
+                income_expense_services.income_expenselistbypage(
+                    token, pagenum).then((response) {
+                  setState(() {
+                    print(response);
+                    load_list = json.decode(response);
+                    list = load_list['response'];
+                  });
+                });
+              }else{
+                Scaffold.of(context).showSnackBar(SnackBar(
+                  backgroundColor:Colors.red ,
+                  content: Text('Network Error'),
+                ));
+              }
+            });
+          },
+          child: ListView.builder(itemCount:list!=null?list.length:temp.length,itemBuilder: (context,int index){
+            return Column(
+              children: <Widget>[
+                Slidable(
+                  actionPane: SlidableDrawerActionPane(),
+                  actionExtentRatio: 0.20,
+                  actions: <Widget>[
+                    IconSlideAction(onTap: ()async{
+                      prefs = await SharedPreferences.getInstance();
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>update_IncomeExpense(list[index],prefs.get('token'),prefs.get('createdBy'))));
 
-                  },color: Colors.blue,icon: Icons.border_color,caption: 'update',),
-                  IconSlideAction(
-                    icon: Icons.visibility_off,
-                    color: Colors.red,
-                    caption: 'Hide',
-                    onTap: () async {
-                      income_expense_services.incomevisibilty(token, list[index]['id']).then((response){
-                        //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
-                        print(response);
-                        if(response!=null){
+                    },color: Colors.blue,icon: Icons.border_color,caption: 'update',),
+                    IconSlideAction(
+                      icon: Icons.visibility_off,
+                      color: Colors.red,
+                      caption: 'Hide',
+                      onTap: () async {
+                        income_expense_services.incomevisibilty(token, list[index]['id']).then((response){
+                          //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
+                          print(response);
+                          if(response!=null){
 
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            backgroundColor:Colors.green ,
-                            content: Text('Visibility Changed'),
-                          ));
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              backgroundColor:Colors.green ,
+                              content: Text('Visibility Changed'),
+                            ));
 
-                        }else{
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            backgroundColor:Colors.red ,
-                            content: Text('Failed'),
-                          ));
-                        }
-                      });
-                    },
+                          }else{
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              backgroundColor:Colors.red ,
+                              content: Text('Failed'),
+                            ));
+                          }
+                        });
+                      },
+                    ),
+                  ],
+                  child: ExpansionTile(
+            //['categoryName']['name']
+                    title: Text(list != null ? list[index]['horseName']['name']:""),
+                    subtitle: Text(list != null ? "Account: "+list[index]['categoryName']['name']:""),
+                    trailing: Text(list != null ? "Date: "+list[index]['date'].toString().substring(0,10):""),
+                  // leading: Text(list != null ? 'Amount '+list[index]['amount'].toString():""),
+                    children: <Widget>[
+
+                  Divider(),
+
+                  ListTile(
+                    title: Text("Amount"),
+                    trailing: Text(list != null ? list[index]['amount'].toString():""),
                   ),
-                ],
-                child: ExpansionTile(
-          //['categoryName']['name']
-                  title: Text(list != null ? list[index]['horseName']['name']:""),
-                  subtitle: Text(list != null ? "Account: "+list[index]['categoryName']['name']:""),
-                  trailing: Text(list != null ? "Date: "+list[index]['date'].toString().substring(0,10):""),
-                // leading: Text(list != null ? 'Amount '+list[index]['amount'].toString():""),
-                  children: <Widget>[
 
+                    ],
+
+
+                  ),
+                ),
                 Divider(),
 
-                ListTile(
-                  title: Text("Amount"),
-                  trailing: Text(list != null ? list[index]['amount'].toString():""),
-                ),
+              ],
 
-                  ],
+            );
 
-
-                ),
-              ),
-              Divider(),
-
-            ],
-
-          );
-
-        })
+          }),
+        )
 
     );
   }

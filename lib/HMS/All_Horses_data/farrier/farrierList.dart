@@ -32,10 +32,13 @@ class _Profile_Page_State extends State<farrier_list>{
   var farrierlist, load_list;
   var temp=[];
   int pagenum=1,total_page;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
 
   @override
   void initState () {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
 //    labtest_services.horseIdLabtest(token, id).then((response){
 //      setState(() {
 //        print(response);
@@ -157,67 +160,90 @@ class _Profile_Page_State extends State<farrier_list>{
                 ]
             )
         ),
-        body: ListView.builder(itemCount:farrierlist!=null?farrierlist.length:temp.length,itemBuilder: (context,int index){
-          return Column(
-            children: <Widget>[
-              Slidable(
-                actionPane: SlidableDrawerActionPane(),
-                actionExtentRatio: 0.20,
-                actions: <Widget>[
-                  IconSlideAction(onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_farrier(farrierlist[index],token)));
+        body:  RefreshIndicator(
+            key: _refreshIndicatorKey,
+            onRefresh: (){
+              return Utils.check_connectivity().then((result){
+                if(result){
+                  farrier_services.farrierlistbypage(
+                      token, pagenum).then((response) {
+                    setState(() {
+                      print(response);
+                      load_list = json.decode(response);
+                      farrierlist = load_list['response'];
+                      print(farrierlist);
+                    });
+                  });
+                }else{
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    backgroundColor:Colors.red ,
+                    content: Text('Network Error'),
+                  ));
+                }
+              });
+            },
+          child: ListView.builder(itemCount:farrierlist!=null?farrierlist.length:temp.length,itemBuilder: (context,int index){
+            return Column(
+              children: <Widget>[
+                Slidable(
+                  actionPane: SlidableDrawerActionPane(),
+                  actionExtentRatio: 0.20,
+                  actions: <Widget>[
+                    IconSlideAction(onTap: ()async{
+                      prefs = await SharedPreferences.getInstance();
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>update_farrier(farrierlist[index],token)));
 
-                  },color: Colors.blue,icon: Icons.border_color,caption: 'update',),
-                  IconSlideAction(
-                    icon: Icons.visibility_off,
-                    color: Colors.red,
-                    caption: 'Hide',
-                    onTap: () async {
-                      farrier_services.weight_hieghtvisibilty(token, farrierlist[index]['id']).then((response){
-                        //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
-                        print(response);
-                        if(response!=null){
+                    },color: Colors.blue,icon: Icons.border_color,caption: 'update',),
+                    IconSlideAction(
+                      icon: Icons.visibility_off,
+                      color: Colors.red,
+                      caption: 'Hide',
+                      onTap: () async {
+                        farrier_services.weight_hieghtvisibilty(token, farrierlist[index]['id']).then((response){
+                          //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
+                          print(response);
+                          if(response!=null){
 
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            backgroundColor:Colors.green ,
-                            content: Text('Visibility Changed'),
-                          ));
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              backgroundColor:Colors.green ,
+                              content: Text('Visibility Changed'),
+                            ));
 
-                        }else{
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            backgroundColor:Colors.red ,
-                            content: Text('Failed'),
-                          ));
-                        }
-                      });
+                          }else{
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              backgroundColor:Colors.red ,
+                              content: Text('Failed'),
+                            ));
+                          }
+                        });
+                      },
+                    ),
+
+                  ],
+                  child: ListTile(
+                    //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
+                    title: Text(farrierlist!=null?(farrierlist[index]['horseName']['name']):''),
+                    subtitle: Text(farrierlist!=null?"Farrier: "+(farrierlist[index]['farrierName']['contactName']['name']):'farrier name not showing'),
+                    trailing: Text(farrierlist!=null?"Amount: "+(farrierlist[index]['amount']).toString():''),
+                    //leading: Image.asset("Assets/horses_icon.png"),
+                    onTap: ()async{
+                      prefs = await SharedPreferences.getInstance();
+                      print((farrierlist[index]));
+                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_labTest(lablist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
                     },
                   ),
+                  secondaryActions: <Widget>[
 
-                ],
-                child: ListTile(
-                  //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
-                  title: Text(farrierlist!=null?(farrierlist[index]['horseName']['name']):''),
-                  subtitle: Text(farrierlist!=null?"Farrier: "+(farrierlist[index]['farrierName']['contactName']['name']):'farrier name not showing'),
-                  trailing: Text(farrierlist!=null?"Amount: "+(farrierlist[index]['amount']).toString():''),
-                  //leading: Image.asset("Assets/horses_icon.png"),
-                  onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    print((farrierlist[index]));
-                    // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_labTest(lablist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
-                  },
+                  ],
+
                 ),
-                secondaryActions: <Widget>[
+                Divider(),
+              ],
 
-                ],
+            );
 
-              ),
-              Divider(),
-            ],
-
-          );
-
-        })
+          }),
+        )
     );
   }
 

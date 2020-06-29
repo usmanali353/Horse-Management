@@ -32,10 +32,12 @@ class _Profile_Page_State extends State<swabbing_list>{
   var swabbinglist, load_list;
   var temp=[];
  int pagenum=1,total_page;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState () {
-
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
 
     Utils.check_connectivity().then((result){
       if(result) {
@@ -150,65 +152,88 @@ class _Profile_Page_State extends State<swabbing_list>{
                 ]
             )
         ),
-        body: ListView.builder(itemCount:swabbinglist!=null?swabbinglist.length:temp.length,itemBuilder: (context,int index){
-          return Column(
-            children: <Widget>[
-              Slidable(
-                actionPane: SlidableDrawerActionPane(),
-                actionExtentRatio: 0.20,
-                actions: <Widget>[
-                  IconSlideAction(
-                    icon: Icons.visibility_off,
-                    color: Colors.red,
-                    caption: 'Hide',
-                    onTap: () async {
-                      swabbing_services.swabbingVisibilty(token, swabbinglist[index]['id']).then((response){
-                        //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
-                        print(response);
-                        if(response!=null){
+        body: RefreshIndicator(
+            key: _refreshIndicatorKey,
+            onRefresh: (){
+              return Utils.check_connectivity().then((result){
+                if(result){
+                  swabbing_services.swabbing_listbypage(
+                      token, pagenum).then((response) {
+                    setState(() {
+                      print(response);
+                      load_list = json.decode(response);
+                      swabbinglist = load_list['response'];
+                      print(swabbinglist);
+                    });
+                  });
+                }else{
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    backgroundColor:Colors.red ,
+                    content: Text('Network Error'),
+                  ));
+                }
+              });
+            },
+          child: ListView.builder(itemCount:swabbinglist!=null?swabbinglist.length:temp.length,itemBuilder: (context,int index){
+            return Column(
+              children: <Widget>[
+                Slidable(
+                  actionPane: SlidableDrawerActionPane(),
+                  actionExtentRatio: 0.20,
+                  actions: <Widget>[
+                    IconSlideAction(
+                      icon: Icons.visibility_off,
+                      color: Colors.red,
+                      caption: 'Hide',
+                      onTap: () async {
+                        swabbing_services.swabbingVisibilty(token, swabbinglist[index]['id']).then((response){
+                          //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
+                          print(response);
+                          if(response!=null){
 
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            backgroundColor:Colors.green ,
-                            content: Text('Visibility Changed'),
-                          ));
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              backgroundColor:Colors.green ,
+                              content: Text('Visibility Changed'),
+                            ));
 
-                        }else{
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            backgroundColor:Colors.red ,
-                            content: Text('Failed'),
-                          ));
-                        }
-                      });
+                          }else{
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              backgroundColor:Colors.red ,
+                              content: Text('Failed'),
+                            ));
+                          }
+                        });
+                      },
+                    ),
+                    IconSlideAction(onTap: ()async{
+                      prefs = await SharedPreferences.getInstance();
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>update_swabbing(swabbinglist[index],prefs.get('token'))));
+
+                    },color: Colors.blue,icon: Icons.border_color,caption: 'update',)
+                  ],
+                  child: ListTile(
+                    //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
+                    title: Text(swabbinglist!=null?(swabbinglist[index]['horseName']['name']):'Horse Name'),
+                    subtitle: Text(swabbinglist!=null?'Date '+(swabbinglist[index]['swabbingDate'].toString().substring(0,10)):'empty'),
+                    trailing: Text(swabbinglist!=null?'Antibiotic '+(swabbinglist[index]['antibiotic']):' epmty'),
+                    onTap: ()async{
+                      prefs = await SharedPreferences.getInstance();
+                      print((swabbinglist[index]));
+                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_labTest(lablist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
                     },
                   ),
-                  IconSlideAction(onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_swabbing(swabbinglist[index],prefs.get('token'))));
+                  secondaryActions: <Widget>[
 
-                  },color: Colors.blue,icon: Icons.border_color,caption: 'update',)
-                ],
-                child: ListTile(
-                  //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
-                  title: Text(swabbinglist!=null?(swabbinglist[index]['horseName']['name']):'Horse Name'),
-                  subtitle: Text(swabbinglist!=null?'Date '+(swabbinglist[index]['swabbingDate'].toString().substring(0,10)):'empty'),
-                  trailing: Text(swabbinglist!=null?'Antibiotic '+(swabbinglist[index]['antibiotic']):' epmty'),
-                  onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    print((swabbinglist[index]));
-                    // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_labTest(lablist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
-                  },
+                  ],
+
                 ),
-                secondaryActions: <Widget>[
+                Divider(),
+              ],
 
-                ],
+            );
 
-              ),
-              Divider(),
-            ],
-
-          );
-
-        })
+          }),
+        )
     );
   }
 

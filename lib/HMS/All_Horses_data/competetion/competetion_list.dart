@@ -33,12 +33,13 @@ class _Profile_Page_State extends State<competetion_list>{
   String token;
   var competetionlist, load_list;
   var temp=['',''];
-
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState () {
 
-
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
 
     Utils.check_connectivity().then((result){
       if(result) {
@@ -147,67 +148,88 @@ class _Profile_Page_State extends State<competetion_list>{
                 ]
             )
         ),
-        body: ListView.builder(itemCount:competetionlist!=null?competetionlist.length:temp.length,itemBuilder: (context,int index){
-          return Column(
-            children: <Widget>[
-              Slidable(
-                actionPane: SlidableDrawerActionPane(),
-                actionExtentRatio: 0.20,
-                actions: <Widget>[
-                  IconSlideAction(onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>update_competetion(competetionlist[index],prefs.get('token'))));
+        body: RefreshIndicator(
+            key: _refreshIndicatorKey,
+            onRefresh: (){
+              return Utils.check_connectivity().then((result){
+                if(result){
+                  competetion_services.competetion_listbypage(token,pagenum).then((response) {
+                    setState(() {
+                      print(response);
+                      load_list = json.decode(response);
+                      competetionlist = load_list['response'];
+                    });
+                  });
+                }else{
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    backgroundColor:Colors.red ,
+                    content: Text('Network Error'),
+                  ));
+                }
+              });
+            },
+          child: ListView.builder(itemCount:competetionlist!=null?competetionlist.length:temp.length,itemBuilder: (context,int index){
+            return Column(
+              children: <Widget>[
+                Slidable(
+                  actionPane: SlidableDrawerActionPane(),
+                  actionExtentRatio: 0.20,
+                  actions: <Widget>[
+                    IconSlideAction(onTap: ()async{
+                      prefs = await SharedPreferences.getInstance();
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>update_competetion(competetionlist[index],prefs.get('token'))));
 
-                  },color: Colors.blue,icon: Icons.border_color,caption: 'update',),
-                  IconSlideAction(
-                    icon: Icons.visibility_off,
-                    color: Colors.red,
-                    caption: 'Hide',
-                    onTap: () async {
-                      competetion_services.competetionVisibilty(token, competetionlist[index]['id']).then((response){
-                        //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
-                        print(response);
-                        if(response!=null){
+                    },color: Colors.blue,icon: Icons.border_color,caption: 'update',),
+                    IconSlideAction(
+                      icon: Icons.visibility_off,
+                      color: Colors.red,
+                      caption: 'Hide',
+                      onTap: () async {
+                        competetion_services.competetionVisibilty(token, competetionlist[index]['id']).then((response){
+                          //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
+                          print(response);
+                          if(response!=null){
 
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            backgroundColor:Colors.green ,
-                            content: Text('Visibility Changed'),
-                          ));
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              backgroundColor:Colors.green ,
+                              content: Text('Visibility Changed'),
+                            ));
 
-                        }else{
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            backgroundColor:Colors.red ,
-                            content: Text('Failed'),
-                          ));
-                        }
-                      });
+                          }else{
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              backgroundColor:Colors.red ,
+                              content: Text('Failed'),
+                            ));
+                          }
+                        });
+                      },
+                    ),
+
+                  ],
+                  child: ListTile(
+                    //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
+                    title: Text(competetionlist!=null?(competetionlist[index]['horseName']['name']):'Horse Name'),
+                    trailing: Text(competetionlist!=null?'Performance :'+(competetionlist[index]['performanceTypeName']['name']):'performance not showing'),
+                    subtitle: Text(competetionlist[index]['date'] != null ? competetionlist[index]['date'].toString().substring(0,10):""),
+                    //leading: Image.asset("Assets/horses_icon.png"),
+                    onTap: ()async{
+                      prefs = await SharedPreferences.getInstance();
+                      print((competetionlist[index]));
+                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_labTest(lablist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
                     },
                   ),
+                  secondaryActions: <Widget>[
 
-                ],
-                child: ListTile(
-                  //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
-                  title: Text(competetionlist!=null?(competetionlist[index]['horseName']['name']):'Horse Name'),
-                  trailing: Text(competetionlist!=null?'Performance :'+(competetionlist[index]['performanceTypeName']['name']):'performance not showing'),
-                  subtitle: Text(competetionlist[index]['date'] != null ? competetionlist[index]['date'].toString().substring(0,10):""),
-                  //leading: Image.asset("Assets/horses_icon.png"),
-                  onTap: ()async{
-                    prefs = await SharedPreferences.getInstance();
-                    print((competetionlist[index]));
-                    // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_labTest(lablist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
-                  },
+                  ],
+
                 ),
-                secondaryActions: <Widget>[
+                Divider(),
+              ],
 
-                ],
+            );
 
-              ),
-              Divider(),
-            ],
-
-          );
-
-        })
+          }),
+        )
     );
   }
 
