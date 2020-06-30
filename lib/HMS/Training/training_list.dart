@@ -39,19 +39,19 @@ class _training_list_state extends State<training_list>{
   Widget build(BuildContext context) {
     return Scaffold(
 
-      appBar: AppBar(title: Text("Training List"),actions: <Widget>[
-        Center(child: Text("Add New",textScaleFactor: 1.3,)),
-        IconButton(
-
-          icon: Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => add_training(token)),);
-          },
-        )
-      ],),
+//      appBar: AppBar(title: Text("Training List"),actions: <Widget>[
+//        Center(child: Text("Add New",textScaleFactor: 1.3,)),
+//        IconButton(
+//
+//          icon: Icon(
+//            Icons.add,
+//            color: Colors.white,
+//          ),
+//          onPressed: () {
+//            Navigator.push(context, MaterialPageRoute(builder: (context) => add_training(token)),);
+//          },
+//        )
+//      ],),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton:
       Padding(
