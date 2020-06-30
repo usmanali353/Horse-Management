@@ -227,19 +227,34 @@ class trainingPlanListState extends State<trainingPlanList>{
                         color: Colors.blue,
                         caption: 'Update',
                         onTap: () async {
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_training(token,training_list[index])));
+                          print(training_list[index]['planExercises']);
+                          //Navigator.push(context,MaterialPageRoute(builder: (context)=>update_training(token,training_list[index])));
                         },
                       ),
                     ],
-                    child: ListTile(
-                      enabled: training_list[index]['isActive'],
+                    child: ExpansionTile(
+                     // enabled: training_list[index]['isActive'],
                       title: Text(training_list!=null?training_list[index]['name']:''),
                       //trailing: Text(training_list!=null?training_list[index]['startDate'].toString().replaceAll("T00:00:00",''):''),
                      // subtitle: Text(training_list!=null?get_training_type_by_id(training_list[index]['trainingType']):''),
                       leading: Icon(Icons.fitness_center,size: 40,color: Colors.teal,),
-                      onTap: (){
-                       // Navigator.push(context, MaterialPageRoute(builder: (context)=>training_details_page(training_list[index],get_training_type_by_id(training_list[index]['trainingType']))));
-                      },
+//                      onTap: (){
+//                       // Navigator.push(context, MaterialPageRoute(builder: (context)=>training_details_page(training_list[index],get_training_type_by_id(training_list[index]['trainingType']))));
+//                      },
+                    children: <Widget>[
+                      ListTile(
+                        title: Text("Execise"),
+                        trailing: Text(training_list[index]['exercises']!=null?training_list[index]['exercises'].toString():''),
+                      ),
+                      ListTile(
+                        title: Text("Plan Exercise Name"),
+                       trailing: Text(training_list[index]['planExercises']!=null?training_list[index]['planExercises'][0]['name'].toString():''),
+                      ),
+                      ListTile(
+                        title: Text("Plan Exercise Description"),
+                        trailing: Text(training_list[index]['planExercises'][0]!=null?training_list[index]['planExercises'][0]['description'].toString():''),
+                      ),
+                    ],
                     ),
 
 

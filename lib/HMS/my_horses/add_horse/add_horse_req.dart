@@ -274,7 +274,7 @@ class _add_horse_state extends State<add_HorseNew>{
                       Padding(
                         padding: const EdgeInsets.only(left: 16,right: 16),
                         child: FormBuilderDropdown(
-
+                          validators: [FormBuilderValidators.required()],
                           attribute: "Barn",
                           hint: Text("Barn"),
                           items: barn.map((name) => DropdownMenuItem(
@@ -297,6 +297,7 @@ class _add_horse_state extends State<add_HorseNew>{
                       Padding(
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
+                          validators: [FormBuilderValidators.required()],
                           attribute: "Breed",
                           hint: Text("Breed"),
                           items: breeding.map((name) => DropdownMenuItem(
@@ -319,6 +320,7 @@ class _add_horse_state extends State<add_HorseNew>{
                       Padding(
                         padding: EdgeInsets.all(16),
                         child: FormBuilderTextField(
+                          validators: [FormBuilderValidators.required()],
                           controller: number,
                           attribute: "Number",
                           decoration: InputDecoration(labelText: "Number",
@@ -333,7 +335,7 @@ class _add_horse_state extends State<add_HorseNew>{
                       Padding(
                         padding: EdgeInsets.all(16),
                         child: FormBuilderTextField(
-
+                          validators: [FormBuilderValidators.required()],
                           controller: chip,
                           attribute: "Chip No",
                           decoration: InputDecoration(labelText: "Chip No",
@@ -348,6 +350,7 @@ class _add_horse_state extends State<add_HorseNew>{
                       Padding(
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
+                          validators: [FormBuilderValidators.required()],
                           attribute: "Color",
                           hint: Text("Color"),
                           items: colors.map((name) => DropdownMenuItem(
@@ -372,6 +375,7 @@ class _add_horse_state extends State<add_HorseNew>{
                       Padding(
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
+                          validators: [FormBuilderValidators.required()],
                           attribute: "sireName",
                           hint: Text("SirName"),
                           items: sire.map((name) => DropdownMenuItem(
@@ -393,6 +397,7 @@ class _add_horse_state extends State<add_HorseNew>{
                       Padding(
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
+                          validators: [FormBuilderValidators.required()],
                           attribute: "damName",
                           hint: Text("DamName"),
                           items: dam.map((name) => DropdownMenuItem(
@@ -415,6 +420,7 @@ class _add_horse_state extends State<add_HorseNew>{
                       Padding(
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
+                          validators: [FormBuilderValidators.required()],
                           attribute: "Breeder",
                           hint: Text("Breeder"),
                           items: breeder.map((name) => DropdownMenuItem(
@@ -436,6 +442,7 @@ class _add_horse_state extends State<add_HorseNew>{
                       Padding(
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
+                          validators: [FormBuilderValidators.required()],
                           attribute: "",
                           hint: Text("Vet"),
                           items: vet.map((name) => DropdownMenuItem(
@@ -467,9 +474,25 @@ class _add_horse_state extends State<add_HorseNew>{
                       // child: add_horse_button(fbKey: _fbKey,name: name ,token: token,select_gender_id:select_gender_id,getHorses: getHorses,number: number.text,passport: passport.text,microchip: chip.text,dateofbirth: Select_date,genderlist: genderlist,colorid: select_color_id,breedid: select_breed_id,categoryid: select_category_id,sireid: select_sire_id,damid: select_dam_id),
                     ),
                     MaterialButton(color: Colors.teal,onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => add_horseDetial(token, name.text,Select_date,genderlist[select_gender_id]['id'],number.text,chip.text,getHorses['colorDropDown'][select_color_id]['id'],getHorses['breedDropDown'][select_breed_id]['id'],getHorses['sireDropDown'][select_sire_id]['id'],getHorses['damDropDown'][select_dam_id]['id'],
-                            getHorses['barnDropDown'][select_barn_id]['id'],getHorses['vetDropDown'][select_vet_id]['id'],getHorses['breederDropDown'][select_breeder_id]['id'])));
-                      }, child: Row(children: <Widget>[
+                      if(_fbKey.currentState.validate()) {
+                        Navigator.push(
+                            context, MaterialPageRoute(builder: (context) =>
+                            add_horseDetial(
+                                token,
+                                name.text,
+                                Select_date,
+                                genderlist[select_gender_id]['id'],
+                                number.text,
+                                chip.text,
+                                getHorses['colorDropDown'][select_color_id]['id'],
+                                getHorses['breedDropDown'][select_breed_id]['id'],
+                                getHorses['sireDropDown'][select_sire_id]['id'],
+                                getHorses['damDropDown'][select_dam_id]['id'],
+                                getHorses['barnDropDown'][select_barn_id]['id'],
+                                getHorses['vetDropDown'][select_vet_id]['id'],
+                                getHorses['breederDropDown'][select_breeder_id]['id'])));
+                      }
+                        }, child: Row(children: <Widget>[
                       Text("Add More"),
                       Icon(Icons.arrow_forward),
                     ], ),)

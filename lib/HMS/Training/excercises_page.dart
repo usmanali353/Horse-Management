@@ -67,8 +67,9 @@ class _excercisesState extends State<excercises> {
       if(result){
         ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
         pd.show();
-         network_operations.addTrainingPlan(token, 111, entries,trainingPlanName, trainingPlanDescription).then((response){
+         network_operations.addTrainingPlan(token, 0, entries,trainingPlanName, trainingPlanDescription).then((response){
            pd.dismiss();
+           print(response);
             if(response!=null){
               Flushbar(
                 message:  "Training Plan added",
