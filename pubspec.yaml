@@ -47,6 +47,7 @@ dependencies:
   charts_flutter:
   pie_chart:
   draggable_scrollbar: ^0.0.4
+  need_resume: ^1.0.4
 
 
 
