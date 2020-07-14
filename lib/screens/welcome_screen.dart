@@ -76,10 +76,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       }
                       ,
                       child: Center(
-                        child:  FadeAnimation(3.4,Text("Forgot password", style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 17,
-                            decoration: TextDecoration.underline
+                        child:  FadeAnimation(3.4,Text("Forgot password?", style: TextStyle(
+                            color: Colors.teal,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            //decoration: TextDecoration.underline
                         ),
                         ),
                         ),

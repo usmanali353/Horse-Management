@@ -519,12 +519,12 @@ static Future<String> getTrainingCareTaker(String token) async{
     return null;
 }
 
-static Future<String> breeding_control_by_page (String token,int pagenum) async {
+static Future<String> breeding_control_by_page (String token,int pagenum, String search) async {
   Map<String, String> headers = {'Authorization': 'Bearer '+token};
   final response = await http.get(
     //'http://192.236.147.77:8083/api/horse/GetAllIncomeAndExpenses?pageNumber=2&pageSize=10',
 
-    'http://192.236.147.77:8083/api/breed/GetAllBreedingControls?pageNumber='+pagenum.toString()+'&pageSize=10',
+    'http://192.236.147.77:8083/api/breed/GetAllBreedingControls?pageNumber='+pagenum.toString()+'&pageSize=10&SearchString='+search,
     headers: headers,
   );
   if (response.statusCode == 200) {
@@ -532,12 +532,12 @@ static Future<String> breeding_control_by_page (String token,int pagenum) async 
   } else
     return null;
 }
-static Future<String> semen_collection_by_page (String token,int pagenum) async {
+static Future<String> semen_collection_by_page (String token,int pagenum, String search) async {
   Map<String, String> headers = {'Authorization': 'Bearer '+token};
   final response = await http.get(
     //'http://192.236.147.77:8083/api/horse/GetAllIncomeAndExpenses?pageNumber=2&pageSize=10',
 
-    'http://192.236.147.77:8083/api/breed/GetAllSemenCollections?pageNumber='+pagenum.toString()+'&pageSize=10',
+    'http://192.236.147.77:8083/api/breed/GetAllSemenCollections?pageNumber='+pagenum.toString()+'&pageSize=10&SearchString='+search,
     headers: headers,
   );
   if (response.statusCode == 200) {

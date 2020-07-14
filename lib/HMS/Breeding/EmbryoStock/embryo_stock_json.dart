@@ -7,11 +7,11 @@ import '../../../Utils.dart';
 
 class EmbryoStockServices{
 
-  static Future<String> embryo_stock_by_page (String token,int pagenum) async {
+  static Future<String> embryo_stock_by_page (String token,int pagenum, String search) async {
     Map<String, String> headers = {'Authorization': 'Bearer '+token};
     final response = await http.get(
       //'http://192.236.147.77:8083/api/horse/GetAllIncomeAndExpenses?pageNumber=2&pageSize=10',
-      'http://192.236.147.77:8083/api/breed/GetAllEmbryoStocks?pageNumber='+pagenum.toString()+'&pageSize=10',
+      'http://192.236.147.77:8083/api/breed/GetAllEmbryoStocks?pageNumber='+pagenum.toString()+'&pageSize=10&SearchString='+search,
       headers: headers,
     );
     if (response.statusCode == 200) {
