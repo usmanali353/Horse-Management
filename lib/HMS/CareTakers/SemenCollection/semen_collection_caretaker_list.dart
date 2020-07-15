@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -31,156 +32,200 @@ class _semen_collection_caretaker_list_state extends State<semen_collection_care
   int pagenum = 1;
   int total_page;
   var temp=['',''];
-  bool isvisible=false;
+  bool isVisible=false;
+  var _isSearching=false, isPagination=false;
+  TextEditingController _searchQuery;
+  String searchQuery = "";
+  List<dynamic> filteredCategory=[], listRecord;
+  int searchPageNum,totalSearchPages;
+  static final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+  _semen_collection_caretaker_list_state(this.token);
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    _searchQuery =TextEditingController();
+
+    Utils.check_connectivity().then((result){
+      if(result) {
+        ProgressDialog pd = ProgressDialog(
+            context, isDismissible: true, type: ProgressDialogType.Normal);
+        pd.show();
+        SemenCollectionCareTakerServices.semenCollection_caretaker_by_page(token, pagenum, searchQuery).then((response){
+          pd.dismiss();
+          if(response!=null){
+            setState(() {
+              //var parsedjson = jsonDecode(response);
+              load_list  = jsonDecode(response);
+              siemen_col_list = load_list['response'];
+              total_page=load_list['totalPages'];
+              isVisible=true;
+              if(total_page == 1){
+                print("init state page = 1");
+                setState(() {
+                  isPagination = false;
+                });
+              }else{
+                print("init state multi page ");
+                setState(() {
+                  isPagination = true;
+                });
+              }
+              print(total_page);
+            });
+
+          }else{
+            Scaffold.of(context).showSnackBar(SnackBar(content: Text("No List"),backgroundColor: Colors.red,));
+          }
+        });
+      }else
+        Scaffold.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.red,
+            content: Text("Network Error")
+        ));
+    });
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
 
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Semen Collection Caretaker"),
-          actions: <Widget>[
-            Center(child: Text("Add New",textScaleFactor: 1.3,)),
-            IconButton(
-
-              icon: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => add_semen_collection(token)),);
-              },
-            )
-//          IconButton(
-//            icon: Icon(Icons.picture_as_pdf),
-//           // onPressed: () => _generatePdfAndView(context),
-//          ),
-          ],
-        ),
+      appBar: AppBar(
+        leading: _isSearching ? const BackButton() : null,
+        title: _isSearching ? _buildSearchField() : _buildTitle(context),
+        actions: _buildActions(),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton:
-      Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                FloatingActionButton(
-                    backgroundColor: Colors.transparent,
-                    splashColor: Colors.red,
-                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
-                  if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
-                    Utils.check_connectivity().then((result){
-                      if(result) {
-                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
-                        pd.show();
-                        SemenCollectionCareTakerServices.semenCollection_caretaker_by_page(token, pagenum).then((response) {
-                          pd.dismiss();
-                          setState(() {
-                            print(response);
-                            load_list= json.decode(response);
-                            siemen_col_list = load_list['response'];
-                            print(siemen_col_list);
+      Visibility(
+        visible: isPagination,
+        child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  FloatingActionButton(
+                      backgroundColor: Colors.transparent,
+                      splashColor: Colors.red,
+                      child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
+                    if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                      Utils.check_connectivity().then((result){
+                        if(result) {
+                          ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                          pd.show();
+                          SemenCollectionCareTakerServices.semenCollection_caretaker_by_page(token, pagenum,searchQuery).then((response) {
+                            pd.dismiss();
+                            print("has pre in if");
+                            setState(() {
+                              //print(response);
+                              load_list= json.decode(response);
+                              siemen_col_list = load_list['response'];
+                              //print(horse_list);
+                            });
                           });
-                        });
-                      }else
-                        print("Network Not Available");
-                    });
-                  }
-                  else{
-                    print("Empty List");
-                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
-                  }
-                  if(pagenum > 1){
-                    pagenum = pagenum - 1;
-                  }
-                  print(pagenum);
-                }),
-                FloatingActionButton(
-                    backgroundColor: Colors.transparent,
-                    splashColor: Colors.red,
-                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
-                  print(load_list['hasNext']);
-                  if(load_list['hasNext'] == true && pagenum >= 1 ) {
-                    Utils.check_connectivity().then((result){
-                      if(result) {
-                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
-                        pd.show();
-                        SemenCollectionCareTakerServices.semenCollection_caretaker_by_page(
-                            token, pagenum).then((response) {
-                          pd.dismiss();
-                          setState(() {
-                            print(response);
-                            load_list = json.decode(response);
-                            siemen_col_list = load_list['response'];
-                            print(siemen_col_list);
-                          });
-                        });
-                      }else
-                        print("Network Not Available");
-                    });
-                  }
-                  else{
-                    print("Empty List");
-                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
-                  }
-                  if(pagenum < total_page) {
-                    pagenum = pagenum + 1;
-                  }
-                  print(pagenum);
+                        }else
+                          print("Network Not Available");
+                      });
+                    }
+                    else{
+                      print("previous else ");
+                      print("Empty List");
+                      //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                    }
+                    if(pagenum > 1){
+                      pagenum = pagenum - 1;
+                    }
+                    print(pagenum);
+                  }),
+                  FloatingActionButton(
+                      backgroundColor: Colors.transparent,
+                      splashColor: Colors.red,
+                      child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
+                    print(load_list['hasNext']);
+                    if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                      Utils.check_connectivity().then((result){
+                        if(result) {
+                          ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                          pd.show();
+                          SemenCollectionCareTakerServices.semenCollection_caretaker_by_page(
+                              token, pagenum,searchQuery).then((response) {
+                            pd.dismiss();
+                            setState(() {
+                              //print(response);
+                              load_list = json.decode(response);
+                              siemen_col_list= load_list['response'];
+                              //print(horse_list);
+                              print("abc");
 
-                })
-              ]
-          )
+                            });
+                          });
+                        }else
+                          print("Network Not Available");
+                      });
+                    }
+                    else{
+                      print("next else ");
+                      print(searchQuery);
+                      print("Empty List");
+                      //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                    }
+                    if(pagenum < total_page) {
+                      pagenum = pagenum + 1;
+                    }
+
+                    print(pagenum);
+
+                  })
+                ]
+            )
+        ),
       ),
-//        floatingActionButton: FloatingActionButton(
-//          child: Icon(
-//            Icons.add,
-//            color: Colors.white,
-//          ),
-//          onPressed: (){
-//            Navigator.push(context, MaterialPageRoute(builder: (context)=>add_semen_collection(token)));
-//          },
-//        ),
         body: RefreshIndicator(
               key: _refreshIndicatorKey,
               onRefresh: (){
-                return  Utils.check_connectivity().then((result){
+                return Utils.check_connectivity().then((result){
                   if(result){
-                    ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                    pd.show();
-                    //network_operations.get_all_semen_collection(token).then((response){
-                    SemenCollectionCareTakerServices.get_semen_collection_caretaker(token).then((response){
-                      pd.dismiss();
-                      if(response!=null){
-                        setState(() {
-                          isvisible=true;
-                          load_list=json.decode(response);
-                          siemen_col_list = load_list['response'];
-                          total_page=load_list['totalPages'];
-                          print(total_page);
-                          // print('Training list Length'+training_list.length.toString());
-                        });
-
-                      }else{
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                          backgroundColor: Colors.red,
-                          content: Text("Semen Collection List Not Found"),
-                        ));
-                        setState(() {
-                          isvisible=false;
-                        });
-                      }
+                    SemenCollectionCareTakerServices.semenCollection_caretaker_by_page(
+                        token, pagenum,searchQuery).then((response) {
+                      setState(() {
+                        print(response);
+                        load_list = json.decode(response);
+                        siemen_col_list = load_list['response'];
+                        total_page=load_list['totalPages'];
+                        isVisible=true;
+                        if(total_page == 1){
+                          print("init state page = 1");
+                          setState(() {
+                            isPagination = false;
+                          });
+                        }else{
+                          print("init state multi page ");
+                          setState(() {
+                            isPagination = true;
+                          });
+                        }
+                        print(siemen_col_list);
+                        print("Refresher sec");
+                        print(pagenum);
+                        print(searchQuery);
+                      });
                     });
                   }else{
                     Scaffold.of(context).showSnackBar(SnackBar(
-                      backgroundColor: Colors.red,
-                      content: Text("Network not Available"),
+                      backgroundColor:Colors.red ,
+                      content: Text('Network Error'),
                     ));
                   }
                 });
               },
               child: Visibility(
-                visible: isvisible,
+                visible: isVisible,
                 child: Scrollbar(
                   child: ListView.builder(itemCount:siemen_col_list!=null?siemen_col_list.length:temp.length,itemBuilder: (context,int index){
                     return Column(
@@ -339,7 +384,7 @@ class _semen_collection_caretaker_list_state extends State<semen_collection_care
                             leading: FaIcon(FontAwesomeIcons.warehouse, color: Colors.lightBlueAccent, size: 30,),
                             title: Text(siemen_col_list!=null?siemen_col_list[index]['horseName']['name']:''),
                               subtitle: Text(siemen_col_list[index]['date']!=null?siemen_col_list[index]['date'].toString().substring(0,10):''),
-                             trailing:Text(siemen_col_list!=null?get_status_by_id(siemen_col_list[index]['status']):''),
+                             trailing:Text(siemen_col_list!=null?"Status: "+(get_status_by_id(siemen_col_list[index]['status'])).toString():'empty'),
 
                             // subtitle: Text(siemen_col_list!=null?siemen_col_list[index]['inChargeName']['contactName']['name']:''),
                               //leading: Image.asset("assets/horse_icon.png"),
@@ -363,14 +408,162 @@ class _semen_collection_caretaker_list_state extends State<semen_collection_care
             ),
     );
   }
+  void _startSearch() {
+    print("open search box");
+    ModalRoute
+        .of(context)
+        .addLocalHistoryEntry(new LocalHistoryEntry(onRemove: _stopSearching));
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    setState(() {
+      _isSearching = true;
+    });
   }
-  _semen_collection_caretaker_list_state(this.token);
+
+
+  void _stopSearching() {
+    _clearSearchQuery();
+
+    setState(() {
+      _isSearching = false;
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    });
+  }
+
+  void _clearSearchQuery() {
+    print("close search box");
+    setState(() {
+      _searchQuery.clear();
+      updateSearchQuery("");
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    });
+  }
+
+  Widget _buildTitle(BuildContext context) {
+    var horizontalTitleAlignment =
+    Platform.isIOS ? CrossAxisAlignment.center : CrossAxisAlignment.start;
+
+    return new InkWell(
+      onTap: () => scaffoldKey.currentState.openDrawer(),
+      child: new Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: horizontalTitleAlignment,
+          children: <Widget>[
+            const Text('Semen Collection Caretaker'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSearchField() {
+    return new TextField(
+      controller: _searchQuery,
+      textInputAction: TextInputAction.search,
+      autofocus: true,
+      decoration: const InputDecoration(
+        hintText: 'Search...',
+        border: InputBorder.none,
+        hintStyle: const TextStyle(color: Colors.white30),
+      ),
+      style: const TextStyle(color: Colors.white, fontSize: 16.0),
+      onSubmitted: updateSearchQuery,
+    );
+  }
+
+  void updateSearchQuery(String newQuery) {
+
+    setState(() {
+      searchQuery = newQuery;
+    });
+    Utils.check_connectivity().then((result){
+      if(result){
+        ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+        pd.show();
+        SemenCollectionCareTakerServices.semenCollection_caretaker_by_page(token,pagenum,searchQuery).then((response){
+          pd.dismiss();
+          if(response!=null){
+            setState(() {
+              if(load_list!=null){
+                load_list.clear();
+              }
+              if(siemen_col_list!=null){
+                siemen_col_list.clear();
+              }
+              load_list=json.decode(response);
+              siemen_col_list = load_list['response'];
+              total_page=load_list['totalPages'];
+              print(total_page);
+              isVisible=true;
+              if(total_page == 1){
+                setState(() {
+                  isPagination = false;
+
+                });
+              }else{
+                isPagination = true;
+              }
+
+            });
+
+          }else{
+            setState(() {
+              isVisible=false;
+            });
+            Scaffold.of(context).showSnackBar(SnackBar(
+              backgroundColor: Colors.red,
+              content: Text("List Not Available"),
+            ));
+          }
+        });
+      }else{
+        Scaffold.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.red,
+          content: Text("Network Not Available"),
+        ));
+      }
+    });
+  }
+
+  List<Widget> _buildActions() {
+    if (_isSearching) {
+      return <Widget>[
+        new IconButton(
+          icon: const Icon(Icons.clear),
+          onPressed: () {
+            if (_searchQuery == null || _searchQuery.text.isEmpty) {
+              Navigator.pop(context);
+              return;
+            }
+            _clearSearchQuery();
+          },
+        ),
+      ];
+    }
+
+    return <Widget>[
+      new IconButton(
+        icon: const Icon(Icons.search),
+        onPressed: _startSearch,
+      ),
+//      Padding(padding: EdgeInsets.all(8.0),
+//        child: InkWell(child: Icon(Icons.add),
+//            onTap: () =>
+//                Navigator.push(context, MaterialPageRoute(
+//                    builder: (context) =>semen_stock_form(token)),)
+//
+//        ),
+//
+//
+//      )
+    ];
+  }
+
+
+
 
 }
 String get_status_by_id(int id){

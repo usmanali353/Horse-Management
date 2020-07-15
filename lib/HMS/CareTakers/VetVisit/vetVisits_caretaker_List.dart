@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/CareTakers/VetVisit/VetVisitCaretaker.dart';
 import 'package:horse_management/HMS/CareTakers/VetVisit/VetVisitLateReason.dart';
 import 'package:horse_management/HMS/Veterinary/VetVisits/addVetVisits.dart';
+import 'package:horse_management/HMS/Veterinary/VetVisits/vet_visit_details.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
@@ -26,155 +28,199 @@ class vetVisit_caretaker_ListState extends State<vetVisit_caretaker_List>{
   int pagenum = 1;
   int total_page;
   var temp=['',''];
-  bool isvisible=false;
+  bool isVisible=false;
+  var _isSearching=false, isPagination=false;
+  TextEditingController _searchQuery;
+  String searchQuery = "";
+  List<dynamic> filteredCategory=[], listRecord;
+  int searchPageNum,totalSearchPages;
+  static final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+  vetVisit_caretaker_ListState(this.token);
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    _searchQuery =TextEditingController();
+
+    Utils.check_connectivity().then((result){
+      if(result) {
+        ProgressDialog pd = ProgressDialog(
+            context, isDismissible: true, type: ProgressDialogType.Normal);
+        pd.show();
+        VetVisitCareTakerServices.vetVisit_caretaker_by_page(token, pagenum, searchQuery).then((response){
+          pd.dismiss();
+          if(response!=null){
+            setState(() {
+              //var parsedjson = jsonDecode(response);
+              load_list  = jsonDecode(response);
+              vetvisits_list = load_list['response'];
+              total_page=load_list['totalPages'];
+              isVisible=true;
+              if(total_page == 1){
+                print("init state page = 1");
+                setState(() {
+                  isPagination = false;
+                });
+              }else{
+                print("init state multi page ");
+                setState(() {
+                  isPagination = true;
+                });
+              }
+              print(total_page);
+            });
+
+          }else{
+            Scaffold.of(context).showSnackBar(SnackBar(content: Text("No List"),backgroundColor: Colors.red,));
+          }
+        });
+      }else
+        Scaffold.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.red,
+            content: Text("Network Error")
+        ));
+    });
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Vet Visits Caretaker"),
-        actions: <Widget>[
-          Center(child: Text("Add New",textScaleFactor: 1.3,)),
-          IconButton(
-
-            icon: Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => addVetVisits(token)),);
-            },
-          )
-//          IconButton(
-//            icon: Icon(Icons.picture_as_pdf),
-//           // onPressed: () => _generatePdfAndView(context),
-//          ),
-        ],
+      appBar: AppBar(
+        leading: _isSearching ? const BackButton() : null,
+        title: _isSearching ? _buildSearchField() : _buildTitle(context),
+        actions: _buildActions(),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton:
-      Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                FloatingActionButton(
-                    backgroundColor: Colors.transparent,
-                    splashColor: Colors.red,
-                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
-
-                  if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
-                    Utils.check_connectivity().then((result){
-                      if(result) {
-                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
-                        pd.show();
-                        VetVisitCareTakerServices.vetVisit_caretaker_by_page(token, pagenum).then((response) {
-                          pd.dismiss();
-                          setState(() {
-                            print(response);
-                            load_list= json.decode(response);
-                            vetvisits_list = load_list['response'];
-                            print(vetvisits_list);
+      Visibility(
+        visible: isPagination,
+        child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  FloatingActionButton(
+                      backgroundColor: Colors.transparent,
+                      splashColor: Colors.red,
+                      child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
+                    if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                      Utils.check_connectivity().then((result){
+                        if(result) {
+                          ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                          pd.show();
+                          VetVisitCareTakerServices.vetVisit_caretaker_by_page(token, pagenum,searchQuery).then((response) {
+                            pd.dismiss();
+                            print("has pre in if");
+                            setState(() {
+                              //print(response);
+                              load_list= json.decode(response);
+                              vetvisits_list = load_list['response'];
+                              //print(horse_list);
+                            });
                           });
-                        });
-                      }else
-                        print("Network Not Available");
-                    });
-                  }
-                  else{
-                    print("Empty List");
-                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
-                  }
-                  if(pagenum > 1){
-                    pagenum = pagenum - 1;
-                  }
-                  print(pagenum);
-                }),
-                FloatingActionButton(
-                    backgroundColor: Colors.transparent,
-                    splashColor: Colors.red,
-                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
-                  print(load_list['hasNext']);
-                  if(load_list['hasNext'] == true && pagenum >= 1 ) {
-                    Utils.check_connectivity().then((result){
-                      if(result) {
-                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
-                        pd.show();
-                        VetVisitCareTakerServices.vetVisit_caretaker_by_page(
-                            token, pagenum).then((response) {
-                          pd.dismiss();
-                          setState(() {
-                            print(response);
-                            load_list = json.decode(response);
-                            vetvisits_list = load_list['response'];
-                            print(vetvisits_list);
-                          });
-                        });
-                      }else
-                        print("Network Not Available");
-                    });
-                  }
-                  else{
-                    print("Empty List");
-                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
-                  }
-                  if(pagenum < total_page) {
-                    pagenum = pagenum + 1;
-                  }
-                  print(pagenum);
+                        }else
+                          print("Network Not Available");
+                      });
+                    }
+                    else{
+                      print("previous else ");
+                      print("Empty List");
+                      //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                    }
+                    if(pagenum > 1){
+                      pagenum = pagenum - 1;
+                    }
+                    print(pagenum);
+                  }),
+                  FloatingActionButton(
+                      backgroundColor: Colors.transparent,
+                      splashColor: Colors.red,
+                      child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
+                    print(load_list['hasNext']);
+                    if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                      Utils.check_connectivity().then((result){
+                        if(result) {
+                          ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                          pd.show();
+                          VetVisitCareTakerServices.vetVisit_caretaker_by_page(
+                              token, pagenum,searchQuery).then((response) {
+                            pd.dismiss();
+                            setState(() {
+                              //print(response);
+                              load_list = json.decode(response);
+                              vetvisits_list= load_list['response'];
+                              //print(horse_list);
+                              print("abc");
 
-                })
-              ]
-          )
+                            });
+                          });
+                        }else
+                          print("Network Not Available");
+                      });
+                    }
+                    else{
+                      print("next else ");
+                      print(searchQuery);
+                      print("Empty List");
+                      //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                    }
+                    if(pagenum < total_page) {
+                      pagenum = pagenum + 1;
+                    }
+
+                    print(pagenum);
+
+                  })
+                ]
+            )
+        ),
       ),
-//      floatingActionButton: FloatingActionButton(
-//        child: Icon(
-//          Icons.add,
-//          color: Colors.white,
-//        ),
-//        onPressed: (){
-//          Navigator.push(context, MaterialPageRoute(builder: (context)=>addVetVisits(token)));
-//        },
-//
-//      ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: (){
-          return  Utils.check_connectivity().then((result){
+          return Utils.check_connectivity().then((result){
             if(result){
-              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-              pd.show();
-              //vieterniaryServices.getVetVisits(token).then((response){
-              VetVisitCareTakerServices.get_vetVisit_caretaker(token).then((response){
-                pd.dismiss();
-                if(response!=null){
-                  setState(() {
-                    isvisible=true;
-                    load_list=json.decode(response);
-                    vetvisits_list = load_list['response'];
-                    total_page=load_list['totalPages'];
-                    print(total_page);
-                  });
-
-                }else{
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                    backgroundColor: Colors.red,
-                    content: Text("Vet Visits List Not Found"),
-                  ));
-                  setState(() {
-                    isvisible=false;
-                  });
-                }
+              VetVisitCareTakerServices.vetVisit_caretaker_by_page(
+                  token, pagenum,searchQuery).then((response) {
+                setState(() {
+                  print(response);
+                  load_list = json.decode(response);
+                  vetvisits_list = load_list['response'];
+                  total_page=load_list['totalPages'];
+                  isVisible=true;
+                  if(total_page == 1){
+                    print("init state page = 1");
+                    setState(() {
+                      isPagination = false;
+                    });
+                  }else{
+                    print("init state multi page ");
+                    setState(() {
+                      isPagination = true;
+                    });
+                  }
+                  print(vetvisits_list);
+                  print("Refresher sec");
+                  print(pagenum);
+                  print(searchQuery);
+                });
               });
             }else{
               Scaffold.of(context).showSnackBar(SnackBar(
-                backgroundColor: Colors.red,
-                content: Text("Network not Available"),
+                backgroundColor:Colors.red ,
+                content: Text('Network Error'),
               ));
             }
           });
         },
         child: Visibility(
-          visible: isvisible,
+          visible: isVisible,
           child: Scrollbar(
             child: ListView.builder(itemCount:vetvisits_list!=null?vetvisits_list.length:temp.length,itemBuilder: (context,int index){
               return Column(
@@ -183,42 +229,6 @@ class vetVisit_caretaker_ListState extends State<vetVisit_caretaker_List>{
                     actionPane: SlidableDrawerActionPane(),
                     actionExtentRatio: 0.20,
                     actions: <Widget>[
-//                    IconSlideAction(
-//                      icon: Icons.visibility_off,
-//                      color: Colors.red,
-//                      caption: 'Hide',
-//                      onTap: () async {
-//                        Utils.check_connectivity().then((result){
-//                          if(result){
-//                            ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-//                            pd.show();
-//                            vieterniaryServices.changeVetVisitsVisibility(token, vetvisits_list[index]['vetVisitId']).then((response){
-//                              pd.dismiss();
-//                              if(response!=null){
-//                                Scaffold.of(context).showSnackBar(SnackBar(
-//                                  backgroundColor:Colors.green ,
-//                                  content: Text('Visibility Changed'),
-//                                ));
-//                                setState(() {
-//                                  vetvisits_list.removeAt(index);
-//                                });
-//                              }else{
-//                                Scaffold.of(context).showSnackBar(SnackBar(
-//                                  backgroundColor:Colors.red ,
-//                                  content: Text('Failed'),
-//                                ));
-//                              }
-//                            });
-//                          }else{
-//                            Scaffold.of(context).showSnackBar(SnackBar(
-//                              content: Text("Network not Available"),
-//                              backgroundColor: Colors.red,
-//                            ));
-//                          }
-//                        });
-//
-//                      },
-//                    ),
                       IconSlideAction(
                         icon: Icons.timer,
                         color: Colors.deepOrange,
@@ -295,56 +305,18 @@ class vetVisit_caretaker_ListState extends State<vetVisit_caretaker_List>{
                             });
                           }
                         },
-//                      onTap: () async {
-//                        Utils.check_connectivity().then((result){
-//                          if(result){
-//                            ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-//                            pd.show();
-//                            VetVisitCareTakerServices.complete_vetVisit(token, vetvisits_list[index]['vetVisitId']).then((response){
-//                              pd.dismiss();
-//                              if(response!=null){
-//                                Scaffold.of(context).showSnackBar(SnackBar(
-//                                  backgroundColor:Colors.green ,
-//                                  content: Text('Process Complete'),
-//                                ));
-////                                  setState(() {
-////                                    control_list.removeAt(index);
-////                                  });
-//                              }else{
-//                                Scaffold.of(context).showSnackBar(SnackBar(
-//                                  backgroundColor:Colors.red ,
-//                                  content: Text('Process Failed'),
-//                                ));
-//                              }
-//                            });
-//                          }else{
-//                            Scaffold.of(context).showSnackBar(SnackBar(
-//                              content: Text("Network not Available"),
-//                              backgroundColor: Colors.red,
-//                            ));
-//                          }
-//                        });
-//
-//                      },
                       ),
-
-//                    IconSlideAction(
-//                      icon: Icons.edit,
-//                      color: Colors.blue,
-//                      caption: 'Update',
-//                      onTap: () async {
-//                        // Navigator.push(context,MaterialPageRoute(builder: (context)=>update_training(token,training_list[index])));
-//                      },
-//                    ),
                     ],
                     child: ListTile(
                       enabled: vetvisits_list[index]['isActive'],
                       leading: FaIcon(FontAwesomeIcons.userMd, color: Colors.blue.shade400, size: 35,),
                       title: Text(vetvisits_list!=null?vetvisits_list[index]['horseName']['name']:''),
-                      trailing:Text(vetvisits_list!=null?get_status_by_id(vetvisits_list[index]['status']):''),
+                      trailing:Text(vetvisits_list!=null?"Status: "+(get_status_by_id(vetvisits_list[index]['status'])).toString():'empty'),
 
                       //leading: Icon(Icons.local_hospital,size: 40,color: Colors.teal,),
                       onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) =>vet_visit_details_page(vetvisits_list[index])));
+
                       },
                     ),
 
@@ -361,15 +333,160 @@ class vetVisit_caretaker_ListState extends State<vetVisit_caretaker_List>{
       ),
     );
   }
+  void _startSearch() {
+    print("open search box");
+    ModalRoute
+        .of(context)
+        .addLocalHistoryEntry(new LocalHistoryEntry(onRemove: _stopSearching));
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    setState(() {
+      _isSearching = true;
+    });
   }
 
-  vetVisit_caretaker_ListState(this.token);
+
+  void _stopSearching() {
+    _clearSearchQuery();
+
+    setState(() {
+      _isSearching = false;
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    });
+  }
+
+  void _clearSearchQuery() {
+    print("close search box");
+    setState(() {
+      _searchQuery.clear();
+      updateSearchQuery("");
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    });
+  }
+
+  Widget _buildTitle(BuildContext context) {
+    var horizontalTitleAlignment =
+    Platform.isIOS ? CrossAxisAlignment.center : CrossAxisAlignment.start;
+
+    return new InkWell(
+      onTap: () => scaffoldKey.currentState.openDrawer(),
+      child: new Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: horizontalTitleAlignment,
+          children: <Widget>[
+            const Text('Vet Visit Caretaker'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSearchField() {
+    return new TextField(
+      controller: _searchQuery,
+      textInputAction: TextInputAction.search,
+      autofocus: true,
+      decoration: const InputDecoration(
+        hintText: 'Search...',
+        border: InputBorder.none,
+        hintStyle: const TextStyle(color: Colors.white30),
+      ),
+      style: const TextStyle(color: Colors.white, fontSize: 16.0),
+      onSubmitted: updateSearchQuery,
+    );
+  }
+
+  void updateSearchQuery(String newQuery) {
+
+    setState(() {
+      searchQuery = newQuery;
+    });
+    Utils.check_connectivity().then((result){
+      if(result){
+        ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+        pd.show();
+        VetVisitCareTakerServices.vetVisit_caretaker_by_page(token,pagenum,searchQuery).then((response){
+          pd.dismiss();
+          if(response!=null){
+            setState(() {
+              if(load_list!=null){
+                load_list.clear();
+              }
+              if(vetvisits_list!=null){
+                vetvisits_list.clear();
+              }
+              load_list=json.decode(response);
+              vetvisits_list = load_list['response'];
+              total_page=load_list['totalPages'];
+              print(total_page);
+              isVisible=true;
+              if(total_page == 1){
+                setState(() {
+                  isPagination = false;
+
+                });
+              }else{
+                isPagination = true;
+              }
+
+            });
+
+          }else{
+            setState(() {
+              isVisible=false;
+            });
+            Scaffold.of(context).showSnackBar(SnackBar(
+              backgroundColor: Colors.red,
+              content: Text("List Not Available"),
+            ));
+          }
+        });
+      }else{
+        Scaffold.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.red,
+          content: Text("Network Not Available"),
+        ));
+      }
+    });
+  }
+
+  List<Widget> _buildActions() {
+    if (_isSearching) {
+      return <Widget>[
+        new IconButton(
+          icon: const Icon(Icons.clear),
+          onPressed: () {
+            if (_searchQuery == null || _searchQuery.text.isEmpty) {
+              Navigator.pop(context);
+              return;
+            }
+            _clearSearchQuery();
+          },
+        ),
+      ];
+    }
+
+    return <Widget>[
+      new IconButton(
+        icon: const Icon(Icons.search),
+        onPressed: _startSearch,
+      ),
+//      Padding(padding: EdgeInsets.all(8.0),
+//        child: InkWell(child: Icon(Icons.add),
+//            onTap: () =>
+//                Navigator.push(context, MaterialPageRoute(
+//                    builder: (context) =>semen_stock_form(token)),)
+//
+//        ),
+//
+//
+//      )
+    ];
+  }
+
 
 }
 
