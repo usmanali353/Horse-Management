@@ -404,7 +404,7 @@ class _currency_list extends State<currency_list>{
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: horizontalTitleAlignment,
           children: <Widget>[
-            const Text('Currency'),
+            const Text('Currencies'),
           ],
         ),
       ),

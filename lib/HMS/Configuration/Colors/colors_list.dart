@@ -374,7 +374,7 @@ class _colors_list extends State<colors_list>{
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: horizontalTitleAlignment,
           children: <Widget>[
-            const Text('Breeds'),
+            const Text('Colors'),
           ],
         ),
       ),
