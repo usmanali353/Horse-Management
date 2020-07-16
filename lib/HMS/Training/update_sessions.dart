@@ -452,7 +452,6 @@ class _update_training_session extends State<update_training_session>{
                       print(list['createdBy']);
                       print(list['trainingId']);
                       print(selected_trainer_id);
-                      print(comments);
                       if (_fbKey.currentState.validate()) {
                         Utils.check_connectivity().then((result){
                           if(result){
