@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -634,10 +635,17 @@ class _state_add_farrier extends State<update_movement>{
                             movement_services.movementSave(movementlist['createdBy'], token, movementlist['movementId'], movementDropdown['horseDropDown'][selected_horse_id]['id'], departure_date, return_date, isroundtrip, selected_transport_id, selected_reason_id,movementDropdown['fromLocation'][select_fromlocation_id]['id'], movementDropdown['toLocation'][select_tolocation_id]['id'], amount.text, responsible.text, description.text, movementDropdown['category'][selected_category_id]['id'] ,  movementDropdown['currency'][selected_currency_id]['id'],  movementDropdown['costCenter'][selected_costcenter_id]['id']).then((response){
 
                               pd.dismiss();
-                              if(response !=null)
-                                print("Successfully income  added");
-                              else{
-                                print("data not added");}
+                              if(response !=null) {
+                                var decode= jsonDecode(response);
+                                if(decode['isSuccess'] == true){
+                                  Flushbar(message: "Added Successfully",
+                                    duration: Duration(seconds: 3),
+                                    backgroundColor: Colors.green,)
+                                    ..show(context);}
+                                else{
+                                  Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
+                              }else{
+                                Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                             });
                           }
                         },

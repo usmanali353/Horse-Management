@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
@@ -232,7 +233,17 @@ class addWeightButton extends StatelessWidget {
             if(response !=null)
               print("Successfully income  added");
             else{
-              print("data not added");}
+              print("data not added");}if(response !=null) {
+              var decode= jsonDecode(response);
+              if(decode['isSuccess'] == true){
+                Flushbar(message: "Added Successfully",
+                  duration: Duration(seconds: 3),
+                  backgroundColor: Colors.green,)
+                  ..show(context);}
+              else{
+                Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
+            }else{
+              Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
           });
 
 

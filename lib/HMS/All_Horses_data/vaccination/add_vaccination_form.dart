@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flushbar/flushbar.dart';
 import 'package:horse_management/HMS/All_Horses_data/services/vaccination_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -70,7 +71,7 @@ class _state_add_farrier extends State<add_vaccination>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Horse"),),
+        appBar: AppBar(title: Text("Add Vaccination"),),
         body: ListView(
           children: <Widget>[
             Column(
@@ -413,10 +414,17 @@ class _state_add_farrier extends State<add_vaccination>{
                             pd.show();
                             vaccination_services.vaccinationSave(null,token,0, vaccinationdropdown['horseDropDown'][selected_horse_id]['id'],Start_date,End_Date, vaccinationdropdown['vaccinationTypeDropDown'][selected_vaccinationtype_id]['id'],vaccinationdropdown['vaccineDropDown'][selected_vaccine_id]['id'],vaccinationdropdown['vetDropDown'][selected_vet_id]['id'],dose.text,amount.text, vaccinationdropdown['currencyDropDown'][selected_currency_id]['id'], vaccinationdropdown['categoryDropDown'][selected_category_id]['id'], vaccinationdropdown['costCenterDropDown'][selected_costcenter_id]['id'],).then((response){
                               pd.dismiss();
-                              if(response !=null)
-                                print("Successfully lab test added");
-                              else{
-                                print("data not added");}
+                              if(response !=null) {
+                                var decode= jsonDecode(response);
+                                if(decode['isSuccess'] == true){
+                                  Flushbar(message: "Added Successfully",
+                                    duration: Duration(seconds: 3),
+                                    backgroundColor: Colors.green,)
+                                    ..show(context);}
+                                else{
+                                  Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
+                              }else{
+                                Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                             });
 
 

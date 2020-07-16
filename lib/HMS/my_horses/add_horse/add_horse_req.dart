@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:hive/hive.dart';
@@ -576,17 +577,17 @@ class add_horse_button extends StatelessWidget {
 
           Add_horse_services.horsesaveReq(token, 0, name.text,genderlist[select_gender_id]['id'], true,number,microchip,dateofbirth,getHorses['colorDropDown'][colorid]['id'],getHorses['breedDropDown'][breedid]['id'],getHorses['sireDropDown'][sireid]['id'],getHorses['damDropDown'][damid]['id'],getHorses['barnDropDown'][barnid]['id'],getHorses['vetDropDown'][vetid]['id'],getHorses['breederDropDown'][breederid]['id']).then((
               response) {
-            if (response != null) {
-              Scaffold.of(context).showSnackBar(SnackBar(
-                backgroundColor: Colors.green,
-                content: Text("Horse  Added Sucessfully"),
-              ));
-            } else {
-              Scaffold.of(context).showSnackBar(SnackBar(
-                backgroundColor: Colors.red,
-                content: Text("Horse not Added"),
-              ));
-            }
+            if(response !=null) {
+              var decode= jsonDecode(response);
+              if(decode['isSuccess'] == true){
+                Flushbar(message: "Added Successfully",
+                  duration: Duration(seconds: 3),
+                  backgroundColor: Colors.green,)
+                  ..show(context);}
+              else{
+                Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
+            }else{
+              Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
           });
         }
       },

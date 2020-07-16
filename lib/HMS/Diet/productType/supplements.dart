@@ -66,14 +66,10 @@ class _notes_list_state extends State<supplement_page>{
               isVisible=true;
               if(total_page == 1){
                 print("init state page = 1");
-                setState(() {
-                  isPagination = false;
-                });
+                isPagination = false;
               }else{
                 print("init state multi page ");
-                setState(() {
-                  isPagination = true;
-                });
+                isPagination = true;
               }
               print(total_page);
             });
@@ -96,7 +92,8 @@ class _notes_list_state extends State<supplement_page>{
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        leading: _isSearching ? const BackButton() : null,
+        automaticallyImplyLeading: false,
+        //leading: _isSearching ? const BackButton() : null,
         title: _isSearching ? _buildSearchField() : _buildTitle(context),
         actions: _buildActions(),
       ),
@@ -282,7 +279,7 @@ class _notes_list_state extends State<supplement_page>{
                   ),
 
                 ),
-                Divider(),
+
 //                Text("Foarge"),
 //                ListTile(
 //                  title: Text(itemList!=null?itemList[index]['name']:''),
@@ -367,7 +364,7 @@ class _notes_list_state extends State<supplement_page>{
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: horizontalTitleAlignment,
           children: <Widget>[
-            const Text('Supplements'),
+            const Text(''),
           ],
         ),
       ),
@@ -464,40 +461,40 @@ class _notes_list_state extends State<supplement_page>{
         icon: const Icon(Icons.search),
         onPressed: _startSearch,
       ),
-      Padding(padding: EdgeInsets.all(8.0),
-        child: InkWell(child: Icon(Icons.add),
-          onTap: (){
-            showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  var image;
-                  return SimpleDialog(
-                      title: Text("Select One"),
-                      children: <Widget>[
-                        SimpleDialogOption(
-                          onPressed: () async {
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>addProductType(token)));
-                          },
-                          child: const Text('Create Product'),
-                        ),
-                        SimpleDialogOption(
-                          onPressed: () async {
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>createFromInventory(token)));
-                          },
-
-                          child: const Text('Create From Inventory'),
-                        ),
-                      ]
-                  );
-                }
-            );
-//          Navigator.push(context, MaterialPageRoute(builder: (context)=>addProductType(token)));
-          },
-
-        ),
-
-
-      )
+//      Padding(padding: EdgeInsets.all(8.0),
+//        child: InkWell(child: Icon(Icons.add),
+//          onTap: (){
+//            showDialog(
+//                context: context,
+//                builder: (BuildContext context) {
+//                  var image;
+//                  return SimpleDialog(
+//                      title: Text("Select One"),
+//                      children: <Widget>[
+//                        SimpleDialogOption(
+//                          onPressed: () async {
+//                            Navigator.push(context, MaterialPageRoute(builder: (context)=>addProductType(token)));
+//                          },
+//                          child: const Text('Create Product'),
+//                        ),
+//                        SimpleDialogOption(
+//                          onPressed: () async {
+//                            Navigator.push(context, MaterialPageRoute(builder: (context)=>createFromInventory(token)));
+//                          },
+//
+//                          child: const Text('Create From Inventory'),
+//                        ),
+//                      ]
+//                  );
+//                }
+//            );
+////          Navigator.push(context, MaterialPageRoute(builder: (context)=>addProductType(token)));
+//          },
+//
+//        ),
+//
+//
+//      )
     ];
   }
  

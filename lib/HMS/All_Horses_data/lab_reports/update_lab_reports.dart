@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/HMS/All_Horses_data/services/labTest_services.dart';
@@ -481,10 +482,17 @@ class _add_horse_state extends State<update_labTest>{
                             pd.show();
                             labtest_services.labTestSave(labtestlist['createdBy'],labtestlist['id'],token, labDropdown['horseDropDown'][selected_horse_id]['id'], Select_date, labDropdown['testTypesdropDown'][selected_testtype_id]['id'], isPositive, labDropdown['responsibleDropDown'][selected_responsible_id]['id'], lab.text, result.text, amount.text, labDropdown['currencyDropDown'][selected_currency_id]['id'], labDropdown['categoryDropDown'][selected_category_id]['id'], labDropdown['costCenterDropDown'][selected_costcenter_id]['id'], labDropdown['contactsDropDown'][selected_contact_id]['id'],picked_image).then((response){
                               pd.dismiss();
-                              if(response !=null)
-                                print("Successfully lab test added");
-                              else{
-                                print("data not added");}
+                              if(response !=null) {
+                                var decode= jsonDecode(response);
+                                if(decode['isSuccess'] == true){
+                                  Flushbar(message: "Added Successfully",
+                                    duration: Duration(seconds: 3),
+                                    backgroundColor: Colors.green,)
+                                    ..show(context);}
+                                else{
+                                  Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
+                              }else{
+                                Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                             });
 
                           }

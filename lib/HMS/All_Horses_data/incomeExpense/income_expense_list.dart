@@ -59,35 +59,35 @@ class _incomeExpense_list_state extends State<income_expense_list>{
 //    });
 
 
-    Utils.check_connectivity().then((result){
-      if(result) {
-        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
-        pd.show();
-        income_expense_services.income_expenselist(token).then((
-            response) {
-          pd.dismiss();
-          setState(() {
-            print(response);
-            load_list = json.decode(response);
-            list = load_list['response'];
-            total_page=load_list['totalPages'];
-            if(total_page == 1){
-              print("init state page = 1");
-              setState(() {
-                isPagination = false;
-              });
-            }else{
-              print("init state multi page ");
-              setState(() {
-                isPagination = true;
-              });
-            }
-            print(total_page);
-          });
-        });
-      }else
-        print("network nahi hai");
-    });
+//    Utils.check_connectivity().then((result){
+//      if(result) {
+//        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+//        pd.show();
+//        income_expense_services.income_expenselist(token).then((
+//            response) {
+//          pd.dismiss();
+//          setState(() {
+//            print(response);
+//            load_list = json.decode(response);
+//            list = load_list['response'];
+//            total_page=load_list['totalPages'];
+//            if(total_page == 1){
+//              print("init state page = 1");
+//              setState(() {
+//                isPagination = false;
+//              });
+//            }else{
+//              print("init state multi page ");
+//              setState(() {
+//                isPagination = true;
+//              });
+//            }
+//            print(total_page);
+//          });
+//        });
+//      }else
+//        print("network nahi hai");
+//    });
 
 
 
@@ -205,7 +205,7 @@ class _incomeExpense_list_state extends State<income_expense_list>{
                     load_list = json.decode(response);
                     list = load_list['response'];
                     total_page=load_list['totalPages'];
-                    if(total_page == 1){
+                    if(total_page == 1 || total_page == -2147483648){
                       print("init state page = 1");
                       setState(() {
                         isPagination = false;

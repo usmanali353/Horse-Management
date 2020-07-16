@@ -45,33 +45,33 @@ class _Profile_Page_State extends State<movement_list>{
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
 
-    Utils.check_connectivity().then((result){
-      if(result) {
-        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
-        pd.show();
-        movement_services.movement_list(token).then((response) {
-          pd.dismiss();
-          print(response);
-          setState(() {
-            load_list = json.decode(response);
-            swabbinglist = load_list['response'];
-            total_page=load_list['totalPages'];
-            if(total_page == 1){
-              print("init state page = 1");
-              setState(() {
-                isPagination = false;
-              });
-            }else{
-              print("init state multi page ");
-              setState(() {
-                isPagination = true;
-              });
-            }
-          });
-        });
-      }else
-        print("network nahi hai");
-    });
+//    Utils.check_connectivity().then((result){
+//      if(result) {
+//        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+//        pd.show();
+//        movement_services.movement_list(token).then((response) {
+//          pd.dismiss();
+//          print(response);
+//          setState(() {
+//            load_list = json.decode(response);
+//            swabbinglist = load_list['response'];
+//            total_page=load_list['totalPages'];
+//            if(total_page == 1){
+//              print("init state page = 1");
+//              setState(() {
+//                isPagination = false;
+//              });
+//            }else{
+//              print("init state multi page ");
+//              setState(() {
+//                isPagination = true;
+//              });
+//            }
+//          });
+//        });
+//      }else
+//        print("network nahi hai");
+//    });
 
 
 
@@ -184,7 +184,7 @@ class _Profile_Page_State extends State<movement_list>{
                       load_list = json.decode(response);
                       swabbinglist = load_list['response'];
                       total_page=load_list['totalPages'];
-                      if(total_page == 1){
+                      if(total_page == 1 || total_page == -2147483648){
                         print("init state page = 1");
                         setState(() {
                           isPagination = false;

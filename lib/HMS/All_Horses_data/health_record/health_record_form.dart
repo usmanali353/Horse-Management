@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/Model/Health_Record.dart';
@@ -350,10 +351,17 @@ class _health_record_form extends State<health_record_form>{
                       pd.show();
                       healthServices.healthRecordSave(null,0,token, healthdropdown['horseDropDown'][selected_horse_id]['id'], healthdropdown['responsibleDropDown'][selected_responsible_id]['id'],selected_health_record_type_id, product.text, selected_quantity, comment.text,amount.text, healthdropdown['currencyDropDown'][selected_currency_id]['id'], healthdropdown['categoryDropDown'][selected_category_id]['id'], healthdropdown['costCenterDropDown'][selected_cost_center_id]['id'], healthdropdown['contactsDropDown'][selected_contact_id]['id']).then((response){
                         pd.dismiss();
-                        if(response !=null)
-                          print("Successfully lab test added");
-                        else{
-                          print("data not added");}
+                        if(response !=null) {
+                          var decode= jsonDecode(response);
+                          if(decode['isSuccess'] == true){
+                            Flushbar(message: "Added Successfully",
+                              duration: Duration(seconds: 3),
+                              backgroundColor: Colors.green,)
+                              ..show(context);}
+                          else{
+                            Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
+                        }else{
+                          Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                       });
                     },
                     child: Text("Add Health Record",style: TextStyle(color: Colors.white),),

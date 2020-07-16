@@ -60,27 +60,30 @@ class _incomeExpense_list_state extends State<income_expense_list>{
 
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Income & Expense "),actions: <Widget>[
-          Center(child: Text("Add New",textScaleFactor: 1.3,)),
-          IconButton(
-
-            icon: Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-            onPressed: () async{
-              prefs= await SharedPreferences.getInstance();
-              Navigator.push(context, MaterialPageRoute(builder: (context) => add_IncomeExpense(prefs.get('token'),prefs.get('createdBy'))),);
-            },
-          )
-        ],),
+        appBar: AppBar(title: Text("Income & Expense "),
+//          actions: <Widget>[
+//          Center(child: Text("Add New",textScaleFactor: 1.3,)),
+//          IconButton(
+//
+//            icon: Icon(
+//              Icons.add,
+//              color: Colors.white,
+//            ),
+//            onPressed: () async{
+//              prefs= await SharedPreferences.getInstance();
+//              Navigator.push(context, MaterialPageRoute(builder: (context) => add_IncomeExpense(prefs.get('token'),prefs.get('createdBy'))),);
+//            },
+//          )
+//        ],
+        ),
         body:ListView.builder(itemCount:list!=null?list.length:temp.length,itemBuilder: (context,int index){
 
           return Column(
             children: <Widget>[
               ExpansionTile(
           //['categoryName']['name']
-                title: Text("Account: \n"+list[index]['categoryName']['name']),
+                //title: Text("Abc"),
+                title: Text(list[index]['categoryName']!=null ?"Account: \n"+list[index]['categoryName']['name']:"empty"),
                 trailing: Text(list[index]['date'].toString().substring(0,10) ),
 
                 children: <Widget>[

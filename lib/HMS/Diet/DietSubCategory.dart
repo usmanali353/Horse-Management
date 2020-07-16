@@ -68,12 +68,12 @@ class _notes_list_state extends State<dietMainList>{
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-  }
+//  @override
+//  void initState() {
+//    super.initState();
+//    WidgetsBinding.instance
+//        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+//  }
 
   _notes_list_state(this.token);
 

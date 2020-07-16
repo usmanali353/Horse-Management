@@ -191,7 +191,7 @@ int pagenum=1,total_page;
                         load_list = json.decode(response);
                         healthlist = load_list['response'];
                         total_page = load_list['totalPages'];
-                        if(total_page == 1){
+                        if(total_page == 1 || total_page == -2147483648){
                           print("init state page = 1");
                           setState(() {
                             isPagination = false;
@@ -222,7 +222,7 @@ int pagenum=1,total_page;
                   Slidable(
 
                     actionPane: SlidableDrawerActionPane(),
-                    actionExtentRatio: 0.10,
+                    actionExtentRatio: 0.15,
                      closeOnScroll: true,
                     secondaryActions: <Widget>[
                       IconSlideAction(onTap: ()async{

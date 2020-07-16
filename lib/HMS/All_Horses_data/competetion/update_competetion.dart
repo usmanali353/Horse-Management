@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flushbar/flushbar.dart';
 import 'package:horse_management/HMS/All_Horses_data/services/competetion_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -296,10 +297,17 @@ class _state_add_farrier extends State<update_competetion>{
                             pd.show();
                             competetion_services.competetionSave(competetionlist['createdBy'],token,competetionlist['competitionId'], competetiondropdown['horseDropDown'][selected_horse_id]['id'],select_date, competetiondropdown['performanceTypeDropDown'][selected_performance_id]['id'],eventName.text,city.text,category.text,result.text,rider.text,1,comment.text).then((response){
                               pd.dismiss();
-                              if(response !=null)
-                                print("Successfully lab test added");
-                              else{
-                                print("data not added");}
+                              if(response !=null) {
+                                var decode= jsonDecode(response);
+                                if(decode['isSuccess'] == true){
+                                  Flushbar(message: "Added Successfully",
+                                    duration: Duration(seconds: 3),
+                                    backgroundColor: Colors.green,)
+                                    ..show(context);}
+                                else{
+                                  Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
+                              }else{
+                                Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                             });
 
 

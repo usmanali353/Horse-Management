@@ -52,54 +52,54 @@ class horse_list extends StatefulWidget{
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     _searchQuery =TextEditingController();
 
-    Utils.check_connectivity().then((result){
-      if(result) {
-        ProgressDialog pd = ProgressDialog(
-            context, isDismissible: true, type: ProgressDialogType.Normal);
-        pd.show();
-        Add_horse_services.horselist(token).then((response){
-          pd.dismiss();
-          // print(response.length.toString());
-          if(response!=null){
-            setState(() {
-              //var parsedjson = jsonDecode(response);
-              load_list  = jsonDecode(response);
-              horse_list = load_list['response'];
-              total_page=load_list['totalPages'];
-              if(total_page == 1){
-                print("init state page = 1");
-                setState(() {
-                  isPagination = false;
-                });
-              }else{
-                print("init state multi page ");
-                setState(() {
-                  isPagination = true;
-                });
-              }
-              print(total_page);
-              //print(horse_list['createdBy']);
-            });
-
-          }else{
-            Scaffold.of(context).showSnackBar(SnackBar(content: Text("hoserlist empty"),backgroundColor: Colors.red,));
-          }
-        });
-//        Add_horse_services.horselistWithSearch(token,pagenum,"hor").then((response) {
-//          setState(() {
-//            print("Teri mehrbani");
-//            print(response);
-//            load_list= json.decode(response);
-//           // horse_list = load_list['response'];
-//           // print(horse_list);
-//          });
+//    Utils.check_connectivity().then((result){
+//      if(result) {
+//        ProgressDialog pd = ProgressDialog(
+//            context, isDismissible: true, type: ProgressDialogType.Normal);
+//        pd.show();
+//        Add_horse_services.horselist(token).then((response){
+//          pd.dismiss();
+//          // print(response.length.toString());
+//          if(response!=null){
+//            setState(() {
+//              //var parsedjson = jsonDecode(response);
+//              load_list  = jsonDecode(response);
+//              horse_list = load_list['response'];
+//              total_page=load_list['totalPages'];
+//              if(total_page == 1){
+//                print("init state page = 1");
+//                setState(() {
+//                  isPagination = false;
+//                });
+//              }else{
+//                print("init state multi page ");
+//                setState(() {
+//                  isPagination = true;
+//                });
+//              }
+//              print(total_page);
+//              //print(horse_list['createdBy']);
+//            });
+//
+//          }else{
+//            Scaffold.of(context).showSnackBar(SnackBar(content: Text("hoserlist empty"),backgroundColor: Colors.red,));
+//          }
 //        });
-      }else
-        Scaffold.of(context).showSnackBar(SnackBar(
-            backgroundColor: Colors.red,
-            content: Text("Network Error")
-        ));
-    });
+////        Add_horse_services.horselistWithSearch(token,pagenum,"hor").then((response) {
+////          setState(() {
+////            print("Teri mehrbani");
+////            print(response);
+////            load_list= json.decode(response);
+////           // horse_list = load_list['response'];
+////           // print(horse_list);
+////          });
+////        });
+//      }else
+//        Scaffold.of(context).showSnackBar(SnackBar(
+//            backgroundColor: Colors.red,
+//            content: Text("Network Error")
+//        ));
+//    });
   }
 
 
@@ -246,7 +246,7 @@ class horse_list extends StatefulWidget{
                     load_list = json.decode(response);
                     horse_list = load_list['response'];
                     total_page=load_list['totalPages'];
-                    if(total_page == 1){
+                    if(total_page == 1 || total_page == -2147483648){
                       print("init state page = 1");
                       setState(() {
                         isPagination = false;
@@ -383,7 +383,7 @@ class horse_list extends StatefulWidget{
            mainAxisAlignment: MainAxisAlignment.center,
            crossAxisAlignment: horizontalTitleAlignment,
            children: <Widget>[
-             const Text('All Horse'),
+             const Text('All Horses'),
            ],
          ),
        ),

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -386,10 +387,17 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                               amount.text,description.text, incomeExpenseDropdown['currencyDropDown'][selected_currency_id]['id'], incomeExpenseDropdown['categoryDropDown'][selected_category_id]['id'],
                               incomeExpenseDropdown['costCenterDropDown'][selected_costcenter_id]['id'], incomeExpenseDropdown['contactsDropDown'][selected_contact_id]['id'],selected_account,).then((response){
                               pd.dismiss();
-                              if(response !=null)
-                                print("Successfully income  added");
-                              else{
-                                print("data not added");}
+                              if(response !=null) {
+                                var decode= jsonDecode(response);
+                                if(decode['isSuccess'] == true){
+                                  Flushbar(message: "Added Successfully",
+                                    duration: Duration(seconds: 3),
+                                    backgroundColor: Colors.green,)
+                                    ..show(context);}
+                                else{
+                                  Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
+                              }else{
+                                Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                             });
 
 
