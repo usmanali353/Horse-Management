@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Configuration/Colors/add_color.dart';
+import 'package:horse_management/HMS/Configuration/Colors/color_details.dart';
 import 'package:horse_management/HMS/Configuration/Colors/colors_json.dart';
 import 'package:horse_management/HMS/Configuration/Colors/update_color.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
@@ -106,37 +107,11 @@ class _colors_list extends State<colors_list>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-//      floatingActionButton: FloatingActionButton(
-//        onPressed: (){
-//          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_color(token)));
-//        },
-//        child: Icon(Icons.add),
-//      ),
       appBar: AppBar(
         leading: _isSearching ? const BackButton() : null,
         title: _isSearching ? _buildSearchField() : _buildTitle(context),
         actions: _buildActions(),
       ),
-//      appBar: AppBar(
-//        title: Text("Colors"),
-//        actions: <Widget>[
-//          Center(child: Text("Add New",textScaleFactor: 1.3,)),
-//          IconButton(
-//
-//            icon: Icon(
-//              Icons.add,
-//              color: Colors.white,
-//            ),
-//            onPressed: () {
-//              Navigator.push(context, MaterialPageRoute(builder: (context) => add_color(token)),);
-//            },
-//          )
-////          IconButton(
-////            icon: Icon(Icons.picture_as_pdf),
-////           // onPressed: () => _generatePdfAndView(context),
-////          ),
-//        ],
-//      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton:
       Visibility(
@@ -235,7 +210,7 @@ class _colors_list extends State<colors_list>{
                   color_lists = load_list['response'];
                   total_page=load_list['totalPages'];
                   isVisible=true;
-                  if(total_page == 1){
+                  if(total_page == 1 || total_page == -2147483648){
                     print("init state page = 1");
                     setState(() {
                       isPagination = false;
@@ -315,7 +290,7 @@ class _colors_list extends State<colors_list>{
                           // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
                           //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
                           onTap: (){
-                            // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                             Navigator.push(context, MaterialPageRoute(builder: (context)=>color_details_page(color_lists[index])));
                           },
                         ),
                       )

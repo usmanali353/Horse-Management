@@ -113,7 +113,7 @@ class _breeding_service_form extends State<breeding_service_form> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(title: Text("Breeding Service Form"),),
+      appBar: AppBar(title: Text("Add Breeding Service"),),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[

@@ -32,44 +32,6 @@ class _next_breeding_check extends State<next_breeding_check>{
     // TODO: implement initState
     super.initState();
     comments=TextEditingController();
-
-//    network_operations.get_breeding_control_dropdowns(token).then((response){
-//      if(response!=null){
-//        setState(() {
-//          breeding_control_list=json.decode(response);
-//          currency_loaded=true;
-//          account_category_loaded=true;
-//          horses_loaded=true;
-//          vets_loaded=true;
-//          related_services_loaded=true;
-//          for(int i=0;i<breeding_control_list['currencyDropDown'].length;i++){
-//            currency.add(breeding_control_list['currencyDropDown'][i]['name']);
-//          }
-//          for(int i=0;i<breeding_control_list['costCenterDropDown'].length;i++){
-//            cost_center.add(breeding_control_list['costCenterDropDown'][i]['name']);
-//          }
-//          for(int i=0;i<breeding_control_list['contactsDropDown'].length;i++){
-//            contacts.add(breeding_control_list['contactsDropDown'][i]['name']);
-//          }
-//          for(int i=0;i<breeding_control_list['horseDropDown'].length;i++){
-//            horses.add(breeding_control_list['horseDropDown'][i]['name']);
-//          }
-//          for(int i=0;i<breeding_control_list['categoryDropDown'].length;i++){
-//            account_category.add(breeding_control_list['categoryDropDown'][i]['name']);
-//          }
-//          for(int i=0;i<breeding_control_list['relatedServiceDropDown'].length;i++){
-//            related_services.add(breeding_control_list['relatedServiceDropDown'][i]['name']);
-//          }
-//          for(int i=0;i<breeding_control_list['vetDropDown'].length;i++){
-//            vet.add(breeding_control_list['vetDropDown'][i]['name']);
-//          }
-//
-//        });
-//
-//      }else{
-//
-//      }
-//    });
   }
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
   @override

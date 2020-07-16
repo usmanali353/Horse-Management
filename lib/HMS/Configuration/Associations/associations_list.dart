@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Configuration/Associations/add_associations.dart';
+import 'package:horse_management/HMS/Configuration/Associations/associations_details.dart';
 import 'package:horse_management/HMS/Configuration/Associations/associations_json.dart';
 import 'package:horse_management/HMS/Configuration/Associations/update_associations.dart';
 import 'package:horse_management/HMS/Configuration/Barns/barn_json.dart';
@@ -216,7 +217,7 @@ class _associations_list extends State<associations_list>{
                   name_lists = load_list['response'];
                   total_page=load_list['totalPages'];
                   isVisible=true;
-                  if(total_page == 1){
+                  if(total_page == 1 || total_page == -2147483648){
                     print("init state page = 1");
                     setState(() {
                       isPagination = false;
@@ -296,7 +297,7 @@ class _associations_list extends State<associations_list>{
                           // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
                           //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
                           onTap: (){
-                            // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>associations_details_page(name_lists[index])));
                           },
                         ),
                       )

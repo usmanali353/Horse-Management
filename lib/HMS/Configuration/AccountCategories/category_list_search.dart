@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:horse_management/HMS/Configuration/AccountCategories/accountCategories_details.dart';
 import 'package:horse_management/HMS/Configuration/AccountCategories/accountcategories_json.dart';
 import 'package:horse_management/HMS/Configuration/AccountCategories/add_accountcategories.dart';
 import 'package:horse_management/HMS/Configuration/AccountCategories/update_accountcategories.dart';
@@ -377,7 +378,7 @@ class _SearchList_State extends State<SearchList>{
                   category_lists = load_list['response'];
                   total_page=load_list['totalPages'];
                   isVisible=true;
-                  if(total_page == 1){
+                  if(total_page == 1 || total_page == -2147483648){
                     print("init state page = 1");
                     setState(() {
                       isPagination = false;
@@ -491,7 +492,7 @@ class _SearchList_State extends State<SearchList>{
                           //subtitle: Text(category_lists!=null?category_lists[index]['description']:''),
                           //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
                           onTap: (){
-                            // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                           Navigator.push(context, MaterialPageRoute(builder: (context)=>accountCategories_details_page(category_lists[index])));
                           },
                         ),
                       )

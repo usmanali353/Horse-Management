@@ -72,7 +72,7 @@ class _semen_stock_form extends State<semen_stock_form>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Semen Stock Form"),),
+        appBar: AppBar(title: Text("Add Semen Stock"),),
             body: ListView(
                 children: <Widget>[
                   Column(

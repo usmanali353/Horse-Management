@@ -50,11 +50,11 @@ class _paddock_details_page extends State<paddock_details_page>{
 //                ),
                 ListTile(
                   title: Text("Has Shade:"),
-                  trailing: Text(paddock_data['hasShade'] == true ?"Has Shade: "+"Yes":"No"),
+                  trailing: Text(paddock_data['hasShade'] == true ? "Yes":"No" ),
                 ),
                 ListTile(
                   title: Text("Has Water:"),
-                  trailing: Text(paddock_data['hasWater'] == true ?"Has Water: "+"Yes":"No"),
+                  trailing: Text(paddock_data['hasWater'] == true ?"Yes": "No"),
                 ),
                 Divider(),
               ],

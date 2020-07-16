@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Configuration/Colors/colors_json.dart';
 import 'package:horse_management/HMS/Configuration/TestTypes/add_testtype.dart';
+import 'package:horse_management/HMS/Configuration/TestTypes/testType_details.dart';
 import 'package:horse_management/HMS/Configuration/TestTypes/testtype_json.dart';
 import 'package:horse_management/HMS/Configuration/TestTypes/update_testtype.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
@@ -195,7 +196,7 @@ class _testtype_list extends State<testtype_list>{
                   types_lists = load_list['response'];
                   total_page=load_list['totalPages'];
                   isVisible=true;
-                  if(total_page == 1){
+                  if(total_page == 1 || total_page == -2147483648){
                     print("init state page = 1");
                     setState(() {
                       isPagination = false;
@@ -276,7 +277,7 @@ class _testtype_list extends State<testtype_list>{
                           // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
                           //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
                           onTap: (){
-                            // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>testType_details_page(types_lists[index])));
                           },
                         ),
                       )
@@ -335,7 +336,7 @@ class _testtype_list extends State<testtype_list>{
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: horizontalTitleAlignment,
           children: <Widget>[
-            const Text('Test Type'),
+            const Text('Test Types'),
           ],
         ),
       ),

@@ -1034,7 +1034,7 @@ class update_breeding_control_button extends StatelessWidget {
               });
             }
           },
-          child: Text("Update Breeding Control",style: TextStyle(color: Colors.white),),
+          child: Text("Update",style: TextStyle(color: Colors.white),),
         ),
       ),
     );

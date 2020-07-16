@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Configuration/Sire/add_sire.dart';
+import 'package:horse_management/HMS/Configuration/Sire/sire_details.dart';
 import 'package:horse_management/HMS/Configuration/Sire/sire_json.dart';
 import 'package:horse_management/HMS/Configuration/Sire/update_sire.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
@@ -194,7 +195,7 @@ class _sire_list extends State<sire_list>{
                   sire_lists = load_list['response'];
                   total_page=load_list['totalPages'];
                   isVisible=true;
-                  if(total_page == 1){
+                  if(total_page == 1 || total_page == -2147483648){
                     print("init state page = 1");
                     setState(() {
                       isPagination = false;
@@ -273,7 +274,7 @@ class _sire_list extends State<sire_list>{
                         // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
                         //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
                         onTap: (){
-                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>sire_details_page(sire_lists[index])));
                         },
                       ),
                     )

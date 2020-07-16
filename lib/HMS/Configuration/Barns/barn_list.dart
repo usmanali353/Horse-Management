@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:horse_management/HMS/Configuration/Barns/barn_details.dart';
 import 'package:horse_management/HMS/Configuration/Barns/barn_json.dart';
 import 'package:horse_management/HMS/Configuration/Barns/update_barn.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
@@ -86,15 +87,7 @@ class _barn_list extends State<barn_list>{
             Scaffold.of(context).showSnackBar(SnackBar(content: Text("No List"),backgroundColor: Colors.red,));
           }
         });
-//        Add_horse_services.horselistWithSearch(token,pagenum,"hor").then((response) {
-//          setState(() {
-//            print("Teri mehrbani");
-//            print(response);
-//            load_list= json.decode(response);
-//           // horse_list = load_list['response'];
-//           // print(horse_list);
-//          });
-//        });
+
       }else
         Scaffold.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.red,
@@ -121,25 +114,6 @@ class _barn_list extends State<barn_list>{
         title: _isSearching ? _buildSearchField() : _buildTitle(context),
         actions: _buildActions(),
       ),
-//      appBar: AppBar(
-//        title: Text("Barn List"),
-//        actions: <Widget>[
-//          Center(child: Text("Add New",textScaleFactor: 1.3,)),
-//          IconButton(
-//            icon: Icon(
-//              Icons.add,
-//              color: Colors.white,
-//            ),
-//            onPressed: () {
-//              Navigator.push(context, MaterialPageRoute(builder: (context) => add_barn(token)),);
-//            },
-//          )
-////          IconButton(
-////            icon: Icon(Icons.picture_as_pdf),
-////           // onPressed: () => _generatePdfAndView(context),
-////          ),
-//        ],
-//      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton:
       Visibility(
@@ -238,7 +212,7 @@ class _barn_list extends State<barn_list>{
                   barn_lists = load_list['response'];
                   total_page=load_list['totalPages'];
                   isVisible=true;
-                  if(total_page == 1){
+                  if(total_page == 1 || total_page == -2147483648){
                     print("init state page = 1");
                     setState(() {
                       isPagination = false;
@@ -319,7 +293,7 @@ class _barn_list extends State<barn_list>{
                           // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
                           //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
                           onTap: (){
-                            // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>barn_details_page(barn_lists[index])));
                           },
                         ),
                       )

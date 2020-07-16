@@ -150,47 +150,6 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
     return yesno;
   }
 
-//  @override
-//  void initState() {
-//    this.payment_reference=TextEditingController();
-//    this.contract_no=TextEditingController();
-//    this.report_no=TextEditingController();
-//    this.comments=TextEditingController();
-//    this.amount=TextEditingController();
-//    // local_db=sqlite_helper();
-//    Utils.check_connectivity().then((result){
-//      if(result){
-//        BreedingSalesServices.get_breeding_sales_dropdowns(token).then((response){
-//          if(response!=null){
-//            print(response);
-//            setState(() {
-//              sale_response=json.decode(response);
-//              for(int i=0;i<sale_response['horseDropDown'].length;i++)
-//                horses.add(sale_response['horseDropDown'][i]['name']);
-//              for(int i=0;i<sale_response['customerDropDown'].length;i++)
-//                customer.add(sale_response['customerDropDown'][i]['name']);
-//              for(int i=0;i<sale_response['assignedVetDropDown'].length;i++)
-//                vet.add(sale_response['assignedVetDropDown'][i]['name']);
-//              for(int i=0;i<sale_response['currencyDropDown'].length;i++)
-//                currency.add(sale_response['currencyDropDown'][i]['name']);
-//              for(int i=0;i<sale_response['categoryDropDown'].length;i++)
-//                category.add(sale_response['categoryDropDown'][i]['name']);
-//              for(int i=0;i<sale_response['costCenterDropDown'].length;i++)
-//                costcenter.add(sale_response['costCenterDropDown'][i]['name']);
-//              for(int i=0;i<sale_response['contactsDropDown'].length;i++)
-//                contact.add(sale_response['contactsDropDown'][i]['name']);
-//              sale_loaded=true;
-//              update_sales_visibility=true;
-//            });
-//          }
-//        });
-//      }else{
-//        print("Network Not Available");
-//      }
-//    });
-//  }
-
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -206,7 +165,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
 
                // autovalidate: true,
                 child: Column(children: <Widget>[
-//
+
                   Padding(
                     padding: const EdgeInsets.only(left: 16,right: 16, top:16),
                     child: Visibility(

@@ -86,7 +86,7 @@ class _breeding_sales_form extends State<breeding_sales_form>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(title: Text("Add Breeding Sales Form"),),
+      appBar: AppBar(title: Text("Add Breeding Sales"),),
       body:  Padding(
         padding: EdgeInsets.all(10),
         child: SingleChildScrollView(
