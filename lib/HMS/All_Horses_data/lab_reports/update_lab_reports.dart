@@ -97,7 +97,7 @@ class _add_horse_state extends State<update_labTest>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Horse"),),
+        appBar: AppBar(title: Text("Update LabTest"),),
         body: ListView(
           children: <Widget>[
             Column(
@@ -488,7 +488,10 @@ class _add_horse_state extends State<update_labTest>{
                                   Flushbar(message: "Added Successfully",
                                     duration: Duration(seconds: 3),
                                     backgroundColor: Colors.green,)
-                                    ..show(context);}
+                                    ..show(context);
+                                  sleep(Duration(seconds: 3));
+                                Navigator.pop(context);
+                                }
                                 else{
                                   Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                               }else{
@@ -497,7 +500,7 @@ class _add_horse_state extends State<update_labTest>{
 
                           }
                         },
-                        child:Text("Add Horse",style: TextStyle(color: Colors.white),),
+                        child:Text("Update",style: TextStyle(color: Colors.white),),
                       ),
                     )
                 )

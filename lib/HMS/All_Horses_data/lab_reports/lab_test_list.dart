@@ -54,36 +54,36 @@ class _Profile_Page_State extends State<lab_list>{
 //      });
 //
 //    });
-//    Utils.check_connectivity().then((result){
-//        if(result){
-//          ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-//          pd.show();
-//          labtest_services.labTestlist(token).then((response) {
-//            pd.dismiss();
-//            isVisible = true;
-//            setState(() {
-//              print(response);
-//             load_list = json.decode(response);
-//             lablist = load_list['response'];
-//              total_page=load_list['totalPages'];
-//              if(total_page == 1){
-//                print("init state page = 1");
-//                setState(() {
-//                  isPagination = false;
-//                });
-//              }else{
-//                print("init state multi page ");
-//                setState(() {
-//                  isPagination = true;
-//                });
-//              }
-//            });
-//          });
-//            }else{
-//          Flushbar(title: "Networks",message: "Error",duration: Duration(seconds: 3),)..show(context);
-//        }
-//
-//          });
+    Utils.check_connectivity().then((result){
+        if(result){
+          ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+          pd.show();
+          labtest_services.labTestlist(token).then((response) {
+            pd.dismiss();
+            isVisible = true;
+            setState(() {
+              print(response);
+             load_list = json.decode(response);
+             lablist = load_list['response'];
+              total_page=load_list['totalPages'];
+              if(total_page == 1 || total_page == -2147483648){
+                print("init state page = 1");
+                setState(() {
+                  isPagination = false;
+                });
+              }else{
+                print("init state multi page ");
+                setState(() {
+                  isPagination = true;
+                });
+              }
+            });
+          });
+            }else{
+          Flushbar(title: "Networks",message: "Error",duration: Duration(seconds: 3),)..show(context);
+        }
+
+          });
   }
 
   @override

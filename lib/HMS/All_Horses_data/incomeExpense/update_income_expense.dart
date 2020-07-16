@@ -387,13 +387,17 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                               amount.text,description.text, incomeExpenseDropdown['currencyDropDown'][selected_currency_id]['id'], incomeExpenseDropdown['categoryDropDown'][selected_category_id]['id'],
                               incomeExpenseDropdown['costCenterDropDown'][selected_costcenter_id]['id'], incomeExpenseDropdown['contactsDropDown'][selected_contact_id]['id'],selected_account,).then((response){
                               pd.dismiss();
+                              print(response);
                               if(response !=null) {
                                 var decode= jsonDecode(response);
                                 if(decode['isSuccess'] == true){
                                   Flushbar(message: "Added Successfully",
                                     duration: Duration(seconds: 3),
                                     backgroundColor: Colors.green,)
-                                    ..show(context);}
+                                    ..show(context);
+                                print("upadte");
+                                Navigator.pop(context);
+                                }
                                 else{
                                   Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                               }else{

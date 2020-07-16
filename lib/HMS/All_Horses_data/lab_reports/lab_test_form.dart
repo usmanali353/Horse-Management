@@ -85,7 +85,7 @@ class _add_horse_state extends State<add_labTest>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Horse"),),
+        appBar: AppBar(title: Text("Add LabTest"),),
         body: ListView(
           children: <Widget>[
             Column(
@@ -95,7 +95,7 @@ class _add_horse_state extends State<add_labTest>{
                   child: Column(
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.only(left: 16,right: 16),
+                        padding: const EdgeInsets.only(left: 16,right: 16,top: 20),
                         child: FormBuilderDropdown(
                           attribute: "Horse",
                           hint: Text("Horse"),
@@ -440,7 +440,7 @@ class _add_horse_state extends State<add_labTest>{
 
                           }
                         },
-                        child:Text("Add Horse",style: TextStyle(color: Colors.white),),
+                        child:Text("Add Lab Text",style: TextStyle(color: Colors.white),),
                       ),
                     )
                 )
