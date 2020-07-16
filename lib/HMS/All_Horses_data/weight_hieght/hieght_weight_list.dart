@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/All_Horses_data/lab_reports/update_lab_reports.dart';
@@ -27,6 +28,12 @@ class _Profile_Page_State extends State<weight_hieght_list>{
   int id;
   SharedPreferences prefs;
   _Profile_Page_State (this.token);
+
+  var _isSearching=false;
+  TextEditingController _searchQuery;
+  String searchQuery = "";
+  var isVisible=false,isPagination=false;
+  static final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   String token;
   var weightlist, load_list;
@@ -35,6 +42,7 @@ class _Profile_Page_State extends State<weight_hieght_list>{
 
   @override
   void initState () {
+    _searchQuery =TextEditingController();
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
 //    labtest_services.horseIdLabtest(token, id).then((response){
@@ -63,6 +71,17 @@ class _Profile_Page_State extends State<weight_hieght_list>{
             load_list =json.decode(response);
             weightlist = load_list['response'];
             total_page=load_list['totalPages'];
+            if(total_page == 1){
+              print("init state page = 1");
+              setState(() {
+                isPagination = false;
+              });
+            }else{
+              print("init state multi page ");
+              setState(() {
+                isPagination = true;
+              });
+            }
           });
 
         });
@@ -78,88 +97,96 @@ class _Profile_Page_State extends State<weight_hieght_list>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Weight & Height"),actions: <Widget>[
-          Center(child: Text("Add New",textScaleFactor: 1.3,)),
-          IconButton(
-
-            icon: Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => add_weight_and_height(token)),);
-            },
-          )
-        ],),
+        appBar: AppBar(
+          leading: _isSearching ? const BackButton() : null,
+          title: _isSearching ? _buildSearchField() : _buildTitle(context),
+          actions: _buildActions(),
+//          title: Text("Weight & Height"),actions: <Widget>[
+//          Center(child: Text("Add New",textScaleFactor: 1.3,)),
+//          IconButton(
+//
+//            icon: Icon(
+//              Icons.add,
+//              color: Colors.white,
+//            ),
+//            onPressed: () {
+//              Navigator.push(context, MaterialPageRoute(builder: (context) => add_weight_and_height(token)),);
+//            },
+//          )
+//        ],
+        ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton:
-        Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
+        Visibility(
+          visible: isPagination,
+          child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    FloatingActionButton(child: Icon(Icons.arrow_back),heroTag: "btn2", onPressed: () {
 
-                    if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
-                      Utils.check_connectivity().then((result){
-                        if(result) {
-                          ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
-                          pd.show();
-                          weight_hieght_services.weight_hieght_listbypage(token, pagenum).then((response) {
-                            pd.dismiss();
-                            setState(() {
-                              print(response);
-                              load_list= json.decode(response);
-                              weightlist = load_list['response'];
-                              print(weightlist);
+                      if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                        Utils.check_connectivity().then((result){
+                          if(result) {
+                            ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                            pd.show();
+                            weight_hieght_services.weight_hieght_listbypage(token, pagenum,searchQuery).then((response) {
+                              pd.dismiss();
+                              setState(() {
+                                print(response);
+                                load_list= json.decode(response);
+                                weightlist = load_list['response'];
+                                print(weightlist);
+                              });
                             });
-                          });
-                        }else
-                          print("network nahi hai");
-                      });
-                    }
-                    else{
-                      print("list empty");
-                      //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
-                    }
-                    if(pagenum > 1){
-                      pagenum = pagenum - 1;
-                    }
-                    print(pagenum);
-                  }),
-                  FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
-                    print(load_list['hasNext']);
-                    if(load_list['hasNext'] == true && pagenum >= 1 ) {
-                      Utils.check_connectivity().then((result){
-                        if(result) {
-                          ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
-                          pd.show();
-                          weight_hieght_services.weight_hieght_listbypage(
-                              token, pagenum).then((response) {
-                            pd.dismiss();
-                            setState(() {
-                              print(response);
-                              load_list = json.decode(response);
-                              weightlist = load_list['response'];
-                              print(weightlist);
+                          }else
+                            print("network nahi hai");
+                        });
+                      }
+                      else{
+                        print("list empty");
+                        //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                      }
+                      if(pagenum > 1){
+                        pagenum = pagenum - 1;
+                      }
+                      print(pagenum);
+                    }),
+                    FloatingActionButton(child: Icon(Icons.arrow_forward),heroTag: "btn1", onPressed: () {
+                      print(load_list['hasNext']);
+                      if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                        Utils.check_connectivity().then((result){
+                          if(result) {
+                            ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                            pd.show();
+                            weight_hieght_services.weight_hieght_listbypage(
+                                token, pagenum,searchQuery).then((response) {
+                              pd.dismiss();
+                              setState(() {
+                                print(response);
+                                load_list = json.decode(response);
+                                weightlist = load_list['response'];
+                                print(weightlist);
+                              });
                             });
-                          });
-                        }else
-                          print("network nahi hai");
-                      });
-                    }
-                    else{
-                      print("list empty");
-                      //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
-                    }
-                    if(pagenum < total_page) {
-                      pagenum = pagenum + 1;
-                    }
-                    print(pagenum);
+                          }else
+                            print("network nahi hai");
+                        });
+                      }
+                      else{
+                        print("list empty");
+                        //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                      }
+                      if(pagenum < total_page) {
+                        pagenum = pagenum + 1;
+                      }
+                      print(pagenum);
 
-                  })
-                ]
-            )
+                    })
+                  ]
+              )
+          ),
         ),
         body: RefreshIndicator(
             key: _refreshIndicatorKey,
@@ -167,11 +194,23 @@ class _Profile_Page_State extends State<weight_hieght_list>{
               return Utils.check_connectivity().then((result){
                 if(result){
                   weight_hieght_services.weight_hieght_listbypage(
-                      token, pagenum).then((response) {
+                      token, pagenum,searchQuery).then((response) {
                     setState(() {
                       print(response);
                       load_list = json.decode(response);
                       weightlist = load_list['response'];
+                      total_page=load_list['totalPages'];
+                      if(total_page == 1){
+                        print("init state page = 1");
+                        setState(() {
+                          isPagination = false;
+                        });
+                      }else{
+                        print("init state multi page ");
+                        setState(() {
+                          isPagination = true;
+                        });
+                      }
                     });
                   });
                 }else{
@@ -244,6 +283,159 @@ class _Profile_Page_State extends State<weight_hieght_list>{
           }),
         )
     );
+  }
+
+  void _startSearch() {
+    print("open search box");
+    ModalRoute
+        .of(context)
+        .addLocalHistoryEntry(new LocalHistoryEntry(onRemove: _stopSearching));
+
+    setState(() {
+      _isSearching = true;
+    });
+  }
+
+
+  void _stopSearching() {
+    _clearSearchQuery();
+
+    setState(() {
+      _isSearching = false;
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    });
+  }
+
+  void _clearSearchQuery() {
+    print("close search box");
+    setState(() {
+      _searchQuery.clear();
+      updateSearchQuery("");
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    });
+  }
+
+  Widget _buildTitle(BuildContext context) {
+    var horizontalTitleAlignment =
+    Platform.isIOS ? CrossAxisAlignment.center : CrossAxisAlignment.start;
+
+    return new InkWell(
+      onTap: () => scaffoldKey.currentState.openDrawer(),
+      child: new Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: horizontalTitleAlignment,
+          children: <Widget>[
+            const Text('Weight & Hieght'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSearchField() {
+    return new TextField(
+      controller: _searchQuery,
+      textInputAction: TextInputAction.search,
+      autofocus: true,
+      decoration: const InputDecoration(
+        hintText: 'Search...',
+        border: InputBorder.none,
+        hintStyle: const TextStyle(color: Colors.white30),
+      ),
+      style: const TextStyle(color: Colors.white, fontSize: 16.0),
+      onSubmitted: updateSearchQuery,
+    );
+  }
+
+  void updateSearchQuery(String newQuery) {
+
+    setState(() {
+      searchQuery = newQuery;
+    });
+    Utils.check_connectivity().then((result){
+      if(result){
+        ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+        pd.show();
+        weight_hieght_services.weight_hieght_listbypage(token,pagenum,searchQuery).then((response){
+          pd.dismiss();
+          if(response!=null){
+            setState(() {
+              if(load_list!=null){
+                load_list.clear();
+              }
+              if(weightlist!=null){
+                weightlist.clear();
+              }
+              load_list=json.decode(response);
+              weightlist = load_list['response'];
+              total_page=load_list['totalPages'];
+              print(total_page);
+              isVisible=true;
+              if(total_page == 1){
+                setState(() {
+                  isPagination = false;
+
+                });
+              }else{
+                isPagination = true;
+              }
+
+            });
+
+          }else{
+            setState(() {
+              isVisible=false;
+            });
+            Scaffold.of(context).showSnackBar(SnackBar(
+              backgroundColor: Colors.red,
+              content: Text("List Not Available"),
+            ));
+          }
+        });
+      }else{
+        Scaffold.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.red,
+          content: Text("Network Not Available"),
+        ));
+      }
+    });
+  }
+
+  List<Widget> _buildActions() {
+
+    if (_isSearching) {
+      return <Widget>[
+        new IconButton(
+          icon: const Icon(Icons.clear),
+          onPressed: () {
+            if (_searchQuery == null || _searchQuery.text.isEmpty) {
+              Navigator.pop(context);
+              return;
+            }
+            _clearSearchQuery();
+          },
+        ),
+      ];
+    }
+
+    return <Widget>[
+      new IconButton(
+        icon: const Icon(Icons.search),
+        onPressed: _startSearch,
+      ),
+      Padding(padding: EdgeInsets.all(8.0),
+        child: InkWell(child: Icon(Icons.add),
+            onTap: () =>  Navigator.push(context, MaterialPageRoute(builder: (context) => add_weight_and_height(token)),)
+
+        ),
+
+
+      )
+    ];
   }
 
 }

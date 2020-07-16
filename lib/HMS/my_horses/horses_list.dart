@@ -23,15 +23,13 @@ class horse_list extends StatefulWidget{
 }
  class _training_list_state extends State<horse_list>{
   String token;
-  //searchQuery = "Search query",
   var _isSearching=false;
   TextEditingController _searchQuery;
   String searchQuery = "";
-  List<dynamic> filteredCategory=[], listRecord;
+  var isVisible=false,isPagination=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   static final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  var isVisible=false,isPagination=false,customerId,filteredList=[];
-  var horse_list, load_list, pagelist, pageloadlist;
+  var horse_list, load_list;
   int pagenum = 1;
   int total_page;
   var temp=[];
