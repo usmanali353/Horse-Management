@@ -45,7 +45,7 @@ class _hypothetic_pedegree_page extends State<hypothetic_pedegree_page>{
     // TODO: implement build
     return Scaffold(
         appBar: AppBar(title: Text("Hypothetic Pedigree"),),
-        body:  Column(
+        body:  ListView(
           children: <Widget>[
             Container(
               height: 92,
