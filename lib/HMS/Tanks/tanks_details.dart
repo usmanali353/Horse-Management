@@ -41,11 +41,11 @@ class _tanks_details_page extends State<tanks_details_page>{
               ),
               ListTile(
                 title: Text("Last Fill:"),
-                trailing: Text(tanks_data['lastFill'].toString()!=null?tanks_data['lastFill'].toString():''),
+                trailing: Text(tanks_data['lastFill'].toString()!=null?tanks_data['lastFill'].toString().substring(0,10):''),
               ),
               ListTile(
                 title: Text("Next Fill:"),
-                trailing: Text(tanks_data['nextFill'].toString()!=null?tanks_data['nextFill'].toString():''),
+                trailing: Text(tanks_data['nextFill'].toString()!=null?tanks_data['nextFill'].toString().substring(0,10):''),
               ),
 //              ListTile(
 //                title: Text("Assigned Vet"),

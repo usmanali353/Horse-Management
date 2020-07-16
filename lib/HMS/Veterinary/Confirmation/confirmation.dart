@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:horse_management/HMS/Veterinary/Confirmation/confirmation_detail_page.dart';
 import 'package:horse_management/HMS/Veterinary/Confirmation/confirmation_json.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -276,7 +277,7 @@ class _confirmation_list extends State<confirmation_list>{
                           subtitle: Text(confirmation_lists!=null?confirmation_lists[index]['vetName']['contactName']['name'].toString():''),
                          trailing: Text(confirmation_lists[index]['date']!=null?confirmation_lists[index]['date'].toString().substring(0,10) :''),
                           onTap: (){
-                            // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>confirmation_details_page(confirmation_lists[index])));
                           },
                         ),
                       )
