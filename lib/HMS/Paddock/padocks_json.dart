@@ -61,9 +61,10 @@ class PaddockServices{
     }else
       return null;
   }
-  static Future<String> getPaddockDetails(String token,int id) async{
+  static Future<String> getPaddockDetails(String token,int id, int pagenum, String search) async{
     Map<String,String> headers = {'Authorization':'Bearer '+token};
-    final response = await http.get('http://192.236.147.77:8083/api/Paddock/GetAllPaddockDetails/'+id.toString(), headers: headers,);
+    final response = await http.get('http://192.236.147.77:8083/api/Paddock/GetAllPaddockDetails/'+id.toString()+'?pageNumber='+pagenum.toString()+'&pageSize=10&SearchString='+search,
+      headers: headers,);
     if(response.statusCode==200){
       return response.body;
     }else
@@ -78,12 +79,12 @@ class PaddockServices{
       return null;
   }
 
-  static Future<String> paddocks_by_page (String token,int pagenum) async {
+  static Future<String> paddocks_by_page (String token,int pagenum, String search) async {
     Map<String, String> headers = {'Authorization': 'Bearer '+token};
     final response = await http.get(
       //'http://192.236.147.77:8083/api/horse/GetAllIncomeAndExpenses?pageNumber=2&pageSize=10',
 
-      'http://192.236.147.77:8083/api/Paddock/GetAllPaddocks?pageNumber='+pagenum.toString()+'&pageSize=10',
+      'http://192.236.147.77:8083/api/Paddock/GetAllPaddocks?pageNumber='+pagenum.toString()+'&pageSize=10&SearchString='+search,
       headers: headers,
     );
     if (response.statusCode == 200) {

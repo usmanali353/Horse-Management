@@ -238,14 +238,7 @@ static Future<String> change_contact_visibility(String token,int id) async{
   }else
     return null;
 }
-static Future<String> get_all_contacts(String token) async{
-  Map<String,String> headers = {'Authorization':'Bearer '+token};
-  final response = await http.get('http://192.236.147.77:8083/api/Contacts/GetAllContacts', headers: headers,);
-  if(response.statusCode==200){
-    return response.body;
-  }else
-    return null;
-}
+
 static Future<String> add_contact(String token,int contactId,String name,String website,String facebook,String instagram,String twitter,String email,String address,String mobile,String phone,String cnic,Uint8List picture,List<Map> contact_type)async{
   Map<String,String> headers = {'Authorization':'Bearer '+token,'Content-Type':'application/json'};
   final body = jsonEncode({"contactId":contactId,"Name":name,"website":website,"facebook":facebook,"instagram":instagram,"twiter":twitter,"email":email,"address":address,"mobileNo":mobile,"phoneNo":phone,"cnic":cnic,"picture":picture,"contactTypess":contact_type},toEncodable: Utils.myEncode);
@@ -619,12 +612,12 @@ static Future<String> getTrainingCareTaker(String token) async{
     return null;
 }
 
-static Future<String> breeding_control_by_page (String token,int pagenum) async {
+static Future<String> breeding_control_by_page (String token,int pagenum, String search) async {
   Map<String, String> headers = {'Authorization': 'Bearer '+token};
   final response = await http.get(
     //'http://192.236.147.77:8083/api/horse/GetAllIncomeAndExpenses?pageNumber=2&pageSize=10',
 
-    'http://192.236.147.77:8083/api/breed/GetAllBreedingControls?pageNumber='+pagenum.toString()+'&pageSize=10',
+    'http://192.236.147.77:8083/api/breed/GetAllBreedingControls?pageNumber='+pagenum.toString()+'&pageSize=10&SearchString='+search,
     headers: headers,
   );
   if (response.statusCode == 200) {
@@ -632,12 +625,12 @@ static Future<String> breeding_control_by_page (String token,int pagenum) async 
   } else
     return null;
 }
-static Future<String> semen_collection_by_page (String token,int pagenum) async {
+static Future<String> semen_collection_by_page (String token,int pagenum, String search) async {
   Map<String, String> headers = {'Authorization': 'Bearer '+token};
   final response = await http.get(
     //'http://192.236.147.77:8083/api/horse/GetAllIncomeAndExpenses?pageNumber=2&pageSize=10',
 
-    'http://192.236.147.77:8083/api/breed/GetAllSemenCollections?pageNumber='+pagenum.toString()+'&pageSize=10',
+    'http://192.236.147.77:8083/api/breed/GetAllSemenCollections?pageNumber='+pagenum.toString()+'&pageSize=10&SearchString='+search,
     headers: headers,
   );
   if (response.statusCode == 200) {
@@ -690,6 +683,29 @@ static Future<String> already_trainedHorses_by_page (String token,int pagenum,St
     //'http://192.236.147.77:8083/api/horse/GetAllIncomeAndExpenses?pageNumber=2&pageSize=10',
 
     'http://192.236.147.77:8083/api/Training/GetAllAlreadyTrainedHorses?pageNumber='+pagenum.toString()+'&pageSize=10&SearchString='+search,
+    headers: headers,
+  );
+  if (response.statusCode == 200) {
+    return response.body;
+  } else
+    return null;
+}
+
+static Future<String> get_all_contacts(String token) async{
+  Map<String,String> headers = {'Authorization':'Bearer '+token};
+  final response = await http.get('http://192.236.147.77:8083/api/Contacts/GetAllContacts', headers: headers,);
+  if(response.statusCode==200){
+    return response.body;
+  }else
+    return null;
+}
+
+
+static Future<String> get_all_contacts_by_page (String token,int pagenum, String search) async {
+  Map<String, String> headers = {'Authorization': 'Bearer '+token};
+  final response = await http.get(
+    //'http://192.236.147.77:8083/api/horse/GetAllIncomeAndExpenses?pageNumber=2&pageSize=10',
+    'http://192.236.147.77:8083/api/Contacts/GetAllContacts?pageNumber='+pagenum.toString()+'&pageSize=10&SearchString='+search,
     headers: headers,
   );
   if (response.statusCode == 200) {

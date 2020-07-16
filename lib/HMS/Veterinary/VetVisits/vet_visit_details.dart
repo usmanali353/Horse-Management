@@ -27,8 +27,8 @@ class _vet_visit_details_page extends State<vet_visit_details_page>{
           Column(
             children: <Widget>[
               ListTile(
-                title: Text("Flushes ID: "),
-                trailing: Text(vet_visit_data['id'].toString()!=null?vet_visit_data['id'].toString():''),
+                title: Text("VetVisit ID: "),
+                trailing: Text(vet_visit_data['vetVisitId'].toString()!=null?vet_visit_data['vetVisitId'].toString():''),
               ),
               Divider(),
               ListTile(
@@ -44,13 +44,15 @@ class _vet_visit_details_page extends State<vet_visit_details_page>{
                 trailing: Text(vet_visit_data['vetName']['contactName']['name']!=null?vet_visit_data['vetName']['contactName']['name']:''),
               ),
               ListTile(
+                onTap: (){
+                },
                 title: Text("Responsible:"),
                 trailing: Text(vet_visit_data['responsibleName']['contactName']['name']!=null?vet_visit_data['responsibleName']['contactName']['name']:''),
               ),
-//              ListTile(
-//                title: Text("Products:"),
-//                trailing: Text(vet_visit_data['vetVisitsProducts']['inventoryProductName']['name']!=null?vet_visit_data['vetVisitsProducts']['inventoryProductName']['name']:''),
-//              ),
+              ListTile(
+                title: Text("Products:"),
+                trailing: Text(vet_visit_data['vetVisitsProducts'][0]['inventoryProductName']['name']!=null?vet_visit_data['vetVisitsProducts'][0]['inventoryProductName']['name']:''),
+              ),
               Divider(),
             ],
           ),

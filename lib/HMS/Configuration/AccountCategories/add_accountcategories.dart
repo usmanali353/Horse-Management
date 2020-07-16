@@ -168,7 +168,7 @@ class _add_accountcategories extends State<add_accountcategories>{
                                 value: name, child: Text("$name")))
                                 .toList(),
                             style: Theme.of(context).textTheme.body1,
-                            decoration: InputDecoration(labelText: "Is Income",
+                            decoration: InputDecoration(labelText: "Is Active",
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(9.0),
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)

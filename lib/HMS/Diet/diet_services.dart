@@ -7,10 +7,10 @@ import 'package:http/http.dart' as http;
 class DietServices {
 
 
-  static Future<String> newDietList (String token) async {
+  static Future<String> newDietList (String token, int pagenum, String search) async {
     Map<String, String> headers = {'Authorization': 'Bearer '+token};
     final response = await http.get(
-      'http://192.236.147.77:8083/api/Diet/GetAllDiets',
+      'http://192.236.147.77:8083/api/Diet/GetAllDiets?pageNumber='+pagenum.toString()+'&pageSize=10&SearchString='+search,
       headers: headers,
     );
     if (response.statusCode == 200) {
@@ -72,10 +72,10 @@ class DietServices {
       return null;
   }
 
-  static Future<String> productTypeList (String token) async {
+  static Future<String> productTypeList(String token, int pagenum, String search) async {
     Map<String, String> headers = {'Authorization': 'Bearer '+token};
     final response = await http.get(
-      'http://192.236.147.77:8083/api/Diet/GetAllProductTypes',
+      'http://192.236.147.77:8083/api/Diet/GetAllProductTypes?pageNumber='+pagenum.toString()+'&pageSize=10&SearchString='+search,
       headers: headers,
     );
     if (response.statusCode == 200) {

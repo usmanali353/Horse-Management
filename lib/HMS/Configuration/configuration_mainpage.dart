@@ -1,7 +1,7 @@
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:horse_management/HMS/Configuration/AccountCategories/accountcategories_list.dart';
+import 'package:horse_management/HMS/Configuration/AccountCategories/category_list_search.dart';
 import 'package:horse_management/HMS/Configuration/Associations/associations_list.dart';
 import 'package:horse_management/HMS/Configuration/Barns/barn_list.dart';
 import 'package:horse_management/HMS/Configuration/Breeds/breeds_list.dart';
@@ -208,7 +208,7 @@ class _configuration_Category extends State<configuration_Category>{
                         //leading: Icon(Icons.category,size: 40, color: Colors.cyan,),
                         trailing: Icon(Icons.arrow_right),
                         onTap: (){
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>accountcategories_list(token)));
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>SearchList(token)));
                         },
                       ),
                       ListTile(

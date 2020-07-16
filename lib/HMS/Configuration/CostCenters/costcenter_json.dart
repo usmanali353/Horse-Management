@@ -7,12 +7,12 @@ import '../../../Utils.dart';
 
 class CostCenterServices{
 
-  static Future<String> costCenters_by_page (String token,int pagenum) async {
+  static Future<String> costCenters_by_page (String token,int pagenum, String search) async {
     Map<String, String> headers = {'Authorization': 'Bearer '+token};
     final response = await http.get(
       //'http://192.236.147.77:8083/api/horse/GetAllIncomeAndExpenses?pageNumber=2&pageSize=10',
 
-      'http://192.236.147.77:8083/api/configuration/GetAllCostCenters?pageNumber='+pagenum.toString()+'&pageSize=10',
+      'http://192.236.147.77:8083/api/configuration/GetAllCostCenters?pageNumber='+pagenum.toString()+'&pageSize=10&SearchString='+search,
       headers: headers,
     );
     if (response.statusCode == 200) {
