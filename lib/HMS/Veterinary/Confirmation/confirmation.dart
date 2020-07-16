@@ -336,7 +336,7 @@ class _confirmation_list extends State<confirmation_list>{
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: horizontalTitleAlignment,
           children: <Widget>[
-            const Text('Confirmation'),
+            const Text('Confirmations'),
           ],
         ),
       ),
