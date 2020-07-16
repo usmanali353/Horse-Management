@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Configuration/CostCenters/add_costcenter.dart';
+import 'package:horse_management/HMS/Configuration/CostCenters/costCenter_details.dart';
 import 'package:horse_management/HMS/Configuration/CostCenters/costcenter_json.dart';
 import 'package:horse_management/HMS/Configuration/CostCenters/update_costcenter.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
@@ -82,15 +83,6 @@ class _costcenter_list extends State<costcenter_list>{
             Scaffold.of(context).showSnackBar(SnackBar(content: Text("No List"),backgroundColor: Colors.red,));
           }
         });
-//        Add_horse_services.horselistWithSearch(token,pagenum,"hor").then((response) {
-//          setState(() {
-//            print("Teri mehrbani");
-//            print(response);
-//            load_list= json.decode(response);
-//           // horse_list = load_list['response'];
-//           // print(horse_list);
-//          });
-//        });
       }else
         Scaffold.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.red,
@@ -209,7 +201,7 @@ class _costcenter_list extends State<costcenter_list>{
                   costcenter_lists = load_list['response'];
                   total_page=load_list['totalPages'];
                   isVisible=true;
-                  if(total_page == 1){
+                  if(total_page == 1 || total_page == -2147483648){
                     print("init state page = 1");
                     setState(() {
                       isPagination = false;
@@ -289,7 +281,7 @@ class _costcenter_list extends State<costcenter_list>{
                          // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
                           //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
                           onTap: (){
-                            // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>costCenter_details_page(costcenter_lists[index])));
                           },
                         ),
                       )

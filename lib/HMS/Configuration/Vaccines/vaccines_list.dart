@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Configuration/Vaccines/add_vaccines.dart';
 import 'package:horse_management/HMS/Configuration/Vaccines/update_vaccines.dart';
+import 'package:horse_management/HMS/Configuration/Vaccines/vaccines_details.dart';
 import 'package:horse_management/HMS/Configuration/Vaccines/vaccines_json.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -195,7 +196,7 @@ class _vaccines_list extends State<vaccines_list>{
                   vaccine_lists = load_list['response'];
                   total_page=load_list['totalPages'];
                   isVisible=true;
-                  if(total_page == 1){
+                  if(total_page == 1 || total_page == -2147483648){
                     print("init state page = 1");
                     setState(() {
                       isPagination = false;
@@ -274,7 +275,7 @@ class _vaccines_list extends State<vaccines_list>{
                         //subtitle: Text(category_lists!=null?category_lists[index]['description']:''),
                         //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
                         onTap: (){
-                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>vaccines_details_page(vaccine_lists[index])));
                         },
                       ),
                     )

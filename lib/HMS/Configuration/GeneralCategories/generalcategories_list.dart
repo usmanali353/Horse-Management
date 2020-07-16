@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Configuration/GeneralCategories/add_generalcategories.dart';
+import 'package:horse_management/HMS/Configuration/GeneralCategories/general_categories_details.dart';
 import 'package:horse_management/HMS/Configuration/GeneralCategories/generalcategories_json.dart';
 import 'package:horse_management/HMS/Configuration/GeneralCategories/update_generalcategories.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
@@ -199,7 +200,7 @@ class _generalcategory_list extends State<generalcategory_list>{
                   generalcategory_lists = load_list['response'];
                   total_page=load_list['totalPages'];
                   isVisible=true;
-                  if(total_page == 1){
+                  if(total_page == 1 || total_page == -2147483648){
                     print("init state page = 1");
                     setState(() {
                       isPagination = false;
@@ -279,7 +280,7 @@ class _generalcategory_list extends State<generalcategory_list>{
                            //subtitle: Text(generalcategory_lists!=null?generalcategory_lists[index]['description']:''),
                           //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
                           onTap: (){
-                            // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                           Navigator.push(context, MaterialPageRoute(builder: (context)=>generalCategories_details_page(generalcategory_lists[index])));
                           },
                         ),
                       )

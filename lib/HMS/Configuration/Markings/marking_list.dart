@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Configuration/Markings/add_marking.dart';
 import 'package:horse_management/HMS/Configuration/Markings/marking_json.dart';
+import 'package:horse_management/HMS/Configuration/Markings/markings_details.dart';
 import 'package:horse_management/HMS/Configuration/Markings/update_marking.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -195,7 +196,7 @@ class _marking_list extends State<marking_list>{
                   marking_lists = load_list['response'];
                   total_page=load_list['totalPages'];
                   isVisible=true;
-                  if(total_page == 1){
+                  if(total_page == 1 || total_page == -2147483648){
                     print("init state page = 1");
                     setState(() {
                       isPagination = false;
@@ -276,7 +277,7 @@ class _marking_list extends State<marking_list>{
                            //subtitle: Text(marking_lists!=null?marking_lists[index]['type'].toString():''),
                           //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
                           onTap: (){
-                            // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                             Navigator.push(context, MaterialPageRoute(builder: (context)=>markings_details_page(marking_lists[index])));
                           },
                         ),
                       )

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:horse_management/HMS/Configuration/Locations/add_location.dart';
+import 'package:horse_management/HMS/Configuration/Locations/location_details.dart';
 import 'package:horse_management/HMS/Configuration/Locations/location_json.dart';
 import 'package:horse_management/HMS/Configuration/Locations/update_location.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
@@ -194,7 +195,7 @@ class _location_list extends State<location_list>{
                   location_lists = load_list['response'];
                   total_page=load_list['totalPages'];
                   isVisible=true;
-                  if(total_page == 1){
+                  if(total_page == 1 || total_page == -2147483648){
                     print("init state page = 1");
                     setState(() {
                       isPagination = false;
@@ -274,7 +275,7 @@ class _location_list extends State<location_list>{
                            // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
                           //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),
                           onTap: (){
-                            // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
+                         Navigator.push(context, MaterialPageRoute(builder: (context)=>location_details_page(location_lists[index])));
                           },
                         ),
                       )

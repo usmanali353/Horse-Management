@@ -63,12 +63,12 @@ class _breeding_control_list extends State< breeding_control_list>{
               total_page=load_list['totalPages'];
               isVisible=true;
               if(total_page == 1){
-                print("init state page = 1");
+                //print("init state page = 1");
                 setState(() {
                   isPagination = false;
                 });
               }else{
-                print("init state multi page ");
+                //print("init state multi page ");
                 setState(() {
                   isPagination = true;
                 });
@@ -118,7 +118,7 @@ class _breeding_control_list extends State< breeding_control_list>{
                           pd.show();
                           network_operations.breeding_control_by_page(token, pagenum,searchQuery).then((response) {
                             pd.dismiss();
-                            print("has pre in if");
+                            //print("has pre in if");
                             setState(() {
                               //print(response);
                               load_list= json.decode(response);
@@ -126,9 +126,11 @@ class _breeding_control_list extends State< breeding_control_list>{
                               //print(horse_list);
                             });
                           });
-                        }else
+                        }
+                        else
                           print("Network Not Available");
-                      });
+                      }
+                      );
                     }
                     else{
                       print("previous else ");
@@ -196,7 +198,7 @@ class _breeding_control_list extends State< breeding_control_list>{
                   control_list = load_list['response'];
                   total_page=load_list['totalPages'];
                   isVisible=true;
-                  if(total_page == 1){
+                  if(total_page == 1 || total_page == -2147483648){
                     print("init state page = 1");
                     setState(() {
                       isPagination = false;

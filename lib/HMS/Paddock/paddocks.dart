@@ -203,7 +203,7 @@ class _paddocks_list extends State<paddocks_list>{
                   paddock_lists = load_list['response'];
                   total_page=load_list['totalPages'];
                   isVisible=true;
-                  if(total_page == 1){
+                  if(total_page == 1 || total_page == -2147483648){
                     print("init state page = 1");
                     setState(() {
                       isPagination = false;
@@ -300,7 +300,7 @@ class _paddocks_list extends State<paddocks_list>{
                           leading: FaIcon(FontAwesomeIcons.landmark, color: Colors.orangeAccent, size: 30,),
                           title: Text(paddock_lists!=null?paddock_lists[index]['name']:''),
                           subtitle: Text(paddock_lists!=null?"Area: "+paddock_lists[index]['area'].toString():''),
-                          trailing: Text(paddock_lists[index]['hasShade'] == true ?"Has Shade: "+"Yes":"No"),
+                          trailing: Text(paddock_lists[index]['hasShade'] == true ?"Has Shade: "+"Yes": "Has Shade: No"),
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context) => paddock_details_page(paddock_lists[index])));
                             // Navigator.push(context, MaterialPageRoute(builder: (context)=>currency_lists(token,currency_lists[index])));
