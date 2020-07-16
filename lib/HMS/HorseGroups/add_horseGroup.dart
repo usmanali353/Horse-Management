@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/Model/sqlite_helper.dart';
@@ -141,7 +142,7 @@ class _add_horse_state extends State<add_HorseGroup>{
 //                        ),
 //                      ),
                       Padding(
-                        padding: EdgeInsets.all(16),
+                        padding: EdgeInsets.only(right: 16,left: 16,top: 16),
                         child: FormBuilderTextField(
                           controller: name,
                           attribute: "Name",
@@ -207,10 +208,10 @@ class _add_horse_state extends State<add_HorseGroup>{
 //                          ),
 //                        ),
 //                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Visibility(
-                          visible: _isvisible,
+                      Visibility(
+                        visible: _isvisible,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 16,right: 16,),
                           child: FormBuilderDropdown(
                             attribute: "Gender",
                             validators: [FormBuilderValidators.required()],
@@ -230,10 +231,10 @@ class _add_horse_state extends State<add_HorseGroup>{
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: Visibility(
-                          visible: _isvisible,
+                      Visibility(
+                        visible: _isvisible,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "location",
                             hint: Text("Location"),
@@ -255,10 +256,10 @@ class _add_horse_state extends State<add_HorseGroup>{
                         ),
                       ),
 
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: Visibility(
-                          visible: _isvisible,
+                      Visibility(
+                        visible: _isvisible,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Breed",
                             hint: Text("Breed"),
@@ -280,10 +281,10 @@ class _add_horse_state extends State<add_HorseGroup>{
                         ),
                       ),
 
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: Visibility(
-                          visible: _isvisible,
+                      Visibility(
+                        visible: _isvisible,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Color",
                             hint: Text("Color"),
@@ -307,10 +308,10 @@ class _add_horse_state extends State<add_HorseGroup>{
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: Visibility(
-                          visible: _isvisible,
+                      Visibility(
+                        visible: _isvisible,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Category",
                             hint: Text("Category"),
@@ -331,10 +332,10 @@ class _add_horse_state extends State<add_HorseGroup>{
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: Visibility(
-                          visible: _isvisible,
+                      Visibility(
+                        visible: _isvisible,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "sireName",
                             hint: Text("SirName"),
@@ -355,10 +356,10 @@ class _add_horse_state extends State<add_HorseGroup>{
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: Visibility(
-                          visible: _isvisible,
+                      Visibility(
+                        visible: _isvisible,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "damName",
                             hint: Text("DamName"),
@@ -380,10 +381,10 @@ class _add_horse_state extends State<add_HorseGroup>{
                         ),
                       ),
                      // Text("More Information",textScaleFactor: 2,),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: Visibility(
-                          visible: _isvisible,
+                      Visibility(
+                        visible: _isvisible,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Breeder",
                             hint: Text("Breeder"),
@@ -405,10 +406,10 @@ class _add_horse_state extends State<add_HorseGroup>{
                         ),
                       ),
 
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: Visibility(
-                          visible: _isvisible,
+                      Visibility(
+                        visible: _isvisible,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "rider",
                             hint: Text("Rider"),
@@ -431,10 +432,10 @@ class _add_horse_state extends State<add_HorseGroup>{
                         ),
                       ),
 
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: Visibility(
-                          visible: _isvisible,
+                      Visibility(
+                        visible: _isvisible,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "owner",
                             hint: Text("Owner"),
@@ -456,10 +457,10 @@ class _add_horse_state extends State<add_HorseGroup>{
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: Visibility(
-                          visible: _isvisible,
+                      Visibility(
+                        visible: _isvisible,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "incharge",
                             hint: Text("Incharge"),
@@ -480,10 +481,10 @@ class _add_horse_state extends State<add_HorseGroup>{
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top:16,left: 16,right: 16),
-                        child:Visibility(
-                          visible: _isvisible,
+                      Visibility(
+                        visible: _isvisible,
+                        child: Padding(
+                          padding: EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDateTimePicker(
                             attribute: "date",
                             style: Theme.of(context).textTheme.body1,
@@ -500,10 +501,10 @@ class _add_horse_state extends State<add_HorseGroup>{
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top:16,left: 16,right: 16),
-                        child:Visibility(
-                          visible: _isvisible,
+                      Visibility(
+                        visible: _isvisible,
+                        child: Padding(
+                          padding: EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDateTimePicker(
                             attribute: "date",
                             style: Theme.of(context).textTheme.body1,
@@ -520,10 +521,10 @@ class _add_horse_state extends State<add_HorseGroup>{
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top:16,left: 16,right: 16),
-                        child:Visibility(
-                          visible: _isvisible,
+                      Visibility(
+                        visible: _isvisible,
+                        child: Padding(
+                          padding: EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDateTimePicker(
                             attribute: "date",
                             style: Theme.of(context).textTheme.body1,
@@ -540,10 +541,10 @@ class _add_horse_state extends State<add_HorseGroup>{
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top:16,left: 16,right: 16),
-                        child:Visibility(
-                          visible: _isvisible,
+                      Visibility(
+                        visible: _isvisible,
+                        child: Padding(
+                          padding: EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDateTimePicker(
                             attribute: "date",
                             style: Theme.of(context).textTheme.body1,
@@ -617,19 +618,17 @@ class _add_horse_state extends State<add_HorseGroup>{
                           if (_fbKey.currentState.validate()) {
                             if (isdynamic == false) {
                               Add_horsegroup_services.horseGroupSave(token, null, 0, name.text, isdynamic, null, null, null, null, null, null, null, null, null, null, null, null, null, null).then((response) {
-                                if (response != null) {
-                                  print("Save");
-//                                  Scaffold.of(context).showSnackBar(SnackBar(
-//                                    backgroundColor: Colors.green,
-//                                    content: Text("Added Sucessfully"),
-//                                  ));
-                                } else {
-                                  print("Do not");
-//                                  Scaffold.of(context).showSnackBar(SnackBar(
-//                                    backgroundColor: Colors.red,
-//                                    content: Text(" not Added"),
-//                                  ));
-                                }
+                                if(response !=null) {
+                                  var decode= jsonDecode(response);
+                                  if(decode['isSuccess'] == true){
+                                    Flushbar(message: "Added Successfully",
+                                      duration: Duration(seconds: 3),
+                                      backgroundColor: Colors.green,)
+                                      ..show(context);}
+                                  else{
+                                    Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
+                                }else{
+                                  Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                               });
                             } else {
                               Add_horsegroup_services.horseGroupSave(token, null, 0, name.text, isdynamic, select_gender_id,
@@ -642,24 +641,22 @@ class _add_horse_state extends State<add_HorseGroup>{
                                   getHorses['ownerDropDown'][select_owner_id]['id'],
                                  null,
                                   getHorses['riderDropDown'][select_rider_id]['id'], birthfrom, birthto, createdfrom, createdto).then((response) {
-                                if (response != null) {
-                                  print("Save");
-//                                  Scaffold.of(context).showSnackBar(SnackBar(
-//                                    backgroundColor: Colors.green,
-//                                    content: Text("Added Sucessfully"),
-//                                  ));
-                                } else {
-                                  print("Do not");
-//                                  Scaffold.of(context).showSnackBar(SnackBar(
-//                                    backgroundColor: Colors.red,
-//                                    content: Text(" not Added"),
-//                                  ));
-                                }
+                                if(response !=null) {
+                                var decode= jsonDecode(response);
+                                if(decode['isSuccess'] == true){
+                                  Flushbar(message: "Added Successfully",
+                                    duration: Duration(seconds: 3),
+                                    backgroundColor: Colors.green,)
+                                    ..show(context);}
+                                else{
+                                  Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
+                              }else{
+                                Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                               });
                             }
                           }
                         },
-                        child:Text("Add Horse",style: TextStyle(color: Colors.white),),
+                        child:Text("Add HorseGroup",style: TextStyle(color: Colors.white),),
                       ),
                     )
                 )

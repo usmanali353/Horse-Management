@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import  'package:flutter_form_builder/flutter_form_builder.dart';
@@ -12,28 +11,28 @@ import 'package:horse_management/Network_Operations.dart';
 
 import '../../Utils.dart';
 
-class add_training_session extends StatefulWidget{
+class update_training_session extends StatefulWidget{
   final token;
   var list;
-  add_training_session(this.token,this.list);
+  update_training_session(this.token,this.list);
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _add_training_session(token,list);
+    return _update_training_session(token,list);
   }
 
 }
-class _add_training_session extends State<add_training_session>{
+class _update_training_session extends State<update_training_session>{
 
   String selected_contact,selected_costcenter,selected_account_category,selected_currency,selected_trainer;
   int selected_contact_id=0,selected_costcenter_id,selected_account_category_id,selected_currency_id, selected_trainer_id;
   List<String> contacts=['Low','Medium','High'],cost_center=[], currency=[],account_category=[],trainer=[];
   final token;
   var list;
-  _add_training_session(this.token,this.list);
+  _update_training_session(this.token,this.list);
   DateTime date = DateTime.now();
   bool isvisible = false;
-  var session_response,session_Responsetype;
+  var session_response,session_responseType;
   TextEditingController hours, minutes, seconds, milli, ammount, comments,repose,fivemin,tenmin,thirtymin;
 
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
@@ -72,7 +71,7 @@ class _add_training_session extends State<add_training_session>{
             //print(response);
             setState(() {
               session_response=json.decode(response);
-              //if(session_response['trainerDropDown']!=null&&session_response['trainerDropDown'].length>0){
+              if(session_response['trainerDropDown']!=null&&session_response['trainerDropDown'].length>0){
                 for(int i=0;i<session_response['trainerDropDown'].length;i++)
                   trainer.add(session_response['trainerDropDown'][i]['name']);
                 for(int i=0;i<session_response['currencyDropDown'].length;i++)
@@ -81,7 +80,7 @@ class _add_training_session extends State<add_training_session>{
                   account_category.add(session_response['categoryDropDown'][i]['name']);
                 for(int i=0;i<session_response['costCenterDropDown'].length;i++)
                   cost_center.add(session_response['costCenterDropDown'][i]['name']);
-             // }
+              }
               //notes_loaded=true;
               //update_notes_visibility=true;
             });
@@ -91,20 +90,19 @@ class _add_training_session extends State<add_training_session>{
           pd.dismiss();
           if(response!=null){
             //print(response);
-            session_Responsetype=response;
-              //print(session_response);
-              if(session_Responsetype=="Speed" || session_Responsetype=="Endurance"|| session_Responsetype=="Customized"){
-                setState(() {
-                  isvisible=true;
-                });
-                }
+            session_responseType=response;
+            //print(session_response);
+            if(session_responseType=="Speed" || session_responseType=="Endurance"|| session_responseType=="Customized"){
+              setState(() {
+                isvisible=true;
+              });
+            }
           }
         });
       }else{
         print("Network Not Available");
       }
     });
-
   }
 
 
@@ -251,7 +249,7 @@ class _add_training_session extends State<add_training_session>{
                         onChanged: (value){
                           setState(() {
                             this.selected_contact=value;
-                            this.selected_contact_id=contacts.indexOf(value)+1;
+                            this.selected_contact_id=contacts.indexOf(value);
                           });
                         },
                       ),
@@ -450,68 +448,69 @@ class _add_training_session extends State<add_training_session>{
 
                   MaterialButton(
                     onPressed: (){
-                      print(trainer);
-                      print(session_response['trainerDropDown']);
                       print(token);
                       print(list['createdBy']);
                       print(list['trainingId']);
                       print(selected_trainer_id);
-                      print(comments.text);
                       if (_fbKey.currentState.validate()) {
                         Utils.check_connectivity().then((result){
                           if(result){
                             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                             pd.show();
                             if(isvisible){
-                              network_operations.addTrainingSession(token, list['createdBy'], 0,list['trainingId'], date, session_response['trainerDropDown'][selected_trainer_id]['id'], int.parse(hours.text), int.parse(minutes.text), int.parse(seconds.text), int.parse(milli.text),selected_contact_id,int.parse(repose.text),int.parse(fivemin.text),int.parse(tenmin.text),int.parse(thirtymin.text),int.parse(ammount.text),
+                              network_operations.addTrainingSession(token, list['createdBy'], list['id'],list['trainingId'], date, session_response['trainerDropDown'][selected_trainer_id]['id'],
+                                  int.parse(hours.text), int.parse(minutes.text), int.parse(seconds.text), int.parse(milli.text),selected_contact_id,int.parse(repose.text),int.parse(fivemin.text),int.parse(tenmin.text),int.parse(thirtymin.text),int.parse(ammount.text),
                                   session_response['currencyDropDown'][selected_currency_id]['id'], session_response['categoryDropDown'][selected_account_category_id]['id'], comments.text).then((respons) {
                                 pd.dismiss();
-                                print(respons);
-                                if(respons != null){
+                                setState(() {
                                   var parsedjson  = jsonDecode(respons);
-                                  if(parsedjson['isSuccess'] == true){
-                                     Flushbar(message: "Sucessfully added",duration: Duration(seconds: 3),backgroundColor: Colors.teal)..show(context);
+                                  print("ok");
+                                  if(parsedjson != null){
+                                    if(parsedjson['isSuccess'] == true){
+                                      print("Successfully data updated");
                                       Navigator.of(context).pop();
-                                    }
-
-                                }else{
-                                  Flushbar(message: "Not added",duration: Duration(seconds: 3),backgroundColor: Colors.teal,)..show(context);
-
-                                }
-//                                setState(() {
-//                                  var parsedjson  = jsonDecode(respons);
-//                                  print("ok");
-//                                  if(parsedjson != null){
-//                                    if(parsedjson['isSuccess'] == true){
-//                                      print("Successfully data updated");
-//                                      Navigator.of(context).pop();
-//                                    }else
-//                                      print("not saved");
-//                                  }else
-//                                    print("json response null");
-//                                });
+                                    }else
+                                      print("not saved");
+                                  }else
+                                    print("json response null");
+                                });
                               });
                             }else{
-                              network_operations.addTrainingSession(token, list['createdBy'], 0,list['trainingId'], date, session_response['trainerDropDown'][selected_trainer_id]['id'],
+                              network_operations.addTrainingSession(token, list['createdBy'], list['id'],list['trainingId'], date, session_response['trainerDropDown'][selected_trainer_id]['id'],
                                   int.parse(hours.text), int.parse(minutes.text), int.parse(seconds.text), int.parse(milli.text),0,0,0,0,0,int.parse(ammount.text),
                                   session_response['currencyDropDown'][selected_currency_id]['id'], session_response['categoryDropDown'][selected_account_category_id]['id'], comments.text).then((respons) {
                                 pd.dismiss();
-                                print(respons);
-//                                setState(() {
-//                                  var parsedjson  = jsonDecode(respons);
-//                                  print("ok");
-//                                  if(parsedjson != null){
-//                                    if(parsedjson['isSuccess'] == true){
-//                                      print("Successfully data updated");
-//                                      Navigator.of(context).pop();
-//                                    }else
-//                                      print("not saved");
-//                                  }else
-//                                    print("json response null");
-//                                });
+                                setState(() {
+                                  var parsedjson  = jsonDecode(respons);
+                                  print("ok");
+                                  if(parsedjson != null){
+                                    if(parsedjson['isSuccess'] == true){
+                                      print("Successfully data updated");
+                                      Navigator.of(context).pop();
+                                    }else
+                                      print("not saved");
+                                  }else
+                                    print("json response null");
+                                });
                               });
                             }
-
+//                            network_operations.addTrainingSession(token, list['createdBy'], list['id'],list['trainingId'], date, selected_trainer_id, int.parse(hours.text), int.parse(minutes.text), int.parse(seconds.text),
+//                            int.parse(milli.text),selected_contact_id,int.parse(repose.text),int.parse(fivemin.text),int.parse(tenmin.text),int.parse(thirtymin.text),int.parse(ammount.text),
+//                            selected_currency_id, selected_account_category_id, comments.text).then((respons) {
+//                              pd.dismiss();
+//                              setState(() {
+//                                var parsedjson  = jsonDecode(respons);
+//                                print("ok");
+//                                if(parsedjson != null){
+//                                  if(parsedjson['isSuccess'] == true){
+//                                    print("Successfully data updated");
+//                                    Navigator.of(context).pop();
+//                                  }else
+//                                    print("not saved");
+//                                }else
+//                                  print("json response null");
+//                              });
+//                            });
                           }
                         });
                       }

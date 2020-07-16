@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/Model/sqlite_helper.dart';
@@ -1224,17 +1225,17 @@ class add_horse_button extends StatelessWidget {
        // ,getHorses['headMarkDropDown'][headmarkid]['id'],getHorses['bodyMarkDropDown'][bodymarkid]['id'],getHorses['legMarkDropDown'][legmarkid]['id'],getHorses['dietDropDown'][dietid]['id'],getHorses['barnDropDown'][barnid]['id'],getHorses['ironBrandDropDown'][ironbrandid]['id'],riderid,inchargeid,associtaionid
           Add_horse_services.horseupdate(token,createdBy,horseId , name.text,select_gender_id, true,number,passport,microchip,dateofbirth,getHorses['colorDropDown'][colorid]['id'],getHorses['breedDropDown'][breedid]['id'],getHorses['horseCategoryDropDown'][categoryid]['id'],getHorses['sireDropDown'][sireid]['id'],getHorses['damDropDown'][damid]['id'],getHorses['headMarkingsDropDown'][headmarkid]['id'],getHorses['bodyMarkingsDropDown'][bodymarkid]['id'],getHorses['legMarkingsDropDown'][legmarkid]['id'],getHorses['dietDropDown'][dietid]['id'],getHorses['barnDropDown'][barnid]['id'],getHorses['ironBrandDropDown'][ironbrandid]['id'],getHorses['vetDropDown'][vetid]['id'],getHorses['breederDropDown'][breederid]['id'],getHorses['locationDropDown'][locationid]['id'],getHorses['riderDropDown'][riderid]['id'],getHorses['inchargeDropDown'][inchargeid]['id'],getHorses['associationDropDown'][associationid]['id'],dna).then((
               response) {
-            if (response != null) {
-              Scaffold.of(context).showSnackBar(SnackBar(
-                backgroundColor: Colors.green,
-                content: Text("update horse Sucessfully"),
-              ));
-            } else {
-              Scaffold.of(context).showSnackBar(SnackBar(
-                backgroundColor: Colors.red,
-                content: Text("horse not updated"),
-              ));
-            }
+            if(response !=null) {
+              var decode= jsonDecode(response);
+              if(decode['isSuccess'] == true){
+                Flushbar(message: "Added Successfully",
+                  duration: Duration(seconds: 3),
+                  backgroundColor: Colors.green,)
+                  ..show(context);}
+              else{
+                Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
+            }else{
+              Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
           });
         }
       },

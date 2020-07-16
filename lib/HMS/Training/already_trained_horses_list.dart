@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/Training/training_detail_page.dart';
@@ -25,84 +26,97 @@ class _already_trained_horses_list_state extends State<already_trained_horses_li
   var already_trained_list=[];
   var temp=['',''];
   bool isvisible=false;
+  var _isSearching=false;
+  TextEditingController _searchQuery;
+  String searchQuery = "";
+  var isVisible=false,isPagination=false;
+  static final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: _isSearching ? _buildSearchField() : _buildTitle(context),
+        actions: _buildActions(),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton:
-      Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                FloatingActionButton(
-                    backgroundColor: Colors.transparent,
-                    splashColor: Colors.red,
-                    child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
-                  if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
-                    Utils.check_connectivity().then((result){
-                      if(result) {
-                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
-                        pd.show();
-                        network_operations.sessions_by_page(token, pagenum).then((response) {
-                          pd.dismiss();
-                          setState(() {
-                            print(response);
-                            load_list= json.decode(response);
-                            already_trained_list = load_list['response'];
-                            print(horse_list);
+      Visibility(
+        visible: isPagination,
+        child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  FloatingActionButton(
+                      backgroundColor: Colors.transparent,
+                      splashColor: Colors.red,
+                      child: Icon(Icons.arrow_back, color: Colors.teal, size: 30,),heroTag: "btn2", onPressed: () {
+                    if(load_list['hasPrevious'] == true && pagenum >= 1 ) {
+                      Utils.check_connectivity().then((result){
+                        if(result) {
+                          ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                          pd.show();
+                          network_operations.already_trainedHorses_by_page(token, pagenum,searchQuery).then((response) {
+                            pd.dismiss();
+                            setState(() {
+                              print(response);
+                              load_list= json.decode(response);
+                              already_trained_list = load_list['response'];
+                              print(horse_list);
+                            });
                           });
-                        });
-                      }else
-                        print("network nahi hai");
-                    });
-                  }
-                  else{
-                    print("list empty");
-                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
-                  }
-                  if(pagenum > 1){
-                    pagenum = pagenum - 1;
-                  }
-                  print(pagenum);
-                }),
-                FloatingActionButton(
-                    backgroundColor: Colors.transparent,
-                    splashColor: Colors.red,
-                    child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
-                  print(load_list['hasNext']);
-                  if(load_list['hasNext'] == true && pagenum >= 1 ) {
-                    Utils.check_connectivity().then((result){
-                      if(result) {
-                        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
-                        pd.show();
-                        network_operations.trainings_by_page(
-                            token, pagenum).then((response) {
-                          pd.dismiss();
-                          setState(() {
-                            print(response);
-                            load_list = json.decode(response);
-                            already_trained_list = load_list['response'];
-                            print(horse_list);
+                        }else
+                          print("network nahi hai");
+                      });
+                    }
+                    else{
+                      print("list empty");
+                      //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                    }
+                    if(pagenum > 1){
+                      pagenum = pagenum - 1;
+                    }
+                    print(pagenum);
+                  }),
+                  FloatingActionButton(
+                      backgroundColor: Colors.transparent,
+                      splashColor: Colors.red,
+                      child: Icon(Icons.arrow_forward, color: Colors.teal, size: 30,),heroTag: "btn1", onPressed: () {
+                    print(load_list['hasNext']);
+                    if(load_list['hasNext'] == true && pagenum >= 1 ) {
+                      Utils.check_connectivity().then((result){
+                        if(result) {
+                          ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                          pd.show();
+                          network_operations.already_trainedHorses_by_page(
+                              token, pagenum,searchQuery).then((response) {
+                            pd.dismiss();
+                            setState(() {
+                              print(response);
+                              load_list = json.decode(response);
+                              already_trained_list = load_list['response'];
+                              print(horse_list);
+                            });
                           });
-                        });
-                      }else
-                        print("network nahi hai");
-                    });
-                  }
-                  else{
-                    print("list empty");
-                    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
-                  }
-                  if(pagenum < total_page) {
-                    pagenum = pagenum + 1;
-                  }
-                  print(pagenum);
+                        }else
+                          print("network nahi hai");
+                      });
+                    }
+                    else{
+                      print("list empty");
+                      //Scaffold.of(context).showSnackBar(SnackBar(content: Text("List empty"),));
+                    }
+                    if(pagenum < total_page) {
+                      pagenum = pagenum + 1;
+                    }
+                    print(pagenum);
 
-                })
-              ]
-          )
+                  })
+                ]
+            )
+        ),
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
@@ -120,6 +134,15 @@ class _already_trained_horses_list_state extends State<already_trained_horses_li
                     load_list=json.decode(response);
                     already_trained_list = load_list['response'];
                     total_page=load_list['totalPages'];
+                    if(total_page == 1){
+                      print("init state page = 1");
+                      isPagination = false;
+                    }else{
+                      print("init state multi page ");
+                      setState(() {
+                        isPagination = true;
+                      });
+                    }
                     print(total_page);
                   });
 
@@ -214,6 +237,7 @@ class _already_trained_horses_list_state extends State<already_trained_horses_li
 
   @override
   void initState() {
+    _searchQuery =TextEditingController();
     super.initState();
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
@@ -235,4 +259,159 @@ class _already_trained_horses_list_state extends State<already_trained_horses_li
     }
     return training_type_name;
   }
+
+
+  void _startSearch() {
+    print("open search box");
+    ModalRoute
+        .of(context)
+        .addLocalHistoryEntry(new LocalHistoryEntry(onRemove: _stopSearching));
+
+    setState(() {
+      _isSearching = true;
+    });
+  }
+
+
+  void _stopSearching() {
+    _clearSearchQuery();
+
+    setState(() {
+      _isSearching = false;
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    });
+  }
+
+  void _clearSearchQuery() {
+    print("close search box");
+    setState(() {
+      _searchQuery.clear();
+      updateSearchQuery("");
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    });
+  }
+
+  Widget _buildTitle(BuildContext context) {
+    var horizontalTitleAlignment =
+    Platform.isIOS ? CrossAxisAlignment.center : CrossAxisAlignment.start;
+
+    return new InkWell(
+      onTap: () => scaffoldKey.currentState.openDrawer(),
+      child: new Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: horizontalTitleAlignment,
+          children: <Widget>[
+            const Text(''),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSearchField() {
+    return new TextField(
+      controller: _searchQuery,
+      textInputAction: TextInputAction.search,
+      autofocus: true,
+      decoration: const InputDecoration(
+        hintText: 'Search...',
+        border: InputBorder.none,
+        hintStyle: const TextStyle(color: Colors.white30),
+      ),
+      style: const TextStyle(color: Colors.white, fontSize: 16.0),
+      onSubmitted: updateSearchQuery,
+    );
+  }
+
+  void updateSearchQuery(String newQuery) {
+
+    setState(() {
+      searchQuery = newQuery;
+    });
+    Utils.check_connectivity().then((result){
+      if(result){
+        ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+        pd.show();
+        network_operations.already_trainedHorses_by_page(token,pagenum,searchQuery).then((response){
+          pd.dismiss();
+          if(response!=null){
+            setState(() {
+              if(load_list!=null){
+                load_list.clear();
+              }
+              if(already_trained_list!=null){
+                already_trained_list.clear();
+              }
+              load_list=json.decode(response);
+              already_trained_list = load_list['response'];
+              total_page=load_list['totalPages'];
+              print(total_page);
+              isVisible=true;
+              if(total_page == 1){
+                setState(() {
+                  isPagination = false;
+
+                });
+              }else{
+                isPagination = true;
+              }
+
+            });
+
+          }else{
+            setState(() {
+              isVisible=false;
+            });
+            Scaffold.of(context).showSnackBar(SnackBar(
+              backgroundColor: Colors.red,
+              content: Text("List Not Available"),
+            ));
+          }
+        });
+      }else{
+        Scaffold.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.red,
+          content: Text("Network Not Available"),
+        ));
+      }
+    });
+  }
+
+  List<Widget> _buildActions() {
+
+    if (_isSearching) {
+      return <Widget>[
+        new IconButton(
+          icon: const Icon(Icons.clear),
+          onPressed: () {
+            if (_searchQuery == null || _searchQuery.text.isEmpty) {
+              Navigator.pop(context);
+              return;
+            }
+            _clearSearchQuery();
+          },
+        ),
+      ];
+    }
+
+    return <Widget>[
+      new IconButton(
+        icon: const Icon(Icons.search),
+        onPressed: _startSearch,
+      ),
+//      Padding(padding: EdgeInsets.all(8.0),
+//        child: InkWell(child: Icon(Icons.add),
+//            onTap: () =>  Navigator.push(context, MaterialPageRoute(builder: (context) => add_training(token)),)
+//
+//        ),
+//
+//
+//      )
+    ];
+  }
+
 }

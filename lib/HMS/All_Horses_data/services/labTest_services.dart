@@ -19,10 +19,10 @@ class labtest_services {
     } else
       return null;
   }
-  static Future<String> labTestlistbypage (String token,int pagenum) async {
+  static Future<String> labTestlistbypage (String token,int pagenum,String search) async {
     Map<String, String> headers = {'Authorization': 'Bearer ' + token};
     final response = await http.get(
-      'http://192.236.147.77:8083/api/horse/GetAllLabTests?pageNumber='+pagenum.toString()+'&pageSize=10',
+      'http://192.236.147.77:8083/api/horse/GetAllLabTests?pageNumber='+pagenum.toString()+'&pageSize=10&SearchString='+search,
       headers: headers,
     );
     if (response.statusCode == 200) {

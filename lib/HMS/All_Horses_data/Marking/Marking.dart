@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:horse_management/HMS/All_Horses_data/services/marking_services.dart';
@@ -68,11 +69,17 @@ class MarkingState extends State<Marking> {
       pd.show();
       MarkingService.markingSave(prefs.getString('token'),horseData['horseId'], bs64).then((response){
         pd.dismiss();
-        if(response!=null){
-
+        if(response !=null) {
+          var decode= jsonDecode(response);
+          if(decode['isSuccess'] == true){
+            Flushbar(message: "Added Successfully",
+              duration: Duration(seconds: 3),
+              backgroundColor: Colors.green,)
+              ..show(context);}
+          else{
+            Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
         }else{
-
-        }
+          Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
       });
     });
 

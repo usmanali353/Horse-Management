@@ -222,9 +222,9 @@ static Future<String> change_notes_visibility(String token,int id) async{
   }else
     return null;
 }
-static Future<String> get_all_notes(String token,int pagenum) async{
+static Future<String> get_all_notes(String token,int pagenum,String search) async{
   Map<String,String> headers = {'Authorization':'Bearer '+token};
-  final response = await http.get('http://192.236.147.77:8083/api/horse/GetAllNotes?pageNumber='+pagenum.toString()+'&pageSize=10', headers: headers,);
+  final response = await http.get('http://192.236.147.77:8083/api/horse/GetAllNotes?pageNumber='+pagenum.toString()+'&pageSize=10&SearchString='+search, headers: headers,);
   if(response.statusCode==200){
     return response.body;
   }else
@@ -396,26 +396,126 @@ static Future<String> delete_already_trained_horses(String token,int id) async{
   }
 static Future<String> addTrainingSession(String token,String createdBy,int id,int trainingId,DateTime date,int trainer,int hour,int min,int sec,int milli,int activitylevel,int repose,int fivemin,int tenmin,int thirtymin,int amount,int currencyid,int category,String comment)async{
   Map<String,String> headers = {'Authorization':'Bearer '+token,'Content-Type':'application/json'};
-  final body = jsonEncode({ "id": id,
-    "trainingId": trainingId,
-    "date":date,
-    "trainerId":trainer,
-    "amount": amount,"hours": hour,
-    "minutes": min,
-    "seconds": sec,
-    "milli": milli,
-    "levelOfActivity": activitylevel,
-    "min": null,
-    "max": null,
-    "average": null,
-    "repose": repose,
-    "min5": fivemin,
-    "min10": tenmin,
-    "min30": thirtymin,
-    "comments": comment,
-    "amount":amount,
-    "currencyId": currencyid,
-    "categoryId": category,'createdBy':createdBy,'isActive':true,'createdOn':DateTime.now(),},toEncodable: Utils.myEncode);
+  final body = jsonEncode(
+
+//      {
+//        "id": id,
+//        "trainingId": trainingId,
+//        "trainerId":trainer,
+//        "currencyId": currencyid,
+//        "categoryId": category,
+//        "date": date,
+//        "amount": amount,
+//        "createdBy": createdBy,
+//        "createdOn": DateTime.now(),
+//        "isActive": true,
+//        "trainingSprints": [
+//          {
+//            "sprintId": 0,
+//            "comments": "Anny Comment",
+//            "createdBy": "41b19c63-510c-48db-85b5-f745c9132c53",
+//            "createdOn": "2020-03-03T09:39:14.507",
+//            "isActive": null
+//          }
+//        ],
+//        "trainingExercises": [
+//          {
+//            "trainingExerciseId": 0,
+//            "planExerciseId": 1,
+//            "createdBy": "41b19c63-510c-48db-85b5-f745c9132c53",
+//            "createdOn": "2020-03-07T14:18:06.467",
+//            "isActive": true
+//          },
+//
+//        ]
+//      },
+
+
+
+      {
+        "id": id,
+        "trainingId": trainingId,
+        "date":date,
+        "trainerId":trainer,
+        "amount": amount,"hours": hour,
+        "minutes": min,
+        "seconds": sec,
+        "milli": milli,
+        "levelOfActivity": activitylevel,
+        "min": null,
+        "max": null,
+        "average": null,
+        "repose": repose,
+        "min5": fivemin,
+        "min10": tenmin,
+        "min30": thirtymin,
+        "comments": comment,
+        "currencyId": currencyid,
+        "categoryId": category,'createdBy':createdBy,'createdOn':DateTime.now(),
+        "isActive": true,
+        "trainingSprints": [
+          {
+            "sprintId": 0,
+            "comments": "Anny Comment",
+            "createdBy": "41b19c63-510c-48db-85b5-f745c9132c53",
+            "createdOn": "2020-03-03T09:39:14.507",
+            "isActive": null
+          }
+        ],
+        "trainingExercises": [
+          {
+            "trainingExerciseId": 0,
+            "planExerciseId": 1,
+            "createdBy": "41b19c63-510c-48db-85b5-f745c9132c53",
+            "createdOn": "2020-03-07T14:18:06.467",
+            "isActive": true
+          },
+
+        ]
+      },
+
+//
+//      { "id": id,
+//    "trainingId": trainingId,
+//    "date":date,
+//    "trainerId":trainer,
+//    "amount": amount,"hours": hour,
+//    "minutes": min,
+//    "seconds": sec,
+//    "milli": milli,
+//    "levelOfActivity": activitylevel,
+//    "min": null,
+//    "max": null,
+//    "average": null,
+//    "repose": repose,
+//    "min5": fivemin,
+//    "min10": tenmin,
+//    "min30": thirtymin,
+//    "comments": comment,
+//    "amount":amount,
+//    "currencyId": currencyid,
+//    "categoryId": category,'createdBy':createdBy,'isActive':true,'createdOn':DateTime.now(),
+//    "trainingSprints": [
+//      {
+//        "sprintId": 0,
+//        "comments": "Anny Comment",
+//        "createdBy": "41b19c63-510c-48db-85b5-f745c9132c53",
+//        "createdOn": "2020-03-03T09:39:14.507",
+//        "isActive": true,
+//      }
+//    ],
+//    "trainingExercises": [
+//      {
+//        "trainingExerciseId": 0,
+//        "planExerciseId": 1,
+//        "createdBy": "41b19c63-510c-48db-85b5-f745c9132c53",
+//        "createdOn": "2020-03-07T14:18:06.467",
+//        "isActive": true,
+//      },
+//    ]
+//
+//  },
+      toEncodable: Utils.myEncode);
   var response= await http.post("http://192.236.147.77:8083/api/Training/TrainingSessionSave",headers: headers,body: body);
   print(response.body);
   if(response.statusCode==200){
@@ -538,12 +638,12 @@ static Future<String> semen_collection_by_page (String token,int pagenum, String
   } else
     return null;
 }
-static Future<String> trainings_by_page (String token,int pagenum) async {
+static Future<String> trainings_by_page (String token,int pagenum,String search) async {
   Map<String, String> headers = {'Authorization': 'Bearer '+token};
   final response = await http.get(
     //'http://192.236.147.77:8083/api/horse/GetAllIncomeAndExpenses?pageNumber=2&pageSize=10',
 
-    'http://192.236.147.77:8083/api/Training/GetTrainings?pageNumber='+pagenum.toString()+'&pageSize=10',
+    'http://192.236.147.77:8083/api/Training/GetTrainings?pageNumber='+pagenum.toString()+'&pageSize=10&SearchString='+search,
     headers: headers,
   );
   if (response.statusCode == 200) {
@@ -551,12 +651,12 @@ static Future<String> trainings_by_page (String token,int pagenum) async {
   } else
     return null;
 }
-static Future<String> trainingPlan_by_page (String token,int pagenum) async {
+static Future<String> trainingPlan_by_page (String token,int pagenum,String search) async {
   Map<String, String> headers = {'Authorization': 'Bearer '+token};
   final response = await http.get(
     //'http://192.236.147.77:8083/api/horse/GetAllIncomeAndExpenses?pageNumber=2&pageSize=10',
 
-    'http://192.236.147.77:8083/api/Training/GetAllTrainingPlans?pageNumber='+pagenum.toString()+'&pageSize=10',
+    'http://192.236.147.77:8083/api/Training/GetAllTrainingPlans?pageNumber='+pagenum.toString()+'&pageSize=10&SearchString='+search,
     headers: headers,
   );
   if (response.statusCode == 200) {
@@ -564,12 +664,12 @@ static Future<String> trainingPlan_by_page (String token,int pagenum) async {
   } else
     return null;
 }
-static Future<String> sessions_by_page (String token,int pagenum) async {
+static Future<String> sessions_by_page (String token,int pagenum,String search) async {
   Map<String, String> headers = {'Authorization': 'Bearer '+token};
   final response = await http.get(
     //'http://192.236.147.77:8083/api/horse/GetAllIncomeAndExpenses?pageNumber=2&pageSize=10',
 
-    'http://192.236.147.77:8083/api/Training/GetAllTrainingSessions?pageNumber='+pagenum.toString()+'&pageSize=10',
+    'http://192.236.147.77:8083/api/Training/GetAllTrainingSessions?pageNumber='+pagenum.toString()+'&pageSize=10&SearchString='+search,
     headers: headers,
   );
   if (response.statusCode == 200) {
@@ -577,12 +677,12 @@ static Future<String> sessions_by_page (String token,int pagenum) async {
   } else
     return null;
 }
-static Future<String> already_trainedHorses_by_page (String token,int pagenum) async {
+static Future<String> already_trainedHorses_by_page (String token,int pagenum,String search) async {
   Map<String, String> headers = {'Authorization': 'Bearer '+token};
   final response = await http.get(
     //'http://192.236.147.77:8083/api/horse/GetAllIncomeAndExpenses?pageNumber=2&pageSize=10',
 
-    'http://192.236.147.77:8083/api/Training/GetAllAlreadyTrainedHorses?pageNumber='+pagenum.toString()+'&pageSize=10',
+    'http://192.236.147.77:8083/api/Training/GetAllAlreadyTrainedHorses?pageNumber='+pagenum.toString()+'&pageSize=10&SearchString='+search,
     headers: headers,
   );
   if (response.statusCode == 200) {

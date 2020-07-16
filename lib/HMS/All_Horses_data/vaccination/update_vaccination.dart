@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flushbar/flushbar.dart';
 import 'package:horse_management/HMS/All_Horses_data/services/vaccination_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -441,10 +442,17 @@ class _state_add_farrier extends State<update_vaccination>{
                             pd.show();
                             vaccination_services.vaccinationSave(vaccinationlist['createdBy'],token,vaccinationlist['vaccinationId'], vaccinationdropdown['horseDropDown'][selected_horse_id]['id'],Start_date,End_Date, vaccinationdropdown['vaccinationTypeDropDown'][selected_vaccinationtype_id]['id'],vaccinationdropdown['vaccineDropDown'][selected_vaccine_id]['id'],vaccinationdropdown['vetDropDown'][selected_vet_id]['id'],dose.text,amount.text, vaccinationdropdown['currencyDropDown'][selected_currency_id]['id'], vaccinationdropdown['categoryDropDown'][selected_category_id]['id'], vaccinationdropdown['costCenterDropDown'][selected_costcenter_id]['id'],).then((response){
                               pd.dismiss();
-                              if(response !=null)
-                                print("Successfully updated");
-                              else{
-                                print("data not update");}
+                              if(response !=null) {
+                                var decode= jsonDecode(response);
+                                if(decode['isSuccess'] == true){
+                                  Flushbar(message: "Added Successfully",
+                                    duration: Duration(seconds: 3),
+                                    backgroundColor: Colors.green,)
+                                    ..show(context);}
+                                else{
+                                  Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
+                              }else{
+                                Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                             });
 
                           }
