@@ -563,11 +563,10 @@ class add_horse_button extends StatelessWidget {
         print(dateofbirth);
         print(select_gender_id);
         print(number);
-        print(microchip);
         print(getHorses['breedDropDown'][breedid]['id']);
         print(getHorses['colorDropDown'][colorid]['id']);
         print(getHorses['damDropDown'][damid]['id']);
-
+        print("flutter");
         print(getHorses['breedDropDown'][breedid]['id']);
 
 //        //print(colorlist['colors']);

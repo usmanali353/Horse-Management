@@ -57,8 +57,8 @@ class horse_list extends StatefulWidget{
 
   @override
   void initState() {
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+//    WidgetsBinding.instance
+//        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     _searchQuery =TextEditingController();
 
     Utils.check_connectivity().then((result){
@@ -68,6 +68,7 @@ class horse_list extends StatefulWidget{
         pd.show();
         Add_horse_services.horselist(token).then((response){
           pd.dismiss();
+          pd.hide();
           // print(response.length.toString());
           if(response!=null){
             setState(() {
@@ -178,6 +179,7 @@ class horse_list extends StatefulWidget{
                             pd.show();
                             Add_horse_services.horselistbypage(token, pagenum,searchQuery).then((response) {
                               pd.dismiss();
+                              pd.hide();
                               print("has pre in if");
                               setState(() {
                                 //print(response);
@@ -252,18 +254,19 @@ class horse_list extends StatefulWidget{
                 pd.show();
                 Add_horse_services.horselistbypage(token, pagenum,searchQuery).then((response) {
                   pd.dismiss();
+                  pd.hide();
                   setState(() {
                     print(response);
                     load_list = json.decode(response);
                     horse_list = load_list['response'];
                     total_page=load_list['totalPages'];
                     if(total_page == 1 || total_page == -2147483648){
-                      print("init state page = 1");
+                      print("refresh page = 1");
                       setState(() {
                         isPagination = false;
                       });
                     }else{
-                      print("init state multi page ");
+                      print("ref multi page ");
                       setState(() {
                         isPagination = true;
                       });
