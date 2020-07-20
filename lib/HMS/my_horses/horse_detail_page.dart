@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:horse_management/HMS/All_Horses_data/Marking/Marking.dart';
 import 'package:horse_management/HMS/my_horses/HypotheticPedegree/hypothetic_pedegree_page.dart';
+import 'package:horse_management/HMS/my_horses/Marking/marking.dart';
 import 'package:horse_management/HMS/my_horses/add_horse/update_horse.dart';
 import 'package:horse_management/HMS/my_horses/breeding_sale/breeding_sales_specific.dart';
 import 'package:horse_management/HMS/my_horses/competetion/specific_competetion.dart';
@@ -12,7 +12,9 @@ import 'package:horse_management/HMS/my_horses/services/add_horse_services.dart'
 import 'package:horse_management/HMS/my_horses/training/tariningList_specific.dart';
 import 'package:horse_management/HMS/my_horses/vaccination/vaccination_list.dart';
 import 'package:horse_management/HMS/my_horses/vet/vetList.dart';
+import 'package:need_resume/need_resume.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'Marking/add_marking.dart';
 import 'health_record/health_record_list.dart';
 import 'incomeExpense/income_expense_list.dart';
 import 'package:horse_management/HMS/my_horses/lab_reports/lab_test_list.dart';
@@ -30,7 +32,7 @@ class horse_detail extends StatefulWidget {
   }
 }
 
-class _Profile_Page_State extends State<horse_detail> {
+class _Profile_Page_State extends ResumableState<horse_detail> {
   var horsedata;
   SharedPreferences prefs;
   var list,blist;
@@ -38,6 +40,14 @@ class _Profile_Page_State extends State<horse_detail> {
   _Profile_Page_State(this.horsedata);
   var getinfo;
    String gender_value;
+
+  @override
+  void onResume() {
+    if(resume.data.toString()== "close"){
+      Navigator.pop(context,"refresh");
+    }
+  }
+
   @override
   void initState() {
     if(horsedata != null) {
@@ -379,7 +389,7 @@ class _Profile_Page_State extends State<horse_detail> {
                 leading: Icon(FontAwesomeIcons.marker,size: 40,),
                 trailing: Icon(Icons.arrow_right),
                 onTap: (){
-                  Navigator.push(context,MaterialPageRoute(builder: (context)=>Marking(horsedata)));
+                 push(context,MaterialPageRoute(builder: (context)=>marking(horsedata)));
                 },
               ),
 //              ListTile(

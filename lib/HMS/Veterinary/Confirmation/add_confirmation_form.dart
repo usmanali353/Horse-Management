@@ -931,6 +931,7 @@ class add_confirmationState extends State<add_confirmation>{
                   print(_rhdata);
                   print(_lhdata);
                   List<Map> confirmationDetails=[];
+
                   confirmationDetails.add(_rfdata);
                   confirmationDetails.add(_lfdata);
                   confirmationDetails.add(_rhdata);

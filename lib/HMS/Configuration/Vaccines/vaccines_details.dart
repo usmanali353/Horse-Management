@@ -59,7 +59,7 @@ class _vaccines_details_page extends State<vaccines_details_page>{
                 ),
                 ListTile(
                   title: Text("Dosage in Gestation: "),
-                  trailing: Text(vaccines_data['doze1MonthNo'].toString()+"-"+vaccines_data['doze2MonthNo'].toString()+"-"+vaccines_data['doze3MonthNo'].toString()!=null?vaccines_data['doze1MonthNo'].toString()+" - "+vaccines_data['doze2MonthNo'].toString()+" - "+vaccines_data['doze3MonthNo'].toString():''),
+                  trailing: Text(vaccines_data['doze1MonthNo'].toString()!=null || "-"+vaccines_data['doze2MonthNo'].toString()!=null||vaccines_data['doze3MonthNo'].toString()!=null?vaccines_data['doze1MonthNo'].toString()+" - "+vaccines_data['doze2MonthNo'].toString()+" - "+vaccines_data['doze3MonthNo'].toString():'empty'),
                 ),
                 ListTile(
                   title: Text("Comments: "),

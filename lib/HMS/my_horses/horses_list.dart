@@ -21,7 +21,7 @@ class horse_list extends StatefulWidget{
     return _training_list_state(token);
   }
 }
- class _training_list_state extends State<horse_list>{
+ class _training_list_state extends ResumableState<horse_list>{
   String token;
   var _isSearching=false;
   TextEditingController _searchQuery;
@@ -46,60 +46,68 @@ class horse_list extends StatefulWidget{
 //    }
 //  }
 
+   @override
+   void onResume() {
+     if(resume.data.toString()== "refresh"){
+       WidgetsBinding.instance
+           .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+     }
+   }
+
   @override
   void initState() {
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     _searchQuery =TextEditingController();
 
-//    Utils.check_connectivity().then((result){
-//      if(result) {
-//        ProgressDialog pd = ProgressDialog(
-//            context, isDismissible: true, type: ProgressDialogType.Normal);
-//        pd.show();
-//        Add_horse_services.horselist(token).then((response){
-//          pd.dismiss();
-//          // print(response.length.toString());
-//          if(response!=null){
-//            setState(() {
-//              //var parsedjson = jsonDecode(response);
-//              load_list  = jsonDecode(response);
-//              horse_list = load_list['response'];
-//              total_page=load_list['totalPages'];
-//              if(total_page == 1){
-//                print("init state page = 1");
-//                setState(() {
-//                  isPagination = false;
-//                });
-//              }else{
-//                print("init state multi page ");
-//                setState(() {
-//                  isPagination = true;
-//                });
-//              }
-//              print(total_page);
-//              //print(horse_list['createdBy']);
-//            });
-//
-//          }else{
-//            Scaffold.of(context).showSnackBar(SnackBar(content: Text("hoserlist empty"),backgroundColor: Colors.red,));
-//          }
+    Utils.check_connectivity().then((result){
+      if(result) {
+        ProgressDialog pd = ProgressDialog(
+            context, isDismissible: true, type: ProgressDialogType.Normal);
+        pd.show();
+        Add_horse_services.horselist(token).then((response){
+          pd.dismiss();
+          // print(response.length.toString());
+          if(response!=null){
+            setState(() {
+              //var parsedjson = jsonDecode(response);
+              load_list  = jsonDecode(response);
+              horse_list = load_list['response'];
+              total_page=load_list['totalPages'];
+              if(total_page == 1){
+                print("init state page = 1");
+                setState(() {
+                  isPagination = false;
+                });
+              }else{
+                print("init state multi page ");
+                setState(() {
+                  isPagination = true;
+                });
+              }
+              print(total_page);
+              //print(horse_list['createdBy']);
+            });
+
+          }else{
+            Scaffold.of(context).showSnackBar(SnackBar(content: Text("hoserlist empty"),backgroundColor: Colors.red,));
+          }
+        });
+//        Add_horse_services.horselistWithSearch(token,pagenum,"hor").then((response) {
+//          setState(() {
+//            print("Teri mehrbani");
+//            print(response);
+//            load_list= json.decode(response);
+//           // horse_list = load_list['response'];
+//           // print(horse_list);
+//          });
 //        });
-////        Add_horse_services.horselistWithSearch(token,pagenum,"hor").then((response) {
-////          setState(() {
-////            print("Teri mehrbani");
-////            print(response);
-////            load_list= json.decode(response);
-////           // horse_list = load_list['response'];
-////           // print(horse_list);
-////          });
-////        });
-//      }else
-//        Scaffold.of(context).showSnackBar(SnackBar(
-//            backgroundColor: Colors.red,
-//            content: Text("Network Error")
-//        ));
-//    });
+      }else
+        Scaffold.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.red,
+            content: Text("Network Error")
+        ));
+    });
   }
 
 
@@ -239,8 +247,10 @@ class horse_list extends StatefulWidget{
           onRefresh: (){
             return Utils.check_connectivity().then((result){
               if(result){
-                Add_horse_services.horselistbypage(
-                    token, pagenum,searchQuery).then((response) {
+                ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                pd.show();
+                Add_horse_services.horselistbypage(token, pagenum,searchQuery).then((response) {
+                  pd.dismiss();
                   setState(() {
                     print(response);
                     load_list = json.decode(response);
@@ -321,7 +331,7 @@ class horse_list extends StatefulWidget{
                     //leading: Image.asset("Assets/horses_icon.png"),
                     onTap: (){
                       print((horse_list[index]));
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>horse_detail(horse_list[index])));
+                      push(context, MaterialPageRoute(builder: (context)=>horse_detail(horse_list[index])));
                     },
                   ),
 

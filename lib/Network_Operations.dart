@@ -53,7 +53,7 @@ static Future<String> Reset_Password(String email,String token,String password) 
     body: body,
   );
   print(response.body);
-  if(response.statusCode==300) {
+  if(response.statusCode==200) {
     return response.body;
   }else
     return null;

@@ -54,8 +54,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     FadeAnimation(2.8,CustomButton(
                       label: "Sign up",
                       background: Colors.transparent,
-                      fontColor: Colors.white,
-                      borderColor: Colors.white,
+                      fontColor: Colors.teal,
+                      borderColor: Colors.teal,
                       onTap:(){
                         Navigator.push(context, MaterialPageRoute(builder: (context)=> SignUpScreen()));
                       } ,
@@ -64,8 +64,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     SizedBox(height: 20),
                     FadeAnimation(3.2,CustomButtonAnimation(
                       label: "Sign In",
-                      backbround: Colors.white,
-                      borderColor: Colors.white,
+                      backbround: Colors.teal,
+                      borderColor: Colors.teal,
                       fontColor: Color(0xFFF001117),
                       child: LoginScreen(),
                     )),

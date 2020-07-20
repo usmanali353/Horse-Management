@@ -178,7 +178,8 @@ class scrollview extends StatelessWidget {
                                 var pd= ProgressDialog(context, type: ProgressDialogType.Normal);
                                 pd.show();
                                 network_operations.Reset_Password(Email,token,password.text).then((response_json)async{
-                                   if(response_json!=null){
+                                   pd.dismiss();
+                                  if(response_json!=null){
                                      Scaffold.of(context).showSnackBar(SnackBar(
                                        content: Text("Password Reset Sucessfully"),
                                        backgroundColor: Colors.green,

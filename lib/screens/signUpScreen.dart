@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
@@ -179,12 +180,14 @@ class scrollview extends StatelessWidget {
                                 content: Text("Email is Required"),
                                 backgroundColor: Colors.red,
                               ));
-                            }else if(!Utils.validateEmail(email.text)){
+                            }
+                            else if(!Utils.validateEmail(email.text)){
                               Scaffold.of(context).showSnackBar(SnackBar(
                                 content: Text("Email Format is Invalid"),
                                 backgroundColor: Colors.red,
                               ));
-                            }else if(password.text == null || password.text.isEmpty){
+                            }
+                            else if(password.text == null || password.text.isEmpty){
                               Scaffold.of(context).showSnackBar(SnackBar(
                                 content: Text("Password is Required"),
                                 backgroundColor: Colors.red,
@@ -201,22 +204,27 @@ class scrollview extends StatelessWidget {
                                   pd.show();
                                   network_operations.Sign_Up(name.text, email.text, password.text).then((response) async{
                                     pd.dismiss();
+                                    print(response);
                                     if(response!=null){
                                       Scaffold.of(context).showSnackBar(SnackBar(
                                         content: Text("Sign Up Sucess"),
                                         backgroundColor: Colors.green,
+                                        duration: Duration(seconds: 3),
                                       ));
-                                    }else{
-                                      Scaffold.of(context).showSnackBar(SnackBar(
-                                        content: Text("Sign Up Failed"),
-                                        backgroundColor: Colors.red,
-                                      ));
+                                    }
+                                    else{
+//                                      Scaffold.of(context).showSnackBar(SnackBar(
+//                                        content: Text("Sign Up Failed"),
+//                                        backgroundColor: Colors.red,
+//                                      ));
+                                    Flushbar(message: "$response",backgroundColor: Colors.red,duration: Duration(seconds: 3),).show(context);
                                     }
                                   });
                                 }else{
                                   Scaffold.of(context).showSnackBar(SnackBar(
                                     content: Text('Network not Available'),
                                     backgroundColor: Colors.red,
+                                    duration: Duration(seconds: 3),
                                   ));
                                 }
                               });
