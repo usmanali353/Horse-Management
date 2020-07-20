@@ -108,7 +108,7 @@ class _add_vaccinationtypes extends State<add_vaccinationtypes>{
                                 value: name, child: Text("$name")))
                                 .toList(),
                             style: Theme.of(context).textTheme.body1,
-                            decoration: InputDecoration(labelText: "Is Income",
+                            decoration: InputDecoration(labelText: "Can Be Delayed",
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(9.0),
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)

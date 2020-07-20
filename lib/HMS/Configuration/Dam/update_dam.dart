@@ -814,6 +814,7 @@ class _update_dam extends State<update_dam>{
                                                 ),
                                                 backgroundColor: Colors.green,
                                               ));
+                                              Navigator.pop(context);
                                             }else{
                                               Scaffold.of(context).showSnackBar(SnackBar(
                                                 content: Text("Sire Updated Failed",

@@ -273,7 +273,7 @@ class _paddocks_list extends State<paddocks_list>{
                           color: Colors.red,
                           caption: 'Hide',
                           onTap: () async {
-                            SireServices.changeSireVisibility(token, paddock_lists[index]['id']).then((response){
+                            PaddockServices.changePaddockVisibility(token, paddock_lists[index]['id']).then((response){
                               print(response);
                               if(response!=null){
                                 Scaffold.of(context).showSnackBar(SnackBar(

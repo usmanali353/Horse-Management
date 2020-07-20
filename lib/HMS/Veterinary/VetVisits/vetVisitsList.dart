@@ -267,14 +267,14 @@ class vetVisitListState extends State<vetVisitList>{
 
                         },
                       ),
-                      IconSlideAction(
-                        icon: Icons.edit,
-                        color: Colors.blue,
-                        caption: 'Update',
-                        onTap: () async {
-                          // Navigator.push(context,MaterialPageRoute(builder: (context)=>update_training(token,training_list[index])));
-                        },
-                      ),
+//                      IconSlideAction(
+//                        icon: Icons.edit,
+//                        color: Colors.blue,
+//                        caption: 'Update',
+//                        onTap: () async {
+//                          // Navigator.push(context,MaterialPageRoute(builder: (context)=>update_training(token,training_list[index])));
+//                        },
+//                      ),
                     ],
                     child: ListTile(
                       enabled: vetvisits_list[index]['isActive'],

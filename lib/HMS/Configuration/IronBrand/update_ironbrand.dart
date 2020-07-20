@@ -149,6 +149,7 @@ class add_picture_button extends StatelessWidget {
                           content: Text("Updated"),
                           backgroundColor: Colors.green,
                         ));
+                        Navigator.pop(context);
                       }else{
                         Scaffold.of(context).showSnackBar(SnackBar(
                           content: Text("Not Updated"),

@@ -123,9 +123,10 @@ class _pictures_list_state extends State<pictures_list>{
                           ),
                         ],
                         child: ListTile(
+                          enabled: picture_list[index]['isActive'],
                           title: Text(picture_list!=null?picture_list[index]['horseName']['name']:''),
                           subtitle: Text(picture_list!=null?picture_list[index]['date'].toString().replaceAll("T00:00:00",''):''),
-                          leading: picture_list[index]['image']!=null?Image.memory(base64.decode(picture_list[index]['image'])):Text(''),
+                          leading: picture_list[index]['image']!=null?Container(width: 50,child: Image.memory(base64.decode(picture_list[index]['image']))):Text(''),
                           onTap: (){
                                 return showDialog<Null>(
         context: context,

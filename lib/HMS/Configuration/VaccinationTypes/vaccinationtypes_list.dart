@@ -248,7 +248,7 @@ class _vaccinationtypes_list extends State<vaccinationtypes_list>{
                           color: Colors.red,
                           caption: 'Hide',
                           onTap: () async {
-                            ColorsServices.changeColorVisibility(token, types_lists[index]['vaccinationTypeId']).then((response){
+                            VaccinationTypesServices.changeVaccinationTypeVisibility(token, types_lists[index]['vaccinationTypeId']).then((response){
                               print(response);
                               if(response!=null){
                                 Scaffold.of(context).showSnackBar(SnackBar(

@@ -182,7 +182,7 @@ class _configuration_Category extends State<configuration_Category>{
                       ListTile(
                         title: Text("Performance Types"),
                         subtitle: Text("Add Performance Types"),
-                        leading: FaIcon(FontAwesomeIcons.superpowers, color: Colors.teal.shade200, size: 40,),
+                        leading: FaIcon(FontAwesomeIcons.chartLine, color: Colors.teal.shade200, size: 40,),
                         //leading: Icon(Icons.library_books,size: 40, color: Colors.tealAccent,),
                         trailing: Icon(Icons.arrow_right),
                         onTap: (){
@@ -192,7 +192,7 @@ class _configuration_Category extends State<configuration_Category>{
                       ListTile(
                         title: Text("Associations"),
                         subtitle: Text("Add Associations"),
-                        leading: FaIcon(FontAwesomeIcons.centos, color: Colors.redAccent.shade400, size: 40,),
+                        leading: FaIcon(FontAwesomeIcons.projectDiagram, color: Colors.redAccent.shade400, size: 40,),
 
                         //leading: Icon(Icons.shopping_basket,size: 40, color: Colors.redAccent,),
                         trailing: Icon(Icons.arrow_right),

@@ -561,7 +561,9 @@ class _update_vaccines extends State<update_vaccines> {
                                               if(result){
                                                 ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                                                 pd.show();
-                                                VaccinesServices.addVaccines(token, specificvaccine['id'], name.text, comments.text,selected_reminder_id, usage_id, primaryvaccination.text, booster.text, revaccination.text, firstdose.text, seconddose.text, thirddose.text, specificvaccine['createdBy'])              .then((respons){
+                                                VaccinesServices.addVaccines(token, specificvaccine['id'], name.text, comments.text,selected_reminder_id, usage_id, primaryvaccination.text, booster.text, revaccination.text, firstdose.text, seconddose.text, thirddose.text, specificvaccine['createdBy'])
+                                                    .then((respons){
+                                                      print(respons);
                                                   pd.dismiss();
                                                   if(respons!=null){
                                                     Scaffold.of(context).showSnackBar(SnackBar(

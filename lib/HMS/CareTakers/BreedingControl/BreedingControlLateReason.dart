@@ -104,6 +104,7 @@ class _breeding_control_late_reason extends State<breeding_control_late_reason>{
                                     if(parsedjson != null){
                                       if(parsedjson['isSuccess'] == true){
                                         print("Successfully data updated");
+                                        //Navigator.pop(context);
                                       }else
                                         print("not saved");
                                     }else

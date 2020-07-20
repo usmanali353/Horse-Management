@@ -137,8 +137,8 @@ class _add_horse_state extends State<update_labTest>{
                               this.selected_horse=value;
                               selected_horse_id = horse.indexOf(value);
                             });
-
                           },
+
                         ),
                       ),
 //
@@ -489,8 +489,8 @@ class _add_horse_state extends State<update_labTest>{
                                     duration: Duration(seconds: 3),
                                     backgroundColor: Colors.green,)
                                     ..show(context);
-                                  sleep(Duration(seconds: 3));
-                                Navigator.pop(context);
+//                                  sleep(Duration(seconds: 3));
+//                                Navigator.pop(context);
                                 }
                                 else{
                                   Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}

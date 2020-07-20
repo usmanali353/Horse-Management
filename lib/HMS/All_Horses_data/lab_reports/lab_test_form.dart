@@ -431,7 +431,10 @@ class _add_horse_state extends State<add_labTest>{
                                 Flushbar(message: "Added Successfully",
                                   duration: Duration(seconds: 3),
                                   backgroundColor: Colors.green,)
-                                  ..show(context);}
+                                  ..show(context);
+                                //Navigator.pop(context);
+
+                              }
                               else{
                                 Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                             }else{

@@ -268,7 +268,7 @@ class _associations_list extends State<associations_list>{
                           color: Colors.red,
                           caption: 'Hide',
                           onTap: () async {
-                            BarnServices.changeBarnVisibility(token, name_lists[index]['id']).then((response){
+                            AssociationServices.changeAssociationsVisibility(token, name_lists[index]['id']).then((response){
                               print(response);
                               if(response!=null){
                                 Scaffold.of(context).showSnackBar(SnackBar(
@@ -292,7 +292,7 @@ class _associations_list extends State<associations_list>{
                       child: FadeAnimation(2.0,
                         ListTile(
                           enabled: name_lists[index]['isActive'],
-                          leading: FaIcon(FontAwesomeIcons.centos, color: Colors.redAccent.shade400, size: 40,),
+                          leading: FaIcon(FontAwesomeIcons.projectDiagram, color: Colors.redAccent.shade400, size: 40,),
                           title: Text(name_lists!=null?name_lists[index]['name']:''),
                           // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
                           //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),

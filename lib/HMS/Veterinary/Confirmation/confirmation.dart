@@ -231,15 +231,15 @@ class _confirmation_list extends State<confirmation_list>{
                       actionPane: SlidableDrawerActionPane(),
                       actionExtentRatio: 0.20,
                       secondaryActions: <Widget>[
-                        IconSlideAction(
-                          icon: Icons.edit,
-                          color: Colors.blue,
-                          caption: 'Update',
-                          onTap: () async {
-                            print(confirmation_lists[index]);
-                           // Navigator.push(context,MaterialPageRoute(builder: (context)=>update_paddock(token,paddock_lists[index])));
-                          },
-                        ),
+//                        IconSlideAction(
+//                          icon: Icons.edit,
+//                          color: Colors.blue,
+//                          caption: 'Update',
+//                          onTap: () async {
+//                            print(confirmation_lists[index]);
+//                           // Navigator.push(context,MaterialPageRoute(builder: (context)=>update_paddock(token,paddock_lists[index])));
+//                          },
+//                        ),
                       ],
                       actions: <Widget>[
                         IconSlideAction(

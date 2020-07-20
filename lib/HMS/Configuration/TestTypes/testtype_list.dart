@@ -247,7 +247,7 @@ class _testtype_list extends State<testtype_list>{
                           color: Colors.red,
                           caption: 'Hide',
                           onTap: () async {
-                            ColorsServices.changeColorVisibility(token, types_lists[index]['id']).then((response){
+                            TestTypesServices.changeTestTypesVisibility(token, types_lists[index]['id']).then((response){
                               print(response);
                               if(response!=null){
                                 Scaffold.of(context).showSnackBar(SnackBar(

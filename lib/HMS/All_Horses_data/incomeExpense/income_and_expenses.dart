@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flushbar/flushbar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -86,7 +88,7 @@ class _state_add_farrier extends State<add_IncomeExpense>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Horse"),),
+        appBar: AppBar(title: Text("Add Income & Expenses"),),
         body: ListView(
           children: <Widget>[
             Column(
@@ -164,10 +166,11 @@ class _state_add_farrier extends State<add_IncomeExpense>{
                       Padding(
                         padding: EdgeInsets.only(bottom: 16,right: 16,left: 16),
                         child: FormBuilderTextField(
+                          keyboardType: TextInputType.number,
                           controller: amount,
-                          attribute: "Currency",
+                          attribute: "Ammount",
                           validators: [FormBuilderValidators.required()],
-                          decoration: InputDecoration(labelText: "Currency",
+                          decoration: InputDecoration(labelText: "Ammount",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -350,7 +353,11 @@ class _state_add_farrier extends State<add_IncomeExpense>{
                                   Flushbar(message: "Added Successfully",
                                     duration: Duration(seconds: 3),
                                     backgroundColor: Colors.green,)
-                                    ..show(context);}
+                                    ..show(context);
+                                  sleep(Duration(seconds: 3));
+                                  Navigator.pop(context);
+                                }
+
                                 else{
                                   Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                               }else{
