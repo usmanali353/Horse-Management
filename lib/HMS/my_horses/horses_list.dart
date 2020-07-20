@@ -49,6 +49,7 @@ class horse_list extends StatefulWidget{
    @override
    void onResume() {
      if(resume.data.toString()== "refresh"){
+       print(resume.data.toString());
        WidgetsBinding.instance
            .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
      }

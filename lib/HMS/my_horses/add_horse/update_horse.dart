@@ -226,6 +226,7 @@ class _update_horse_state extends State<update_horse>{
                             onSaved: (value){
                               setState(() {
                                 this.Select_date = value;
+                                print(Select_date);
                               });
                             },
                           ),
@@ -256,6 +257,7 @@ class _update_horse_state extends State<update_horse>{
                               setState(() {
                                 this.select_gender=value;
                                 this.select_gender_id=gender.indexOf(value)+1;
+                                print(select_gender_id);
 
                               });
                             },
