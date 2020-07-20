@@ -43,7 +43,7 @@ class _Profile_Page_State extends ResumableState<horse_detail> {
 
   @override
   void onResume() {
-    if(resume.data.toString()== "close"){
+    if(resume.data.toString() == "close"){
       Navigator.pop(context,"refresh");
     }
   }
