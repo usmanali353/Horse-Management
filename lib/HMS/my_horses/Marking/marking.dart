@@ -78,8 +78,13 @@ class _marking_state extends ResumableState<marking> {
                                 letterSpacing: 1.1
                             ),
                           ),
-                          content: Image.memory(base64.decode(
-                              horseData['horseDetails']['markingPhoto'])),
+                          content:Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Image.memory(base64.decode(
+                                  horseData['horseDetails']['markingPhoto'])),
+                            ],
+                          ),
                         );
                       }
                   );

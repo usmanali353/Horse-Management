@@ -64,15 +64,12 @@ class _add_horse_state extends State<update_labTest>{
           costcenter.add(labDropdown['costCenterDropDown'][i]['name']);
         for(int i=0;i<labDropdown['contactsDropDown'].length;i++)
           contact.add(labDropdown['contactsDropDown'][i]['name']);
-
       });
     });
     setState(() {
       lab.text = labtestlist['lab']!= null ? labtestlist['lab']:"";
       result.text = labtestlist['result'];
       amount.text = labtestlist['amount'].toString();
-
-
       if(labtestlist['isPositive']!= null ?labtestlist['isPositive'] == true:null)
         positiveinitial = "Yes";
       else {
@@ -137,8 +134,8 @@ class _add_horse_state extends State<update_labTest>{
                               this.selected_horse=value;
                               selected_horse_id = horse.indexOf(value);
                             });
-
                           },
+
                         ),
                       ),
 //
@@ -340,6 +337,12 @@ class _add_horse_state extends State<update_labTest>{
                               selected_currency_id = currency.indexOf(value);
                             });
                           },
+                          onSaved: (value){
+                            setState(() {
+                              this.selected_currency=value;
+                              selected_currency_id = currency.indexOf(value);
+                            });
+                          },
                         ),
                       ),
                       Padding(
@@ -365,7 +368,14 @@ class _add_horse_state extends State<update_labTest>{
                             setState(() {
                               this.selected_category=value;
                               selected_category_id = category.indexOf(value);
-                            });                          },
+                            });
+                            },
+                          onSaved: (value){
+                            setState(() {
+                              this.selected_category=value;
+                              selected_category_id = category.indexOf(value);
+                            });
+                          },
                         ),
                       ),
 
@@ -392,7 +402,14 @@ class _add_horse_state extends State<update_labTest>{
                             setState(() {
                               this.selected_costcenter=value;
                               selected_costcenter_id = costcenter.indexOf(value);
-                            });                          },
+                            });
+                            },
+                          onSaved: (value){
+                            setState(() {
+                              this.selected_costcenter=value;
+                              selected_costcenter_id = costcenter.indexOf(value);
+                            });
+                          },
                         ),
                       ),
                       Padding(
@@ -418,7 +435,14 @@ class _add_horse_state extends State<update_labTest>{
                             setState(() {
                               this.selected_contact=value;
                               selected_contact_id = contact.indexOf(value);
-                            });                          },
+                            });
+                            },
+                          onSaved: (value){
+                            setState(() {
+                              this.selected_contact=value;
+                              selected_contact_id = contact.indexOf(value);
+                            });
+                          },
                         ),
                       ),
                       Padding(
@@ -489,8 +513,8 @@ class _add_horse_state extends State<update_labTest>{
                                     duration: Duration(seconds: 3),
                                     backgroundColor: Colors.green,)
                                     ..show(context);
-                                  sleep(Duration(seconds: 3));
-                                Navigator.pop(context);
+//                                  sleep(Duration(seconds: 3));
+//                                Navigator.pop(context);
                                 }
                                 else{
                                   Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}

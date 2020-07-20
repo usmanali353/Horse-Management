@@ -233,7 +233,7 @@ class _add_dam extends State<add_dam>{
                                             .then((respons){
                                           pd.dismiss();
                                           if(respons!=null){
-                                            Navigator.pop(context);
+
                                             Scaffold.of(context).showSnackBar(SnackBar(
                                               content: Text("Dam Added",
                                                 style: TextStyle(
@@ -242,6 +242,7 @@ class _add_dam extends State<add_dam>{
                                               ),
                                               backgroundColor: Colors.green,
                                             ));
+                                            Navigator.pop(context);
                                           }else{
                                             Scaffold.of(context).showSnackBar(SnackBar(
                                               content: Text("Dam not Added",

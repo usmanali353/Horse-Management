@@ -125,7 +125,7 @@ class _add_testtype extends State<add_testtype>{
                                 value: name, child: Text("$name")))
                                 .toList(),
                             style: Theme.of(context).textTheme.body1,
-                            decoration: InputDecoration(labelText: "Is Income",
+                            decoration: InputDecoration(labelText: "Reminder",
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(9.0),
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -148,7 +148,7 @@ class _add_testtype extends State<add_testtype>{
                             keyboardType: TextInputType.number,
                             attribute: "Show Reminders",
                             validators: [FormBuilderValidators.required()],
-                            decoration: InputDecoration(labelText: "Show Reminders",
+                            decoration: InputDecoration(labelText: "Show Reminders (Days Before)",
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(9.0),
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)

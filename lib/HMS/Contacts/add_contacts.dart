@@ -69,6 +69,8 @@ class _add_contacts_state extends State<add_contacts>{
                         padding: EdgeInsets.only(left: 16,right: 16),
                         child: FormBuilderTextField(
                           controller: cnic,
+                          keyboardType: TextInputType.number,
+                          maxLength: 13,
                           attribute: "CNIC",
                           validators: [FormBuilderValidators.required()],
                           decoration: InputDecoration(labelText: "CNIC",
@@ -157,7 +159,7 @@ class _add_contacts_state extends State<add_contacts>{
                       Center(
                         child: Padding(
                           padding: const EdgeInsets.only(top: 16),
-                          child: Text("Address Information",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,fontStyle: FontStyle.italic),),
+                          child: Text("Address Information",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold, color: Colors.teal),),
                         ),
                       ),
                       Padding(
@@ -204,7 +206,7 @@ class _add_contacts_state extends State<add_contacts>{
                       Center(
                         child: Padding(
                           padding: const EdgeInsets.only(top: 16),
-                          child: Text("Email and Website",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,fontStyle: FontStyle.italic)),
+                          child: Text("Email and Website",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold, color: Colors.teal)),
                         ),
                       ),
                       Padding(
@@ -239,7 +241,7 @@ class _add_contacts_state extends State<add_contacts>{
                       Center(
                         child: Padding(
                           padding: const EdgeInsets.only(top: 16),
-                          child: Text("Social Media Information",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,fontStyle: FontStyle.italic)),
+                          child: Text("Social Media Information",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.teal)),
                         ),
                       ),
                       Padding(
@@ -287,7 +289,7 @@ class _add_contacts_state extends State<add_contacts>{
                       Center(
                         child: Padding(
                           padding: const EdgeInsets.only(top: 16),
-                          child: Text("Picture",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,fontStyle: FontStyle.italic)),
+                          child: Text("Picture",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.teal)),
                         ),
                       ),
                       Padding(

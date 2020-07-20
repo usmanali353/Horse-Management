@@ -250,7 +250,7 @@ class _performancetype_list extends State<performancetype_list>{
                           color: Colors.red,
                           caption: 'Hide',
                           onTap: () async {
-                            LocationServices.changeLocationVisibility(token, type_lists[index]['performanceId']).then((response){
+                            PerformanceTypesServices.changePerformanceTypeVisibility(token, type_lists[index]['performanceId']).then((response){
                               print(response);
                               if(response!=null){
                                 Scaffold.of(context).showSnackBar(SnackBar(
@@ -274,7 +274,7 @@ class _performancetype_list extends State<performancetype_list>{
                       child: FadeAnimation(2.0,
                          ListTile(
                            enabled: type_lists[index]['isActive'],
-                           leading: FaIcon(FontAwesomeIcons.superpowers, color: Colors.teal.shade200, size: 40,),
+                           leading: FaIcon(FontAwesomeIcons.chartLine, color: Colors.teal.shade200, size: 40,),
                            title: Text(type_lists!=null?type_lists[index]['name']:''),
                           // subtitle: Text(costcenter_lists!=null?costcenter_lists[index]['description']:''),
                           //trailing: Text(embryo_list!=null?embryo_list[index]['status']:''),

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import  'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/HMS/Configuration/Colors/colors_json.dart';
@@ -125,6 +127,7 @@ class _add_color extends State<add_color>{
                                                 pd.dismiss();
                                                 if(respons!=null){
                                                   Scaffold.of(context).showSnackBar(SnackBar(
+                                                    duration:Duration(seconds: 3),
                                                     content: Text("Color Added Successfully",
                                                       style: TextStyle(
                                                           color: Colors.red
@@ -132,6 +135,7 @@ class _add_color extends State<add_color>{
                                                     ),
                                                     backgroundColor: Colors.green,
                                                   ));
+                                                  sleep(Duration(seconds: 5));
                                                   Navigator.pop(context);
                                                 }else{
                                                   Scaffold.of(context).showSnackBar(SnackBar(

@@ -40,14 +40,14 @@ class _markings_details_page extends State<markings_details_page>{
                   title: Text("Marking: "),
                   trailing: Text(marking_data['name'].toString()!=null?marking_data['name'].toString():''),
                 ),
-                ListTile(
-                  title: Text("Description: "),
-                  subtitle: Wrap(
-                    children: <Widget>[
-                      Text(marking_data['description'].toString()!=null?marking_data['description'].toString():''
-                      )],
-                  ),
-                ),
+//                ListTile(
+//                  title: Text("Description: "),
+//                  subtitle: Wrap(
+//                    children: <Widget>[
+//                      Text(marking_data['description'].toString()!=null?marking_data['description'].toString():''
+//                      )],
+//                  ),
+//                ),
 
                 Divider(),
               ],

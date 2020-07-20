@@ -67,113 +67,115 @@ void initState() {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(title: Text("Add new Video"),),
-      body: Column(
-        children: <Widget>[
-          FormBuilder(
-            key: _fbKey,
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child:FormBuilderDateTimePicker(
-                    attribute: "date",
-                    style: Theme.of(context).textTheme.body1,
-                    inputType: InputType.date,
-                    validators: [FormBuilderValidators.required()],
-                    format: DateFormat("MM-dd-yyyy"),
-                    decoration: InputDecoration(labelText: "Date",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(9.0),
-                          borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                      ),),
-                    onChanged: (value){
-                      setState(() {
-                         date=value;
-                      });
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16,right: 16),
-                  child: Visibility(
-                    visible: horses_loaded,
-                    child: FormBuilderDropdown(
-                      attribute: "Horse",
-                      validators: [FormBuilderValidators.required()],
-                      hint: Text("Horse"),
-                      items:horses!=null?horses.map((horse)=>DropdownMenuItem(
-                        child: Text(horse),
-                        value: horse,
-                      )).toList():[""].map((name) => DropdownMenuItem(
-                          value: name, child: Text("$name")))
-                          .toList(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            FormBuilder(
+              key: _fbKey,
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(16),
+                    child:FormBuilderDateTimePicker(
+                      attribute: "date",
                       style: Theme.of(context).textTheme.body1,
-                      decoration: InputDecoration(labelText: "Horse",
+                      inputType: InputType.date,
+                      validators: [FormBuilderValidators.required()],
+                      format: DateFormat("MM-dd-yyyy"),
+                      decoration: InputDecoration(labelText: "Date",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(9.0),
+                            borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                        ),),
+                      onChanged: (value){
+                        setState(() {
+                           date=value;
+                        });
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16,right: 16),
+                    child: Visibility(
+                      visible: horses_loaded,
+                      child: FormBuilderDropdown(
+                        attribute: "Horse",
+                        validators: [FormBuilderValidators.required()],
+                        hint: Text("Horse"),
+                        items:horses!=null?horses.map((horse)=>DropdownMenuItem(
+                          child: Text(horse),
+                          value: horse,
+                        )).toList():[""].map((name) => DropdownMenuItem(
+                            value: name, child: Text("$name")))
+                            .toList(),
+                        style: Theme.of(context).textTheme.body1,
+                        decoration: InputDecoration(labelText: "Horse",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(9.0),
+                              borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                          ),
+                        ),
+                        onChanged: (value){
+                          setState(() {
+                            this.selected_horse=value;
+                            this.selected_horse_id=horses.indexOf(value);
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                    child: FormBuilderTextField(
+                      attribute: "Video Link",
+                      controller: link,
+                      validators: [FormBuilderValidators.required()],
+                      style: Theme.of(context).textTheme.body1,
+                      decoration: InputDecoration(labelText: "Video Link",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(9.0),
                             borderSide: BorderSide(color: Colors.teal, width: 1.0)
                         ),
                       ),
-                      onChanged: (value){
-                        setState(() {
-                          this.selected_horse=value;
-                          this.selected_horse_id=horses.indexOf(value);
-                        });
-                      },
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                  child: FormBuilderTextField(
-                    attribute: "Video Link",
-                    controller: link,
-                    validators: [FormBuilderValidators.required()],
-                    style: Theme.of(context).textTheme.body1,
-                    decoration: InputDecoration(labelText: "Video Link",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(9.0),
-                          borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                  Padding(
+                    padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                    child: FormBuilderTextField(
+                      attribute: "Title",
+                      controller: title,
+                      validators: [FormBuilderValidators.required()],
+                      style: Theme.of(context).textTheme.body1,
+                      decoration: InputDecoration(labelText: "Title",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(9.0),
+                            borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                  child: FormBuilderTextField(
-                    attribute: "Title",
-                    controller: title,
-                    validators: [FormBuilderValidators.required()],
-                    style: Theme.of(context).textTheme.body1,
-                    decoration: InputDecoration(labelText: "Title",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(9.0),
-                          borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                  Padding(
+                    padding: const EdgeInsets.only(top:16,left: 16,right: 16),
+                    child: FormBuilderTextField(
+                      attribute: "Comments",
+                      controller: comment,
+                      validators: [FormBuilderValidators.required()],
+                      style: Theme.of(context).textTheme.body1,
+                      decoration: InputDecoration(labelText: "Comments",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(9.0),
+                            borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                  child: FormBuilderTextField(
-                    attribute: "Comments",
-                    controller: comment,
-                    validators: [FormBuilderValidators.required()],
-                    style: Theme.of(context).textTheme.body1,
-                    decoration: InputDecoration(labelText: "Comments",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(9.0),
-                          borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+                ],
 
+              ),
             ),
-          ),
-          add_video_button(token: token, comment: comment, title: title, link: link, date: date, selected_horse: selected_horse, selected_horse_id: selected_horse_id,fbKey: _fbKey,)
-        ],
+            add_video_button(token: token, comment: comment, title: title, link: link, date: date, selected_horse: selected_horse, selected_horse_id: selected_horse_id,fbKey: _fbKey,)
+          ],
+        ),
       ),
     );
   }

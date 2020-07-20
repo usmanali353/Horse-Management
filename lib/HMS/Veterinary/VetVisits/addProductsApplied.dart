@@ -92,6 +92,8 @@ class addProductsAppliedState extends State<addProductsApplied> {
                   child: RaisedButton(
                     child: Text('Add Vet Visit'),
                     onPressed: () {
+                      print(vet_id);
+                      print(treatement);
                       Utils.check_connectivity().then((result) {
                         if (result) {
                           List<Map> entries = [];
@@ -125,6 +127,7 @@ class addProductsAppliedState extends State<addProductsApplied> {
                               pulmonary_Auscultation, trachea_Auscultation, diagnosis, dt_observation, treatement)
                               .then((response) {
                             pd.dismiss();
+
                             if (response != null) {
 
 //                        Scaffold.of(context).showSnackBar(SnackBar(
