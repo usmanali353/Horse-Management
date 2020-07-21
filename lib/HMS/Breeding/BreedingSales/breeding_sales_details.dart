@@ -16,7 +16,24 @@ class breeding_sales_details_page extends StatefulWidget{
 class _breeding_sales_details_page extends State<breeding_sales_details_page>{
   var breeding_sales_data;
   String status_type_name;
-
+  var initialStatus;
+ @override
+  void initState() {
+   setState(() {
+     if(breeding_sales_data['status']==1){
+       initialStatus='Sold';
+     }else if(breeding_sales_data['status']==2){
+       initialStatus='Shipped';
+     }else if(breeding_sales_data['status']==3){
+       initialStatus='Delivered';
+     }else if(breeding_sales_data['status']==4){
+       initialStatus='Pregnant';
+     }else if(breeding_sales_data['status']==5){
+       initialStatus='Breeding Report';
+     }
+   });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -51,7 +68,7 @@ class _breeding_sales_details_page extends State<breeding_sales_details_page>{
                 ),
                 ListTile(
                   title: Text("Status:"),
-                  trailing: Text(status_type_name!=null?status_type_name:''),
+                  trailing: Text(initialStatus),
                 ),
                 ListTile(
                   title: Text("Assigned Vet:"),

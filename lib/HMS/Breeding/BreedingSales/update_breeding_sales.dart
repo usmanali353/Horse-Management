@@ -38,12 +38,27 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
 
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
   bool _isvisible=false;
+  var initialStatus;
   bool sale_loaded=false;
   bool update_sales_visibility;
  // var vet_name,costcenter_name,contact_name,accountcategory_name;
   @override
   void initState() {
     // TODO: implement initState
+    print(specificsales['status']);
+    setState(() {
+      if(specificsales['status']==1){
+        initialStatus='Sold';
+      }else if(specificsales['status']==2){
+        initialStatus='Shipped';
+      }else if(specificsales['status']==3){
+        initialStatus='Delivered';
+      }else if(specificsales['status']==4){
+        initialStatus='Pregnant';
+      }else if(specificsales['status']==5){
+        initialStatus='Breeding Report';
+      }
+    });
     super.initState();
     this.payment_reference=TextEditingController();
     this.contract_no=TextEditingController();
@@ -499,7 +514,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                     padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                     child: FormBuilderDropdown(
                       attribute: "Status",
-                      initialValue: specificsales['status']!=null?status[specificsales['status']]:null,
+                      initialValue: specificsales['status']!=null?initialStatus:null,
                       validators: [FormBuilderValidators.required()],
                       hint: Text("Status"),
                       items: status!=null?status.map((trainer)=>DropdownMenuItem(
@@ -756,7 +771,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                               if(result){
                                 ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                                 pd.show();
-                                BreedingSalesServices.add_breeding_sales(specificsales['createdBy'],token,specificsales['id'],sale_response['horseDropDown'][selected_horse_id]['id'],DateTime.now(), sale_response['customerDropDown'][selected_customer_id]['id'],sale_response['assignedVetDropDown'][selected_vet_id]['id'],Payment_date,payment_reference.text, selected_semen_id,selected_frozen_id,selected_cashpaymemt_id,selected_gift_id,selected_status_id, contract_no.text, report_no.text, comments.text,amount.text, sale_response['currencyDropDown'][selected_currency_id]['id'], sale_response['categoryDropDown'][selected_category_id]['id'], sale_response['costCenterDropDown'][selected_costcenter_id]['id'], sale_response['contactsDropDown'][selected_contact_id]['id'],  ).then((response){
+                                BreedingSalesServices.add_breeding_sales(specificsales['createdBy'],token,specificsales['breedingSalesId'],sale_response['horseDropDown'][selected_horse_id]['id'],DateTime.now(), sale_response['customerDropDown'][selected_customer_id]['id'],sale_response['assignedVetDropDown'][selected_vet_id]['id'],Payment_date,payment_reference.text, selected_semen_id,selected_frozen_id,selected_cashpaymemt_id,selected_gift_id,selected_status_id, contract_no.text, report_no.text, comments.text,amount.text, sale_response['currencyDropDown'][selected_currency_id]['id'], sale_response['categoryDropDown'][selected_category_id]['id'], sale_response['costCenterDropDown'][selected_costcenter_id]['id'], sale_response['contactsDropDown'][selected_contact_id]['id'],  ).then((response){
                                   pd.dismiss();
                                   if(response!=null){
                                     Scaffold.of(context).showSnackBar(SnackBar(
