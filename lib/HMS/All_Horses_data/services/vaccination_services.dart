@@ -81,6 +81,7 @@ class vaccination_services {
         'http://192.236.147.77:8083/api/horse/VaccinationSave', headers: headers,
         body: body
     );
+    print(response.statusCode);
     print(response.body);
     if (response.statusCode == 200) {
       return response.body;

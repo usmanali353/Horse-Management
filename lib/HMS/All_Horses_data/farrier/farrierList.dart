@@ -7,6 +7,7 @@ import 'package:horse_management/HMS/All_Horses_data/farrier/updateFarrier.dart'
 import 'package:horse_management/HMS/All_Horses_data/lab_reports/update_lab_reports.dart';
 import 'package:horse_management/HMS/All_Horses_data/services/farrier_services.dart';
 import 'package:horse_management/Utils.dart';
+import 'package:need_resume/need_resume.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,7 +25,7 @@ class farrier_list extends StatefulWidget{
   }
 
 }
-class _Profile_Page_State extends State<farrier_list>{
+class _Profile_Page_State extends ResumableState<farrier_list>{
   int id;
   SharedPreferences prefs;
   _Profile_Page_State (this.token);
@@ -39,6 +40,14 @@ class _Profile_Page_State extends State<farrier_list>{
   int pagenum=1,total_page;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
+  @override
+  void onResume() {
+    if(resume.data.toString()== "refresh"){
+      print(resume.data.toString());
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    }
+  }
 
   @override
   void initState () {
@@ -176,8 +185,11 @@ class _Profile_Page_State extends State<farrier_list>{
             onRefresh: (){
               return Utils.check_connectivity().then((result){
                 if(result){
+                  ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+                  pd.show();
                   farrier_services.farrierlistbypage(
                       token, pagenum,searchQuery).then((response) {
+                  pd.dismiss();
                     setState(() {
                       print(response);
                       load_list = json.decode(response);
@@ -243,7 +255,7 @@ class _Profile_Page_State extends State<farrier_list>{
                     ),
 
                   ],
-                  child: ListTile(
+                  child: ListTile(enabled: farrierlist[index]['isActive'],
                     //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                     title: Text(farrierlist!=null?(farrierlist[index]['horseName']['name']):''),
                     subtitle: Text(farrierlist!=null?"Farrier: "+(farrierlist[index]['farrierName']['contactName']['name']):'farrier name not showing'),

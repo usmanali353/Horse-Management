@@ -445,14 +445,14 @@ class _state_add_farrier extends State<update_vaccination>{
                               if(response !=null) {
                                 var decode= jsonDecode(response);
                                 if(decode['isSuccess'] == true){
-                                  Flushbar(message: "Added Successfully",
+                                  Flushbar(message: "update Successfully",
                                     duration: Duration(seconds: 3),
                                     backgroundColor: Colors.green,)
                                     ..show(context);}
                                 else{
-                                  Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
+                                  Flushbar(message: "Not updated",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                               }else{
-                                Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
+                                Flushbar(message: "Not updated",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                             });
 
                           }

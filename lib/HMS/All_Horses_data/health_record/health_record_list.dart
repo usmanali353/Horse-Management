@@ -5,6 +5,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/All_Horses_data/health_record/update_health_record.dart';
 import 'package:horse_management/HMS/All_Horses_data/services/health_services.dart';
 import 'package:horse_management/Utils.dart';
+import 'package:need_resume/need_resume.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'health_record_form.dart';
@@ -23,7 +24,7 @@ class healthRecord_list extends StatefulWidget{
   }
 
 }
-class _Profile_Page_State extends State<healthRecord_list>{
+class _Profile_Page_State extends ResumableState<healthRecord_list>{
   int id;SharedPreferences prefs;
 
   _Profile_Page_State (this.token);
@@ -39,6 +40,15 @@ class _Profile_Page_State extends State<healthRecord_list>{
   bool isVisible = false;
  // MainPageState _mainPageState;
 int pagenum=1,total_page;
+
+  @override
+  void onResume() {
+    if(resume.data.toString()== "refresh"){
+      print(resume.data.toString());
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    }
+  }
 
   @override
   void initState () {
@@ -286,8 +296,8 @@ int pagenum=1,total_page;
                     ],
                     actions: <Widget>[
                       IconSlideAction(onTap: ()async{
-
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => update_health(healthlist[index],token)),);
+                          print(healthlist[index]['id']);
+                        push(context, MaterialPageRoute(builder: (context) => update_health(healthlist[index],token)),);
 
                       },color: Colors.blue,icon: Icons.border_color,caption: 'update',),
                       IconSlideAction(
@@ -503,7 +513,7 @@ int pagenum=1,total_page;
       ),
       Padding(padding: EdgeInsets.all(8.0),
         child: InkWell(child: Icon(Icons.add),
-            onTap: () =>  Navigator.push(context, MaterialPageRoute(builder: (context) => health_record_form(token)),)
+            onTap: () =>  push(context, MaterialPageRoute(builder: (context) => health_record_form(token)),)
 
         ),
 

@@ -105,19 +105,24 @@ class _Profile_Page_State extends State<vaccination_list>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Vaccination"),actions: <Widget>[
-          Center(child: Text("Add New",textScaleFactor: 1.3,)),
-          IconButton(
-
-            icon: Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => add_vaccination(token)),);
-            },
-          )
-        ],),
+        appBar: AppBar(
+          leading: _isSearching ? const BackButton() : null,
+          title: _isSearching ? _buildSearchField() : _buildTitle(context),
+          actions: _buildActions(),
+//          title: Text("Vaccination"),actions: <Widget>[
+//          Center(child: Text("Add New",textScaleFactor: 1.3,)),
+//          IconButton(
+//
+//            icon: Icon(
+//              Icons.add,
+//              color: Colors.white,
+//            ),
+//            onPressed: () {
+//              Navigator.push(context, MaterialPageRoute(builder: (context) => add_vaccination(token)),);
+//            },
+//          )
+//        ],
+        ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton:
         Visibility(
@@ -196,8 +201,12 @@ class _Profile_Page_State extends State<vaccination_list>{
             onRefresh: (){
               return Utils.check_connectivity().then((result){
                 if(result){
+                  ProgressDialog pd = ProgressDialog(
+            context, isDismissible: true, type: ProgressDialogType.Normal);
+                  pd.show();
                   vaccination_services.vaccination_listbypage(
                       token, pagenum,searchQuery).then((response) {
+                        pd.dismiss();
                     setState(() {
                       print(response);
                       load_list = json.decode(response);
@@ -266,6 +275,7 @@ class _Profile_Page_State extends State<vaccination_list>{
 
                   ],
                   child: ListTile(
+                    enabled: vaccinationlist[index]['isActive'],
                     //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                     title: Text(vaccinationlist!=null?(vaccinationlist[index]['horseName']['name']):' '),
                     subtitle: Text(vaccinationlist!=null?'Vaccine: '+(vaccinationlist[index]['vaccineName']['name']):'farrier name not showing'),
@@ -282,10 +292,6 @@ class _Profile_Page_State extends State<vaccination_list>{
 
                 ),
                 Divider(),
-
-                Center(
-                  child: Text(vaccinationlist == null ? "No Data Found":"hello",textScaleFactor: 1.5, ),
-                ),
               ],
 
             );

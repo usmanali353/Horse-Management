@@ -6,6 +6,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:horse_management/HMS/All_Horses_data/lab_reports/update_lab_reports.dart';
 import 'package:horse_management/HMS/All_Horses_data/services/labTest_services.dart';
 import 'package:horse_management/Utils.dart';
+import 'package:need_resume/need_resume.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'lab_test_form.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,7 +25,7 @@ class lab_list extends StatefulWidget{
   }
 
 }
-class _Profile_Page_State extends State<lab_list>{
+class _Profile_Page_State extends ResumableState<lab_list>{
   int id;
   SharedPreferences prefs;
   _Profile_Page_State (this.token);
@@ -39,6 +40,15 @@ class _Profile_Page_State extends State<lab_list>{
   var lablist, load_list;
   var temp=['',''];
   int pagenum=1,total_page;
+
+  @override
+  void onResume() {
+    if(resume.data.toString()== "refresh"){
+      print(resume.data.toString());
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    }
+  }
 
   @override
   void initState () {
@@ -233,7 +243,7 @@ class _Profile_Page_State extends State<lab_list>{
                     actions: <Widget>[
                       IconSlideAction(onTap: ()async{
                         prefs = await SharedPreferences.getInstance();
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>update_labTest(lablist[index],prefs.get('token'),prefs.get('createdBy'))));
+                        push(context, MaterialPageRoute(builder: (context)=>update_labTest(lablist[index],prefs.get('token'),prefs.get('createdBy'))));
 
                       },color: Colors.blue,icon: Icons.border_color,caption: 'update',),
                       IconSlideAction(

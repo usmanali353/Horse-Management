@@ -92,7 +92,23 @@ class _state_add_farrier extends State<add_swabbing>{
     amount= TextEditingController();
     comment= TextEditingController();
 
+    Utils.check_connectivity().then((result){
+      if(result) {
+        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+        pd.show();
+        swabbing_services.swabbing_Dropdown(token).then((response){
+          pd.dismiss();
+          setState(() {
+            print(response);
+            swabbingdropdown=json.decode(response);
+            for(int i=0;i<swabbingdropdown['horseDropDown'].length;i++)
+              horse.add(swabbingdropdown['horseDropDown'][i]['name']);
 
+          });
+        });
+      }else
+       Flushbar(message: "Network Error",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);
+    });
     swabbing_services.swabbing_Dropdown(token).then((response){
       setState(() {
         print(response);
@@ -163,7 +179,7 @@ class _state_add_farrier extends State<add_swabbing>{
                           inputType: InputType.date,
                           validators: [FormBuilderValidators.required()],
                           format: DateFormat("MM-dd-yyyy"),
-                          decoration: InputDecoration(labelText: "Start Date",
+                          decoration: InputDecoration(labelText: "Swabbing Date",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -174,14 +190,14 @@ class _state_add_farrier extends State<add_swabbing>{
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 16,right: 16),
+                        padding: EdgeInsets.only(left: 16,right: 16,top: 16),
                         child:FormBuilderDateTimePicker(
                           attribute: "date",
                           style: Theme.of(context).textTheme.body1,
                           inputType: InputType.date,
                           validators: [FormBuilderValidators.required()],
                           format: DateFormat("MM-dd-yyyy"),
-                          decoration: InputDecoration(labelText: "Start Date",
+                          decoration: InputDecoration(labelText: "Treatment Date",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -198,7 +214,7 @@ class _state_add_farrier extends State<add_swabbing>{
                           controller: antibiotic,
                           attribute: "city",
                           validators: [FormBuilderValidators.required()],
-                          decoration: InputDecoration(labelText: "City",
+                          decoration: InputDecoration(labelText: "Antibiotic",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -297,7 +313,7 @@ class _state_add_farrier extends State<add_swabbing>{
 
                           }
                         },
-                        child:Text("Add Horse",style: TextStyle(color: Colors.white),),
+                        child:Text("Add Swabbing",style: TextStyle(color: Colors.white),),
                       ),
                     )
                 )

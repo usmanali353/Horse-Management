@@ -117,6 +117,7 @@ class _add_weight_and_height extends State<add_weight_and_height>{
                       Padding(
                         padding: EdgeInsets.all(16),
                         child: FormBuilderTextField(
+                          keyboardType: TextInputType.number,
                           controller: weight,
                           attribute: "Weight",
                           decoration: InputDecoration(labelText: "Weight(kg)",
@@ -131,6 +132,7 @@ class _add_weight_and_height extends State<add_weight_and_height>{
                       Padding(
                         padding: EdgeInsets.all(16),
                         child: FormBuilderTextField(
+                          keyboardType: TextInputType.number,
                           controller: height,
                           attribute: "Height",
                           decoration: InputDecoration(labelText: "Height(cm)",
@@ -145,6 +147,7 @@ class _add_weight_and_height extends State<add_weight_and_height>{
                       Padding(
                         padding: EdgeInsets.all(16),
                         child: FormBuilderTextField(
+                          keyboardType: TextInputType.number,
                           controller: bodyindex,
                           attribute: "body index",
                           decoration: InputDecoration(labelText: "Body Cond Index",
@@ -228,7 +231,7 @@ class addWeightButton extends StatelessWidget {
           pd.show();
 
           weight_hieght_services.weight_hieghtSave(null,token, 0,weightHieghtdropdown['horseDropDown'][selected_horse_id]['id'], Select_date,
-            weight.text,height.toString(),bodyindex.text,comment.text).then((response){
+            weight.text,height.text,bodyindex.text,comment.text).then((response){
             pd.dismiss();
             if(response !=null)
               print("Successfully income  added");
@@ -236,6 +239,7 @@ class addWeightButton extends StatelessWidget {
               print("data not added");}if(response !=null) {
               var decode= jsonDecode(response);
               if(decode['isSuccess'] == true){
+                Navigator.pop(context,'refresh');
                 Flushbar(message: "Added Successfully",
                   duration: Duration(seconds: 3),
                   backgroundColor: Colors.green,)
