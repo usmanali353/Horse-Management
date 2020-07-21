@@ -39,14 +39,14 @@ class _add_horse_state extends State<update_labTest>{
   bool isPositive;
   var listById;
   var positiveinitial;
+  var base64img;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
   @override
   void initState() {
+
     lab= TextEditingController();
     result= TextEditingController();
     amount= TextEditingController();
-
-
     Utils.check_connectivity().then((result){
       if(result){
         ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
@@ -56,7 +56,8 @@ class _add_horse_state extends State<update_labTest>{
           setState(() {
             print(response);
             listById = json.decode(response);
-          _image= listById['labTestReportImage'] != null ? Image.memory(base64.decode(listById['labTestReportImage'])) : "";
+            base64img=listById['labTestReportImage'];
+          //_image= listById['labTestReportImage'] != null ? Image.memory(base64.decode(listById['labTestReportImage'])) : "";
           });
         });
       }else{
@@ -474,7 +475,7 @@ class _add_horse_state extends State<update_labTest>{
                               margin: EdgeInsets.all(16),
                               height: 100,
                               width: 80,
-                              child: _image == null ? Text('No image selected.') : Image.file(_image),
+                              child: base64img == null ? Text('No image selected.') : Image.memory(base64Decode(base64img)),
                             ),
                             MaterialButton(
                               color: Colors.teal,
@@ -485,6 +486,7 @@ class _add_horse_state extends State<update_labTest>{
                                         if (image != null) {
                                           setState(() {
                                             this.picked_image = image;
+                                            this.base64img=base64Encode(picked_image);
                                             _image = image_file;
                                           });
                                         }
