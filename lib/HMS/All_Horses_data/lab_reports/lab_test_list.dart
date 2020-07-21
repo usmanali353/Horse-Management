@@ -263,7 +263,7 @@ class _Profile_Page_State extends State<lab_list>{
                     ],
                     child: ListTile(
                       enabled: lablist[index]['isActive']!=null? lablist[index]['isActive']:true,
-                      leading: lablist[index]['labTestReportImage']!=null?Image.memory(base64.decode(lablist[index]['labTestReportImage'])):Text(''),
+                      leading: Container(width: 45,child: lablist[index]['labTestReportImage']!=null?Image.memory(base64.decode(lablist[index]['labTestReportImage'])):Text('')),
                       //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                       title: Text(lablist!=null?(lablist[index]['horseName']['name']):''),
                       subtitle: Text(lablist[index]['testTypes']!=null?(lablist[index]['testTypes']['name']):'testtype empty'),

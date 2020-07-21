@@ -252,9 +252,10 @@ class _add_horse_state extends State<add_labTest>{
                         padding: EdgeInsets.all(16),
                         child: FormBuilderTextField(
                           controller: amount,
+                          keyboardType: TextInputType.number,
                           attribute: "Currency",
                           validators: [FormBuilderValidators.required()],
-                          decoration: InputDecoration(labelText: "Currency",
+                          decoration: InputDecoration(labelText: "Amount",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -428,11 +429,12 @@ class _add_horse_state extends State<add_labTest>{
                             if(response !=null) {
                               var decode= jsonDecode(response);
                               if(decode['isSuccess'] == true){
+                                Navigator.pop(context);
                                 Flushbar(message: "Added Successfully",
                                   duration: Duration(seconds: 3),
                                   backgroundColor: Colors.green,)
                                   ..show(context);
-                                //Navigator.pop(context);
+                                Navigator.pop(context);
 
                               }
                               else{

@@ -3,15 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:horse_management/HMS/Diet/add_Diet.dart';
-import 'package:horse_management/HMS/Diet/diet_services.dart';
-import 'package:horse_management/HMS/Training/training_plans.dart';
-import 'package:horse_management/HMS/Training/update_training.dart';
 import 'package:horse_management/HMS/Veterinary/VetVisits/addVetVisits.dart';
 import 'package:horse_management/HMS/Veterinary/VetVisits/vet_visit_details.dart';
 import 'package:horse_management/HMS/Veterinary/VetVisits/veterniaryServices.dart';
-import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
+import 'package:need_resume/need_resume.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class vetVisitList extends StatefulWidget{
@@ -26,7 +22,7 @@ class vetVisitList extends StatefulWidget{
   }
 
 }
-class vetVisitListState extends State<vetVisitList>{
+class vetVisitListState extends ResumableState<vetVisitList>{
   vetVisitListState(this.token);
   String token;
   var vetvisits_list=[], load_list, pagelist, pageloadlist;
@@ -41,6 +37,16 @@ class vetVisitListState extends State<vetVisitList>{
   int searchPageNum,totalSearchPages;
   static final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+
+  @override
+  void onResume() {
+    if(resume.data.toString()== "refresh"){
+      print(resume.data.toString());
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    }
+  }
+
 
   @override
   void initState() {
@@ -283,7 +289,7 @@ class vetVisitListState extends State<vetVisitList>{
                       title: Text(vetvisits_list!=null?vetvisits_list[index]['horseName']['name']:''),
                       //leading: Icon(Icons.local_hospital,size: 40,color: Colors.teal,),
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => vet_visit_details_page(vetvisits_list[index])));
+                        push(context, MaterialPageRoute(builder: (context) => vet_visit_details_page(vetvisits_list[index])));
 
                       },
                     ),

@@ -134,7 +134,7 @@ class addProductsAppliedState extends State<addProductsApplied> {
 //                          backgroundColor: Colors.green,
 //                          content: Text("Vet Visit Added Sucessfully"),
 //                        ));
-
+                              Navigator.pop(context,'close');
                             // sleep(Duration(seconds: 5));
                              Flushbar(
                                message:  "Vet Visits added",
@@ -142,11 +142,12 @@ class addProductsAppliedState extends State<addProductsApplied> {
                                duration:  Duration(seconds: 5),
                              )..show(context);
 
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) {
-                                return vetVisitList(token);     }));
+//                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) {
+//                                return vetVisitList(token);     }));
 
-                               Navigator.pop(context);
+
                             }else{
+
                               Flushbar(
                                 message:  "Vet Visits not added",
                                 backgroundColor: Colors.red,

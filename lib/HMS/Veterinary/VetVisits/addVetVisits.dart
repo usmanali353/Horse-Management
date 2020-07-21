@@ -4,6 +4,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/HMS/Veterinary/VetVisits/addProductsApplied.dart';
 import 'package:horse_management/HMS/Veterinary/VetVisits/veterniaryServices.dart';
 import 'package:intl/intl.dart';
+import 'package:need_resume/need_resume.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Utils.dart';
@@ -20,7 +21,7 @@ class addVetVisits extends StatefulWidget{
   }
 
 }
-class addVetVisitsState extends State<addVetVisits>{
+class addVetVisitsState extends ResumableState<addVetVisits>{
   String token;
 
   addVetVisitsState(this.token);
@@ -40,7 +41,12 @@ class addVetVisitsState extends State<addVetVisits>{
 
   TextEditingController reason, temperature, heart_rate, breathing_freq, capillary_filling, dehydration, overall_mood, observation, diagnosis, DT_observation,treatment ;
 
-
+  @override
+  void onResume() {
+    if(resume.data.toString() == "close"){
+      Navigator.pop(context,"refresh");
+    }
+  }
 
   @override
   void initState() {
@@ -265,7 +271,7 @@ class addVetVisitsState extends State<addVetVisits>{
                         Padding(
                           padding: EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderTextField(
-                            //keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.number,
                             controller: temperature,
                             attribute: "Temperature(C)",
                             validators: [FormBuilderValidators.required()],
@@ -280,7 +286,7 @@ class addVetVisitsState extends State<addVetVisits>{
                         Padding(
                           padding: EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderTextField(
-                            //keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.number,
                             controller: heart_rate,
                             attribute: "Heart Rate (per min.)",
                             validators: [FormBuilderValidators.required()],
@@ -295,7 +301,7 @@ class addVetVisitsState extends State<addVetVisits>{
                         Padding(
                           padding: EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderTextField(
-                            //keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.number,
                             controller: breathing_freq,
                             attribute: "Breathing Freq. (per min.)",
                             validators: [FormBuilderValidators.required()],
@@ -310,7 +316,7 @@ class addVetVisitsState extends State<addVetVisits>{
                         Padding(
                           padding: EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderTextField(
-                            //keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.number,
                             controller: capillary_filling,
                             attribute: "Capillary Filling (seg)",
                             validators: [FormBuilderValidators.required()],
@@ -325,7 +331,7 @@ class addVetVisitsState extends State<addVetVisits>{
                         Padding(
                           padding: EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderTextField(
-                            //keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.number,
                             controller: dehydration,
                             attribute: "Dehydration (%)",
                             validators: [FormBuilderValidators.required()],
@@ -814,7 +820,7 @@ class addVetVisitsState extends State<addVetVisits>{
                         onPressed: () async{
                           SharedPreferences prefs= await SharedPreferences.getInstance();
                           if(_fbKey.currentState.validate()){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>addProductsApplied(
+                            push(context, MaterialPageRoute(builder: (context)=>addProductsApplied(
                                 prefs.getString("token"),
                                 date,
                                 vetVisitsDropdowns['horseDropDown'][selected_horse_id]['id'],

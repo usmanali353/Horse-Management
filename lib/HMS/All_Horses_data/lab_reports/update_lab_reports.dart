@@ -37,6 +37,7 @@ class _add_horse_state extends State<update_labTest>{
   File _image;
   sqlite_helper local_db;
   bool isPositive;
+  var listById;
   var positiveinitial;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
   @override
@@ -44,6 +45,25 @@ class _add_horse_state extends State<update_labTest>{
     lab= TextEditingController();
     result= TextEditingController();
     amount= TextEditingController();
+
+
+    Utils.check_connectivity().then((result){
+      if(result){
+        ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+        pd.show();
+        labtest_services.horseIdLabtest(token,labtestlist['id']).then((response) {
+          pd.dismiss();
+          setState(() {
+            print(response);
+            listById = json.decode(response);
+          _image= listById['labTestReportImage'] != null ? Image.memory(base64.decode(listById['labTestReportImage'])) : "";
+          });
+        });
+      }else{
+        Flushbar(title: "Networks",message: "Error",duration: Duration(seconds: 3),)..show(context);
+      }
+
+    });
 
 
     labtest_services.labdropdown(token).then((response){
@@ -459,21 +479,21 @@ class _add_horse_state extends State<update_labTest>{
                             MaterialButton(
                               color: Colors.teal,
                               onPressed: (){
-                                Utils.getImage().then((image_file){
-                                  if(image_file!=null){
-                                    image_file.readAsBytes().then((image){
-                                      if(image!=null){
-                                        setState(() {
-                                          this.picked_image=image;
-                                          _image = image_file;
-                                        });
-                                      }
-                                    });
-                                  }else{
+                                  Utils.getImage().then((image_file) {
+                                    if (image_file != null) {
+                                      image_file.readAsBytes().then((image) {
+                                        if (image != null) {
+                                          setState(() {
+                                            this.picked_image = image;
+                                            _image = image_file;
+                                          });
+                                        }
+                                      });
+                                    } else {
 
-                                  }
-                                });
-                              },
+                                    }
+                                  });
+                                },
                               child: Text("Select Image",style: TextStyle(color: Colors.white),),
                             ),
                           ],
