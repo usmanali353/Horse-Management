@@ -141,10 +141,11 @@ class addProductsAppliedState extends State<addProductsApplied> {
                                backgroundColor: Colors.green,
                                duration:  Duration(seconds: 5),
                              )..show(context);
+
                               Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) {
                                 return vetVisitList(token);     }));
 
-                              // Navigator.pop(context);
+                               Navigator.pop(context);
                             }else{
                               Flushbar(
                                 message:  "Vet Visits not added",

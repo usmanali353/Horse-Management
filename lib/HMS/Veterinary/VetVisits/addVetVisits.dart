@@ -814,13 +814,14 @@ class addVetVisitsState extends State<addVetVisits>{
                         onPressed: () async{
                           SharedPreferences prefs= await SharedPreferences.getInstance();
                           if(_fbKey.currentState.validate()){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>addProductsApplied(prefs.getString("token"),
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>addProductsApplied(
+                                prefs.getString("token"),
                                 date,
                                 vetVisitsDropdowns['horseDropDown'][selected_horse_id]['id'],
                                 vetVisitsDropdowns['vetDropDown'][selected_vet_id]['id'],
                                 selected_type_id,
                                 vetVisitsDropdowns['vetVisitProduct']['inventoryProductsDropDown'],
-                                selected_responsible_id,
+                                vetVisitsDropdowns['responsibleDropDown'][selected_responsible_id]['id'],
                                 reason.text,
                                 temperature.text,
                                 heart_rate.text,

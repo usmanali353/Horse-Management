@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:horse_management/Utils.dart';
 import 'package:http/http.dart' as http;
 class vieterniaryServices {
@@ -16,18 +17,30 @@ class vieterniaryServices {
       String reason, String temperature, String heart_rate, String breathing_freq, String capillary_filling, String dehydration, int mucus_membrane, String overall_mood,
       int pulse, int hoof_FL, int hoof_FR, int hoof_RL, int hoof_RR, int movements_L, int movements_R, bool feces_presence, int feces_consistency, String observation,
       int effort, int pulmonary_auscultation, int trachea_auscultation, String diagnosis, String dt_observation, String treatment )async{
-      Map<String,String> headers = {'Content-Type':'application/json',"Authorization":"Bearer "+token};
+    Map<String,String> headers = {
+      HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.authorizationHeader : 'Bearer '+token
+    };
+    // Map<String,String> headers = {'Content-Type':'application/json',"Authorization":"Bearer "+token};
       final body = jsonEncode({
-        "type":type,
-        "horseId":horseId,
-        "vetId":vetId,
-        "vetVisitId":vetVisitId,
-        "visitDate":visitDate,
-        "createdBy":createdBy,
-        "createdOn":DateTime.now(),
-        "isActive":true,
-        "vetVisitsProducts":vetVisitsProducts,
-        "responsibleId":responsibleId,
+//        "type":type,
+//        "horseId":horseId,
+//        "vetId":vetId,
+//        "vetVisitId":vetVisitId,
+//        "visitDate":visitDate,
+//        "createdBy":createdBy,
+//        "createdOn":DateTime.now(),
+//        "isActive":true,
+        "vetVisitId": vetVisitId,
+        "horseId": horseId,
+        "vetId": vetId,
+        "responsibleId": responsibleId,
+        "visitDate": visitDate,
+        "type": type,
+        "createdBy": createdBy,
+        "createdOn": DateTime.now(),
+        "isActive" : true,
+        "vetVisitsProducts": vetVisitsProducts,
         "reason":reason,
         "temperature":temperature,
         "heartRate": heart_rate,
@@ -57,7 +70,9 @@ class vieterniaryServices {
           headers: headers,
           body:body);
       print(response.body);
-      return response.body;
+      print(response.statusCode);
+      print("response from json");
+     // return response.body;
       if(response.statusCode==200){
         return response.body;
       }else
