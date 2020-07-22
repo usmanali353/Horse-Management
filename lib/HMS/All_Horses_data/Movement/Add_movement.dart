@@ -505,7 +505,7 @@ class _state_add_farrier extends State<add_movement>{
                             });
                             }
                         },
-                        child:Text("Add Horse",style: TextStyle(color: Colors.white),),
+                        child:Text("Add Movement",style: TextStyle(color: Colors.white),),
                       ),
                     )
                 )

@@ -204,6 +204,12 @@ class _state_add_farrier extends State<update_farrier> {
                               selected_farrier_id = farrier.indexOf(value);
                             });
                           },
+                          onSaved: (value){
+                            setState((){
+                              this.selected_farrier=value;
+                              selected_farrier_id = farrier.indexOf(value);
+                            });
+                          },
                         ),
 
                       ),
@@ -405,10 +411,10 @@ class _state_add_farrier extends State<update_farrier> {
                       child: MaterialButton(
                         color: Colors.teal,
                         onPressed: () {
-                          print(get_category_by_id(6)+"abcccccc");
                           if (_fbKey.currentState.validate()) {
-                            print(_fbKey.currentState.value);
                             _fbKey.currentState.save();
+                            print(_fbKey.currentState.value);
+
 
                             print(farrierlist['id']);
                             print(token);print(createdBy);print(farrierdropdown['horseDropDown'][selected_horse_id]['id']);print(selected_shoeingtype_id);
@@ -421,19 +427,19 @@ class _state_add_farrier extends State<update_farrier> {
                             print(farrierdropdown['contactsDropDown'][selected_contact_id]['id']);
                             ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                             pd.show();
-                            farrier_services.farrierSave(createdBy,farrierlist['id'],token, farrierdropdown['horseDropDown'][selected_horse_id]['id'], farrierdropdown['farrierDropDown'][selected_farrier_id]['id'],selected_shoeingtype_id, comment.text,amount.text, farrierdropdown['currencyDropDown'][selected_currency_id]['id'], farrierdropdown['categoryDropDown'][selected_category_id]['id'], farrierdropdown['costCenterDropDown'][selected_costcenter_id]['id'], farrierdropdown['contactsDropDown'][selected_contact_id]['id']).then((response){
+                            farrier_services.farrierSave(farrierlist['createdBy'],farrierlist['id'],token, farrierdropdown['horseDropDown'][selected_horse_id]['id'], farrierdropdown['farrierDropDown'][selected_farrier_id]['id'],selected_shoeingtype_id, comment.text,amount.text, farrierdropdown['currencyDropDown'][selected_currency_id]['id'], farrierdropdown['categoryDropDown'][selected_category_id]['id'], farrierdropdown['costCenterDropDown'][selected_costcenter_id]['id'], farrierdropdown['contactsDropDown'][selected_contact_id]['id']).then((response){
                               pd.dismiss();
                               if(response !=null) {
                                 var decode= jsonDecode(response);
                                 if(decode['isSuccess'] == true){
-                                  Flushbar(message: "Added Successfully",
+                                  Flushbar(message: "update Successfully",
                                     duration: Duration(seconds: 3),
                                     backgroundColor: Colors.green,)
                                     ..show(context);}
                                 else{
-                                  Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
+                                  Flushbar(message: "Not updated",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                               }else{
-                                Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
+                                Flushbar(message: "Not updated",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                             });
 
 
@@ -443,7 +449,7 @@ class _state_add_farrier extends State<update_farrier> {
                           }
                         },
                         child: Text(
-                          "Add Farrier", style: TextStyle(color: Colors.white),),
+                          "Update Farrier", style: TextStyle(color: Colors.white),),
                       ),
                     )
                 )

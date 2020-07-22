@@ -233,6 +233,9 @@ class _health_record_form extends State<update_health>{
                         Padding(
                           padding: EdgeInsets.only(left: 16,right:16,bottom: 16),
                           child: FormBuilderTouchSpin(
+                            iconActiveColor: Colors.white,
+                            iconDisabledColor: Colors.grey,
+
                             attribute: "Quantity",
                             initialValue: healthrecordlist['quantity'] != null ? healthrecordlist['quantity']:1,
                             step: 1,
@@ -244,6 +247,9 @@ class _health_record_form extends State<update_health>{
                               ),
                             ),
                             onChanged: (value){
+                              this.selected_quantity=value;
+                            },
+                            onSaved: (value){
                               this.selected_quantity=value;
                             },
 
@@ -280,7 +286,7 @@ class _health_record_form extends State<update_health>{
                           padding: const EdgeInsets.only(left: 16,right: 16,bottom: 16),
                           child: FormBuilderDropdown(
                             attribute: "Currency",
-                            initialValue: get_currency_by_id(healthrecordlist['currency'])!= null ?get_currency_by_id(healthrecordlist['currency']):null,
+                            initialValue: get_currency_by_id(healthrecordlist['currency']),
                             validators: [FormBuilderValidators.required()],
                             hint: Text("Currency"),
                             items: currency!=null?currency.map((types)=>DropdownMenuItem(
@@ -405,6 +411,12 @@ class _health_record_form extends State<update_health>{
                                 selected_contact_id = contact.indexOf(value);
                               });
                             },
+                            onSaved: (value){
+                              setState((){
+                                this.selected_contact=value;
+                                selected_contact_id = contact.indexOf(value);
+                              });
+                            },
                           ),
 
                         ),
@@ -436,14 +448,14 @@ class _health_record_form extends State<update_health>{
                                 healthdropdown['costCenterDropDown'][selected_cost_center_id]['id']);
                             print(selected_contact_id);
                             print(amount.text);
-                            print(healthdropdown['contactsDropDown'][0]['id']);
+                            print(healthdropdown['contactsDropDown'][selected_contact_id]['id']);
                             ProgressDialog pd = ProgressDialog(
                                 context, isDismissible: true,
                                 type: ProgressDialogType.Normal);
                             pd.show();
                             healthServices.healthRecordSave(
                                 healthrecordlist['createdBy'],
-                                healthrecordlist['horseId'],
+                                healthrecordlist['id'],
                                 token,
                                 healthdropdown['horseDropDown'][selected_horse_id]['id'],
                                 healthdropdown['responsibleDropDown'][selected_responsible_id]['id'],
@@ -464,7 +476,10 @@ class _health_record_form extends State<update_health>{
                                   Flushbar(message: "Added Successfully",
                                     duration: Duration(seconds: 3),
                                     backgroundColor: Colors.green,)
-                                    ..show(context);}
+                                    ..show(context);
+                                  Navigator.pop(context,"refresh");
+                                }
+
                                 else{
                                   Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                               }else{
@@ -472,7 +487,7 @@ class _health_record_form extends State<update_health>{
                             });
                           }
                         },
-                        child: Text("Add Health Record",style: TextStyle(color: Colors.white),),
+                        child: Text("update Health Record",style: TextStyle(color: Colors.white),),
                         color: Colors.teal,
                       ),
                     ),

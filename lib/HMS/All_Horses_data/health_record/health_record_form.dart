@@ -354,6 +354,7 @@ class _health_record_form extends State<health_record_form>{
                         if(response !=null) {
                           var decode= jsonDecode(response);
                           if(decode['isSuccess'] == true){
+                            Navigator.pop(context,"refresh");
                             Flushbar(message: "Added Successfully",
                               duration: Duration(seconds: 3),
                               backgroundColor: Colors.green,)
@@ -364,7 +365,7 @@ class _health_record_form extends State<health_record_form>{
                           Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                       });
                     },
-                    child: Text("Add Health Record",style: TextStyle(color: Colors.white),),
+                    child: Text("Update Health Record",style: TextStyle(color: Colors.white),),
                     color: Colors.teal,
                   ),
                 ),

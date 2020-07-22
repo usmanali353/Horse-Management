@@ -125,7 +125,7 @@ class _add_horse_state extends State<update_labTest>{
                   child: Column(
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.only(left: 16,right: 16),
+                        padding: const EdgeInsets.only(left: 16,right: 16,top: 16),
                         child: FormBuilderDropdown(
                           attribute: "Horse",
                           initialValue:  labtestlist['horseName']['name'],
@@ -531,10 +531,12 @@ class _add_horse_state extends State<update_labTest>{
                               if(response !=null) {
                                 var decode= jsonDecode(response);
                                 if(decode['isSuccess'] == true){
-                                  Flushbar(message: "Added Successfully",
+                                  Navigator.pop(context,"refresh");
+                                  Flushbar(message: "Update Successfully",
                                     duration: Duration(seconds: 3),
                                     backgroundColor: Colors.green,)
                                     ..show(context);
+
 //                                  sleep(Duration(seconds: 3));
 //                                Navigator.pop(context);
                                 }

@@ -124,6 +124,9 @@ class _add_weight_and_height extends State<update_weight_and_height>{
                           onChanged: (value){
                             this.Select_date=value;
                           },
+                          onSaved:  (value){
+                            this.Select_date=value;
+                          },
                         ),
                       ),
 
@@ -132,6 +135,7 @@ class _add_weight_and_height extends State<update_weight_and_height>{
                       Padding(
                         padding: EdgeInsets.all(16),
                         child: FormBuilderTextField(
+                          keyboardType: TextInputType.number,
                           controller: weight,
                           attribute: "Weight",
                           decoration: InputDecoration(labelText: "Weight(kg)",
@@ -146,6 +150,7 @@ class _add_weight_and_height extends State<update_weight_and_height>{
                       Padding(
                         padding: EdgeInsets.all(16),
                         child: FormBuilderTextField(
+                          keyboardType: TextInputType.number,
                           controller: height,
                           attribute: "Height",
                           decoration: InputDecoration(labelText: "Height(cm)",
@@ -160,6 +165,7 @@ class _add_weight_and_height extends State<update_weight_and_height>{
                       Padding(
                         padding: EdgeInsets.all(16),
                         child: FormBuilderTextField(
+                          keyboardType: TextInputType.number,
                           controller: bodyindex,
                           attribute: "body index",
                           decoration: InputDecoration(labelText: "Body Cond Index",
@@ -182,7 +188,6 @@ class _add_weight_and_height extends State<update_weight_and_height>{
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15.0))
                           ),
-                          autofocus: true,
                           keyboardType: TextInputType.multiline,
                         ),
                       ),
@@ -240,14 +245,16 @@ class addWeightButton extends StatelessWidget {
       color: Colors.teal,
       onPressed: (){
         if (_fbKey.currentState.validate()) {
+          _fbKey.currentState.save();
           print(_fbKey.currentState.value);
           ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
           pd.show();
 
           weight_hieght_services.weight_hieghtSave(createdBy,token, whid,weightHieghtdropdown['horseDropDown'][selected_horse_id]['id'], Select_date,
-              weight.text,height.toString(),bodyindex.text,comment.text).then((response){
+              weight.text,height.text,bodyindex.text,comment.text).then((response){
             pd.dismiss();
             if(response !=null){
+              Navigator.pop(context,'refresh');
               Scaffold.of(context).showSnackBar(SnackBar(
                 backgroundColor: Colors.green,
                 content: Text("Weight Added Sucessfully"),

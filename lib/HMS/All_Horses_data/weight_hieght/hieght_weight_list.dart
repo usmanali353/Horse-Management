@@ -7,6 +7,7 @@ import 'package:horse_management/HMS/All_Horses_data/services/weight_hieght_serv
 import 'package:horse_management/HMS/All_Horses_data/weight_hieght/add_weight_and_height.dart';
 import 'package:horse_management/HMS/All_Horses_data/weight_hieght/update_hieght_weight.dart';
 import 'package:horse_management/Utils.dart';
+import 'package:need_resume/need_resume.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,7 +25,7 @@ class weight_hieght_list extends StatefulWidget{
   }
 
 }
-class _Profile_Page_State extends State<weight_hieght_list>{
+class _Profile_Page_State extends ResumableState<weight_hieght_list>{
   int id;
   SharedPreferences prefs;
   _Profile_Page_State (this.token);
@@ -39,6 +40,15 @@ class _Profile_Page_State extends State<weight_hieght_list>{
   var weightlist, load_list;
   var temp=['',''];
   int pagenum=1,total_page;
+
+  @override
+  void onResume() {
+    if(resume.data.toString()== "refresh"){
+      print(resume.data.toString());
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    }
+  }
 
   @override
   void initState () {

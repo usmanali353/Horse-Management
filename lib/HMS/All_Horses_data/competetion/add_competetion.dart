@@ -58,7 +58,7 @@ class _state_add_farrier extends State<add_competetion>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Horse"),),
+        appBar: AppBar(title: Text("Add Competetion"),),
         body: ListView(
           children: <Widget>[
             Column(
@@ -296,7 +296,7 @@ class _state_add_farrier extends State<add_competetion>{
 
                           }
                         },
-                        child:Text("Add Horse",style: TextStyle(color: Colors.white),),
+                        child:Text("Add Competetion",style: TextStyle(color: Colors.white),),
                       ),
                     )
                 )

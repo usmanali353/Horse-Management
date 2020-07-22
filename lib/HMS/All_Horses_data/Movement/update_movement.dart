@@ -638,14 +638,14 @@ class _state_add_farrier extends State<update_movement>{
                               if(response !=null) {
                                 var decode= jsonDecode(response);
                                 if(decode['isSuccess'] == true){
-                                  Flushbar(message: "Added Successfully",
+                                  Flushbar(message: "Update Successfully",
                                     duration: Duration(seconds: 3),
                                     backgroundColor: Colors.green,)
                                     ..show(context);}
                                 else{
-                                  Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
+                                  Flushbar(message: "Not Update",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                               }else{
-                                Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
+                                Flushbar(message: "Not Update",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                             });
                           }
                         },

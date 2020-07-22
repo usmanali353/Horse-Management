@@ -213,6 +213,7 @@ class _state_add_farrier extends State<add_vaccination>{
                       Padding(
                         padding: EdgeInsets.only(top: 16,right: 16,left: 16),
                         child: FormBuilderTextField(
+                          keyboardType: TextInputType.number,
                           controller: dose,
                           attribute: "Dose",
                           decoration: InputDecoration(labelText: "No of Dose",
@@ -400,13 +401,9 @@ class _state_add_farrier extends State<add_vaccination>{
                         color: Colors.teal,
                         onPressed: (){
                           if (_fbKey.currentState.validate()) {
-                            print(_fbKey.currentState.value);
-
-
                             print(token);print(vaccinationdropdown['horseDropDown'][selected_horse_id]['id']);print(selected_vaccine_id);
                             print(vaccinationdropdown['vaccinationTypeDropDown'][selected_vaccinationtype_id]['id']);
                             print("farrier show");
-                            print(selected_contact_id);
                             print(amount.text);
                             print(vaccinationdropdown['costCenterDropDown'][selected_costcenter_id]['id']);
 
@@ -436,7 +433,7 @@ class _state_add_farrier extends State<add_vaccination>{
 
                           }
                         },
-                        child:Text("Add Horse",style: TextStyle(color: Colors.white),),
+                        child:Text("AddVaccination",style: TextStyle(color: Colors.white),),
                       ),
                     )
                 )
