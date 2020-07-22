@@ -939,9 +939,17 @@ class add_confirmationState extends State<add_confirmation>{
 
                   ConfirmationServices.add_confirmation(token, 0,confirmationDropdowns['horseDropDown'][selected_horse_id]['id'], date,confirmationDropdowns['vetDropDown'][selected_vet_id]['id'], selected_opinion_id, '', confirmationDetails).then((response){
                     if(response!=null){
+//                      Scaffold.of(context).showSnackBar(SnackBar(
+//                        content: Text("Confirmation Added Sucessfully"),
+//                        backgroundColor: Colors.green,
+//                      ));
+                      Navigator.pop(context);
 
                     }else{
-
+//                      Scaffold.of(context).showSnackBar(SnackBar(
+//                        content: Text("Confirmation Added Failed"),
+//                        backgroundColor: Colors.red,
+//                      ));
                     }
                   });
                   SharedPreferences prefs= await SharedPreferences.getInstance();

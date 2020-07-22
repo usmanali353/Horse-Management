@@ -31,7 +31,7 @@ class EmbryoStockServices{
   }
   static Future<String> change_embryo_stock_visibility(String token,int id) async{
     Map<String,String> headers = {'Authorization':'Bearer '+token};
-    var response =await http.get('http://192.236.147.77:8083/api/breed/SemenCollectionVisibility/'+id.toString(),headers: headers);
+    var response =await http.get('http://192.236.147.77:8083/api/breed/EmbryoStockVisibility/'+id.toString(),headers: headers);
     if(response.statusCode==200){
       return response.body;
     }else

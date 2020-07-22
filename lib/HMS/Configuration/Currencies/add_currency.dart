@@ -24,7 +24,7 @@ class _add_currency extends State<add_currency>{
   final token;
   _add_currency(this.token);
   String selected_currency;
-  int selected_currency_id=0;
+  int selected_currency_id;
 
   List<String> currency=[];
   var currency_response;
@@ -116,6 +116,7 @@ class _add_currency extends State<add_currency>{
                                         print(currency_response['currencySymbolsDropDown'][selected_currency_id]['id']);
                                         CurrenciesServices.addCurrency(token,currency_response['currencySymbolsDropDown'][selected_currency_id]['id'],selected_currency, null)
                                             .then((respons){
+                                              print(respons);
                                           pd.dismiss();
                                            if(respons!=null){
                                              Scaffold.of(context).showSnackBar(SnackBar(

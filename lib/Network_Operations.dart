@@ -243,6 +243,8 @@ static Future<String> add_contact(String token,int contactId,String name,String 
   Map<String,String> headers = {'Authorization':'Bearer '+token,'Content-Type':'application/json'};
   final body = jsonEncode({"contactId":contactId,"Name":name,"website":website,"facebook":facebook,"instagram":instagram,"twiter":twitter,"email":email,"address":address,"mobileNo":mobile,"phoneNo":phone,"cnic":cnic,"picture":picture,"contactTypess":contact_type},toEncodable: Utils.myEncode);
   var response= await http.post("http://192.236.147.77:8083/api/Contacts/ContactSave",headers: headers,body: body);
+  print(response.body);
+  print(response.statusCode.toString());
   if(response.statusCode==200){
     return response.body;
   }else

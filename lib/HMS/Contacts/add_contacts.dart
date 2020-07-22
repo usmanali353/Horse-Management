@@ -379,6 +379,7 @@ class add_contact_button extends StatelessWidget {
                 roles.add(contactTypes(int.parse(_myActivities[i])).toJson());
               }
               network_operations.add_contact(token, 0, name.text, website.text, facebook.text, instagram.text, twitter.text, email.text, address.text, mobile.text, phone.text, cnic.text, picked_image, roles).then((response){
+
                  if(response!=null){
                    Scaffold.of(context).showSnackBar(SnackBar(
                      content: Text("Contact Added Sucessfully"),

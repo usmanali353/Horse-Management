@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
@@ -527,7 +529,7 @@ class _update_breeding extends State<update_breeding> {
                     padding: const EdgeInsets.only(
                         top: 16, left: 16, right: 16),
                     child: Visibility(
-                      visible: semen_type_loaded,
+                      //visible: semen_type_loaded,
                       child: FormBuilderDropdown(
                         attribute: "Semen Type",
                         //initialValue: specificservice['semenType']!=null?semen_type[specificservice['semenType']]:null,
@@ -816,13 +818,19 @@ class _update_breeding extends State<update_breeding> {
                               breeddropdown['costCenterDropDown'][selected_costcenter_id]['id'],
                               breeddropdown['contactsDropDown'][selected_contact_id]['id'],
                               comments.text).then((response) {
+                            //Navigator.of(context).pop();
                             if(response!=null){
+
+                             //print('Hello');
                               Scaffold.of(context).showSnackBar(SnackBar(
                                 content: Text("Breeding Service Updated"),
                                 backgroundColor: Colors.green,
                               ));
+                              //sleep(Duration(seconds: 3));
+                              Navigator.of(context).pop();
                               Navigator.pop(context);
-                            }else{
+                            }
+                            else{
                               Scaffold.of(context).showSnackBar(SnackBar(
                                 content: Text("Breeding Services not Updated"),
                                 backgroundColor: Colors.red,

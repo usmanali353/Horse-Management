@@ -50,6 +50,7 @@ class _currency_list extends State<currency_list>{
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     _searchQuery =TextEditingController();
     CurrenciesServices.getCurrencyDropdown(token).then((response){
+      print(response);
       if(response!=null){
         setState(() {
           currency_response=json.decode(response);
@@ -137,31 +138,6 @@ class _currency_list extends State<currency_list>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-//      floatingActionButton: FloatingActionButton(
-//        onPressed: (){
-//          Navigator.push(context, MaterialPageRoute(builder: (context)=>add_currency(token)));
-//        },
-//        child: Icon(Icons.add),
-//      ),
-//      appBar: AppBar(
-//        title: Text("Currencies"),
-//        actions: <Widget>[
-//          Center(child: Text("Add New",textScaleFactor: 1.3,)),
-//          IconButton(
-//            icon: Icon(
-//              Icons.add,
-//              color: Colors.white,
-//            ),
-//            onPressed: () {
-//              Navigator.push(context, MaterialPageRoute(builder: (context) => add_currency(token)),);
-//            },
-//          )
-////          IconButton(
-////            icon: Icon(Icons.picture_as_pdf),
-////           // onPressed: () => _generatePdfAndView(context),
-////          ),
-//        ],
-//      ),
       appBar: AppBar(
         leading: _isSearching ? const BackButton() : null,
         title: _isSearching ? _buildSearchField() : _buildTitle(context),

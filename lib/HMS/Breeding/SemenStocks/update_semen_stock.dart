@@ -139,7 +139,7 @@ class _update_semen_stock_form extends State<update_semen_stock_form>{
                         Padding(
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: Visibility(
-                            visible: dose_loaded,
+                            //visible: dose_loaded,
                             child: FormBuilderDropdown(
                               attribute: "Horse",
                               initialValue: dose_data['horseName']['name'],
@@ -438,6 +438,7 @@ class _update_semen_stock_form extends State<update_semen_stock_form>{
                                 child: Text("Update",style: TextStyle(color: Colors.white),),
 
                                 onPressed: (){
+                                  print(dose_data['id']);
                                   if (_fbKey.currentState.validate()) {
                                     _fbKey.currentState.save();
                                     Utils.check_connectivity().then((result){

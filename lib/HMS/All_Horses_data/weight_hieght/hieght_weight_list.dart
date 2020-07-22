@@ -339,7 +339,7 @@ class _Profile_Page_State extends ResumableState<weight_hieght_list>{
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: horizontalTitleAlignment,
           children: <Widget>[
-            const Text('Weight & Hieght'),
+            const Text('Weight & Height'),
           ],
         ),
       ),

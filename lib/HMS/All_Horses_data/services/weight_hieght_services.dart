@@ -54,7 +54,7 @@ class weight_hieght_services {
       return null;
   }
 
-  static Future<String> weight_hieghtSave (String createdBy,String token,int id, int horseid, DateTime date,String weight,String hieght,String bodyCond,String comment ) async {
+  static Future<String> weight_hieghtSave (String createdBy,String token,int id, int horseid, DateTime date,String weight,int hieght,String bodyCond,String comment ) async {
     Map<String, String> headers = {
       HttpHeaders.contentTypeHeader: 'application/json',
       HttpHeaders.authorizationHeader: 'Bearer '+token

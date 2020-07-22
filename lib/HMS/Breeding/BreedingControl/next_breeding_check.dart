@@ -132,6 +132,7 @@ class _next_breeding_check extends State<next_breeding_check>{
                                       if(parsedjson != null){
                                         if(parsedjson['isSuccess'] == true){
                                           print("Successfully data Saved");
+                                          Navigator.pop(context);
                                         }else
                                           print("not saved");
                                       }else

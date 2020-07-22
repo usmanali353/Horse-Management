@@ -245,7 +245,7 @@ class _breeding_services_State extends State<breeding_services>{
                           color: Colors.red,
                           caption: 'Hide',
                           onTap: () async {
-                            BreedingServicesJson. change_breeding_services_visibility(token, breeding_services_list[index]['embryoStockId']).then((response){
+                            BreedingServicesJson. change_breeding_services_visibility(token, breeding_services_list[index]['breedingServiceId']).then((response){
                               print(response);
                               if(response!=null){
                                 Scaffold.of(context).showSnackBar(SnackBar(

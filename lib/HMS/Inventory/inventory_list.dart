@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Inventory/add_inventory.dart';
 import 'package:horse_management/HMS/Inventory/services_inventory.dart';
 import 'package:horse_management/HMS/Inventory/update_inventory.dart';
@@ -267,10 +268,11 @@ class _Profile_Page_State extends State<inventory_list>{
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ExpansionTile(
+                          leading: FaIcon(FontAwesomeIcons.boxOpen, color: Colors.brown.shade300, size: 30,),
                           //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                           title: Text(inventorylist!=null?(inventorylist[index]['name']):''),
-                         subtitle: Text(inventorylist[index]['itemType']!=null?(inventorylist[index]['itemType']).toString():'testtype empty'),
-                          trailing: Text(inventorylist[index]['stock'] != null ? inventorylist[index]['stock'].toString():" name empty"),
+                         subtitle: Text(inventorylist[index]['itemType']!=null?"Item Type: "+(inventorylist[index]['itemType']).toString():'testtype empty'),
+                          trailing: Text(inventorylist[index]['stock'] != null ?"Stock: "+ (inventorylist[index]['stock']).toString():" name empty"),
                           //leading: Image.asset("Assets/horses_icon.png"),
 
 
@@ -278,10 +280,13 @@ class _Profile_Page_State extends State<inventory_list>{
 
                             Divider(),
                             ListTile(
-                              title: Text("Amount"),
-                              //trailing: Text(inventorylist != null ? inventorylist[index]['amount'].toString():""),
+                              title: Text("Location"),
+                              trailing: Text(inventorylist[index]['currentLocation'] != null ? inventorylist[index]['currentLocation'].toString():""),
+                            ),
+                            ListTile(
+                              title: Text("Quantity"),
+                              trailing: Text(inventorylist[index]['quantity'] != null ? inventorylist[index]['quantity'].toString():""),
                             )
-
                           ],
 
 

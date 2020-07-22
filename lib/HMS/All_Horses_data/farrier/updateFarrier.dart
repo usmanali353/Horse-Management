@@ -390,7 +390,7 @@ class _state_add_farrier extends State<update_farrier> {
                         padding: const EdgeInsets.all(16.0),
                         child: TextFormField(
                           controller: comment,
-                          maxLines: null,
+
                           minLines: 5,
                           decoration: InputDecoration(
                               hintText: "Add Comment",

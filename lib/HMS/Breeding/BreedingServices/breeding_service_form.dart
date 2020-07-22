@@ -402,7 +402,7 @@ class _breeding_service_form extends State<breeding_service_form> {
                     padding: const EdgeInsets.only(
                         top: 16, left: 16, right: 16),
                     child: Visibility(
-                      visible: semen_type_loaded,
+                      //visible: semen_type_loaded,
                       child: FormBuilderDropdown(
                         attribute: "Semen Type",
                         validators: [FormBuilderValidators.required()],
@@ -414,8 +414,7 @@ class _breeding_service_form extends State<breeding_service_form> {
                         onChanged: (value) {
                           setState(() {
                             this.semen_type = value;
-                            this.semen_type_id =
-                                semen_type_list.indexOf(value) + 1;
+                            this.semen_type_id = semen_type_list.indexOf(value) + 1;
                           });
                         },
                         style: Theme
@@ -638,6 +637,7 @@ class _breeding_service_form extends State<breeding_service_form> {
               builder: (BuildContext context){
                 return  MaterialButton(
                   onPressed: () {
+                    print(semen_type);
                     if (_fbKey.currentState.validate()) {
                       Utils.check_connectivity().then((result){
                         if(result){

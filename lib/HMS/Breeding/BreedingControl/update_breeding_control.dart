@@ -1013,6 +1013,7 @@ class update_breeding_control_button extends StatelessWidget {
         child: MaterialButton(
           color: Colors.teal,
           onPressed: (){
+            print(breeding_control_data);
             if(_fbKey.currentState.validate()){
               _fbKey.currentState.save();
 

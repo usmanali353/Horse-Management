@@ -305,9 +305,9 @@ class _breeding_sales extends State<breeding_sales>{
       }else if(id==4){
         status_type="Pregnant";
       }else if(id==5){
-        status_type="Empty";
-      }else{
         status_type="Bleeding Report";
+      }else{
+        status_type="Empty";
       }
     }
     return status_type;

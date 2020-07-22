@@ -45,7 +45,7 @@ class SemenStockServices{
     final body = jsonEncode({"createdOn":DateTime.now(),
       "createdBy":createdBy,
       "isActive":true,
-      "semenCollectionId":embryostockId,
+      "id":embryostockId,
       "horseId":horseID,
       "tankId":tankID,
       "enterDate":  entry_date,

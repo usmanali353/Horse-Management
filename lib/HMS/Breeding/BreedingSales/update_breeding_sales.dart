@@ -533,30 +533,14 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
 
                       onChanged: (value){
                         setState(() {
-                          if(value == "Sold")
-                            selected_status_id = 1;
-                          else if(value == "Shipped")
-                            selected_status_id = 2;
-                          else if(value == "Delivered")
-                            selected_status_id = 3;
-                          else if(value == "Pregnant")
-                            selected_status_id = 4;
-                          else if(value == "Breeding Report")
-                            selected_status_id = 5;
+                          this.selected_status=value;
+                          this.selected_status_id=status.indexOf(value)+1;
                         });
                       },
                       onSaved: (value){
                         setState(() {
-                          if(value == "Sold")
-                            selected_status_id = 1;
-                          else if(value == "Shipped")
-                            selected_status_id = 2;
-                          else if(value == "Delivered")
-                            selected_status_id = 3;
-                          else if(value == "Pregnant")
-                            selected_status_id = 4;
-                          else if(value == "Breeding Report")
-                            selected_status_id = 5;
+                          this.selected_status=value;
+                          this.selected_status_id=status.indexOf(value)+1;
                         });
                       },
                     ),

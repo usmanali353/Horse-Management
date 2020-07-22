@@ -55,7 +55,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       label: "Sign up",
                       background: Colors.transparent,
                       fontColor: Colors.teal,
-                      borderColor: Colors.teal,
+                      borderColor: Colors.white,
                       onTap:(){
                         Navigator.push(context, MaterialPageRoute(builder: (context)=> SignUpScreen()));
                       } ,
@@ -64,9 +64,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     SizedBox(height: 20),
                     FadeAnimation(3.2,CustomButtonAnimation(
                       label: "Sign In",
-                      backbround: Colors.teal,
-                      borderColor: Colors.teal,
-                      fontColor: Color(0xFFF001117),
+                      backbround: Colors.white,
+                      borderColor: Colors.white,
+                      fontColor: Colors.teal,
+                      //fontColor: Color(0xFFF001117),
                       child: LoginScreen(),
                     )),
                     SizedBox(height: 30),
@@ -77,10 +78,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       ,
                       child: Center(
                         child:  FadeAnimation(3.4,Text("Forgot password?", style: TextStyle(
-                            color: Colors.teal,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            //decoration: TextDecoration.underline
+                          color: Colors.teal,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          //decoration: TextDecoration.underline
                         ),
                         ),
                         ),
