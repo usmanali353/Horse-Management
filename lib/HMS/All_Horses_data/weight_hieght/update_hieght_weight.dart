@@ -251,7 +251,7 @@ class addWeightButton extends StatelessWidget {
           pd.show();
 
           weight_hieght_services.weight_hieghtSave(createdBy,token, whid,weightHieghtdropdown['horseDropDown'][selected_horse_id]['id'], Select_date,
-              weight.text,height.text,bodyindex.text,comment.text).then((response){
+              weight.text,int.parse(height.text),bodyindex.text,comment.text).then((response){
             pd.dismiss();
             if(response !=null){
               Navigator.pop(context,'refresh');

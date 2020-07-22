@@ -275,12 +275,15 @@ class _state_add_farrier extends State<add_competetion>{
                             competetion_services.competetionSave(null,token,0, competetiondropdown['horseDropDown'][selected_horse_id]['id'],select_date, competetiondropdown['performanceTypeDropDown'][selected_performance_id]['id'],eventName.text,city.text,category.text,result.text,rider.text,int.parse(judges.text),comment.text).then((response){
                               pd.dismiss();
                               if(response !=null) {
+                                Navigator.pop(context);
                                 var decode= jsonDecode(response);
                                 if(decode['isSuccess'] == true){
                                   Flushbar(message: "Added Successfully",
                                     duration: Duration(seconds: 3),
                                     backgroundColor: Colors.green,)
-                                    ..show(context);}
+                                    ..show(context);
+                                  Navigator.pop(context);
+                                }
                                 else{
                                   Flushbar(message: "Not Added",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                               }else{

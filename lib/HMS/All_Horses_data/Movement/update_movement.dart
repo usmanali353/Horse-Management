@@ -641,7 +641,9 @@ class _state_add_farrier extends State<update_movement>{
                                   Flushbar(message: "Update Successfully",
                                     duration: Duration(seconds: 3),
                                     backgroundColor: Colors.green,)
-                                    ..show(context);}
+                                    ..show(context);
+                                  Navigator.pop(context);
+                                }
                                 else{
                                   Flushbar(message: "Not Update",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);}
                               }else{

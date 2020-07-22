@@ -229,7 +229,7 @@ class _Profile_Page_State extends State<competetion_list>{
                         color: Colors.red,
                         caption: 'Hide',
                         onTap: () async {
-                          competetion_services.competetionVisibilty(token, competetionlist[index]['id']).then((response){
+                          competetion_services.competetionVisibilty(token, competetionlist[index]['competitionId']).then((response){
                             //replytile.removeWhere((item) => item.id == horse_list[index]['horseId']);
                             print(response);
                             if(response!=null){
@@ -251,6 +251,7 @@ class _Profile_Page_State extends State<competetion_list>{
 
                     ],
                     child: ListTile(
+                      enabled: competetionlist[index]['isActive'],
                       //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                       title: Text(competetionlist!=null?(competetionlist[index]['horseName']['name']):'Horse Name'),
                       trailing: Text(competetionlist!=null?'Performance :'+(competetionlist[index]['performanceTypeName']['name']):'performance not showing'),
