@@ -22,7 +22,7 @@ class CurrenciesServices{
 
   static Future<String> addCurrency(String token,int id,String name,String createdBy) async{
     Map<String,String> headers = {'Authorization':'Bearer '+token,'Content-Type':'application/json'};
-    final body = jsonEncode({"id":id,"symbol":name,"createdBy":createdBy,"createdOn":DateTime.now(),"isActive":true},toEncodable: Utils.myEncode);
+    final body = jsonEncode({"id":0,"symbolId":id,"createdBy":createdBy,"createdOn":DateTime.now(),"isActive":true},toEncodable: Utils.myEncode);
     var response= await http.post("http://192.236.147.77:8083/api/configuration/Currencysave",headers: headers,body: body);
     print(response.body);
     if(response.statusCode==200){

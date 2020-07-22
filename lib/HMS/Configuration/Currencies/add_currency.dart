@@ -39,8 +39,8 @@ class _add_currency extends State<add_currency>{
             print(response);
             setState(() {
               currency_response=json.decode(response);
-              for(int i=0;i<currency_response['response']['currencySymbolsDropDown'].length;i++)
-                currency.add(currency_response['response']['currencySymbolsDropDown'][i]['name']);
+              for(int i=0;i<currency_response['currencySymbolsDropDown'].length;i++)
+                currency.add(currency_response['currencySymbolsDropDown'][i]['name']);
 
              // stocks_loaded=true;
             });
@@ -90,7 +90,7 @@ class _add_currency extends State<add_currency>{
                               onChanged: (value){
                                 setState(() {
                                   this.selected_currency=value;
-                                  this.selected_currency_id=currency.indexOf(value);
+                                  this.selected_currency_id=currency.indexOf(value)+1;
                                 });
                               },
                             ),
@@ -113,6 +113,7 @@ class _add_currency extends State<add_currency>{
                                       if(result){
                                         ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
                                         pd.show();
+                                        print(currency_response['currencySymbolsDropDown'][selected_currency_id]['id']);
                                         CurrenciesServices.addCurrency(token,currency_response['currencySymbolsDropDown'][selected_currency_id]['id'],selected_currency, null)
                                             .then((respons){
                                           pd.dismiss();
