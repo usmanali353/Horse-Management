@@ -57,21 +57,7 @@ class _Profile_Page_State extends State<all_horse_data>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("All Records"),
-//          actions: <Widget>[
-//          IconButton(
-//            icon: Icon(
-//              Icons.arrow_right,
-//              color: Colors.white,
-//            ),
-//            onPressed: () {
-//              Navigator.push(
-//                context,
-//                MaterialPageRoute(builder: (context) => add_newHorse()),
-//              );
-//            },
-//          )
-//        ],
+        appBar: AppBar(title: Text("Horse Records"),
         ),
         body: SingleChildScrollView(
 
@@ -79,34 +65,20 @@ class _Profile_Page_State extends State<all_horse_data>{
              Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-//              ListTile(
-//                title: Text("All Horses list"),
-//                //(training_list!=null?training_list[index]['targetCompetition'].toString():''
-//                subtitle: Text("Add new Horse"),
-//                leading: Icon(Icons.account_balance_wallet,size: 40,),
-//                trailing: Icon(Icons.arrow_right),
-//                onTap: ()async{
-////                  print(horsedata != null?horsedata['allIncomeAndExpenses'][0]['amount'].toString():'');
-////                  print(horsedata != null?horsedata['allIncomeAndExpenses'].toString():'');
-//                  Navigator.push(context,MaterialPageRoute(builder: (context)=>horse_list(token)));
-//                },
-//              ),
                 ListTile(
                   title: Text("Income & Expense"),
                   //(training_list!=null?training_list[index]['targetCompetition'].toString():''
-                  subtitle: Text("Track Your Expense"),
+                  subtitle: Text("Track Your Expenses"),
                   leading: Icon(Icons.account_balance_wallet,size: 40,),
                   trailing: Icon(Icons.arrow_right),
                   onTap: ()async{
-//                  print(horsedata != null?horsedata['allIncomeAndExpenses'][0]['amount'].toString():'');
-//                  print(horsedata != null?horsedata['allIncomeAndExpenses'].toString():'');
                     prefs =await SharedPreferences.getInstance();
                     Navigator.push(context,MaterialPageRoute(builder: (context)=>income_expense_list(token)));
                   },
                 ),
                 ListTile(
                   title: Text("Notes"),
-                  subtitle: Text("manage note on horse"),
+                  subtitle: Text("Manage notes of specific horse"),
                   leading: Icon(FontAwesomeIcons.stickyNote,size: 40,),
                   trailing: Icon(Icons.arrow_right),
                   onTap: () {
@@ -115,7 +87,7 @@ class _Profile_Page_State extends State<all_horse_data>{
                 ),
                 ListTile(
                   title: Text("Image"),
-                  subtitle: Text("Add image on this horse"),
+                  subtitle: Text("Add image of specific horse"),
                   leading: Icon(FontAwesomeIcons.images,size: 40,),
                   trailing: Icon(Icons.arrow_right),
                   onTap: (){
@@ -133,7 +105,7 @@ class _Profile_Page_State extends State<all_horse_data>{
                 ),
                 ListTile(
                   title: Text("Lab Report"),
-                  subtitle: Text("Add Report on this horse"),
+                  subtitle: Text("Add Report of specific horse"),
                   leading: Icon(FontAwesomeIcons.notesMedical,size: 40,),
                   trailing: Icon(Icons.arrow_right),
                   onTap: ()async{
@@ -144,7 +116,7 @@ class _Profile_Page_State extends State<all_horse_data>{
                 ),
                 ListTile(
                   title: Text("Health Record"),
-                  subtitle: Text("Add Health Record on this horse"),
+                  subtitle: Text("Add Health Record of specific horse"),
                   leading: Icon(FontAwesomeIcons.solidStickyNote,size: 40,),
                   trailing: Icon(Icons.arrow_right),
                   onTap: (){
@@ -152,8 +124,8 @@ class _Profile_Page_State extends State<all_horse_data>{
                   },
                 ),
                 ListTile(
-                  title: Text("Weight & Hieght"),
-                  subtitle: Text("Add & Update Weight Hieght"),
+                  title: Text("Weight & Height"),
+                  subtitle: Text("Add & Update Weight & Height"),
                   leading: Icon(FontAwesomeIcons.weight,size: 40,),
                   trailing: Icon(Icons.arrow_right),
                   onTap: (){
@@ -180,8 +152,8 @@ class _Profile_Page_State extends State<all_horse_data>{
                   },
                 ),
                 ListTile(
-                  title: Text("Competetion"),
-                  subtitle: Text("Add & Update Competetion"),
+                  title: Text("Competition"),
+                  subtitle: Text("Add & Update Competition"),
                   leading: Icon(FontAwesomeIcons.compactDisc,size: 40,),
                   trailing: Icon(Icons.arrow_right),
                   onTap: (){
@@ -198,7 +170,7 @@ class _Profile_Page_State extends State<all_horse_data>{
                   },
                 ),
                 ListTile(
-                  title: Text("MoveMent"),
+                  title: Text("Movement"),
                   subtitle: Text("Add & Update Movement"),
                   leading: Icon(FontAwesomeIcons.truckMoving,size: 40,),
                   trailing: Icon(Icons.arrow_right),

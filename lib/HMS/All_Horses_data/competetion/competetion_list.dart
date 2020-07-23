@@ -323,7 +323,7 @@ class _Profile_Page_State extends State<competetion_list>{
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: horizontalTitleAlignment,
           children: <Widget>[
-            const Text('Competetions'),
+            const Text('Competitions'),
           ],
         ),
       ),

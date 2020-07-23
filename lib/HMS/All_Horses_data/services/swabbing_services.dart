@@ -37,6 +37,7 @@ class swabbing_services {
       headers: headers,
     );
     if (response.statusCode == 200) {
+      print(response.body);
       return response.body;
     } else
       return null;
