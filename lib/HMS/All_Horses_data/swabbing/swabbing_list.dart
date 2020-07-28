@@ -11,6 +11,7 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'add_swabbing.dart';
+import 'swabbing_details.dart';
 
 
 class swabbing_list extends StatefulWidget{
@@ -259,7 +260,7 @@ class _Profile_Page_State extends State<swabbing_list>{
                     onTap: ()async{
                       prefs = await SharedPreferences.getInstance();
                       print((swabbinglist[index]));
-                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_labTest(lablist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
+                       Navigator.push(context, MaterialPageRoute(builder: (context)=>Swabbing_details_page(swabbinglist[index])));
                     },
                   ),
                   secondaryActions: <Widget>[

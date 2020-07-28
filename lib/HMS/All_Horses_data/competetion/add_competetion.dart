@@ -3,6 +3,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:horse_management/HMS/All_Horses_data/services/competetion_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:horse_management/Utils.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -39,18 +40,30 @@ class _state_add_farrier extends State<add_competetion>{
     rider= TextEditingController();judges= TextEditingController();
     comment= TextEditingController();
 
+    Utils.check_connectivity().then((result){
+      if(result) {
+        ProgressDialog pd = ProgressDialog(
+            context, isDismissible: true, type: ProgressDialogType.Normal);
+        pd.show();
+        competetion_services.competetionDropdown(token).then((response){
+          pd.dismiss();
+          setState(() {
+            print(response);
+            competetiondropdown=json.decode(response);
+            for(int i=0;i<competetiondropdown['horseDropDown'].length;i++)
+              horse.add(competetiondropdown['horseDropDown'][i]['name']);
+            for(int i=0;i<competetiondropdown['performanceTypeDropDown'].length;i++)
+              performance.add(competetiondropdown['performanceTypeDropDown'][i]['name']);
 
-    competetion_services.competetionDropdown(token).then((response){
-      setState(() {
-        print(response);
-        competetiondropdown=json.decode(response);
-        for(int i=0;i<competetiondropdown['horseDropDown'].length;i++)
-          horse.add(competetiondropdown['horseDropDown'][i]['name']);
-      for(int i=0;i<competetiondropdown['performanceTypeDropDown'].length;i++)
-        performance.add(competetiondropdown['performanceTypeDropDown'][i]['name']);
-
-      });
+          });
+        });
+      }else
+        Flushbar(message: "Network Error",backgroundColor: Colors.red,duration: Duration(seconds: 3),).show(context);
     });
+
+
+
+
 
 
   }

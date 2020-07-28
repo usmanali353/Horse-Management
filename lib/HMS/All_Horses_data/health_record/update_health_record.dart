@@ -6,6 +6,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/Model/Health_Record.dart';
 import 'package:horse_management/Model/sqlite_helper.dart';
 import 'package:horse_management/HMS/All_Horses_data/services/health_services.dart';
+import 'package:horse_management/Utils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 class update_health extends StatefulWidget{
   String token;
@@ -46,26 +47,56 @@ class _health_record_form extends State<update_health>{
     });
 
 
-    healthServices.healthdropdown(token).then((response){
-      setState(() {
-        print(response);
-        healthdropdown=json.decode(response);
-        for(int i=0;i<healthdropdown['horseDropDown'].length;i++)
-          horse.add(healthdropdown['horseDropDown'][i]['name']);
-        for(int i=0;i<healthdropdown['responsibleDropDown'].length;i++)
-          responsible.add(healthdropdown['responsibleDropDown'][i]['name']);
-        for(int i=0;i<healthdropdown['currencyDropDown'].length;i++)
-          currency.add(healthdropdown['currencyDropDown'][i]['name']);
-        for(int i=0;i<healthdropdown['categoryDropDown'].length;i++)
-          category.add(healthdropdown['categoryDropDown'][i]['name']);
-        for(int i=0;i<healthdropdown['costCenterDropDown'].length;i++)
-          costcenter.add(healthdropdown['costCenterDropDown'][i]['name']);
-        for(int i=0;i<healthdropdown['contactsDropDown'].length;i++)
-          contact.add(healthdropdown['contactsDropDown'][i]['name']);
-        print(contact);
+    Utils.check_connectivity().then((result){
+      if(result) {
+        ProgressDialog pd = ProgressDialog(
+            context, isDismissible: true, type: ProgressDialogType.Normal);
+        pd.show();
+        healthServices.healthdropdown(token).then((response){
+          pd.dismiss();
+          setState(() {
+            print(response);
+            healthdropdown=json.decode(response);
+            for(int i=0;i<healthdropdown['horseDropDown'].length;i++)
+              horse.add(healthdropdown['horseDropDown'][i]['name']);
+            for(int i=0;i<healthdropdown['responsibleDropDown'].length;i++)
+              responsible.add(healthdropdown['responsibleDropDown'][i]['name']);
+            for(int i=0;i<healthdropdown['currencyDropDown'].length;i++)
+              currency.add(healthdropdown['currencyDropDown'][i]['name']);
+            for(int i=0;i<healthdropdown['categoryDropDown'].length;i++)
+              category.add(healthdropdown['categoryDropDown'][i]['name']);
+            for(int i=0;i<healthdropdown['costCenterDropDown'].length;i++)
+              costcenter.add(healthdropdown['costCenterDropDown'][i]['name']);
+            for(int i=0;i<healthdropdown['contactsDropDown'].length;i++)
+              contact.add(healthdropdown['contactsDropDown'][i]['name']);
+            print(contact);
 
-      });
+          });
+        });
+      }else
+        Flushbar(message: "Network Error",backgroundColor: Colors.red,duration: Duration(seconds: 3),).show(context);
     });
+
+//    healthServices.healthdropdown(token).then((response){
+//      setState(() {
+//        print(response);
+//        healthdropdown=json.decode(response);
+//        for(int i=0;i<healthdropdown['horseDropDown'].length;i++)
+//          horse.add(healthdropdown['horseDropDown'][i]['name']);
+//        for(int i=0;i<healthdropdown['responsibleDropDown'].length;i++)
+//          responsible.add(healthdropdown['responsibleDropDown'][i]['name']);
+//        for(int i=0;i<healthdropdown['currencyDropDown'].length;i++)
+//          currency.add(healthdropdown['currencyDropDown'][i]['name']);
+//        for(int i=0;i<healthdropdown['categoryDropDown'].length;i++)
+//          category.add(healthdropdown['categoryDropDown'][i]['name']);
+//        for(int i=0;i<healthdropdown['costCenterDropDown'].length;i++)
+//          costcenter.add(healthdropdown['costCenterDropDown'][i]['name']);
+//        for(int i=0;i<healthdropdown['contactsDropDown'].length;i++)
+//          contact.add(healthdropdown['contactsDropDown'][i]['name']);
+//        print(contact);
+//
+//      });
+//    });
 
 
     if(healthrecordlist != null) {

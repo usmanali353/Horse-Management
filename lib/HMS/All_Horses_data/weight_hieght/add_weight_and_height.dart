@@ -255,7 +255,7 @@ class addWeightButton extends StatelessWidget {
 
         }
       },
-      child:Text("Add",style: TextStyle(color: Colors.white),),
+      child:Text("Add Weight ",style: TextStyle(color: Colors.white),),
     );
   }
 }

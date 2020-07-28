@@ -31,11 +31,12 @@ class swabbing_services {
   }
 
   static Future<String> swabbing_Dropdown (String token) async {
-    Map<String, String> headers = {'Authorization': 'Bearer ' + token};
+    Map<String, String> headers = {'Authorization': 'Bearer '+token};
     final response = await http.get(
       'http://192.236.147.77:8083/api/horse/GetSwabbingById',
       headers: headers,
     );
+    print(response.body);
     if (response.statusCode == 200) {
       print(response.body);
       return response.body;

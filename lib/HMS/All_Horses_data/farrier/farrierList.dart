@@ -11,6 +11,8 @@ import 'package:need_resume/need_resume.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'farrier_details.dart';
+
 
 class farrier_list extends StatefulWidget{
   String token;
@@ -264,7 +266,7 @@ class _Profile_Page_State extends ResumableState<farrier_list>{
                     onTap: ()async{
                       prefs = await SharedPreferences.getInstance();
                       print((farrierlist[index]));
-                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_labTest(lablist[index]['id'],prefs.get('token'),prefs.get('createdBy'))));
+                       Navigator.push(context, MaterialPageRoute(builder: (context)=>farrier_details_page(farrierlist[index])));
                     },
                   ),
                   secondaryActions: <Widget>[

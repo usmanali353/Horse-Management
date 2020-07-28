@@ -8,6 +8,7 @@ import 'package:horse_management/Utils.dart';
 import 'package:need_resume/need_resume.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'healthRecord_details.dart';
 import 'health_record_form.dart';
 
 
@@ -333,13 +334,10 @@ int pagenum=1,total_page;
                       //trailing: healthlist != null ? CircleAvatar(backgroundColor: get_status_by_id(healthlist[index]['status'])):"empty",
                       //leading: Image.asset("Assets/horses_icon.png"),
                       onTap: ()async{
-                        print(healthlist[index]['id']);
+                        print(healthlist[index]);
                         prefs= await SharedPreferences.getInstance();
-//                    Scaffold.of(context).showSnackBar(SnackBar(
-//                      backgroundColor: Colors.green,
-//                      content: Text("Training Updated Sucessfully"),
-//                    ));
-//                    Utils.createSnackBar("qwerty",context);
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>healthRecord_details_page(healthlist[index])));
+
                       },
                     ),
 

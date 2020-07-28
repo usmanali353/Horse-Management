@@ -92,45 +92,27 @@ class _state_add_farrier extends State<add_swabbing>{
     amount= TextEditingController();
     comment= TextEditingController();
 
-    swabbing_services.swabbing_Dropdown(token).then((response){
-      if(response!=null){
-        setState(() {
-          swabbingdropdown=json.decode(response);
-          for(int i=0;i<swabbingdropdown['horseDropDown'].length;i++){
-            horse.add(swabbingdropdown['horseDropDown'][i]['name']);
+
+
+    Utils.check_connectivity().then((result){
+      if(result) {
+        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
+        pd.show();
+        swabbing_services.swabbing_Dropdown(token).then((response){
+          pd.dismiss();
+          if(response!=null){
+            setState(() {
+              swabbingdropdown=json.decode(response);
+              for(int i=0;i<swabbingdropdown['horsesDropDown'].length;i++){
+                horse.add(swabbingdropdown['horsesDropDown'][i]['name']);
+              }
+            });
+          }else{
           }
         });
-      }else{
-      }
+      }else
+       Flushbar(message: "Network Error",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);
     });
-
-//    Utils.check_connectivity().then((result){
-//      if(result) {
-//        ProgressDialog pd = ProgressDialog(context, isDismissible: true, type: ProgressDialogType.Normal);
-//        pd.show();
-//        swabbing_services.swabbing_Dropdown(token).then((response){
-//          pd.dismiss();
-//          setState(() {
-//            print(response);
-//            swabbingdropdown=json.decode(response);
-//            for(int i=0;i<swabbingdropdown['horseDropDown'].length;i++){
-//              horse.add(swabbingdropdown['horseDropDown'][i]['name']);
-//            }
-//
-//          });
-//        });
-//      }else
-//       Flushbar(message: "Network Error",duration: Duration(seconds: 3),backgroundColor: Colors.red,)..show(context);
-//    });
-//    swabbing_services.swabbing_Dropdown(token).then((response){
-//      setState(() {
-//        print(response);
-//        swabbingdropdown=json.decode(response);
-//        for(int i=0;i<swabbingdropdown['horseDropDown'].length;i++)
-//          horse.add(swabbingdropdown['horseDropDown'][i]['name']);
-//
-//      });
-//    });
 
 
   }

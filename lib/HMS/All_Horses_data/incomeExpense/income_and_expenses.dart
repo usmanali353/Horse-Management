@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:horse_management/Utils.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/HMS/All_Horses_data/services/incomeExpense_services.dart';
@@ -26,7 +27,7 @@ class add_IncomeExpense extends StatefulWidget{
 class _state_add_farrier extends State<add_IncomeExpense>{
   int selected_horse_id,selected_category_id,selected_costcenter_id,selected_currency_id,selected_contact_id;
   String selected_horse,selected_category,selected_costcenter,selected_currency,selected_contact,selected_account;
-  List<String> horse=[];List<String> account=["General","Bussiness"];List<String> responsible=[];List<String> currency=[];List<String> category=[];List<String> costcenter=[];
+  List<String> horse=[], account=["General","Bussiness"], responsible=[], currency=[],category=[],costcenter=[];
   List<String> contact=[];
   DateTime Select_date = DateTime.now();
   TextEditingController amount,description;
@@ -41,24 +42,57 @@ class _state_add_farrier extends State<add_IncomeExpense>{
     amount= TextEditingController();
     description= TextEditingController();
 
-    labtest_services.labdropdown(token).then((response){
-      setState(() {
-       incomeExpenseDropdown=json.decode(response);
-        for(int i=0;i<incomeExpenseDropdown['horseDropDown'].length;i++)
-          horse.add(incomeExpenseDropdown['horseDropDown'][i]['name']);
-        for(int i=0;i<incomeExpenseDropdown['responsibleDropDown'].length;i++)
-          responsible.add(incomeExpenseDropdown['responsibleDropDown'][i]['name']);
-        for(int i=0;i<incomeExpenseDropdown['currencyDropDown'].length;i++)
-          currency.add(incomeExpenseDropdown['currencyDropDown'][i]['name']);
-        for(int i=0;i<incomeExpenseDropdown['categoryDropDown'].length;i++)
-          category.add(incomeExpenseDropdown['categoryDropDown'][i]['name']);
-        for(int i=0;i<incomeExpenseDropdown['costCenterDropDown'].length;i++)
-          costcenter.add(incomeExpenseDropdown['costCenterDropDown'][i]['name']);
-        for(int i=0;i<incomeExpenseDropdown['contactsDropDown'].length;i++)
-          contact.add(incomeExpenseDropdown['contactsDropDown'][i]['name']);
-      });
+    Utils.check_connectivity().then((result){
+      if(result) {
+        ProgressDialog pd = ProgressDialog(
+            context, isDismissible: true, type: ProgressDialogType.Normal);
+        pd.show();
+        income_expense_services.incomedropdown(token).then((response){
+          pd.dismiss();
+          print(response);
+          setState(() {
+            incomeExpenseDropdown=json.decode(response);
+            for(int i=0;i<incomeExpenseDropdown['horseDropdown'].length;i++)
+              horse.add(incomeExpenseDropdown['horseDropdown'][i]['name']);
+            for(int i=0;i<incomeExpenseDropdown['responsibleDropDown'].length;i++)
+              responsible.add(incomeExpenseDropdown['responsibleDropDown'][i]['name']);
+            for(int i=0;i<incomeExpenseDropdown['currencyDropDown'].length;i++)
+              currency.add(incomeExpenseDropdown['currencyDropDown'][i]['name']);
+            for(int i=0;i<incomeExpenseDropdown['categoryDropDown'].length;i++)
+              category.add(incomeExpenseDropdown['categoryDropDown'][i]['name']);
+            for(int i=0;i<incomeExpenseDropdown['costCenterDropDown'].length;i++)
+              costcenter.add(incomeExpenseDropdown['costCenterDropDown'][i]['name']);
+            for(int i=0;i<incomeExpenseDropdown['contactsDropDown'].length;i++)
+              contact.add(incomeExpenseDropdown['contactsDropDown'][i]['name']);
+          });
+        });
+
+      }else
+        Flushbar(message: "Network Error",backgroundColor: Colors.red,duration: Duration(seconds: 3),).show(context);
     });
 
+
+
+
+//    labtest_services.labdropdown(token).then((response){
+//      setState(() {
+//        print(response);
+//        labDropdown=json.decode(response);
+//        for(int i=0;i<labDropdown['horseDropDown'].length;i++)
+//          horse.add(labDropdown['horseDropDown'][i]['name']);
+//        for(int i=0;i<labDropdown['responsibleDropDown'].length;i++)
+//          responsible.add(labDropdown['responsibleDropDown'][i]['name']);
+//        for(int i=0;i<labDropdown['currencyDropDown'].length;i++)
+//          currency.add(labDropdown['currencyDropDown'][i]['name']);
+//        for(int i=0;i<labDropdown['categoryDropDown'].length;i++)
+//          category.add(labDropdown['categoryDropDown'][i]['name']);
+//        for(int i=0;i<labDropdown['costCenterDropDown'].length;i++)
+//          costcenter.add(labDropdown['costCenterDropDown'][i]['name']);
+//        for(int i=0;i<labDropdown['contactsDropDown'].length;i++)
+//          contact.add(labDropdown['contactsDropDown'][i]['name']);
+//
+//      });
+//    });
 
 
 

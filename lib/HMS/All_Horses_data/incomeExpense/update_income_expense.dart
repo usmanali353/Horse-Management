@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:horse_management/Utils.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:horse_management/HMS/All_Horses_data/services/incomeExpense_services.dart';
@@ -42,23 +43,37 @@ class _state_add_farrier extends State<update_IncomeExpense>{
      amount.text = expenselist['amount'] != null ? expenselist['amount'].toString():null;
      description.text = expenselist['description'] != null ? expenselist['description']:null;
    });
-    labtest_services.labdropdown(token).then((response){
-      setState(() {
-        incomeExpenseDropdown=json.decode(response);
-        for(int i=0;i<incomeExpenseDropdown['horseDropDown'].length;i++)
-          horse.add(incomeExpenseDropdown['horseDropDown'][i]['name']);
-        for(int i=0;i<incomeExpenseDropdown['responsibleDropDown'].length;i++)
-          responsible.add(incomeExpenseDropdown['responsibleDropDown'][i]['name']);
-        for(int i=0;i<incomeExpenseDropdown['currencyDropDown'].length;i++)
-          currency.add(incomeExpenseDropdown['currencyDropDown'][i]['name']);
-        for(int i=0;i<incomeExpenseDropdown['categoryDropDown'].length;i++)
-          category.add(incomeExpenseDropdown['categoryDropDown'][i]['name']);
-        for(int i=0;i<incomeExpenseDropdown['costCenterDropDown'].length;i++)
-          costcenter.add(incomeExpenseDropdown['costCenterDropDown'][i]['name']);
-        for(int i=0;i<incomeExpenseDropdown['contactsDropDown'].length;i++)
-          contact.add(incomeExpenseDropdown['contactsDropDown'][i]['name']);
-      });
+
+    Utils.check_connectivity().then((result){
+      if(result) {
+        ProgressDialog pd = ProgressDialog(
+            context, isDismissible: true, type: ProgressDialogType.Normal);
+        pd.show();
+        labtest_services.labdropdown(token).then((response){
+          pd.dismiss();
+          setState(() {
+            incomeExpenseDropdown=json.decode(response);
+            for(int i=0;i<incomeExpenseDropdown['horseDropDown'].length;i++)
+              horse.add(incomeExpenseDropdown['horseDropDown'][i]['name']);
+            for(int i=0;i<incomeExpenseDropdown['responsibleDropDown'].length;i++)
+              responsible.add(incomeExpenseDropdown['responsibleDropDown'][i]['name']);
+            for(int i=0;i<incomeExpenseDropdown['currencyDropDown'].length;i++)
+              currency.add(incomeExpenseDropdown['currencyDropDown'][i]['name']);
+            for(int i=0;i<incomeExpenseDropdown['categoryDropDown'].length;i++)
+              category.add(incomeExpenseDropdown['categoryDropDown'][i]['name']);
+            for(int i=0;i<incomeExpenseDropdown['costCenterDropDown'].length;i++)
+              costcenter.add(incomeExpenseDropdown['costCenterDropDown'][i]['name']);
+            for(int i=0;i<incomeExpenseDropdown['contactsDropDown'].length;i++)
+              contact.add(incomeExpenseDropdown['contactsDropDown'][i]['name']);
+          });
+        });
+
+
+      }else
+        Flushbar(message: "Network Error",backgroundColor: Colors.red,duration: Duration(seconds: 3),).show(context);
     });
+
+
 
 
 

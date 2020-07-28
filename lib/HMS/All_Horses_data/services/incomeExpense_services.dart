@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:horse_management/Utils.dart';
+import 'package:horse_management/screens/reset_password_screen.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -13,6 +14,8 @@ class income_expense_services {
       'http://192.236.147.77:8083/api/horse/GetAllIncomeAndExpenses',
       headers: headers,
     );
+    print(response);
+    print(response.statusCode);
     if (response.statusCode == 200) {
       return response.body;
     } else
@@ -39,18 +42,30 @@ class income_expense_services {
     }else
       return null;
   }
-
-  static Future<String> incomedropdown (String token) async {
-    Map<String, String> headers = {'Authorization': 'Bearer ' + token};
-    final response = await http.get(
-      'http://192.236.147.77:8083/api/horse/GetIncomeAndExpenseById',
+  static Future<String> incomedropdown(String token) async{
+    Map<String,String> headers = {'Authorization':'Bearer '+token};
+    final response = await http.get('http://192.236.147.77:8083/api/horse/GetIncomeAndExpenseById',
       headers: headers,
     );
-    if (response.statusCode == 200) {
+    print(response.body);
+    print(response.statusCode);
+    if(response.statusCode==200){
       return response.body;
-    } else
+    }else
       return null;
   }
+
+//  static Future<String> incomedropdown (String token) async {
+//    Map<String, String> headers = {'Authorization': 'Bearer '+token};
+//    final response = await http.get(
+//      'http://192.236.147.77:8083/api/horse/GetIncomeAndExpenseById',
+//      headers: headers,
+//    );
+//    if (response.statusCode == 200) {
+//      return response.body;
+//    } else
+//      return null;
+//  }
 
   static Future<String> horseIdincomeExpense (String token, int id) async {
     Map<String, String> headers = {'Authorization': 'Bearer '+token};

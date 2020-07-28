@@ -174,7 +174,9 @@ class _Profile_Page_State extends ResumableState<horse_detail> {
                         Tooltip(message: horsedata['horseStatus']['trainingStatus'] !=null ? horsedata['horseStatus']['trainingStatus']: 'empty',child: CircleAvatar(radius: 25.0,backgroundColor: Color(int.parse(get_colors(horsedata['horseStatus']['trainingColor']))),)),
                         Tooltip(message: horsedata['horseStatus']['breedingStatus'] != null ?horsedata['horseStatus']['breedingStatus']:'empty',child: CircleAvatar(radius: 25.0,backgroundColor: Color(int.parse(get_colors(horsedata['horseStatus']['breedingColor']))),)),
                         Tooltip(message: horsedata['horseStatus']['healthRecordStatus']!= null ?horsedata['horseStatus']['healthRecordStatus']:'empty',child: CircleAvatar(radius: 25.0,backgroundColor: Color(int.parse(get_colors(horsedata['horseStatus']['healthRecordColor']))),)),
-                        Tooltip(message: horsedata['horseStatus']['vaccinationStatus']!= null? horsedata['horseStatus']['vaccinationStatus']:'empty',child: CircleAvatar(radius: 25.0,backgroundColor: Color(int.parse(get_colors(horsedata['horseStatus']['vaccinationColor']))),child: Text(horsedata['horseStatus']['vaccinationStatus']!= null ? horsedata['horseStatus']['vaccinationStatus']:''),)),
+                        Tooltip(message: horsedata['horseStatus']['vaccinationStatus']!= null? horsedata['horseStatus']['vaccinationStatus']:'empty',child: CircleAvatar(radius: 25.0,backgroundColor: Color(int.parse(get_colors(horsedata['horseStatus']['vaccinationColor']))),
+//                          child: Text(horsedata['horseStatus']['vaccinationStatus']!= null ? horsedata['horseStatus']['vaccinationStatus']:''),
+                        )),
                       ],
                     ),
 

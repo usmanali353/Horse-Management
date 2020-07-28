@@ -8,6 +8,7 @@ import 'package:horse_management/HMS/All_Horses_data/services/labTest_services.d
 import 'package:horse_management/Utils.dart';
 import 'package:need_resume/need_resume.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'lab_report_details.dart';
 import 'lab_test_form.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -277,11 +278,13 @@ class _Profile_Page_State extends ResumableState<lab_list>{
                       //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                       title: Text(lablist!=null?(lablist[index]['horseName']['name']):''),
                       subtitle: Text(lablist[index]['testTypes']!=null?(lablist[index]['testTypes']['name']):'testtype empty'),
-                      trailing: Text(lablist[index]['responsibleName'] != null ? lablist[index]['responsibleName']['contactName']['name']:" name empty"),
+                      //trailing: Text(lablist[index]['responsibleName'] != null ? lablist[index]['responsibleName']['contactName']['name']:" name empty"),
                       //leading: Image.asset("Assets/horses_icon.png"),
                       onTap: ()async{
                         prefs = await SharedPreferences.getInstance();
                         print((lablist[index]));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>LabReport_details_page(lablist[index])));
+
                       },
                     ),
 

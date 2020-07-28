@@ -58,8 +58,8 @@ class _state_add_farrier extends State<update_swabbing>{
           setState(() {
             print(response);
             swabbingdropdown=json.decode(response);
-            for(int i=0;i<swabbingdropdown['horseDropDown'].length;i++)
-              horse.add(swabbingdropdown['horseDropDown'][i]['name']);
+            for(int i=0;i<swabbingdropdown['horsesDropDown'].length;i++)
+              horse.add(swabbingdropdown['horsesDropDown'][i]['name']);
 
           });
         });
@@ -147,7 +147,7 @@ class _state_add_farrier extends State<update_swabbing>{
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 16,right: 16),
+                        padding: EdgeInsets.only(left: 16,right: 16,top: 16),
                         child:FormBuilderDateTimePicker(
                           attribute: "date",
                           initialValue: DateTime.parse(swabinglist['dateOfTreatment']!= null ? swabinglist['dateOfTreatment']:DateTime.now()),

@@ -9,6 +9,8 @@ import 'package:horse_management/Utils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'movement_details.dart';
+
 
 class movement_list extends StatefulWidget{
   String token;
@@ -246,12 +248,12 @@ class _Profile_Page_State extends State<movement_list>{
                     enabled: swabbinglist[index]['isActive'],
                     //specifichorselab!=null?(specifichorselab[index]['testTypesdropDown']['name']):''
                     title: Text(swabbinglist!=null?(swabbinglist[index]['horseName']['name']):'Horse Name'),
-                    subtitle: Text(swabbinglist!=null?'From location:'+(swabbinglist[index]['fromLocationName']['name']):'From not showing'),
-                    trailing: Text(swabbinglist!=null?'To Location: '+(swabbinglist[index]['toLocationName']['name']):'tolocation not showing'),
+                    subtitle: Text(swabbinglist[index]['comments']!=null?'Comments: '+(swabbinglist[index]['comments']):''),
+//                    trailing: Text(swabbinglist!=null?'To Location: '+(swabbinglist[index]['toLocationName']['name']):'tolocation not showing'),
                     onTap: ()async{
                       prefs = await SharedPreferences.getInstance();
                       print((swabbinglist[index]));
-                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>update_labTest(lablist[index]['id'],prefs.get('token'))));
+                       Navigator.push(context, MaterialPageRoute(builder: (context)=>Movement_details_page(swabbinglist[index])));
                     },
                   ),
                   secondaryActions: <Widget>[

@@ -4,6 +4,7 @@ import 'package:horse_management/HMS/All_Horses_data/services/farrier_services.d
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:horse_management/Utils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class update_farrier extends StatefulWidget{
@@ -39,26 +40,56 @@ class _state_add_farrier extends State<update_farrier> {
       comment.text  = farrierlist['comment'].toString();
     });
 
-    farrier_services.farrierDropdown(token).then((response){
-      setState(() {
-        print(response);
-        farrierdropdown=json.decode(response);
-        for(int i=0;i<farrierdropdown['horseDropDown'].length;i++)
-          horse.add(farrierdropdown['horseDropDown'][i]['name']);
-        for(int i=0;i<farrierdropdown['farrierDropDown'].length;i++)
-          farrier.add(farrierdropdown['farrierDropDown'][i]['name']);
-        for(int i=0;i<farrierdropdown['currencyDropDown'].length;i++)
-          currency.add(farrierdropdown['currencyDropDown'][i]['name']);
-        for(int i=0;i<farrierdropdown['categoryDropDown'].length;i++)
-          category.add(farrierdropdown['categoryDropDown'][i]['name']);
-        for(int i=0;i<farrierdropdown['costCenterDropDown'].length;i++)
-          costcenter.add(farrierdropdown['costCenterDropDown'][i]['name']);
-        for(int i=0;i<farrierdropdown['contactsDropDown'].length;i++)
-          contact.add(farrierdropdown['contactsDropDown'][i]['name']);
-        print(contact);
+    Utils.check_connectivity().then((result){
+      if(result) {
+        ProgressDialog pd = ProgressDialog(
+            context, isDismissible: true, type: ProgressDialogType.Normal);
+        pd.show();
+        farrier_services.farrierDropdown(token).then((response){
+          pd.dismiss();
+          setState(() {
+            print(response);
+            farrierdropdown=json.decode(response);
+            for(int i=0;i<farrierdropdown['horseDropDown'].length;i++)
+              horse.add(farrierdropdown['horseDropDown'][i]['name']);
+            for(int i=0;i<farrierdropdown['farrierDropDown'].length;i++)
+              farrier.add(farrierdropdown['farrierDropDown'][i]['name']);
+            for(int i=0;i<farrierdropdown['currencyDropDown'].length;i++)
+              currency.add(farrierdropdown['currencyDropDown'][i]['name']);
+            for(int i=0;i<farrierdropdown['categoryDropDown'].length;i++)
+              category.add(farrierdropdown['categoryDropDown'][i]['name']);
+            for(int i=0;i<farrierdropdown['costCenterDropDown'].length;i++)
+              costcenter.add(farrierdropdown['costCenterDropDown'][i]['name']);
+            for(int i=0;i<farrierdropdown['contactsDropDown'].length;i++)
+              contact.add(farrierdropdown['contactsDropDown'][i]['name']);
+            print(contact);
 
-      });
+          });
+        });
+      }else
+        Flushbar(message: "Network Error",backgroundColor: Colors.red,duration: Duration(seconds: 3),).show(context);
     });
+
+//    farrier_services.farrierDropdown(token).then((response){
+//      setState(() {
+//        print(response);
+//        farrierdropdown=json.decode(response);
+//        for(int i=0;i<farrierdropdown['horseDropDown'].length;i++)
+//          horse.add(farrierdropdown['horseDropDown'][i]['name']);
+//        for(int i=0;i<farrierdropdown['farrierDropDown'].length;i++)
+//          farrier.add(farrierdropdown['farrierDropDown'][i]['name']);
+//        for(int i=0;i<farrierdropdown['currencyDropDown'].length;i++)
+//          currency.add(farrierdropdown['currencyDropDown'][i]['name']);
+//        for(int i=0;i<farrierdropdown['categoryDropDown'].length;i++)
+//          category.add(farrierdropdown['categoryDropDown'][i]['name']);
+//        for(int i=0;i<farrierdropdown['costCenterDropDown'].length;i++)
+//          costcenter.add(farrierdropdown['costCenterDropDown'][i]['name']);
+//        for(int i=0;i<farrierdropdown['contactsDropDown'].length;i++)
+//          contact.add(farrierdropdown['contactsDropDown'][i]['name']);
+//        print(contact);
+//
+//      });
+//    });
 
 
 
