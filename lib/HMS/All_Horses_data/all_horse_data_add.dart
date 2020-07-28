@@ -66,7 +66,7 @@ class _Profile_Page_State extends State<all_horse_data>{
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 ListTile(
-                  title: Text("Income & Expense"),
+                  title: Text("Income & Expenses"),
                   //(training_list!=null?training_list[index]['targetCompetition'].toString():''
                   subtitle: Text("Track Your Expenses"),
                   leading: FaIcon(FontAwesomeIcons.wallet, color: Colors.brown.shade500, size: 35,),
