@@ -364,23 +364,10 @@ static Future<String> add_breeding_control_req(String token, int id, int horseId
     "hour": "01:00:00",
     "check_Method": check_method_id,
     "relatedServiceId": serviceid,
-//    "empty": empty,
-//    "pregnancy": pregnancy,
-//    "abortion": abortion,
-//    "reabsorption": reabsorption,
-//    "follicle": follicle,
-//    "ovule": ovule,
-//    "twins": twins,
-//    "volvoplasty": volvoplasty,
     "nextCheckDate": "2020-03-06T10:09:59.17",
     "NextCheck":nextcheck,
     "amount": amount,
     "vetId": vetId,
-//    "lo": lo,
-//    "ro": ro,
-//    "uterus": uterus,
-//    "vagina": vagina,
-//    "cervix": cervix,
     "comments": comments,
     "nextCheckReason": 1,
     "nextCheckComments": null,
@@ -391,8 +378,6 @@ static Future<String> add_breeding_control_req(String token, int id, int horseId
     "status": null,
     "createdBy": Createdby,
     "createdOn": DateTime.now(),
-    "updatedBy": "ce84c3c9-c8b3-464f-8516-49aae24af9ea",
-    "updatedOn": "2020-03-06T02:21:50.338155-08:00",
     "isActive": true,},toEncodable: Utils.myEncode);
   final response = await http.post('http://192.236.147.77:8083/api/breed/BreedingControlSave', headers: headers, body: body);
   print(response.body);
@@ -404,7 +389,8 @@ static Future<String> add_breeding_control_req(String token, int id, int horseId
 
 static Future<String> get_breeding_control_dropdowns(String token) async{
   Map<String,String> headers = {'Authorization':'Bearer '+token};
-  final response = await http.get('http://192.236.147.77:8083/api/breed/GetBreedingControlById', headers: headers,);
+  final response = await http.get('http://192.236.147.77:8083/api/breed/GetBreedingControlById/', headers: headers,);
+  print(response.statusCode.toString());
   if(response.statusCode==200){
     return response.body;
   }else

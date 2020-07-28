@@ -5,6 +5,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/breeding_control_details.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/breeding_control_form.dart';
+import 'package:horse_management/HMS/Breeding/BreedingControl/new_add_breeding_control.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/next_breeding_check.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/update_breeding_control.dart';
 import 'package:horse_management/Network_Operations.dart';
@@ -474,7 +475,7 @@ class _breeding_control_list extends State< breeding_control_list>{
         child: InkWell(child: Icon(Icons.add),
             onTap: () =>
                 Navigator.push(context, MaterialPageRoute(
-                    builder: (context) =>add_breeding_control(token)),)
+                    builder: (context) =>new_breeding_control_form(token)),)
 
         ),
 

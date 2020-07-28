@@ -4,8 +4,6 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:hive/hive.dart';
-import 'package:horse_management/Model/Training.dart';
 import 'package:horse_management/Model/sqlite_helper.dart';
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
@@ -49,57 +47,34 @@ class _add_training_state extends State<add_training>{
      this.training_center=TextEditingController();
      this.target_competition=TextEditingController();
      local_db=sqlite_helper();
-     Utils.openBox("AddTrainingDropDowns").then((resp){
-       Utils.check_connectivity().then((result){
-         if(result){
-           ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-           pd.show();
-           network_operations.get_training_dropdowns(token).then((response){
-             pd.dismiss();
-             if(response!=null){
-               setState(() {
-                 training_response=json.decode(response);
-
-                 Hive.box("AddTrainingDropDowns").put("offline_training_dropdowns", training_response);
-                 if(training_response!=null){
-                   if(training_response['horses']!=null&&training_response['horses'].length>0){
-                     for(int i=0;i<training_response['horses'].length;i++)
-                       horses.add(training_response['horses'][i]['name']);
-                     horses_loaded=true;
-                   }
-                   if(training_response['trainerDropDown']!=null&&training_response['trainerDropDown'].length>0){
-                     for(int i=0;i<training_response['trainerDropDown'].length;i++)
-                       trainers.add(training_response['trainerDropDown'][i]['name']);
-                   }
-                   if(training_response['trainingPlans']!=null&&training_response['trainingPlans'].length>0){
-                     for(int i=0;i<training_response['trainingPlans'].length;i++)
-                       excercise_plans.add(training_response['trainingPlans'][i]['name']);
-                   }
+     Utils.check_connectivity().then((result){
+       if(result){
+         ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+         pd.show();
+         network_operations.get_training_dropdowns(token).then((response){
+           pd.dismiss();
+           if(response!=null){
+             setState(() {
+               training_response=json.decode(response);
+               if(training_response!=null){
+                 if(training_response['horses']!=null&&training_response['horses'].length>0){
+                   for(int i=0;i<training_response['horses'].length;i++)
+                     horses.add(training_response['horses'][i]['name']);
+                   horses_loaded=true;
                  }
-               });
-             }
-           });
-         }else{
-           setState(() {
-             training_response=Hive.box("AddTrainingDropDowns").get("offline_training_dropdowns");
-             if(training_response!=null){
-               if(training_response['horses']!=null&&training_response['horses'].length>0){
-                 for(int i=0;i<training_response['horses'].length;i++)
-                   horses.add(training_response['horses'][i]['name']);
-                 horses_loaded=true;
+                 if(training_response['trainerDropDown']!=null&&training_response['trainerDropDown'].length>0){
+                   for(int i=0;i<training_response['trainerDropDown'].length;i++)
+                     trainers.add(training_response['trainerDropDown'][i]['name']);
+                 }
+                 if(training_response['trainingPlans']!=null&&training_response['trainingPlans'].length>0){
+                   for(int i=0;i<training_response['trainingPlans'].length;i++)
+                     excercise_plans.add(training_response['trainingPlans'][i]['name']);
+                 }
                }
-               if(training_response['trainerDropDown']!=null&&training_response['trainerDropDown'].length>0){
-                 for(int i=0;i<training_response['trainerDropDown'].length;i++)
-                   trainers.add(training_response['trainerDropDown'][i]['name']);
-               }
-               if(training_response['trainingPlans']!=null&&training_response['trainingPlans'].length>0){
-                 for(int i=0;i<training_response['trainingPlans'].length;i++)
-                   excercise_plans.add(training_response['trainingPlans'][i]['name']);
-               }
-             }
-           });
-         }
-       });
+             });
+           }
+         });
+       }else {}
      });
 
 
@@ -394,55 +369,28 @@ class add_training_button extends StatelessWidget {
       color: Colors.teal,
       onPressed: () {
         if (_fbKey.currentState.validate()) {
-          Utils.openBox("AddTrainingData").then((resp){
-            Utils.check_connectivity().then((result){
-              if(result){
-                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                pd.show();
-                if(Hive.box("AddTrainingData").get("addTrainingJson")!=null){
-                  Training tr=Training.fromMap(Hive.box("AddTrainingData").get("addTrainingJson"));
-                  network_operations.add_training(0, tr.training_type_id, DateTime.parse(tr.start_date), DateTime.parse(tr.end_date), tr.horse_id, tr.training_center, DateTime.parse(tr.target_date),tr.target_competition, token, tr.trainer_id, tr.horse_name, tr.excercise_plan_id, tr.trainer_name, tr.excercise_plan, '').then((response){
-                    pd.dismiss();
-                    print(response);
-                    if(response!=null) {
-                      Hive.box("AddTrainingData").delete("addTrainingJson");
-                      Scaffold.of(context).showSnackBar(SnackBar(
-                        backgroundColor: Colors.green,
-                        content: Text("Previously Stored Training Added Sucessfully"),
-                      ));
-                    }else{
-                      Hive.box("AddTrainingData").delete("addTrainingJson");
-                      Scaffold.of(context).showSnackBar(SnackBar(
-                        backgroundColor: Colors.red,
-                        content: Text("Previously Stored Training not Added"),
-                      ));
-                    }
-                  });
+          Utils.check_connectivity().then((result){
+            if(result){
+              ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+              pd.show();
+              network_operations.add_training(0,selected_training_type,Start_date, End_Date,training_response['horses'][selected_horse_id]['id'], training_center.text, target_date, target_competition.text,token,training_response['trainerDropDown'][selected_trainer_id]['id'],selected_horse,training_response['trainingPlans'][selected_excercise_plan]['id']!=null?training_response['trainingPlans'][selected_excercise_plan]['id']:null,selected_trainer!=null?selected_trainer:'',excerciseplan!=null?excerciseplan:null,'').then((response){
+                pd.dismiss();
+                print(response);
+                if(response!=null) {
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.green,
+                    content: Text("Training Added Sucessfully"),
+                  ));
+                  Navigator.pop(context);
                 }else{
-                  network_operations.add_training(0,selected_training_type,Start_date, End_Date,training_response['horses'][selected_horse_id]['id'], training_center.text, target_date, target_competition.text,token,training_response['trainerDropDown'][selected_trainer_id]['id'],selected_horse,training_response['trainingPlans'][selected_excercise_plan]['id']!=null?training_response['trainingPlans'][selected_excercise_plan]['id']:null,selected_trainer!=null?selected_trainer:'',excerciseplan!=null?excerciseplan:null,'').then((response){
-                    pd.dismiss();
-                    print(response);
-                    if(response!=null) {
-                      Scaffold.of(context).showSnackBar(SnackBar(
-                        backgroundColor: Colors.green,
-                        content: Text("Training Added Sucessfully"),
-                      ));
-                      Navigator.pop(context);
-                    }else{
-                      Scaffold.of(context).showSnackBar(SnackBar(
-                        backgroundColor: Colors.red,
-                        content: Text("Training not Added"),
-                      ));
-                    }
-                  });
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.red,
+                    content: Text("Training not Added"),
+                  ));
                 }
-              }else{
-                  Hive.box("AddTrainingData").put("addTrainingJson",Training(selected_horse,selected_trainer,'',training_center.text,Start_date.toString(),End_Date.toString(),target_date.toString(),'',selected_horse_id,selected_trainer_id,selected_training_type,selected_excercise_plan,target_competition.text).toMap());
-              }
-            });
+              });
+            }
           });
-
-
         }
       },
       child:Text("Add Training",style: TextStyle(color: Colors.white),),

@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:hive/hive.dart';
 import 'package:horse_management/Model/sqlite_helper.dart';
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/Utils.dart';
@@ -75,58 +74,35 @@ class _update_training extends State<update_training>{
         training_center.text = training_data['trainingCenter'];
       }
     });
-    Utils.openBox("UpdateTrainingDropDowns").then((resp){
-      Utils.check_connectivity().then((result){
-        if(result){
-          ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-          pd.show();
-          network_operations.get_training_dropdowns(token).then((response){
-            pd.dismiss();
-            if(response!=null){
-              setState(() {
-                training_response=json.decode(response);
-                Hive.box("UpdateTrainingDropDowns").put("offline_Update_training_dropdowns", training_response);
-                if(training_response!=null){
-                  if(training_response['horses']!=null&&training_response['horses'].length>0){
-                    for(int i=0;i<training_response['horses'].length;i++)
-                      horses.add(training_response['horses'][i]['name']);
-                    horses_loaded=true;
-                  }
-                  if(training_response['trainerDropDown']!=null&&training_response['trainerDropDown'].length>0){
-                    for(int i=0;i<training_response['trainerDropDown'].length;i++)
-                      trainers.add(training_response['trainerDropDown'][i]['name']);
-                  }
-                  if(training_response['trainingPlans']!=null&&training_response['trainingPlans'].length>0){
-                    for(int i=0;i<training_response['trainingPlans'].length;i++)
-                      excercise_plans.add(training_response['trainingPlans'][i]['name']);
-                  }
+    Utils.check_connectivity().then((result){
+      if(result){
+        ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+        pd.show();
+        network_operations.get_training_dropdowns(token).then((response){
+          pd.dismiss();
+          if(response!=null){
+            setState(() {
+              training_response=json.decode(response);
+              if(training_response!=null){
+                if(training_response['horses']!=null&&training_response['horses'].length>0){
+                  for(int i=0;i<training_response['horses'].length;i++)
+                    horses.add(training_response['horses'][i]['name']);
+                  horses_loaded=true;
                 }
-              });
-            }
-          });
-        }else{
-          setState(() {
-            training_response=Hive.box("UpdateTrainingDropDowns").get("offline_Update_training_dropdowns");
-            if(training_response!=null){
-              if(training_response['horses']!=null&&training_response['horses'].length>0){
-                for(int i=0;i<training_response['horses'].length;i++)
-                  horses.add(training_response['horses'][i]['name']);
-                horses_loaded=true;
+                if(training_response['trainerDropDown']!=null&&training_response['trainerDropDown'].length>0){
+                  for(int i=0;i<training_response['trainerDropDown'].length;i++)
+                    trainers.add(training_response['trainerDropDown'][i]['name']);
+                }
+                if(training_response['trainingPlans']!=null&&training_response['trainingPlans'].length>0){
+                  for(int i=0;i<training_response['trainingPlans'].length;i++)
+                    excercise_plans.add(training_response['trainingPlans'][i]['name']);
+                }
               }
-              if(training_response['trainerDropDown']!=null&&training_response['trainerDropDown'].length>0){
-                for(int i=0;i<training_response['trainerDropDown'].length;i++)
-                  trainers.add(training_response['trainerDropDown'][i]['name']);
-              }
-              if(training_response['trainingPlans']!=null&&training_response['trainingPlans'].length>0){
-                for(int i=0;i<training_response['trainingPlans'].length;i++)
-                  excercise_plans.add(training_response['trainingPlans'][i]['name']);
-              }
-            }
-          });
-        }
-      });
+            });
+          }
+        });
+      }
     });
-
   }
 
   @override

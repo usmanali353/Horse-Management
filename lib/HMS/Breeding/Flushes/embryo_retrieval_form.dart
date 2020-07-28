@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import  'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -42,50 +41,31 @@ class _add_flushes extends State<add_flushes>{
   void initState() {
     this.embryos=TextEditingController();
     this.comments=TextEditingController();
-    Utils.openBox("AddFlushesDropDowns").then((resp){
-      Utils.check_connectivity().then((result){
-        if(result){
-          ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-          pd.show();
-          FlushesServicesJson.flushesdropdowns(token).then((response){
-            pd.dismiss();
-            if(response!=null){
-              setState(() {
-                flushes_response=json.decode(response);
-                Hive.box("AddFlushesDropDowns").put("offline_flushes_dropdowns", flushes_response);
-                if(flushes_response!=null){
-                  if(flushes_response['horseDropDown']!=null&&flushes_response['horseDropDown'].length>0){
-                    for(int i=0;i<flushes_response['horseDropDown'].length;i++)
+    Utils.check_connectivity().then((result){
+      if(result){
+        ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+        pd.show();
+        FlushesServicesJson.flushesdropdowns(token).then((response){
+          pd.dismiss();
+          if(response!=null){
+            setState(() {
+              flushes_response=json.decode(response);
+              if(flushes_response!=null){
+                if(flushes_response['horseDropDown']!=null&&flushes_response['horseDropDown'].length>0){
+                  for(int i=0;i<flushes_response['horseDropDown'].length;i++)
                     horse_name.add(flushes_response['horseDropDown'][i]['name']);
-                    flushes_loaded=true;
-                  }
-                  if(flushes_response['vetDropDown']!=null&&flushes_response['vetDropDown'].length>0){
-                    for(int i=0;i<flushes_response['vetDropDown'].length;i++)
-                    vet.add(flushes_response['vetDropDown'][i]['name']);
-                    flushes_loaded=true;
-                  }
+                  flushes_loaded=true;
                 }
-              });
-            }
-          });
-        }else{
-          setState(() {
-            flushes_response=Hive.box("AddFlushesDropDowns").get("offline_flushes_dropdowns");
-            if(flushes_response!=null){
-              if(flushes_response['horseDropDown']!=null&&flushes_response['horseDropDown'].length>0){
-                for(int i=0;i<flushes_response['horseDropDown'].length;i++)
-                  horse_name.add(flushes_response['horseDropDown'][i]['name']);
-                flushes_loaded=true;
+                if(flushes_response['vetDropDown']!=null&&flushes_response['vetDropDown'].length>0){
+                  for(int i=0;i<flushes_response['vetDropDown'].length;i++)
+                    vet.add(flushes_response['vetDropDown'][i]['name']);
+                  flushes_loaded=true;
+                }
               }
-              if(flushes_response['vetDropDown']!=null&&flushes_response['vetDropDown'].length>0){
-                for(int i=0;i<flushes_response['vetDropDown'].length;i++)
-                  vet.add(flushes_response['vetDropDown'][i]['name']);
-                flushes_loaded=true;
-              }
-            }
-          });
-        }
-      });
+            });
+          }
+        });
+      }
     });
   }
 
