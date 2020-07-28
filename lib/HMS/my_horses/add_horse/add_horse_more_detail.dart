@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:hive/hive.dart';
 import 'package:horse_management/Model/sqlite_helper.dart';
 import 'package:horse_management/Utils.dart';
 import 'package:horse_management/HMS/my_horses/services/add_horse_services.dart';
@@ -69,56 +68,18 @@ class _add_horse_state extends State<add_horseDetial>{
 //        print("No Training Found");
 //      }
     });
-    Utils.openBox("AddHorseDropDown").then((resp){
-      Utils.check_connectivity().then((result) {
-        if (result) {
-          ProgressDialog pd = ProgressDialog(
-              context, type: ProgressDialogType.Normal, isDismissible: true);
-          pd.show();
-          Add_horse_services.horsesdropdown(token).then((response){
-            pd.dismiss();
-            setState(() {
-              //genderlist  = jsonDecode(response);
-              print(response);
-              print("online");
-
-              getHorses=json.decode(response);
-              Hive.box("AddHorseDropDown").put("offline_horse_dropdowns", getHorses);
-
-              for(int i=0;i<getHorses['ironBrandDropDown'].length;i++)
-                ironbrand.add(getHorses['ironBrandDropDown'][i]['name']);
-              for(int i=0;i<getHorses['associationDropDown'].length;i++)
-                association.add(getHorses['associationDropDown'][i]['name']);
-              for(int i=0;i<getHorses['locationDropDown'].length;i++)
-                location.add(getHorses['locationDropDown'][i]['name']);
-              for(int i=0;i<getHorses['riderDropDown'].length;i++)
-                rider.add(getHorses['riderDropDown'][i]['name']);
-              for(int i=0;i<getHorses['inchargeDropDown'].length;i++)
-                incharge.add(getHorses['inchargeDropDown'][i]['name']);
-              for(int i=0;i<getHorses['dietDropDown'].length;i++)
-                diet.add(getHorses['dietDropDown'][i]['name']);
-              for(int i=0;i<getHorses['horseCategoryDropDown'].length;i++)
-                category.add(getHorses['horseCategoryDropDown'][i]['name']);
-              for(int i=0;i<getHorses['headMarkingsDropDown'].length;i++)
-                headmark.add(getHorses['headMarkingsDropDown'][i]['name']);
-              for(int i=0;i<getHorses['bodyMarkingsDropDown'].length;i++)
-                bodymark.add(getHorses['bodyMarkingsDropDown'][i]['name']);
-              for(int i=0;i<getHorses['legMarkingsDropDown'].length;i++)
-                legmark.add(getHorses['legMarkingsDropDown'][i]['name']);
-//        for(int i=0;i<getHorses['locationDropDown'].length;i++)
-//          location.add(getHorses['locationDropDown'][i]['name']);
-
-//        print(gender.length.toString());
-            });
-          });
-
-
-
-        }else{
+    Utils.check_connectivity().then((result) {
+      if (result) {
+        ProgressDialog pd = ProgressDialog(
+            context, type: ProgressDialogType.Normal, isDismissible: true);
+        pd.show();
+        Add_horse_services.horsesdropdown(token).then((response){
+          pd.dismiss();
           setState(() {
-            print("offline");
-            genderlist = Hive.box("AddHorseDropDown").get("offline_gender_dropdowns");
-            getHorses = Hive.box("AddHorseDropDown").get("offline_horse_dropdowns");
+            //genderlist  = jsonDecode(response);
+            print(response);
+            print("online");
+            getHorses=json.decode(response);
             for(int i=0;i<getHorses['ironBrandDropDown'].length;i++)
               ironbrand.add(getHorses['ironBrandDropDown'][i]['name']);
             for(int i=0;i<getHorses['associationDropDown'].length;i++)
@@ -139,11 +100,16 @@ class _add_horse_state extends State<add_horseDetial>{
               bodymark.add(getHorses['bodyMarkingsDropDown'][i]['name']);
             for(int i=0;i<getHorses['legMarkingsDropDown'].length;i++)
               legmark.add(getHorses['legMarkingsDropDown'][i]['name']);
+//        for(int i=0;i<getHorses['locationDropDown'].length;i++)
+//          location.add(getHorses['locationDropDown'][i]['name']);
 
-            print("offline");
+//        print(gender.length.toString());
           });
-        }
-      });
+        });
+
+
+
+      }
     });
 
 
