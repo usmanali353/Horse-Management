@@ -117,6 +117,14 @@ static Future<String> get_all_videos(String token) async{
   }else
     return null;
 }
+static Future<String> get_all_videos_by_page(String token,int pagenum,String search) async{
+  Map<String,String> headers = {'Content-Type':'application/json',"Authorization":"Bearer "+token};
+  var response=await http.get('http://192.236.147.77:8083/api/horse/GetAllVideos?pageNumber='+pagenum.toString()+'&pageSize=10&SearchString='+search,headers: headers);
+  if(response.statusCode==200){
+    return response.body;
+  }else
+    return null;
+}
 static Future<String> change_video_visibility(String token,int id) async{
   Map<String,String> headers = {'Authorization':'Bearer '+token};
   var response =await http.get('http://192.236.147.77:8083/api/horse/VideosVisibility/'+id.toString(),headers: headers);
@@ -157,6 +165,14 @@ static Future<String> add_pictures(int picture_id,String token,int horseid, Date
 static Future<String> get_all_pictures(String token) async{
   Map<String,String> headers = {'Authorization':'Bearer '+token};
   final response = await http.get('http://192.236.147.77:8083/api/horse/GetAllPictures', headers: headers,);
+  if(response.statusCode==200){
+    return response.body;
+  }else
+    return null;
+}
+static Future<String> get_all_pictures_by_page(String token,int pagenum,String search ) async{
+  Map<String,String> headers = {'Authorization':'Bearer '+token};
+  final response = await http.get('http://192.236.147.77:8083/api/horse/GetAllPictures?pageNumber='+pagenum.toString()+'&pageSize=10&SearchString='+search, headers: headers,);
   if(response.statusCode==200){
     return response.body;
   }else
