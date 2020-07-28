@@ -258,10 +258,7 @@ class _Profile_Page_State extends ResumableState<horse_detail> {
               ListTile(
                 title: Text("Training"),
                 subtitle: Text("Add Training on this horse"),
-                leading: Icon(
-                  Icons.receipt,
-                  size: 40,
-                ),
+                leading: FaIcon(FontAwesomeIcons.hatCowboy, color: Colors.brown.shade300, size: 35,),
                 trailing: Icon(Icons.arrow_right),
                 onTap: () async{
                   prefs = await SharedPreferences.getInstance();
@@ -274,10 +271,7 @@ class _Profile_Page_State extends ResumableState<horse_detail> {
               ListTile(
                 title: Text("Vaccination"),
                 subtitle: Text("Vaccination Detail on this Horse"),
-                leading: Icon(
-                  Icons.receipt,
-                  size: 40,
-                ),
+                leading: FaIcon(FontAwesomeIcons.syringe, color: Colors.yellowAccent.shade200, size: 35,),
                 trailing: Icon(Icons.arrow_right),
                 onTap: () async{
                   print(horsedata['allVaccinations'] != null ? horsedata['allVaccinations']:"Abc");
@@ -288,10 +282,8 @@ class _Profile_Page_State extends ResumableState<horse_detail> {
               ListTile(
                 title: Text("Lab Report"),
                 subtitle: Text("Add Report on this horse"),
-                leading: Icon(
-                  Icons.receipt,
-                  size: 40,
-                ),
+                leading: FaIcon(FontAwesomeIcons.fileMedicalAlt, color: Colors.blue.shade400, size: 35,),
+
                 trailing: Icon(Icons.arrow_right),
                 onTap: () async {
                   prefs = await SharedPreferences.getInstance();
@@ -302,10 +294,7 @@ class _Profile_Page_State extends ResumableState<horse_detail> {
               ListTile(
                 title: Text("Health Record"),
                 subtitle: Text("Add Health Record on this horse"),
-                leading: Icon(
-                  Icons.receipt,
-                  size: 40,
-                ),
+                leading: FaIcon(FontAwesomeIcons.bookMedical, color: Colors.redAccent.shade100, size: 35,),
                 trailing: Icon(Icons.arrow_right),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => healthRecord_list(prefs.get('token'), horsedata['allHealthRecords'])));
@@ -315,10 +304,7 @@ class _Profile_Page_State extends ResumableState<horse_detail> {
                 title: Text("Income & Expense"),
                 //(training_list!=null?training_list[index]['targetCompetition'].toString():''
                 subtitle: Text("Track Your Expense"),
-                leading: Icon(
-                  Icons.account_balance_wallet,
-                  size: 40,
-                ),
+                leading: FaIcon(FontAwesomeIcons.wallet, color: Colors.brown.shade500, size: 35,),
                 trailing: Icon(Icons.arrow_right),
                 onTap: () async {
                  // print(horsedata != null ? horsedata['allIncomeAndExpenses'][1]['amount'].toString() : '');
@@ -331,10 +317,8 @@ class _Profile_Page_State extends ResumableState<horse_detail> {
               ListTile(
                 title: Text("Competetion"),
                 subtitle: Text("View All competetion"),
-                leading: Icon(
-                  Icons.receipt,
-                  size: 40,
-                ),
+                leading: FaIcon(FontAwesomeIcons.flagCheckered, color: Colors.white, size: 35,),
+
                 trailing: Icon(Icons.arrow_right),
                 onTap: ()async {
                   prefs = await SharedPreferences.getInstance();
@@ -344,10 +328,7 @@ class _Profile_Page_State extends ResumableState<horse_detail> {
               ListTile(
                 title: Text("Vet Visit"),
                 subtitle: Text("All vet visit on this horse"),
-                leading: Icon(
-                  Icons.receipt,
-                  size: 40,
-                ),
+                leading: FaIcon(FontAwesomeIcons.userMd, color: Colors.redAccent, size: 35,),
                 trailing: Icon(Icons.arrow_right),
                 onTap: () async{
                   prefs = await SharedPreferences.getInstance();
@@ -357,10 +338,8 @@ class _Profile_Page_State extends ResumableState<horse_detail> {
               ListTile(
                 title: Text("Breeding Sale"),
                 subtitle: Text("All breeding sale Detail on this horse"),
-                leading: Icon(
-                  Icons.receipt,
-                  size: 40,
-                ),
+                leading: FaIcon(FontAwesomeIcons.handHoldingUsd, color: Colors.green, size: 35,),
+
                 trailing: Icon(Icons.arrow_right),
                 onTap: () async{
                   print(horsedata['horseId'].toString());
@@ -375,10 +354,8 @@ class _Profile_Page_State extends ResumableState<horse_detail> {
               ListTile(
                 title: Text("Hypothetical Pedigree"),
                 subtitle: Text("View ancesstors of the horse"),
-                leading: Icon(
-                  Icons.history,
-                  size: 40,
-                ),
+                leading: FaIcon(FontAwesomeIcons.projectDiagram, color:Colors.pink.shade100, size: 35,),
+
                 trailing: Icon(Icons.arrow_right),
                 onTap: () {
                   print(horsedata);
@@ -388,7 +365,8 @@ class _Profile_Page_State extends ResumableState<horse_detail> {
               ListTile(
                 title: Text("Marking"),
                 subtitle: Text("Add Marking"),
-                leading: Icon(FontAwesomeIcons.marker,size: 40,),
+                leading: FaIcon(FontAwesomeIcons.marker, color: Color(0xFFd4af37), size: 35,),
+
                 trailing: Icon(Icons.arrow_right),
                 onTap: (){
                  push(context,MaterialPageRoute(builder: (context)=>marking(horsedata)));

@@ -69,7 +69,7 @@ class _Profile_Page_State extends State<all_horse_data>{
                   title: Text("Income & Expense"),
                   //(training_list!=null?training_list[index]['targetCompetition'].toString():''
                   subtitle: Text("Track Your Expenses"),
-                  leading: Icon(Icons.account_balance_wallet,size: 40,),
+                  leading: FaIcon(FontAwesomeIcons.wallet, color: Colors.brown.shade500, size: 35,),
                   trailing: Icon(Icons.arrow_right),
                   onTap: ()async{
                     prefs =await SharedPreferences.getInstance();
@@ -79,7 +79,7 @@ class _Profile_Page_State extends State<all_horse_data>{
                 ListTile(
                   title: Text("Notes"),
                   subtitle: Text("Manage notes of specific horse"),
-                  leading: Icon(FontAwesomeIcons.stickyNote,size: 40,),
+                  leading: FaIcon(FontAwesomeIcons.stickyNote, color: Colors.yellow.shade400, size: 35,),
                   trailing: Icon(Icons.arrow_right),
                   onTap: () {
                     Navigator.push(context,MaterialPageRoute(builder: (context)=>notes_list(token)));
@@ -88,7 +88,7 @@ class _Profile_Page_State extends State<all_horse_data>{
                 ListTile(
                   title: Text("Image"),
                   subtitle: Text("Add image of specific horse"),
-                  leading: Icon(FontAwesomeIcons.images,size: 40,),
+                  leading: FaIcon(FontAwesomeIcons.images, color: Colors.deepPurpleAccent.shade100, size: 35,),
                   trailing: Icon(Icons.arrow_right),
                   onTap: (){
                     Navigator.push(context,MaterialPageRoute(builder: (context)=>pictures_list(token)));
@@ -97,7 +97,7 @@ class _Profile_Page_State extends State<all_horse_data>{
                 ListTile(
                   title: Text("Videos"),
                   subtitle: Text("All Horse Videos"),
-                  leading: Icon(FontAwesomeIcons.video,size: 40,),
+                  leading: FaIcon(FontAwesomeIcons.video, color: Colors.red.shade400, size: 35,),
                   trailing: Icon(Icons.arrow_right),
                   onTap: (){
                     Navigator.push(context,MaterialPageRoute(builder: (context)=>horse_videos_list(token)));
@@ -106,7 +106,7 @@ class _Profile_Page_State extends State<all_horse_data>{
                 ListTile(
                   title: Text("Lab Report"),
                   subtitle: Text("Add Report of specific horse"),
-                  leading: Icon(FontAwesomeIcons.notesMedical,size: 40,),
+                  leading: FaIcon(FontAwesomeIcons.fileMedicalAlt, color: Colors.blue.shade400, size: 35,),
                   trailing: Icon(Icons.arrow_right),
                   onTap: ()async{
                     prefs =await SharedPreferences.getInstance();
@@ -117,7 +117,7 @@ class _Profile_Page_State extends State<all_horse_data>{
                 ListTile(
                   title: Text("Health Record"),
                   subtitle: Text("Add Health Record of specific horse"),
-                  leading: Icon(FontAwesomeIcons.solidStickyNote,size: 40,),
+                  leading: FaIcon(FontAwesomeIcons.bookMedical, color: Colors.redAccent.shade100, size: 35,),
                   trailing: Icon(Icons.arrow_right),
                   onTap: (){
                     Navigator.push(context,MaterialPageRoute(builder: (context)=>healthRecord_list(token)));
@@ -126,7 +126,7 @@ class _Profile_Page_State extends State<all_horse_data>{
                 ListTile(
                   title: Text("Weight & Height"),
                   subtitle: Text("Add & Update Weight & Height"),
-                  leading: Icon(FontAwesomeIcons.weight,size: 40,),
+                  leading: FaIcon(FontAwesomeIcons.weight, color: Colors.orangeAccent.shade400, size: 35,),
                   trailing: Icon(Icons.arrow_right),
                   onTap: (){
                     Navigator.push(context,MaterialPageRoute(builder: (context)=>weight_hieght_list(token)));
@@ -135,7 +135,7 @@ class _Profile_Page_State extends State<all_horse_data>{
                 ListTile(
                   title: Text("Farrier"),
                   subtitle: Text("Add & Update farrier"),
-                  leading: Icon(FontAwesomeIcons.storeAlt,size: 40,),
+                  leading: FaIcon(FontAwesomeIcons.shoePrints, color: Colors.blueGrey.shade300, size: 35,),
                   trailing: Icon(Icons.arrow_right),
                   onTap: (){
                     Navigator.push(context,MaterialPageRoute(builder: (context)=>farrier_list(token)));
@@ -145,7 +145,7 @@ class _Profile_Page_State extends State<all_horse_data>{
                 ListTile(
                   title: Text("Vaccination"),
                   subtitle: Text("Add & Update Vaccination"),
-                  leading: Icon(FontAwesomeIcons.clinicMedical,size: 40,),
+                  leading: FaIcon(FontAwesomeIcons.syringe, color: Colors.yellowAccent.shade200, size: 35,),
                   trailing: Icon(Icons.arrow_right),
                   onTap: (){
                     Navigator.push(context,MaterialPageRoute(builder: (context)=>vaccination_list(token)));
@@ -154,7 +154,7 @@ class _Profile_Page_State extends State<all_horse_data>{
                 ListTile(
                   title: Text("Competition"),
                   subtitle: Text("Add & Update Competition"),
-                  leading: Icon(FontAwesomeIcons.compactDisc,size: 40,),
+                  leading: FaIcon(FontAwesomeIcons.flagCheckered, color: Colors.white, size: 35,),
                   trailing: Icon(Icons.arrow_right),
                   onTap: (){
                     Navigator.push(context,MaterialPageRoute(builder: (context)=>competetion_list(token)));
@@ -163,7 +163,7 @@ class _Profile_Page_State extends State<all_horse_data>{
                 ListTile(
                   title: Text("Swabbing"),
                   subtitle: Text("Add & Update Swabbing"),
-                  leading: Icon(FontAwesomeIcons.clinicMedical,size: 40,),
+                  leading: FaIcon(FontAwesomeIcons.pumpMedical, color: Colors.lightGreen.shade400, size: 35,),
                   trailing: Icon(Icons.arrow_right),
                   onTap: (){
                     Navigator.push(context,MaterialPageRoute(builder: (context)=>swabbing_list(token)));
@@ -172,7 +172,7 @@ class _Profile_Page_State extends State<all_horse_data>{
                 ListTile(
                   title: Text("Movement"),
                   subtitle: Text("Add & Update Movement"),
-                  leading: Icon(FontAwesomeIcons.truckMoving,size: 40,),
+                  leading: FaIcon(FontAwesomeIcons.truckMoving, color: Colors.purpleAccent.shade100, size: 35,),
                   trailing: Icon(Icons.arrow_right),
                   onTap: (){
                     Navigator.push(context,MaterialPageRoute(builder: (context)=>movement_list(token)));
@@ -181,7 +181,7 @@ class _Profile_Page_State extends State<all_horse_data>{
                 ListTile(
                   title: Text("Marking"),
                   subtitle: Text("Add Marking"),
-                  leading: Icon(FontAwesomeIcons.marker,size: 40,),
+                  leading: FaIcon(FontAwesomeIcons.marker, color: Color(0xFFd4af37), size: 35,),
                   trailing: Icon(Icons.arrow_right),
                   onTap: (){
                     //Navigator.push(context,MaterialPageRoute(builder: (context)=>SignApp()));
