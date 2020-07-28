@@ -3,16 +3,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hive/hive.dart';
 import 'package:horse_management/HMS/Training/training_detail_page.dart';
 import 'package:horse_management/HMS/Training/session_list.dart';
 import 'package:horse_management/HMS/Training/update_training.dart';
 import 'package:horse_management/Network_Operations.dart';
 import 'package:horse_management/animations/fadeAnimation.dart';
-import 'package:intl/intl.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import '../../Utils.dart';
-import 'Add_training.dart';
 class training_list extends StatefulWidget{
   String token;
 
@@ -145,63 +142,51 @@ class _training_list_state extends State<training_list>{
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: (){
-          return  Utils.openBox('trainingList').then((response){
-            Utils.check_connectivity().then((result){
-              if(result){
-                ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-                pd.show();
-                network_operations.get_training(token,pagenum).then((response){
-                  pd.dismiss();
-                  if(response!=null){
-                    setState(() {
-                      isvisible=true;
-                      load_list=json.decode(response);
-                      training_list = load_list['response'];
-                      total_page=load_list['totalPages'];
-                      print(load_list);
-                      if(total_page == 1 || total_page == -2147483648){
-                        print("init state page = 1");
-                        setState(() {
-                          isPagination = false;
-                        });
-                      }else{
-                        print("init state multi page ");
-                        setState(() {
-                          isPagination = true;
-                        });
-                      }
-                      print(total_page);
+         return Utils.check_connectivity().then((result){
+            if(result){
+              ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
+              pd.show();
+              network_operations.get_training(token,pagenum).then((response){
+                pd.dismiss();
+                if(response!=null){
+                  setState(() {
+                    isvisible=true;
+                    load_list=json.decode(response);
+                    training_list = load_list['response'];
+                    total_page=load_list['totalPages'];
+                    print(load_list);
+                    if(total_page == 1 || total_page == -2147483648){
+                      print("init state page = 1");
+                      setState(() {
+                        isPagination = false;
+                      });
+                    }else{
+                      print("init state multi page ");
+                      setState(() {
+                        isPagination = true;
+                      });
+                    }
+                    print(total_page);
 
-                      for(int i=0;i<training_list.length;i++){
-                        if(DateTime.parse(training_list[i]['startDate'])==DateTime.now()){
-                          today_training_list.add(training_list[i]);
-                        }
+                    for(int i=0;i<training_list.length;i++){
+                      if(DateTime.parse(training_list[i]['startDate'])==DateTime.now()){
+                        today_training_list.add(training_list[i]);
                       }
-                      Hive.box("trainingList").put("offline_training_list",training_list);
-                      // print('Training list Length'+training_list.length.toString());
-                    });
+                    }
+                    // print('Training list Length'+training_list.length.toString());
+                  });
 
-                  }else{
-                    Scaffold.of(context).showSnackBar(SnackBar(
-                      backgroundColor: Colors.red,
-                      content: Text("Training List Not Found"),
-                    ));
-                    setState(() {
-                      isvisible=false;
-                    });
-                  }
-                });
-              }else{
-                setState(() {
-                  isvisible=true;
-                  training_list=Hive.box("trainingList").get("offline_training_list");
-                });
-//                    Scaffold.of(context).showSnackBar(SnackBar(
-//                      backgroundColor: Colors.red,
-//                      content: Text("Network not Available"),
-//                    ));
-              }
-            });
+                }else{
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.red,
+                    content: Text("Training List Not Found"),
+                  ));
+                  setState(() {
+                    isvisible=false;
+                  });
+                }
+              });
+            }
           });
         },
         child: Visibility(
