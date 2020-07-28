@@ -16,10 +16,10 @@ class add_breeding_control extends StatefulWidget{
 
 }
 class _add_breeding_control_state extends State<add_breeding_control>{
-  DateTime date,hour;
-  var breeding_control_list;
   String token;
   _add_breeding_control_state(this.token);
+  DateTime date,hour;
+  var breeding_control_list;
   TextEditingController lo,ro,uterus,vagina,cervix,comments,amount;
   bool currency_loaded=false,account_category_loaded=false, horses_loaded=false,vets_loaded=false,related_services_loaded=false,empty=false,Pregnancy=false,Abortion=false,Reabsorption=false,Follicle=false,Ovule=false,Twins=false,Volvoplasty=false;
   String selected_contact,selected_costcenter,selected_account_category,selected_currency,selected_horse,selected_check_method,selected_vet,selected_related_services;
