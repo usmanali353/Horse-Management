@@ -289,6 +289,7 @@ class _health_record_form extends State<update_health>{
                         Padding(
                           padding: EdgeInsets.only(left: 16,right: 16,bottom: 16),
                           child: FormBuilderTextField(
+                            keyboardType: TextInputType.number,
                             attribute: "Comment",
                             controller: comment,
                             decoration: InputDecoration(labelText: "Comment",

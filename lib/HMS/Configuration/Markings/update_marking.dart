@@ -119,6 +119,12 @@ class _update_marking extends State<update_marking>{
                                   this.selected_marking_id=marking_type.indexOf(value);
                                 });
                               },
+                              onSaved:  (value){
+                                setState(() {
+                                  this.selected_marking=value;
+                                  this.selected_marking_id=marking_type.indexOf(value);
+                                });
+                              },
                             ),
                           ),
                         ),
@@ -166,6 +172,7 @@ class _update_marking extends State<update_marking>{
                                   child: Text("Update",style: TextStyle(color: Colors.white),),
                                   onPressed: (){
                                     if (_fbKey.currentState.validate()) {
+                                      _fbKey.currentState.save();
                                       Utils.check_connectivity().then((result){
                                         if(result){
                                           ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);

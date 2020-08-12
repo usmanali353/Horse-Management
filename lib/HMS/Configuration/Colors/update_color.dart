@@ -126,6 +126,7 @@ class _update_color extends State<update_color>{
                                       child: Text("Update",style: TextStyle(color: Colors.white),),
                                       onPressed: (){
                                         if (_fbKey.currentState.validate()) {
+                                          _fbKey.currentState.save();
                                           Utils.check_connectivity().then((result){
                                             if(result){
                                               ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);

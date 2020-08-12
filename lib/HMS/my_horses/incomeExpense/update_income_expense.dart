@@ -85,7 +85,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Horse"),),
+        appBar: AppBar(title: Text("Update Income & Expenses"),),
         body: ListView(
           children: <Widget>[
             Column(
@@ -163,6 +163,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                       Padding(
                         padding: EdgeInsets.only(bottom: 16,right: 16,left: 16),
                         child: FormBuilderTextField(
+                          keyboardType: TextInputType.number,
                           controller: amount,
                           attribute: "Currency",
                           validators: [FormBuilderValidators.required()],

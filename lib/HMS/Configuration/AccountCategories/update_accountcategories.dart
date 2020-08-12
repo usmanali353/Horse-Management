@@ -30,7 +30,7 @@ class _update_accountcategories extends State<update_accountcategories>{
   var specificcategory;
   _update_accountcategories(this.token, this.specificcategory);
   String ddvalue,selected_horse,selected_tank, selected_sire, selected_isIncome, selected_isActive;
-  bool selected_isIncome_id=false, selected_isActive_id=false;
+  bool selected_isIncome_id=false, selected_isActive_id=true;
 
   // sqlite_helper local_db;
   List<String>  isIncome=['Yes','No'], isActive=['Yes','No'] ;
@@ -116,6 +116,7 @@ class _update_accountcategories extends State<update_accountcategories>{
                           padding: EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderTextField(
                             controller: code,
+                            keyboardType: TextInputType.number,
                             attribute: "Code",
                             validators: [FormBuilderValidators.required()],
                             decoration: InputDecoration(labelText: "Code",
@@ -283,6 +284,7 @@ class _update_accountcategories extends State<update_accountcategories>{
 
                                   onPressed: (){
                                     if (_fbKey.currentState.validate()) {
+                                      _fbKey.currentState.save();
                                       Utils.check_connectivity().then((result){
                                         if(result){
                                           ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);

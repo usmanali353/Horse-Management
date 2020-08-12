@@ -174,9 +174,7 @@ class _Profile_Page_State extends ResumableState<horse_detail> {
                         Tooltip(message: horsedata['horseStatus']['trainingStatus'] !=null ? horsedata['horseStatus']['trainingStatus']: 'empty',child: CircleAvatar(radius: 25.0,backgroundColor: Color(int.parse(get_colors(horsedata['horseStatus']['trainingColor']))),)),
                         Tooltip(message: horsedata['horseStatus']['breedingStatus'] != null ?horsedata['horseStatus']['breedingStatus']:'empty',child: CircleAvatar(radius: 25.0,backgroundColor: Color(int.parse(get_colors(horsedata['horseStatus']['breedingColor']))),)),
                         Tooltip(message: horsedata['horseStatus']['healthRecordStatus']!= null ?horsedata['horseStatus']['healthRecordStatus']:'empty',child: CircleAvatar(radius: 25.0,backgroundColor: Color(int.parse(get_colors(horsedata['horseStatus']['healthRecordColor']))),)),
-                        Tooltip(message: horsedata['horseStatus']['vaccinationStatus']!= null? horsedata['horseStatus']['vaccinationStatus']:'empty',child: CircleAvatar(radius: 25.0,backgroundColor: Color(int.parse(get_colors(horsedata['horseStatus']['vaccinationColor']))),
-//                          child: Text(horsedata['horseStatus']['vaccinationStatus']!= null ? horsedata['horseStatus']['vaccinationStatus']:''),
-                        )),
+                        Tooltip(message: horsedata['horseStatus']['vaccinationStatus']!= null? horsedata['horseStatus']['vaccinationStatus']:'empty',child: CircleAvatar(radius: 25.0,backgroundColor: Color(int.parse(get_colors(horsedata['horseStatus']['vaccinationColor']))),child: Text(horsedata['horseStatus']['vaccinationStatus']!= null ? horsedata['horseStatus']['vaccinationStatus']:''),)),
                       ],
                     ),
 
@@ -258,7 +256,7 @@ class _Profile_Page_State extends ResumableState<horse_detail> {
               ListTile(
                 title: Text("Training"),
                 subtitle: Text("Add Training on this horse"),
-                leading: FaIcon(FontAwesomeIcons.hatCowboy, color: Colors.brown.shade300, size: 35,),
+                leading: FaIcon(FontAwesomeIcons.dumbbell, color: Colors.teal.shade600, size: 35,),
                 trailing: Icon(Icons.arrow_right),
                 onTap: () async{
                   prefs = await SharedPreferences.getInstance();
@@ -283,7 +281,6 @@ class _Profile_Page_State extends ResumableState<horse_detail> {
                 title: Text("Lab Report"),
                 subtitle: Text("Add Report on this horse"),
                 leading: FaIcon(FontAwesomeIcons.fileMedicalAlt, color: Colors.blue.shade400, size: 35,),
-
                 trailing: Icon(Icons.arrow_right),
                 onTap: () async {
                   prefs = await SharedPreferences.getInstance();
@@ -317,8 +314,7 @@ class _Profile_Page_State extends ResumableState<horse_detail> {
               ListTile(
                 title: Text("Competetion"),
                 subtitle: Text("View All competetion"),
-                leading: FaIcon(FontAwesomeIcons.flagCheckered, color: Colors.white, size: 35,),
-
+                leading: FaIcon(FontAwesomeIcons.flagCheckered, color: Colors.red, size: 35,),
                 trailing: Icon(Icons.arrow_right),
                 onTap: ()async {
                   prefs = await SharedPreferences.getInstance();
@@ -328,7 +324,7 @@ class _Profile_Page_State extends ResumableState<horse_detail> {
               ListTile(
                 title: Text("Vet Visit"),
                 subtitle: Text("All vet visit on this horse"),
-                leading: FaIcon(FontAwesomeIcons.userMd, color: Colors.redAccent, size: 35,),
+                leading: FaIcon(FontAwesomeIcons.userMd, color: Colors.deepPurpleAccent.shade400, size: 35,),
                 trailing: Icon(Icons.arrow_right),
                 onTap: () async{
                   prefs = await SharedPreferences.getInstance();
@@ -338,8 +334,7 @@ class _Profile_Page_State extends ResumableState<horse_detail> {
               ListTile(
                 title: Text("Breeding Sale"),
                 subtitle: Text("All breeding sale Detail on this horse"),
-                leading: FaIcon(FontAwesomeIcons.handHoldingUsd, color: Colors.green, size: 35,),
-
+                leading: FaIcon(FontAwesomeIcons.handHoldingUsd, color: Colors.green.shade600, size: 35,),
                 trailing: Icon(Icons.arrow_right),
                 onTap: () async{
                   print(horsedata['horseId'].toString());
@@ -354,7 +349,7 @@ class _Profile_Page_State extends ResumableState<horse_detail> {
               ListTile(
                 title: Text("Hypothetical Pedigree"),
                 subtitle: Text("View ancesstors of the horse"),
-                leading: FaIcon(FontAwesomeIcons.projectDiagram, color:Colors.pink.shade100, size: 35,),
+                leading: FaIcon(FontAwesomeIcons.projectDiagram, color: Colors.pink.shade100, size: 40,),
 
                 trailing: Icon(Icons.arrow_right),
                 onTap: () {
@@ -366,7 +361,6 @@ class _Profile_Page_State extends ResumableState<horse_detail> {
                 title: Text("Marking"),
                 subtitle: Text("Add Marking"),
                 leading: FaIcon(FontAwesomeIcons.marker, color: Color(0xFFd4af37), size: 35,),
-
                 trailing: Icon(Icons.arrow_right),
                 onTap: (){
                  push(context,MaterialPageRoute(builder: (context)=>marking(horsedata)));

@@ -62,7 +62,7 @@ class _Profile_Page_State extends State<all_horse_data>{
         body: SingleChildScrollView(
 
           child: FadeAnimation(2.0,
-             Column(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 ListTile(
@@ -154,7 +154,7 @@ class _Profile_Page_State extends State<all_horse_data>{
                 ListTile(
                   title: Text("Competition"),
                   subtitle: Text("Add & Update Competition"),
-                  leading: FaIcon(FontAwesomeIcons.flagCheckered, color: Colors.white, size: 35,),
+                  leading: FaIcon(FontAwesomeIcons.flagCheckered, color: Colors.red, size: 35,),
                   trailing: Icon(Icons.arrow_right),
                   onTap: (){
                     Navigator.push(context,MaterialPageRoute(builder: (context)=>competetion_list(token)));

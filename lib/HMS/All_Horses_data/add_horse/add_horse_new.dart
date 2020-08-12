@@ -579,9 +579,10 @@ class _add_horse_state extends State<add_newHorse>{
                       Padding(
                         padding: EdgeInsets.all(16),
                         child: FormBuilderTextField(
+                          keyboardType: TextInputType.number,
                           controller: passport,
-                          attribute: "Passpost#",
-                          decoration: InputDecoration(labelText: "Passpost#",
+                          attribute: "Passport#",
+                          decoration: InputDecoration(labelText: "Passport#",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -593,10 +594,10 @@ class _add_horse_state extends State<add_newHorse>{
                       Padding(
                         padding: EdgeInsets.all(16),
                         child: FormBuilderTextField(
-
+                          keyboardType: TextInputType.number,
                           controller: chip,
-                          attribute: "Chip No",
-                          decoration: InputDecoration(labelText: "Chip No",
+                          attribute: "Chip#",
+                          decoration: InputDecoration(labelText: "Chip#",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)

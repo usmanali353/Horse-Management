@@ -124,6 +124,7 @@ class _add_new_note_state extends State<addProductType>{
                       Padding(
                         padding: EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderTextField(
+                          keyboardType: TextInputType.number,
                           attribute: "cost",
                           controller: cost,
                           decoration: InputDecoration(labelText: "Cost",
@@ -137,6 +138,7 @@ class _add_new_note_state extends State<addProductType>{
                       Padding(
                         padding: EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderTextField(
+                          keyboardType: TextInputType.number,
                           attribute: "unit",
                           controller: unit,
                           decoration: InputDecoration(labelText: "Unit",

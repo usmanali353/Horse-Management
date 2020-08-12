@@ -254,6 +254,7 @@ class _add_embryo_stock extends State<add_embryo_stock>{
                         padding: EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderTextField(
                           controller: price,
+                          keyboardType: TextInputType.number,
                           attribute: "Price",
                           validators: [FormBuilderValidators.required()],
                           decoration: InputDecoration(labelText: "Price",

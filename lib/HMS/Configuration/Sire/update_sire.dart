@@ -308,6 +308,7 @@ class _UpdateSire extends State<UpdateSire>{
                           Padding(
                             padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                             child: FormBuilderTextField(
+                              keyboardType: TextInputType.number,
                               controller: number,
                               attribute: "Number",
                               decoration: InputDecoration(labelText: "Number",
@@ -322,6 +323,7 @@ class _UpdateSire extends State<UpdateSire>{
                           Padding(
                             padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                             child: FormBuilderTextField(
+                              keyboardType: TextInputType.number,
                               controller: passport,
                               attribute: "Passpost#",
                               decoration: InputDecoration(labelText: "Passpost#",
@@ -336,6 +338,7 @@ class _UpdateSire extends State<UpdateSire>{
                           Padding(
                             padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                             child: FormBuilderTextField(
+                              keyboardType: TextInputType.number,
 
                               controller: chip,
                               attribute: "Chip No",

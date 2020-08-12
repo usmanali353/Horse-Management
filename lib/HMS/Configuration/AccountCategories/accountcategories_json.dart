@@ -9,7 +9,7 @@ import '../../../Utils.dart';
 class AccountCategoriesServices{
   static Future<String> addAccountCategory(String token,int id,String code,String name,String description,String createdBy,bool isIncome, bool isActive) async{
     Map<String,String> headers = {'Authorization':'Bearer '+token,'Content-Type':'application/json'};
-    final body = jsonEncode({"id":id, "code":code, "name":name, "description":description,"createdBy":createdBy,"createdOn":DateTime.now(),"isIncome":isIncome,"isActive":isActive,},toEncodable: Utils.myEncode);
+    final body = jsonEncode({"id":id, "code":code, "name":name, "description":description,"createdBy":createdBy,"createdOn":DateTime.now(),"isIncome":isIncome,"isActive":true,},toEncodable: Utils.myEncode);
     var response= await http.post("http://192.236.147.77:8083/api/configuration/AccountCategorySave",headers: headers,body: body);
     print(response.body);
     if(response.statusCode==200){

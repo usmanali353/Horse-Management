@@ -257,40 +257,45 @@ class _flushes_update extends State<flushes_update>{
 
                         ),
                       ),
-//
-                      MaterialButton(
-                        onPressed: (){
-                          if (_fbKey.currentState.validate()) {
-                            _fbKey.currentState.save();
-                            Utils.check_connectivity().then((result){
-                              if(result){
-                                ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                                pd.show();
-                                FlushesServicesJson.add_flushes(specificflushing['createdBy'],token,specificflushing['id'],flushes_response['horseDropDown'][selected_horse_id]['id'],Select_date, flushes_response['vetDropDown'][selected_vet_id]['id'],selected_success_id,embryos.text, comments.text )
-                                    .then((response){
-                                 pd.dismiss();
-                                 if(response!=null){
-                                   Scaffold.of(context).showSnackBar(SnackBar(
-                                     content: Text("Flushes Updated"),
-                                     backgroundColor: Colors.green,
-                                   ));
-                                   Navigator.pop(context);
-                                 }else{
-                                   Scaffold.of(context).showSnackBar(SnackBar(
-                                     content: Text("Flushes not Updated"),
-                                     backgroundColor: Colors.red,
-                                   ));
-                                 }
+                      Builder(
+                        builder: (BuildContext context){
+                          return  MaterialButton(
+                            onPressed: (){
+                              if (_fbKey.currentState.validate()) {
+                                _fbKey.currentState.save();
+                                Utils.check_connectivity().then((result){
+                                  if(result){
+                                    ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                                    pd.show();
+                                    FlushesServicesJson.add_flushes(specificflushing['createdBy'],token,specificflushing['id'],flushes_response['horseDropDown'][selected_horse_id]['id'],Select_date, flushes_response['vetDropDown'][selected_vet_id]['id'],selected_success_id,embryos.text, comments.text )
+                                        .then((response){
+                                      pd.dismiss();
+                                      if(response!=null){
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text("Flushes Updated"),
+                                          backgroundColor: Colors.green,
+                                        ));
+                                        Navigator.pop(context);
+                                      }else{
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text("Flushes not Updated"),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                      }
+                                    });
+                                  }
                                 });
-                              }
-                            });
 
-                          }
+                              }
+                            },
+                            child: Text("Update",style: TextStyle(color: Colors.white),
+                            ),
+                            color: Colors.teal,
+                          );
                         },
-                        child: Text("Update",style: TextStyle(color: Colors.white),
-                        ),
-                        color: Colors.teal,
+
                       ),
+
                     ],
                     ),
                   ),

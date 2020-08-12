@@ -294,13 +294,13 @@ class _breeding_services_State extends State<breeding_services>{
   String get_check_service_by_id(int id){
     var service_type;
     if(breeding_services_list!=null&&id!=null){
-      if(id==1){
+      if(id==0){
         service_type="Direct Service";
-      }else if(id==2){
+      }else if(id==1){
         service_type="Assisted Service";
-      }else if(id==3){
+      }else if(id==2){
         service_type="Artificial Insemination";
-      }else{
+      }else if(id == 3){
         service_type="Embryo Transfer";
       }
     }

@@ -85,7 +85,7 @@ class _add_horse_state extends State<add_labTest>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add LabTest"),),
+        appBar: AppBar(title: Text("Add Lab Test"),),
         body: ListView(
           children: <Widget>[
             Column(

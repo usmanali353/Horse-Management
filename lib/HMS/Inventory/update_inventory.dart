@@ -141,6 +141,7 @@ class _add_training_state extends State<updateInventory>{
                       Padding(
                         padding: EdgeInsets.only(bottom: 16,left: 16,right: 16),
                         child: FormBuilderTextField(
+                          keyboardType: TextInputType.number,
                           controller: code,
                           initialValue: inventoryList['code'] != null ? inventoryList['code']:"",
                           attribute: "Training Center",
@@ -356,6 +357,7 @@ class _add_training_state extends State<updateInventory>{
                         child: Padding(
                           padding: EdgeInsets.only(bottom: 16,left: 16, right: 16),
                           child: FormBuilderTextField(
+                            keyboardType: TextInputType.number,
                             controller: quantity,
                             attribute: "quantity",
 
@@ -404,9 +406,10 @@ class _add_training_state extends State<updateInventory>{
                         child: Padding(
                           padding: EdgeInsets.only(right: 16,left: 16,bottom: 16),
                           child: FormBuilderTextField(
+                            keyboardType: TextInputType.number,
                             controller: serial,
                             attribute: "serial",
-                            decoration: InputDecoration(labelText: "Serial",
+                            decoration: InputDecoration(labelText: "Serial #",
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(9.0),
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -421,9 +424,10 @@ class _add_training_state extends State<updateInventory>{
                         child: Padding(
                           padding: EdgeInsets.only(left: 16,right: 16,bottom: 16),
                           child: FormBuilderTextField(
+                            keyboardType: TextInputType.number,
                             controller: batch,
                             attribute: "batch",
-                            decoration: InputDecoration(labelText: "Batch",
+                            decoration: InputDecoration(labelText: "Batch #",
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(9.0),
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)

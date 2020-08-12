@@ -144,7 +144,7 @@ class _add_paddock extends State<add_paddock>{
                           padding: EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderTextField(
                             controller: area,
-                           // keyboardType: TextInputType.number,
+                           keyboardType: TextInputType.number,
                             attribute: "Area",
                             validators: [FormBuilderValidators.required()],
                             decoration: InputDecoration(labelText: "Area",

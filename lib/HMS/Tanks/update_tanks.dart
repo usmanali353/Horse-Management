@@ -227,7 +227,7 @@ class _update_tanks_form extends State<update_tanks_form>{
                   Padding(
                     padding: EdgeInsets.only(left: 16,right: 16, top:16),
                     child: FormBuilderTextField(
-                      //keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.number,
                       controller: policynumber,
                       attribute: "Insurance Policy #",
                       validators: [FormBuilderValidators.required()],

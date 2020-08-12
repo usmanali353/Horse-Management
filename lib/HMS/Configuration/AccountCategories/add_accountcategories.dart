@@ -84,6 +84,7 @@ class _add_accountcategories extends State<add_accountcategories>{
                         Padding(
                           padding: EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderTextField(
+                            keyboardType: TextInputType.number,
                             controller: code,
                             attribute: "Code",
                             validators: [FormBuilderValidators.required()],

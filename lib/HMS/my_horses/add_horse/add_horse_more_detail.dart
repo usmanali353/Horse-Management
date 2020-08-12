@@ -134,9 +134,10 @@ class _add_horse_state extends State<add_horseDetial>{
                       Padding(
                         padding: EdgeInsets.all(16),
                         child: FormBuilderTextField(
+                          keyboardType: TextInputType.number,
                           controller: passport,
-                          attribute: "Passpost#",
-                          decoration: InputDecoration(labelText: "Passpost#",
+                          attribute: "Passport#",
+                          decoration: InputDecoration(labelText: "Passport#",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)

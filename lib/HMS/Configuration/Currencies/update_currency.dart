@@ -26,7 +26,7 @@ class _update_currency extends State<update_currency>{
   var specificcurrency;
   _update_currency(this.token, this.specificcurrency);
   String selected_currency;
-  int selected_currency_id=0;
+  int selected_currency_id;
 
   List<String> currency=[];
   var currency_response;

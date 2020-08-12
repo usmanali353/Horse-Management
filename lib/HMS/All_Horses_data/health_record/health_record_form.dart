@@ -240,6 +240,7 @@ class _health_record_form extends State<health_record_form>{
                     Padding(
                       padding: EdgeInsets.only(left: 16,right: 16,bottom: 16),
                       child: FormBuilderTextField(
+                        keyboardType: TextInputType.number,
                         attribute: "amount",
                         controller: amount,
                         decoration: InputDecoration(labelText: "Amount",

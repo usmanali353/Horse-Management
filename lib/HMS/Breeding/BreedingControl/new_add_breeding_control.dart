@@ -60,6 +60,7 @@ class _new_breeding_control_form_state extends State<new_breeding_control_form> 
     comments = TextEditingController();
     amount = TextEditingController();
     network_operations.get_breeding_control_dropdowns(token).then((response) {
+      print(response);
       if (response != null) {
         setState(() {
           breeding_control_list = json.decode(response);

@@ -182,7 +182,7 @@ class _state_add_farrier extends State<add_IncomeExpense>{
                         padding: EdgeInsets.all(16),
                         child: FormBuilderTextField(
                           controller: description,
-                          attribute: "Currency",
+                          attribute: "desc",
                           validators: [FormBuilderValidators.required()],
                           decoration: InputDecoration(labelText: "Description",
                             border: OutlineInputBorder(

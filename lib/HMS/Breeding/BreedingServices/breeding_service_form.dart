@@ -402,7 +402,7 @@ class _breeding_service_form extends State<breeding_service_form> {
                     padding: const EdgeInsets.only(
                         top: 16, left: 16, right: 16),
                     child: Visibility(
-                      //visible: semen_type_loaded,
+                      visible: semen_type_loaded,
                       child: FormBuilderDropdown(
                         attribute: "Semen Type",
                         validators: [FormBuilderValidators.required()],

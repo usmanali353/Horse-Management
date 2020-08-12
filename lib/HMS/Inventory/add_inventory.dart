@@ -132,6 +132,7 @@ class _add_training_state extends State<addInventory>{
                       Padding(
                         padding: EdgeInsets.all(16),
                         child: FormBuilderTextField(
+                          keyboardType: TextInputType.number,
                           controller: code,
                           attribute: "Training Center",
                           validators: [FormBuilderValidators.required()],
@@ -346,6 +347,7 @@ class _add_training_state extends State<addInventory>{
                           child: FormBuilderTextField(
                             controller: quantity,
                             attribute: "quantity",
+                            keyboardType: TextInputType.number,
 
                             decoration: InputDecoration(labelText: "Quantity",
                               border: OutlineInputBorder(
@@ -393,6 +395,7 @@ class _add_training_state extends State<addInventory>{
                           padding: EdgeInsets.all(16),
                           child: FormBuilderTextField(
                             controller: serial,
+                            keyboardType: TextInputType.number,
                             attribute: "serial",
                             decoration: InputDecoration(labelText: "Serial",
                               border: OutlineInputBorder(
@@ -409,6 +412,7 @@ class _add_training_state extends State<addInventory>{
                         child: Padding(
                           padding: EdgeInsets.only(left: 16,right: 16,bottom: 16),
                           child: FormBuilderTextField(
+                            keyboardType: TextInputType.number,
                             controller: batch,
                             attribute: "batch",
                             decoration: InputDecoration(labelText: "Batch",

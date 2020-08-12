@@ -264,6 +264,7 @@ class _add_horse_state extends State<add_HorseNew>{
                       Padding(
                         padding: EdgeInsets.all(16),
                         child: FormBuilderTextField(
+                          keyboardType: TextInputType.number,
                           validators: [FormBuilderValidators.required()],
                           controller: number,
                           attribute: "Number",
@@ -279,10 +280,11 @@ class _add_horse_state extends State<add_HorseNew>{
                       Padding(
                         padding: EdgeInsets.all(16),
                         child: FormBuilderTextField(
+                          keyboardType: TextInputType.number,
                           validators: [FormBuilderValidators.required()],
                           controller: chip,
-                          attribute: "Chip No",
-                          decoration: InputDecoration(labelText: "Chip No",
+                          attribute: "Chip#",
+                          decoration: InputDecoration(labelText: "Chip#",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)

@@ -80,7 +80,7 @@ class _add_horse_state extends State<add_labTest>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Horse"),),
+        appBar: AppBar(title: Text("Add Lab Reports"),),
         body: ListView(
           children: <Widget>[
             Column(
@@ -246,6 +246,7 @@ class _add_horse_state extends State<add_labTest>{
                       Padding(
                         padding: EdgeInsets.all(16),
                         child: FormBuilderTextField(
+                          keyboardType: TextInputType.number,
                           controller: amount,
                           attribute: "Currency",
                           validators: [FormBuilderValidators.required()],

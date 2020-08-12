@@ -241,6 +241,7 @@ class _state_add_farrier extends State<update_vaccination>{
                       Padding(
                         padding: EdgeInsets.only(top: 16,right: 16,left: 16),
                         child: FormBuilderTextField(
+                          keyboardType: TextInputType.number,
                           controller: dose,
                           attribute: "Dose",
                           decoration: InputDecoration(labelText: "No of Dose",

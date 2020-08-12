@@ -198,7 +198,7 @@ class _state_add_farrier extends State<add_competetion>{
                         padding: EdgeInsets.only(top: 16,right: 16,left: 16),
                         child: FormBuilderTextField(
                           controller: category,
-                          attribute: "Dose",
+                          attribute: "Category",
                           decoration: InputDecoration(labelText: "Category",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),

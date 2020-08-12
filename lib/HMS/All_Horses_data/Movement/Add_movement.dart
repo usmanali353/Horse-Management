@@ -173,7 +173,7 @@ class _state_add_farrier extends State<add_movement>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "transporttype",
-                          hint: Text("transportType"),
+                          hint: Text("Transport Type"),
                           items: transporttype!=null?transporttype.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -237,7 +237,7 @@ class _state_add_farrier extends State<add_movement>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "reason",
-                          hint: Text(" RoundTrip"),
+                          hint: Text("Round Trip"),
                           items: roundtrip!=null?roundtrip.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -245,7 +245,7 @@ class _state_add_farrier extends State<add_movement>{
                               value: name, child: Text("$name")))
                               .toList(),
                           style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Is RoundTrip",
+                          decoration: InputDecoration(labelText: "Is Round Trip",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -304,7 +304,7 @@ class _state_add_farrier extends State<add_movement>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "to location",
-                          hint: Text("Tolocation"),
+                          hint: Text("To Location"),
                           items: tolocation!=null?tolocation.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
