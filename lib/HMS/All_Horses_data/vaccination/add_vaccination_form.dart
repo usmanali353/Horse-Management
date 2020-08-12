@@ -85,7 +85,7 @@ class _state_add_farrier extends State<add_vaccination>{
                         child: FormBuilderDropdown(
                           attribute: "Horse",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Horse"),
+                          hint: Text("- Select -"),
                           items: horse!=null?horse.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -186,7 +186,7 @@ class _state_add_farrier extends State<add_vaccination>{
                         child: FormBuilderDropdown(
                           attribute: "vaccine",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Vaccine"),
+                          hint: Text("- Select -"),
                           items: vaccine!=null?vaccine.map((types)=>DropdownMenuItem(
                             child: Text(types),
                             value: types,
@@ -230,7 +230,7 @@ class _state_add_farrier extends State<add_vaccination>{
                         child: FormBuilderDropdown(
                           attribute: "vet",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Vet"),
+                          hint: Text("- Select -"),
                           items: vet!=null?vet.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -282,7 +282,7 @@ class _state_add_farrier extends State<add_vaccination>{
                         child: FormBuilderDropdown(
                           attribute: "Cost Center",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Select Center"),
+                          hint: Text("- Select -"),
                           items: costcenter!=null?costcenter.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -320,7 +320,7 @@ class _state_add_farrier extends State<add_vaccination>{
                         child: FormBuilderDropdown(
                           attribute: "Account Category",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Select Category"),
+                          hint: Text("- Select -"),
                           items:  category!=null?category.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -358,7 +358,7 @@ class _state_add_farrier extends State<add_vaccination>{
                         child: FormBuilderDropdown(
                           attribute: "currency",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Select Currency"),
+                          hint: Text("- Select -"),
                           items:  currency!=null?currency.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,

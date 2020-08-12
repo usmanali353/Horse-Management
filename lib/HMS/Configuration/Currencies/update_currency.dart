@@ -134,7 +134,7 @@ class _update_currency extends State<update_currency>{
                               initialValue: get_currency_by_id(specificcurrency['symbolId'])!= null ?get_currency_by_id(specificcurrency['symbolId']):null,
                             //  initialValue: specificcurrency!=null?specificcurrency['id']:null,
                               validators: [FormBuilderValidators.required()],
-                              hint: Text("Currency"),
+                              hint: Text("- Select -"),
                               items:currency!=null?currency.map((horse)=>DropdownMenuItem(
                                 child: Text(horse),
                                 value: horse,

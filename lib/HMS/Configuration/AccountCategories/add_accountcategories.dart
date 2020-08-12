@@ -132,7 +132,7 @@ class _add_accountcategories extends State<add_accountcategories>{
                           child: FormBuilderDropdown(
                             attribute: "Is Income",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Is Income"),
+                            hint: Text("- Select -"),
                             items: isIncome!=null?isIncome.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,
@@ -161,7 +161,7 @@ class _add_accountcategories extends State<add_accountcategories>{
                           child: FormBuilderDropdown(
                             attribute: "Is Active",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Is Active"),
+                            hint: Text("- Select -"),
                             items: isActive!=null?isActive.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,

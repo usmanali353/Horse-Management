@@ -140,7 +140,7 @@ class addVetVisitsState extends ResumableState<addVetVisits>{
                             child: FormBuilderDropdown(
                               attribute: "Horse",
                               validators: [FormBuilderValidators.required()],
-                              hint: Text("Horse"),
+                              hint: Text("- Select -"),
                               items:horses!=null?horses.map((horse)=>DropdownMenuItem(
                                 child: Text(horse),
                                 value: horse,
@@ -168,7 +168,7 @@ class addVetVisitsState extends ResumableState<addVetVisits>{
                           child: FormBuilderDropdown(
                             attribute: "Type",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Type"),
+                            hint: Text("- Select -"),
                             items:type!=null?type.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -197,7 +197,7 @@ class addVetVisitsState extends ResumableState<addVetVisits>{
                             child: FormBuilderDropdown(
                               attribute: "Vet",
                               validators: [FormBuilderValidators.required()],
-                              hint: Text("Vet"),
+                              hint: Text("- Select -"),
                               items:vet!=null?vet.map((horse)=>DropdownMenuItem(
                                 child: Text(horse),
                                 value: horse,
@@ -227,7 +227,7 @@ class addVetVisitsState extends ResumableState<addVetVisits>{
                             child: FormBuilderDropdown(
                               attribute: "Responsible",
                               validators: [FormBuilderValidators.required()],
-                              hint: Text("Responsible"),
+                              hint: Text("- Select -"),
                               items:responsible!=null?responsible.map((horse)=>DropdownMenuItem(
                                 child: Text(horse),
                                 value: horse,
@@ -348,7 +348,7 @@ class addVetVisitsState extends ResumableState<addVetVisits>{
                             child: FormBuilderDropdown(
                               attribute: "Mucus Membranes",
                               validators: [FormBuilderValidators.required()],
-                              hint: Text("Mucus Membranes"),
+                              hint: Text("- Select -"),
                               items:mucus_membrane!=null?mucus_membrane.map((horse)=>DropdownMenuItem(
                                 child: Text(horse),
                                 value: horse,
@@ -393,7 +393,7 @@ class addVetVisitsState extends ResumableState<addVetVisits>{
                           child: FormBuilderDropdown(
                             attribute: "Pulse",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Pulse"),
+                            hint: Text("- Select -"),
                             items:Pulse!=null?Pulse.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -420,7 +420,7 @@ class addVetVisitsState extends ResumableState<addVetVisits>{
                           child: FormBuilderDropdown(
                             attribute: "Hoof (Front Left)",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Hoof (Front Left)"),
+                            hint: Text("- Select -"),
                             items:Hoof_FL!=null?Hoof_FL.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -447,7 +447,7 @@ class addVetVisitsState extends ResumableState<addVetVisits>{
                           child: FormBuilderDropdown(
                             attribute: "Hoof (Front Right)",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Hoof (Front Right)"),
+                            hint: Text("- Select -"),
                             items:Hoof_FR!=null?Hoof_FR.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -474,7 +474,7 @@ class addVetVisitsState extends ResumableState<addVetVisits>{
                           child: FormBuilderDropdown(
                             attribute: "Hoof (Rear Left)",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Hoof (Rear Left)"),
+                            hint: Text("- Select -"),
                             items:Hoof_RL!=null?Hoof_RL.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -501,7 +501,7 @@ class addVetVisitsState extends ResumableState<addVetVisits>{
                           child: FormBuilderDropdown(
                             attribute: "Hoof (Rear Right)",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Hoof (Rear Right)"),
+                            hint: Text("- Select -"),
                             items:Hoof_RR!=null?Hoof_RR.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -531,7 +531,7 @@ class addVetVisitsState extends ResumableState<addVetVisits>{
                           child: FormBuilderDropdown(
                             attribute: "Movements (Left)",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Movements (Left)"),
+                            hint: Text("- Select -"),
                             items:Movements_L!=null?Movements_L.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -559,7 +559,7 @@ class addVetVisitsState extends ResumableState<addVetVisits>{
                           child: FormBuilderDropdown(
                             attribute: "Movements (Right)",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Movements (Right)"),
+                            hint: Text("- Select -"),
                             items:Movements_R!=null?Movements_R.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -586,7 +586,7 @@ class addVetVisitsState extends ResumableState<addVetVisits>{
                           child: FormBuilderDropdown(
                             attribute: "Presence of Feces",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Presence of Feces"),
+                            hint: Text("- Select -"),
                             items:Feces_Present!=null?Feces_Present.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -613,7 +613,7 @@ class addVetVisitsState extends ResumableState<addVetVisits>{
                           child: FormBuilderDropdown(
                             attribute: "Consistency of Feces",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Consistency of Feces"),
+                            hint: Text("- Select -"),
                             items:Feces_Consistency!=null?Feces_Consistency.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -653,39 +653,39 @@ class addVetVisitsState extends ResumableState<addVetVisits>{
                         Padding(padding: EdgeInsets.only(top:30, right: 250),
                             child: Text("Respiratory", style: TextStyle(color: Colors.teal,fontSize: 20, fontWeight: FontWeight.bold),)
                         ),
+//                        Padding(
+//                          padding: const EdgeInsets.only(top: 16,right: 16,left: 16),
+//                          child: FormBuilderDropdown(
+//                            attribute: "Effort",
+//                            validators: [FormBuilderValidators.required()],
+//                            hint: Text("- Select -"),
+//                            items:Effort!=null?Effort.map((horse)=>DropdownMenuItem(
+//                              child: Text(horse),
+//                              value: horse,
+//                            )).toList():[""].map((name) => DropdownMenuItem(
+//                                value: name, child: Text("$name")))
+//                                .toList(),
+//                            style: Theme.of(context).textTheme.body1,
+//                            decoration: InputDecoration(labelText: "Effort",
+//                              border: OutlineInputBorder(
+//                                  borderRadius: BorderRadius.circular(9.0),
+//                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
+//                              ),
+//                            ),
+//                            onChanged: (value){
+//                              setState(() {
+//                                this.selected_Effort=value;
+//                                this.selected_Effort_id=Effort.indexOf(value);
+//                              });
+//                            },
+//                          ),
+//                        ),
                         Padding(
                           padding: const EdgeInsets.only(top: 16,right: 16,left: 16),
                           child: FormBuilderDropdown(
                             attribute: "Effort",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Effort"),
-                            items:Effort!=null?Effort.map((horse)=>DropdownMenuItem(
-                              child: Text(horse),
-                              value: horse,
-                            )).toList():[""].map((name) => DropdownMenuItem(
-                                value: name, child: Text("$name")))
-                                .toList(),
-                            style: Theme.of(context).textTheme.body1,
-                            decoration: InputDecoration(labelText: "Effort",
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(9.0),
-                                  borderSide: BorderSide(color: Colors.teal, width: 1.0)
-                              ),
-                            ),
-                            onChanged: (value){
-                              setState(() {
-                                this.selected_Effort=value;
-                                this.selected_Effort_id=Effort.indexOf(value);
-                              });
-                            },
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 16,right: 16,left: 16),
-                          child: FormBuilderDropdown(
-                            attribute: "Effort",
-                            validators: [FormBuilderValidators.required()],
-                            hint: Text("Effort"),
+                            hint: Text("- Select -"),
                             items:Effort!=null?Effort.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -712,7 +712,7 @@ class addVetVisitsState extends ResumableState<addVetVisits>{
                           child: FormBuilderDropdown(
                             attribute: "Pulmonary Auscultation",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Pulmonary Auscultation"),
+                            hint: Text("- Select -"),
                             items:Pulmonary_Auscultation!=null?Pulmonary_Auscultation.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -739,7 +739,7 @@ class addVetVisitsState extends ResumableState<addVetVisits>{
                           child: FormBuilderDropdown(
                             attribute: "Trachea Auscultation",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Trachea Auscultation"),
+                            hint: Text("- Select -"),
                             items:Trachea_Auscultation!=null?Trachea_Auscultation.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -761,7 +761,7 @@ class addVetVisitsState extends ResumableState<addVetVisits>{
                             },
                           ),
                         ),
-                        Padding(padding: EdgeInsets.only(top:30, right: 200),
+                        Padding(padding: EdgeInsets.only(left:10, top:30, right: 150),
                             child: Text("Diagnosis & Treatment", style: TextStyle(color: Colors.teal,fontSize: 20, fontWeight: FontWeight.bold),)
                         ),
                         Padding(

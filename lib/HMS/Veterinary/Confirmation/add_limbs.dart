@@ -105,7 +105,7 @@ class addlimbs_dataAppliedState extends State<addlimbs_dataApplied>{
             Padding(
               padding: const EdgeInsets.all(16),
               child: DropdownButtonFormField(
-                hint: Text("Select Product"),
+                hint: Text("- Select -"),
                 items: limbs_data!=null?limbs_data.map((trainer)=>DropdownMenuItem(
                   child: Text(trainer),
                   value: trainer,

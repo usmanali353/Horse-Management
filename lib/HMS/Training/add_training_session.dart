@@ -145,7 +145,7 @@ class _add_training_session extends State<add_training_session>{
                       child: FormBuilderDropdown(
                         attribute: "Trainer",
                         validators: [FormBuilderValidators.required()],
-                        hint: Text("Trainer"),
+                        hint: Text("- Select -"),
                         items:trainer!=null?trainer.map((horse)=>DropdownMenuItem(
                           child: Text(horse),
                           value: horse,
@@ -234,7 +234,7 @@ class _add_training_session extends State<add_training_session>{
                       child: FormBuilderDropdown(
                         attribute: "Contact",
                         validators: [FormBuilderValidators.required()],
-                        hint: Text("-Select-"),
+                        hint: Text("- Select -"),
                         items:contacts!=null?contacts.map((horse)=>DropdownMenuItem(
                           child: Text(horse),
                           value: horse,
@@ -348,7 +348,7 @@ class _add_training_session extends State<add_training_session>{
                       child: FormBuilderDropdown(
                         attribute: "Currency",
                         validators: [FormBuilderValidators.required()],
-                        hint: Text("Currency"),
+                        hint: Text("- Select -"),
                         items:currency!=null?currency.map((horse)=>DropdownMenuItem(
                           child: Text(horse),
                           value: horse,
@@ -378,7 +378,7 @@ class _add_training_session extends State<add_training_session>{
                       child: FormBuilderDropdown(
                         attribute: "Account Category",
                         validators: [FormBuilderValidators.required()],
-                        hint: Text("Account Category"),
+                        hint: Text("- Select -"),
                         items:account_category!=null?account_category.map((horse)=>DropdownMenuItem(
                           child: Text(horse),
                           value: horse,

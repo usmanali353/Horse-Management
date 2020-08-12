@@ -104,7 +104,7 @@ class _update_picture_state extends State<update_picture>{
                               attribute: "Horse",
                               validators: [FormBuilderValidators.required()],
                               initialValue: picture_data['horseName']['name'],
-                              hint: Text("Horse"),
+                              hint: Text("- Select -"),
                               items: horse_name.map((name) => DropdownMenuItem(
                                   value: name, child: Text("$name")))
                                   .toList(),

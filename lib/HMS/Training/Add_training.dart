@@ -99,7 +99,7 @@ class _add_training_state extends State<add_training>{
                             child: FormBuilderDropdown(
                               attribute: "Training Type",
                               validators: [FormBuilderValidators.required()],
-                              hint: Text("Select Training"),
+                              hint: Text("- Select -"),
                               items: training_types_list.map((name) => DropdownMenuItem(
                                value: name, child: Text("$name")))
                                .toList(),
@@ -134,7 +134,7 @@ class _add_training_state extends State<add_training>{
                               visible: _isvisible,
                               child:FormBuilderDropdown(
                                 attribute: "Exercise Plan",
-                                hint: Text("Excercise Plan"),
+                                hint: Text("- Select -"),
                                 items: excercise_plans!=null?excercise_plans.map((plans)=>DropdownMenuItem(
                                   child: Text(plans),
                                   value: plans,
@@ -166,7 +166,7 @@ class _add_training_state extends State<add_training>{
                               child: FormBuilderDropdown(
                                 attribute: "Horse",
                                 validators: [FormBuilderValidators.required()],
-                                hint: Text("Horse"),
+                                hint: Text("- Select -"),
                                 items:horses!=null?horses.map((horse)=>DropdownMenuItem(
                                   child: Text(horse),
                                   value: horse,
@@ -254,7 +254,7 @@ class _add_training_state extends State<add_training>{
                             child: FormBuilderDropdown(
                               attribute: "Trainer",
                               validators: [FormBuilderValidators.required()],
-                              hint: Text("Trainer"),
+                              hint: Text("- Select -"),
                               items: trainers!=null?trainers.map((trainer)=>DropdownMenuItem(
                                 child: Text(trainer),
                                 value: trainer,

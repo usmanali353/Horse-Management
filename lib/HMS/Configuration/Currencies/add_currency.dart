@@ -73,7 +73,7 @@ class _add_currency extends State<add_currency>{
                             child: FormBuilderDropdown(
                               attribute: "Currency",
                               validators: [FormBuilderValidators.required()],
-                              hint: Text("Currency"),
+                              hint: Text("- Select -"),
                               items:currency!=null?currency.map((horse)=>DropdownMenuItem(
                                 child: Text(horse),
                                 value: horse,

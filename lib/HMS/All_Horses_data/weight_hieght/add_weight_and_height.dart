@@ -69,7 +69,7 @@ class _add_weight_and_height extends State<add_weight_and_height>{
                         padding: const EdgeInsets.only(top: 16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Horse",
-                          hint: Text("Horse"),
+                          hint: Text("- Select -"),
                           items: horse!=null?horse.map((types)=>DropdownMenuItem(
                             child: Text(types),
                             value: types,
@@ -161,17 +161,17 @@ class _add_weight_and_height extends State<add_weight_and_height>{
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: TextFormField(
+                        child: FormBuilderTextField(
+                          keyboardType: TextInputType.number,
                           controller: comment,
-                          maxLines: null,
-                          minLines: 5,
-                          decoration: InputDecoration(
-                              hintText: "Add Comment",
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15.0))
+                          attribute: "comment",
+                          decoration: InputDecoration(labelText: "Comments",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(9.0),
+                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                            ),
                           ),
-                          autofocus: true,
-                          keyboardType: TextInputType.multiline,
+
                         ),
                       ),
 

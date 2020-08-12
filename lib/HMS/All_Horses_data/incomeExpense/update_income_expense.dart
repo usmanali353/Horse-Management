@@ -118,7 +118,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                         child: FormBuilderDropdown(
                           attribute: "Horse",
                           initialValue: expenselist['horseName']['name'] != null ? expenselist['horseName']['name']:"",
-                          hint: Text("Horse"),
+                          hint: Text("- Select -"),
                           items: horse!=null?horse.map((types)=>DropdownMenuItem(
                             child: Text(types),
                             value: types,
@@ -166,7 +166,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                         padding: EdgeInsets.all(16),
                         child: FormBuilderTextField(
                           controller: description,
-                          attribute: "Currency",
+                          attribute: "desc",
                           validators: [FormBuilderValidators.required()],
                           decoration: InputDecoration(labelText: "Description",
                             border: OutlineInputBorder(
@@ -185,10 +185,10 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                         padding: EdgeInsets.only(bottom: 16,right: 16,left: 16),
                         child: FormBuilderTextField(
                           controller: amount,
-                          attribute: "Currency",
+                          attribute: "amm",
                           validators: [FormBuilderValidators.required()],
                           keyboardType: TextInputType.number,
-                          decoration: InputDecoration(labelText: "Currency",
+                          decoration: InputDecoration(labelText: "Amount",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -202,7 +202,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                         child: FormBuilderDropdown(
                           attribute: "Cuurency",
                           initialValue: get_currency_by_id(expenselist['currency'])!= null ? get_currency_by_id(expenselist['currency']):null,
-                          hint: Text("Currency"),
+                          hint: Text("- Select -"),
                           items: currency!=null?currency.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -235,7 +235,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                         child: FormBuilderDropdown(
                           attribute: "Category",
                           initialValue: expenselist['categoryId']!= null ? expenselist['categoryName']['name']:null,
-                          hint: Text("Category"),
+                          hint: Text("- Select -"),
                           items: category!=null?category.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -269,7 +269,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                         child: FormBuilderDropdown(
                           attribute: "cost Center",
                           initialValue: get_costcenter_by_id(expenselist['costCenterId'])!= null ?get_costcenter_by_id(expenselist['costCenterId']):null,
-                          hint: Text("Cost Center"),
+                          hint: Text("- Select -"),
                           items: costcenter!=null?costcenter.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -303,7 +303,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                           attribute: "Contact",
                           initialValue: get_contact_by_id(expenselist['contactId'])!= null ?get_contact_by_id(expenselist['contactId']):null,
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Contact"),
+                          hint: Text("- Select -"),
                           items: contact!=null?contact.map((types)=>DropdownMenuItem(
                             child: Text(types),
                             value: types,
@@ -341,7 +341,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                         child: FormBuilderDropdown(
                           attribute: "Account",
                           initialValue: expenselist['typeGeneralOrBusiness']!= null ? expenselist['typeGeneralOrBusiness']:null,
-                          hint: Text(" Account"),
+                          hint: Text("- Select -"),
                           items: account!=null?account.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,

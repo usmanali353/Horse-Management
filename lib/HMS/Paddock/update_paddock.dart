@@ -176,7 +176,7 @@ class _update_paddock extends State<update_paddock>{
                               attribute: "Location",
                               initialValue: get_location_by_id(specificpaddock['locationId'])!= null ?get_location_by_id(specificpaddock['locationId']):null,
                               validators: [FormBuilderValidators.required()],
-                              hint: Text("Location"),
+                              hint: Text("- Select -"),
                               items:location!=null?location.map((horse)=>DropdownMenuItem(
                                 child: Text(horse),
                                 value: horse,
@@ -221,7 +221,7 @@ class _update_paddock extends State<update_paddock>{
                             attribute: "Has Shade",
                             initialValue: get_yesno(specificpaddock['hasShade']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Has Shade"),
+                            hint: Text("- Select -"),
                             items: hasShade!=null?hasShade.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,
@@ -229,7 +229,7 @@ class _update_paddock extends State<update_paddock>{
                                 value: name, child: Text("$name")))
                                 .toList(),
                             style: Theme.of(context).textTheme.body1,
-                            decoration: InputDecoration(labelText: "Has Shade",
+                            decoration: InputDecoration(labelText: "Has Shade?",
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(9.0),
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -261,7 +261,7 @@ class _update_paddock extends State<update_paddock>{
                             attribute: "Has Water",
                             initialValue: get_yesno(specificpaddock['hasWater']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Has Water"),
+                            hint: Text("- Select -"),
                             items: hasWater!=null?hasWater.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,
@@ -269,7 +269,7 @@ class _update_paddock extends State<update_paddock>{
                                 value: name, child: Text("$name")))
                                 .toList(),
                             style: Theme.of(context).textTheme.body1,
-                            decoration: InputDecoration(labelText: "Has Water",
+                            decoration: InputDecoration(labelText: "Has Water?",
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(9.0),
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -301,7 +301,7 @@ class _update_paddock extends State<update_paddock>{
                             attribute: "Grass",
                             initialValue: get_yesno(specificpaddock['grass']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Grass"),
+                            hint: Text("- Select -"),
                             items: hasShade!=null?hasShade.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,
@@ -341,7 +341,7 @@ class _update_paddock extends State<update_paddock>{
                             attribute: "Other Animals",
                             initialValue: get_yesno(specificpaddock['otherAnimals']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Other Animals"),
+                            hint: Text("- Select -"),
                             items: otherAnimals!=null?otherAnimals.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,

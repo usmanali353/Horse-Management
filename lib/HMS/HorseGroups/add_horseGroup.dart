@@ -161,7 +161,7 @@ class _add_horse_state extends State<add_HorseGroup>{
                         child: FormBuilderDropdown(
                           attribute: "dynamic",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Dynamic"),
+                          hint: Text("- Select -"),
                           items: ["Yes","No"].map((name) => DropdownMenuItem(value: name, child: Text(name))).toList(),
                           onChanged: (value){
                             //this.ddvalue=value;
@@ -215,7 +215,7 @@ class _add_horse_state extends State<add_HorseGroup>{
                           child: FormBuilderDropdown(
                             attribute: "Gender",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Gender"),
+                            hint: Text("- Select -"),
                             items: gender.map((name) => DropdownMenuItem(value: name, child: Text(name))).toList(),
                             onChanged: (value){
                               setState(() {
@@ -237,7 +237,7 @@ class _add_horse_state extends State<add_HorseGroup>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "location",
-                            hint: Text("Location"),
+                            hint: Text("- Select -"),
                             items: location.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
@@ -262,7 +262,7 @@ class _add_horse_state extends State<add_HorseGroup>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Breed",
-                            hint: Text("Breed"),
+                            hint: Text("- Select -"),
                             items: breeding.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
@@ -287,7 +287,7 @@ class _add_horse_state extends State<add_HorseGroup>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Color",
-                            hint: Text("Color"),
+                            hint: Text("- Select -"),
                             items: colors.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
@@ -314,7 +314,7 @@ class _add_horse_state extends State<add_HorseGroup>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Category",
-                            hint: Text("Category"),
+                            hint: Text("- Select -"),
                             items: category.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
@@ -338,7 +338,7 @@ class _add_horse_state extends State<add_HorseGroup>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "sireName",
-                            hint: Text("SirName"),
+                            hint: Text("- Select -"),
                             items: sire.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
@@ -362,7 +362,7 @@ class _add_horse_state extends State<add_HorseGroup>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "damName",
-                            hint: Text("DamName"),
+                            hint: Text("- Select -"),
                             items: dam.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
@@ -387,7 +387,7 @@ class _add_horse_state extends State<add_HorseGroup>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "Breeder",
-                            hint: Text("Breeder"),
+                            hint: Text("- Select -"),
                             items: breeder.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
@@ -412,7 +412,7 @@ class _add_horse_state extends State<add_HorseGroup>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "rider",
-                            hint: Text("Rider"),
+                            hint: Text("- Select -"),
                             items: rider.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
@@ -438,7 +438,7 @@ class _add_horse_state extends State<add_HorseGroup>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "owner",
-                            hint: Text("Owner"),
+                            hint: Text("- Select -"),
                             items: rider.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
@@ -463,7 +463,7 @@ class _add_horse_state extends State<add_HorseGroup>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "incharge",
-                            hint: Text("Incharge"),
+                            hint: Text("- Select -"),
                             items: incharge.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),

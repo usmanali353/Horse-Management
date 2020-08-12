@@ -129,7 +129,7 @@ class _add_horse_state extends State<update_labTest>{
                         child: FormBuilderDropdown(
                           attribute: "Horse",
                           initialValue:  labtestlist['horseName']['name'],
-                          hint: Text("Horse"),
+                          hint: Text("- Select -"),
                           items: horse!=null?horse.map((types)=>DropdownMenuItem(
                             child: Text(types),
                             value: types,
@@ -191,7 +191,7 @@ class _add_horse_state extends State<update_labTest>{
                         child: FormBuilderDropdown(
                           attribute: "Test Type",
                           initialValue: labtestlist['typeTestId'] != null ? labtestlist['testTypes']['name']:null,
-                          hint: Text("Test Type"),
+                          hint: Text("- Select -"),
                           items: testtype!=null?testtype.map((types)=>DropdownMenuItem(
                             child: Text(types),
                             value: types,
@@ -224,7 +224,7 @@ class _add_horse_state extends State<update_labTest>{
                         child: FormBuilderDropdown(
                           attribute: "POsitive",
                           initialValue: positiveinitial,
-                          hint: Text("Positive"),
+                          hint: Text("- Select -"),
                           items: positive.map((name) => DropdownMenuItem(
                               value: name,
                               child: Text("$name")))
@@ -259,7 +259,7 @@ class _add_horse_state extends State<update_labTest>{
                         child: FormBuilderDropdown(
                           attribute: "Responsible",
                           initialValue: labtestlist['responsible'] != null ? labtestlist['responsibleName']['contactName']['name']:null,
-                          hint: Text("Responsible"),
+                          hint: Text("- Select -"),
                           items: responsible!=null?responsible.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -338,7 +338,7 @@ class _add_horse_state extends State<update_labTest>{
                         child: FormBuilderDropdown(
                           attribute: "Cuurency",
                          initialValue: get_currency_by_id(labtestlist['currencyId']),
-                          hint: Text("Currency"),
+                          hint: Text("- Select -"),
                           items: currency!=null?currency.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -371,7 +371,7 @@ class _add_horse_state extends State<update_labTest>{
                         child: FormBuilderDropdown(
                           attribute: "Category",
                           initialValue: get_category_by_id(labtestlist['categoryId']),
-                          hint: Text("Category"),
+                          hint: Text("- Select -"),
                           items: category!=null?category.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -405,7 +405,7 @@ class _add_horse_state extends State<update_labTest>{
                         child: FormBuilderDropdown(
                           attribute: "cost Center",
                           initialValue: get_costcenter_by_id(labtestlist['costCenterId']),
-                          hint: Text("Cost Center"),
+                          hint: Text("- Select -"),
                           items: costcenter!=null?costcenter.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -438,7 +438,7 @@ class _add_horse_state extends State<update_labTest>{
                         child: FormBuilderDropdown(
                           attribute: "contact",
                           initialValue: get_contact_by_id(labtestlist['contactId']),
-                          hint: Text("Contact"),
+                          hint: Text("- Select -"),
                           items: contact!=null?contact.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,

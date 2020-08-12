@@ -100,7 +100,7 @@ class _add_vaccinationtypes extends State<add_vaccinationtypes>{
                           child: FormBuilderDropdown(
                             attribute: "Can Be Delayed",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Can Be Delayed"),
+                            hint: Text("- Select -"),
                             items: canBeDelayed!=null?canBeDelayed.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,

@@ -124,7 +124,7 @@ class GroupDetailState extends State<GroupDetail> {
                             ),
                           ),
                           // initialValue: 'Male',
-                          hint: Text('No'),
+                          hint: Text('- Select -'),
                           // validators: [FormBuilderValidators.required()],
                           items: _dynamics
                               .map((dynamics) => DropdownMenuItem(

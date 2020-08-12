@@ -190,7 +190,7 @@ class _add_horse_state extends State<add_HorseNew>{
                         child: FormBuilderDropdown(
                           attribute: "Gender",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Gender"),
+                          hint: Text("- Select -"),
                           items: gender.map((name) => DropdownMenuItem(
                               value: name,
                               child: Text(name)))
@@ -220,7 +220,7 @@ class _add_horse_state extends State<add_HorseNew>{
                         child: FormBuilderDropdown(
                           validators: [FormBuilderValidators.required()],
                           attribute: "Barn",
-                          hint: Text("Barn"),
+                          hint: Text("- Select -"),
                           items: barn.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -243,7 +243,7 @@ class _add_horse_state extends State<add_HorseNew>{
                         child: FormBuilderDropdown(
                           validators: [FormBuilderValidators.required()],
                           attribute: "Breed",
-                          hint: Text("Breed"),
+                          hint: Text("- Select -"),
                           items: breeding.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -298,7 +298,7 @@ class _add_horse_state extends State<add_HorseNew>{
                         child: FormBuilderDropdown(
                           validators: [FormBuilderValidators.required()],
                           attribute: "Color",
-                          hint: Text("Color"),
+                          hint: Text("- Select -"),
                           items: colors.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -323,7 +323,7 @@ class _add_horse_state extends State<add_HorseNew>{
                         child: FormBuilderDropdown(
                           validators: [FormBuilderValidators.required()],
                           attribute: "sireName",
-                          hint: Text("SirName"),
+                          hint: Text("- Select -"),
                           items: sire.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -345,7 +345,7 @@ class _add_horse_state extends State<add_HorseNew>{
                         child: FormBuilderDropdown(
                           validators: [FormBuilderValidators.required()],
                           attribute: "damName",
-                          hint: Text("DamName"),
+                          hint: Text("- Select -"),
                           items: dam.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -368,7 +368,7 @@ class _add_horse_state extends State<add_HorseNew>{
                         child: FormBuilderDropdown(
                           validators: [FormBuilderValidators.required()],
                           attribute: "Breeder",
-                          hint: Text("Breeder"),
+                          hint: Text("- Select -"),
                           items: breeder.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -390,7 +390,7 @@ class _add_horse_state extends State<add_HorseNew>{
                         child: FormBuilderDropdown(
                           validators: [FormBuilderValidators.required()],
                           attribute: "",
-                          hint: Text("Vet"),
+                          hint: Text("- Select -"),
                           items: vet.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),

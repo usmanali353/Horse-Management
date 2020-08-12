@@ -83,7 +83,7 @@ class _add_new_picture extends State<add_new_picture>{
                         child: FormBuilderDropdown(
                           attribute: "Horse",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Horse"),
+                          hint: Text("- Select -"),
                           items: horse_name.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),

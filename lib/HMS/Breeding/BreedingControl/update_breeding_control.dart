@@ -195,7 +195,7 @@ class _update_breeding_control_state extends State<update_breeding_control>{
                             attribute: "Horse",
                            initialValue: breeding_control_data!=null?breeding_control_data['horseName']['name']:null,
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Horse"),
+                            hint: Text("- Select -"),
                             items:horses!=null?horses.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -284,7 +284,7 @@ class _update_breeding_control_state extends State<update_breeding_control>{
                           attribute: "Check Method",
                           initialValue: breeding_control_data['check_Method']!=null?check_method_list[breeding_control_data['check_Method']]:null,
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Check Method"),
+                          hint: Text("- Select -"),
                           items: check_method_list.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -318,7 +318,7 @@ class _update_breeding_control_state extends State<update_breeding_control>{
                             attribute: "Vet",
                             initialValue: get_vet_name(breeding_control_data['vetId']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Vet"),
+                            hint: Text("- Select -"),
                             items:vet!=null?vet.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -445,7 +445,7 @@ class _update_breeding_control_state extends State<update_breeding_control>{
                             attribute: "Related Services",
                             initialValue: get_related_service_name(breeding_control_data['relatedServiceId']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Related Services"),
+                            hint: Text("- Select -"),
                             items:related_services!=null?related_services.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -480,7 +480,7 @@ class _update_breeding_control_state extends State<update_breeding_control>{
                           attribute: "Empty",
                           initialValue: get_yesno(breeding_control_data['empty']),
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Empty"),
+                          hint: Text("- Select -"),
                           items: yesnolist.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -518,7 +518,7 @@ class _update_breeding_control_state extends State<update_breeding_control>{
                           attribute: "Pregnancy",
                           initialValue: get_yesno(breeding_control_data['pregnancy']),
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Pregnancy"),
+                          hint: Text("- Select -"),
                           items: yesnolist.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -556,7 +556,7 @@ class _update_breeding_control_state extends State<update_breeding_control>{
                           attribute: "Abortion",
                          initialValue: get_yesno(breeding_control_data['abortion']),
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Abortion"),
+                          hint: Text("- Select -"),
                           items: yesnolist.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -594,7 +594,7 @@ class _update_breeding_control_state extends State<update_breeding_control>{
                           attribute: "Reabsorption",
                           initialValue: get_yesno(breeding_control_data['reabsorption']),
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Reabsorption"),
+                          hint: Text("- Select -"),
                           items: yesnolist.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -632,7 +632,7 @@ class _update_breeding_control_state extends State<update_breeding_control>{
                           attribute: "Follicle",
                          initialValue: get_yesno(breeding_control_data['follicle']),
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Follicle"),
+                          hint: Text("- Select -"),
                           items: yesnolist.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -670,7 +670,7 @@ class _update_breeding_control_state extends State<update_breeding_control>{
                           attribute: "Ovule",
                           initialValue: get_yesno(breeding_control_data['ovule']),
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Ovule"),
+                          hint: Text("- Select -"),
                           items: yesnolist.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -708,7 +708,7 @@ class _update_breeding_control_state extends State<update_breeding_control>{
                           attribute: "Twins",
                           validators: [FormBuilderValidators.required()],
                           initialValue: get_yesno(breeding_control_data['twins']),
-                          hint: Text("Twins"),
+                          hint: Text("- Select -"),
                           items: yesnolist.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -746,7 +746,7 @@ class _update_breeding_control_state extends State<update_breeding_control>{
                           attribute: "Volvoplasty",
                           initialValue: get_yesno(breeding_control_data['volvoplasty']),
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Volvoplasty"),
+                          hint: Text("- Select -"),
                           items: yesnolist.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -802,7 +802,7 @@ class _update_breeding_control_state extends State<update_breeding_control>{
                             attribute: "Currency",
                             initialValue: get_currency_name(breeding_control_data['currency']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Currency"),
+                            hint: Text("- Select -"),
                             items:currency!=null?currency.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -839,7 +839,7 @@ class _update_breeding_control_state extends State<update_breeding_control>{
                             attribute: "Account Category",
                             initialValue: getAcCategoryName(breeding_control_data['categoryId']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Account Category"),
+                            hint: Text("- Select -"),
                             items:account_category!=null?account_category.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -876,7 +876,7 @@ class _update_breeding_control_state extends State<update_breeding_control>{
                             attribute: "Cost Center",
                             initialValue: get_costcenter_name(breeding_control_data['costCenterId']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Cost Center"),
+                            hint: Text("- Select -"),
                             items:cost_center!=null?cost_center.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -913,7 +913,7 @@ class _update_breeding_control_state extends State<update_breeding_control>{
                             attribute: "Contact",
                             initialValue: get_contact_name(breeding_control_data['contactId']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Contact"),
+                            hint: Text("- Select -"),
                             items:contacts!=null?contacts.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,

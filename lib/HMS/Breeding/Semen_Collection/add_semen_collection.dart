@@ -80,7 +80,7 @@ class _add_semen_collection_state extends State<add_semen_collection>{
                           child: FormBuilderDropdown(
                             attribute: "Horse",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Horse"),
+                            hint: Text("- Select -"),
                             items:horses!=null?horses.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -166,7 +166,7 @@ class _add_semen_collection_state extends State<add_semen_collection>{
                           child: FormBuilderDropdown(
                             attribute: "To Freeze",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("To Freeze"),
+                            hint: Text("- Select -"),
                             items:['Yes','No'].map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -206,7 +206,7 @@ class _add_semen_collection_state extends State<add_semen_collection>{
                           child: FormBuilderDropdown(
                             attribute: "Incharge",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Incharge"),
+                            hint: Text("- Select -"),
                             items:incharge!=null?incharge.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,

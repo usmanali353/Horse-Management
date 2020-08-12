@@ -107,7 +107,7 @@ class _update_picture_state extends State<update_picture>{
                               attribute: "Horse",
                               validators: [FormBuilderValidators.required()],
                               initialValue: picture_data['horseName']['name'],
-                              hint: Text("Horse"),
+                              hint: Text("- Select -"),
                               items: horse_name.map((name) => DropdownMenuItem(
                                   value: name, child: Text("$name")))
                                   .toList(),
@@ -147,16 +147,15 @@ class _update_picture_state extends State<update_picture>{
                           ),
                           Padding(
                             padding: const EdgeInsets.all(16.0),
-                            child: TextFormField(
+                            child:  FormBuilderTextField(
+                              attribute: "Desc",
                               controller: description,
-                              maxLines: null,
-                              minLines: 5,
-                              decoration: InputDecoration(
-                                  hintText: "Description",
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15.0))
+                              decoration: InputDecoration(labelText: "Description",
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(9.0),
+                                    borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                                ),
                               ),
-                              keyboardType: TextInputType.multiline,
                             ),
                           ),
                           Padding(

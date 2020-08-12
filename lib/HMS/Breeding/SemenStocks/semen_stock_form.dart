@@ -88,7 +88,7 @@ class _semen_stock_form extends State<semen_stock_form>{
                                 child: FormBuilderDropdown(
                                   attribute: "Horse",
                                   validators: [FormBuilderValidators.required()],
-                                  hint: Text("Horse"),
+                                  hint: Text("- Select -"),
                                   items:horses!=null?horses.map((horse)=>DropdownMenuItem(
                                     child: Text(horse),
                                     value: horse,
@@ -116,7 +116,7 @@ class _semen_stock_form extends State<semen_stock_form>{
                               child: FormBuilderDropdown(
                                 attribute: "Tanks",
                                 validators: [FormBuilderValidators.required()],
-                                hint: Text("Tanks"),
+                                hint: Text("- Select -"),
                                 items: tanks!=null?tanks.map((trainer)=>DropdownMenuItem(
                                   child: Text(trainer),
                                   value: trainer,
@@ -265,7 +265,7 @@ class _semen_stock_form extends State<semen_stock_form>{
                               child: FormBuilderDropdown(
                                 attribute: "Was Bought",
                                 validators: [FormBuilderValidators.required()],
-                                hint: Text("Was Bought"),
+                                hint: Text("- Select -"),
                                 items: was_bought!=null?was_bought.map((trainer)=>DropdownMenuItem(
                                   child: Text(trainer),
                                   value: trainer,
@@ -295,7 +295,7 @@ class _semen_stock_form extends State<semen_stock_form>{
                               child: FormBuilderDropdown(
                                 attribute: "On Sale",
                                 validators: [FormBuilderValidators.required()],
-                                hint: Text("On Sale"),
+                                hint: Text("- Select -"),
                                 items: on_sale!=null?on_sale.map((trainer)=>DropdownMenuItem(
                                   child: Text(trainer),
                                   value: trainer,

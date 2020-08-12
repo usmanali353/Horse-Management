@@ -152,7 +152,7 @@ class _update_testtype extends State<update_testtype>{
                             attribute: "Reminder",
                             initialValue: get_yesno(specifictype['reminder']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Reminder"),
+                            hint: Text("- Select -"),
                             items: reminder!=null?reminder.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,

@@ -189,7 +189,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                         initialValue: specificsales['horseName']['name'],
                         attribute: "Horse",
                         validators: [FormBuilderValidators.required()],
-                        hint: Text("Horse"),
+                        hint: Text("- Select -"),
                         items:horses!=null?horses.map((horse)=>DropdownMenuItem(
                           child: Text(horse),
                           value: horse,
@@ -251,7 +251,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                         initialValue: specificsales['customerId'] != null ? specificsales['customerName']['contactName']['name']:null,
                         attribute: "Customer",
                         validators: [FormBuilderValidators.required()],
-                        hint: Text("Customer"),
+                        hint: Text("- Select -"),
                         items:customer!=null?customer.map((horse)=>DropdownMenuItem(
                           child: Text(horse),
                           value: horse,
@@ -286,7 +286,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                       attribute: "Assigned Vet",
                       initialValue: specificsales['assignedVetId'] != null ? specificsales['assignedVetName']['contactName']['name']:null,
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("Assigned Vet"),
+                      hint: Text("- Select -"),
                       items: vet!=null?vet.map((trainer)=>DropdownMenuItem(
                         child: Text(trainer),
                         value: trainer,
@@ -356,7 +356,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                       attribute: "Semen",
                       initialValue: get_yesno(specificsales['isSemen']),
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("Semen"),
+                      hint: Text("- Select -"),
                       items: semen!=null?semen.map((trainer)=>DropdownMenuItem(
                         child: Text(trainer),
                         value: trainer,
@@ -396,7 +396,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                       attribute: "Frozen",
                       initialValue: get_yesno(specificsales['isFrozen']),
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("Frozen"),
+                      hint: Text("- Select -"),
                       items: frozen!=null?frozen.map((trainer)=>DropdownMenuItem(
                         child: Text(trainer),
                         value: trainer,
@@ -437,7 +437,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                       attribute: "Cash Payment",
                       initialValue: get_yesno(specificsales['isCashPayment']),
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("Cash Paymment"),
+                      hint: Text("- Select -"),
                       items: cashpayment!=null?cashpayment.map((trainer)=>DropdownMenuItem(
                         child: Text(trainer),
                         value: trainer,
@@ -477,7 +477,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                       attribute: "Gift",
                       initialValue: get_yesno(specificsales['isGift']),
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("Gift"),
+                      hint: Text("- Select -"),
                       items: gift!=null?gift.map((trainer)=>DropdownMenuItem(
                         child: Text(trainer),
                         value: trainer,
@@ -516,7 +516,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                       attribute: "Status",
                       initialValue: specificsales['status']!=null?initialStatus:null,
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("Status"),
+                      hint: Text("- Select -"),
                       items: status!=null?status.map((trainer)=>DropdownMenuItem(
                         child: Text(trainer),
                         value: trainer,
@@ -612,7 +612,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                       attribute: "Currency",
                       initialValue: get_currency_by_id(specificsales['currency'])!= null ?get_currency_by_id(specificsales['currency']):null,
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("Currency"),
+                      hint: Text("- Select -"),
                       items: currency!=null?currency.map((trainer)=>DropdownMenuItem(
                         child: Text(trainer),
                         value: trainer,
@@ -647,7 +647,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                       attribute: "Account Category",
                       initialValue: get_category_by_id(specificsales['categoryId']),
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("Account Category"),
+                      hint: Text("- Select -"),
                       items: category!=null?category.map((trainer)=>DropdownMenuItem(
                         child: Text(trainer),
                         value: trainer,
@@ -683,7 +683,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                       attribute: "Cost Center",
                       initialValue: get_costcenter_by_id(specificsales['costCenterId']),
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("Cost Center"),
+                      hint: Text("- Select -"),
                       items: costcenter!=null?costcenter.map((trainer)=>DropdownMenuItem(
                         child: Text(trainer),
                         value: trainer,
@@ -691,7 +691,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                           value: name, child: Text("$name")))
                           .toList(),
                       style: Theme.of(context).textTheme.body1,
-                      decoration: InputDecoration(labelText: "Account Category",
+                      decoration: InputDecoration(labelText: "Cost Center",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(9.0),
                             borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -717,7 +717,7 @@ class _update_breeding_sales_form extends State<update_breeding_sales_form>{
                       attribute: "Contact",
                       initialValue: get_contact_by_id(specificsales['contactId']),
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("Contact"),
+                      hint: Text("- Select -"),
                       items: contact!=null?contact.map((trainer)=>DropdownMenuItem(
                         child: Text(trainer),
                         value: trainer,

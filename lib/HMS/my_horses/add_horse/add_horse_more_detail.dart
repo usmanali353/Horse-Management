@@ -151,7 +151,7 @@ class _add_horse_state extends State<add_horseDetial>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Category",
-                          hint: Text("Category"),
+                          hint: Text("- Select -"),
                           items: category.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -173,7 +173,7 @@ class _add_horse_state extends State<add_horseDetial>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Diet",
-                          hint: Text("Diet"),
+                          hint: Text("- Select -"),
                           items: diet.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -195,12 +195,12 @@ class _add_horse_state extends State<add_horseDetial>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "headMarking",
-                          hint: Text("Head Marking"),
+                          hint: Text("- Select -"),
                           items: headmark.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
                           style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Head Mark",
+                          decoration: InputDecoration(labelText: "Head Marking",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -216,12 +216,12 @@ class _add_horse_state extends State<add_horseDetial>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Leg",
-                          hint: Text("Leg Mark"),
+                          hint: Text("- Select -"),
                           items: legmark.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
                           style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Leg MArking",
+                          decoration: InputDecoration(labelText: "Leg Marking",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -237,12 +237,12 @@ class _add_horse_state extends State<add_horseDetial>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "body",
-                          hint: Text("Body Mark"),
+                          hint: Text("- Select -"),
                           items: bodymark.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
                           style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "BodyMark",
+                          decoration: InputDecoration(labelText: "Body Marking",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -259,13 +259,13 @@ class _add_horse_state extends State<add_horseDetial>{
                       Padding(
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
-                          attribute: "",
-                          hint: Text("Location"),
+                          attribute: "loc",
+                          hint: Text("- Select -"),
                           items: location.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
                           style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Vet",
+                          decoration: InputDecoration(labelText: "Location",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -281,7 +281,7 @@ class _add_horse_state extends State<add_horseDetial>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "",
-                          hint: Text("IronBrand"),
+                          hint: Text("- Select -"),
                           items: ironbrand.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -302,7 +302,7 @@ class _add_horse_state extends State<add_horseDetial>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "",
-                          hint: Text("Rider"),
+                          hint: Text("- Select -"),
                           items: rider.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -324,7 +324,7 @@ class _add_horse_state extends State<add_horseDetial>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "",
-                          hint: Text("Incharge"),
+                          hint: Text("- Select -"),
                           items: incharge.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -345,12 +345,12 @@ class _add_horse_state extends State<add_horseDetial>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "",
-                          hint: Text("Association"),
+                          hint: Text("- Select -"),
                           items: association.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
                           style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Association",
+                          decoration: InputDecoration(labelText: "Associations",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)

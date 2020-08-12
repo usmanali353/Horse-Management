@@ -216,7 +216,7 @@ class _state_add_farrier extends State<update_movement>{
                         child: FormBuilderDropdown(
                           attribute: "Horse",
                           initialValue: movementlist['horseName']['name'],
-                          hint: Text("Horse"),
+                          hint: Text("- Select -"),
                           items: horse!=null?horse.map((types)=>DropdownMenuItem(
                             child: Text(types),
                             value: types,
@@ -293,7 +293,7 @@ class _state_add_farrier extends State<update_movement>{
                         child: FormBuilderDropdown(
                           attribute: "transporttype",
                           initialValue: transportinitial,
-                          hint: Text("Transport Type"),
+                          hint: Text("- Select -"),
                           items: transporttype!=null?transporttype.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -326,7 +326,7 @@ class _state_add_farrier extends State<update_movement>{
                         child: FormBuilderDropdown(
                           attribute: "reason",
                           initialValue: reasoninitial!= null? reasoninitial:null,
-                          hint: Text("reason"),
+                          hint: Text("- Select -"),
                           items: reason!=null?reason.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -359,7 +359,7 @@ class _state_add_farrier extends State<update_movement>{
                         child: FormBuilderDropdown(
                           attribute: "reason",
                           initialValue: "No",
-                          hint: Text("Round Trip"),
+                          hint: Text("- Select -"),
                           items: roundtrip!=null?roundtrip.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -398,7 +398,7 @@ class _state_add_farrier extends State<update_movement>{
                         child: FormBuilderDropdown(
                           attribute: "fromlocation",
                           initialValue: movementlist['fromLocationName']['name'],
-                          hint: Text("From Location"),
+                          hint: Text("- Select -"),
                           items: fromlocation!=null?fromlocation.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -431,7 +431,7 @@ class _state_add_farrier extends State<update_movement>{
                         child: FormBuilderDropdown(
                           attribute: "to location",
                           initialValue: movementlist['toLocationName']['name'],
-                          hint: Text("To Location"),
+                          hint: Text("- Select -"),
                           items: tolocation!=null?tolocation.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -514,7 +514,7 @@ class _state_add_farrier extends State<update_movement>{
                         child: FormBuilderDropdown(
                           attribute: "Cuurency",
                           initialValue: get_currency_by_id(movementlist['currencyId']),
-                          hint: Text("Currency"),
+                          hint: Text("- Select -"),
                           items: currency!=null?currency.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -547,7 +547,7 @@ class _state_add_farrier extends State<update_movement>{
                         child: FormBuilderDropdown(
                           attribute: "Category",
                           initialValue: get_category_by_id(movementlist['categoryId']),
-                          hint: Text("Category"),
+                          hint: Text("- Select -"),
                           items: category!=null?category.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -580,7 +580,7 @@ class _state_add_farrier extends State<update_movement>{
                         child: FormBuilderDropdown(
                           initialValue: get_costcenter_by_id(movementlist['costCenterId']),
                           attribute: "cost Center",
-                          hint: Text("Cost Center"),
+                          hint: Text("- Select -"),
                           items: costcenter!=null?costcenter.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,

@@ -104,7 +104,7 @@ class _add_new_opertation_note extends State<add_new_opertation_note>{
                       child: FormBuilderDropdown(
                         attribute: "General Category",
                         validators: [FormBuilderValidators.required()],
-                        hint: Text("General Category"),
+                        hint: Text("- Select -"),
                         items:notes!=null?notes.map((horse)=>DropdownMenuItem(
                           child: Text(horse),
                           value: horse,

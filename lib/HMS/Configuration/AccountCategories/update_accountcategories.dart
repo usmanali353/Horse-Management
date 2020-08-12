@@ -194,7 +194,7 @@ class _update_accountcategories extends State<update_accountcategories>{
                             attribute: "Is Income",
                             initialValue: get_yesno(specificcategory['isIncome']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Is Income"),
+                            hint: Text("- Select -"),
                             items: isIncome.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
@@ -232,7 +232,7 @@ class _update_accountcategories extends State<update_accountcategories>{
                             initialValue: get_yesno(specificcategory['isActive']),
                             attribute: "Is Active",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Is Active"),
+                            hint: Text("- Select -"),
                             items: isActive!=null?isActive.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,

@@ -93,7 +93,7 @@ class _add_flushes extends State<add_flushes>{
                           child: FormBuilderDropdown(
                             attribute: "Horse",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Horse"),
+                            hint: Text("- Select -"),
                             items:horse_name!=null?horse_name.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -138,7 +138,7 @@ class _add_flushes extends State<add_flushes>{
                         child: FormBuilderDropdown(
                           attribute: "Vet",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Vet"),
+                          hint: Text("- Select -"),
                           items: vet!=null?vet.map((trainer)=>DropdownMenuItem(
                             child: Text(trainer),
                             value: trainer,
@@ -165,7 +165,7 @@ class _add_flushes extends State<add_flushes>{
                         child: FormBuilderDropdown(
                           attribute: "Success?",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Success?"),
+                          hint: Text("- Select -"),
                           items: success!=null?success.map((trainer)=>DropdownMenuItem(
                             child: Text(trainer),
                             value: trainer,

@@ -143,7 +143,7 @@ class _update_opertation_note extends State<update_opertation_note>{
                         initialValue: specificnote['generalCategoryName']['name'],
                        // initialValue: get_category_name(specificnote['generalCategoryId']),
                         validators: [FormBuilderValidators.required()],
-                        hint: Text("General Category"),
+                        hint: Text("- Select -"),
                         items:notes!=null?notes.map((horse)=>DropdownMenuItem(
                           child: Text(horse),
                           value: horse,

@@ -109,7 +109,7 @@ class _state_add_farrier extends State<add_movement>{
                         padding: const EdgeInsets.only(top: 16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Horse",
-                          hint: Text("Horse"),
+                          hint: Text("- Select -"),
                           items: horse!=null?horse.map((types)=>DropdownMenuItem(
                             child: Text(types),
                             value: types,
@@ -173,7 +173,7 @@ class _state_add_farrier extends State<add_movement>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "transporttype",
-                          hint: Text("Transport Type"),
+                          hint: Text("- Select -"),
                           items: transporttype!=null?transporttype.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -205,7 +205,7 @@ class _state_add_farrier extends State<add_movement>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "reason",
-                          hint: Text("reason"),
+                          hint: Text("- Select -"),
                           items: reason!=null?reason.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -237,7 +237,7 @@ class _state_add_farrier extends State<add_movement>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "reason",
-                          hint: Text("Round Trip"),
+                          hint: Text("- Select -"),
                           items: roundtrip!=null?roundtrip.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -272,7 +272,7 @@ class _state_add_farrier extends State<add_movement>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "fromlocation",
-                          hint: Text("From Location"),
+                          hint: Text("- Select -"),
                           items: fromlocation!=null?fromlocation.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -304,7 +304,7 @@ class _state_add_farrier extends State<add_movement>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "to location",
-                          hint: Text("To Location"),
+                          hint: Text("- Select -"),
                           items: tolocation!=null?tolocation.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -386,7 +386,7 @@ class _state_add_farrier extends State<add_movement>{
                         padding: const EdgeInsets.only(left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Cuurency",
-                          hint: Text("Currency"),
+                          hint: Text("- Select -"),
                           items: currency!=null?currency.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -412,7 +412,7 @@ class _state_add_farrier extends State<add_movement>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Category",
-                          hint: Text("Category"),
+                          hint: Text("- Select -"),
                           items: category!=null?category.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -438,7 +438,7 @@ class _state_add_farrier extends State<add_movement>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "cost Center",
-                          hint: Text("Cost Center"),
+                          hint: Text("- Select -"),
                           items: costcenter!=null?costcenter.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,

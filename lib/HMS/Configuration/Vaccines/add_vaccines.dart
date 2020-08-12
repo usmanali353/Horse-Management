@@ -157,7 +157,7 @@ class _add_vaccines extends State<add_vaccines> {
                     child: FormBuilderDropdown(
                       attribute: "Reminder",
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("Reminder"),
+                      hint: Text("- Select -"),
                       items: is_reminder != null ? is_reminder.map((trainer) =>
                           DropdownMenuItem(
                             child: Text(trainer),
@@ -204,7 +204,7 @@ class _add_vaccines extends State<add_vaccines> {
                           ),
                         ),
                         // initialValue: 'Male',
-                        hint: Text('Select Service'),
+                        hint: Text('- Select -'),
                         validators: [FormBuilderValidators.required()],
                         items: usage_type
                             .map((name) =>

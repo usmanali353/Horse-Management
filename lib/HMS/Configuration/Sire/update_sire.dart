@@ -213,7 +213,7 @@ class _UpdateSire extends State<UpdateSire>{
                               attribute: "Gender",
                              // initialValue: get_gender_info_by_id(horsedata['genderId'] != null ? horsedata['genderId']:null),
                               validators: [FormBuilderValidators.required()],
-                              hint: Text("Gender"),
+                              hint: Text("- Select -"),
                               items: gender.map((name) => DropdownMenuItem(
                                   value: name,
                                   child: Text(name)))
@@ -262,7 +262,7 @@ class _UpdateSire extends State<UpdateSire>{
                             child: FormBuilderDropdown(
                               //initialValue:horsedata['barnId'] != null ? get_barn_by_id(barnid):Text(""),
                               attribute: "Barn",
-                              hint: Text("Barn"),
+                              hint: Text("- Select -"),
                               items: barn.map((name) => DropdownMenuItem(
                                   value: name, child: Text("$name")))
                                   .toList(),
@@ -288,7 +288,7 @@ class _UpdateSire extends State<UpdateSire>{
                             child: FormBuilderDropdown(
                               attribute: "Breed",
                               //initialValue:horsedata['breedId'] != null ? horsedata['breedName']['name']:Text(''),
-                              hint: Text("Breed"),
+                              hint: Text("- Select -"),
                               items: breed.map((name) => DropdownMenuItem(
                                   value: name, child: Text("$name")))
                                   .toList(),
@@ -356,7 +356,7 @@ class _UpdateSire extends State<UpdateSire>{
                             child: FormBuilderDropdown(
                               attribute: "Color",
                               //initialValue: horsedata['colorId'] != null ? horsedata['colorName']['name']:Text(''),
-                              hint: Text("Color"),
+                              hint: Text("- Select -"),
                               items: color.map((name) => DropdownMenuItem(
                                   value: name, child: Text("$name")))
                                   .toList(),
@@ -388,7 +388,7 @@ class _UpdateSire extends State<UpdateSire>{
                             child: FormBuilderDropdown(
                               attribute: "Category",
                               // initialValue: getinfo['categoryName']['name']!= null?getinfo['categoryName']['name']:Text(''),
-                              hint: Text("Category"),
+                              hint: Text("- Select -"),
                               items: category.map((name) => DropdownMenuItem(
                                   value: name, child: Text("$name")))
                                   .toList(),
@@ -420,7 +420,7 @@ class _UpdateSire extends State<UpdateSire>{
                             child: FormBuilderDropdown(
                               attribute: "sireName",
                              // initialValue: horsedata['sireId'] != null ? horsedata['sireName']['name']:null,
-                              hint: Text("SirName"),
+                              hint: Text("- Select -"),
                               items: sire.map((name) => DropdownMenuItem(
                                   value: name, child: Text("$name")))
                                   .toList(),
@@ -452,7 +452,7 @@ class _UpdateSire extends State<UpdateSire>{
                             child: FormBuilderDropdown(
                               attribute: "damName",
                               //initialValue: horsedata['damId'] != null ? horsedata['damName']['name']:null,
-                              hint: Text("DamName"),
+                              hint: Text("- Select -"),
                               items: dam.map((name) => DropdownMenuItem(
                                   value: name, child: Text("$name")))
                                   .toList(),
@@ -484,7 +484,7 @@ class _UpdateSire extends State<UpdateSire>{
                             child: FormBuilderDropdown(
                               attribute: "Diet",
                               //initialValue: horsedata['diet'] != null ? getinfo['dietName']['name']:null,
-                              hint: Text("Diet"),
+                              hint: Text("- Select -"),
                               items: diet.map((name) => DropdownMenuItem(
                                   value: name, child: Text("$name")))
                                   .toList(),
@@ -519,7 +519,7 @@ class _UpdateSire extends State<UpdateSire>{
                             child: FormBuilderDropdown(
                               attribute: "headMarking",
                               // initialValue: getinfo['headmarkingId'] != null ? getinfo['headMarkingName']['name']:null,
-                              hint: Text("Head Marking"),
+                              hint: Text("- Select -"),
                               items: headmark.map((name) => DropdownMenuItem(
                                   value: name, child: Text("$name")))
                                   .toList(),
@@ -551,7 +551,7 @@ class _UpdateSire extends State<UpdateSire>{
                             child: FormBuilderDropdown(
                               attribute: "Leg",
                               //initialValue: getinfo['legmarkingId'] != null ? getinfo['legMarkingName']['name']:null,
-                              hint: Text("Leg Mark"),
+                              hint: Text("- Select -"),
                               items: legmark.map((name) => DropdownMenuItem(
                                   value: name, child: Text("$name")))
                                   .toList(),
@@ -583,7 +583,7 @@ class _UpdateSire extends State<UpdateSire>{
                             child: FormBuilderDropdown(
                               attribute: "body",
                               //initialValue: getinfo['bodymarkingId'] != null ? getinfo['bodyMarkingName']['name']:null,
-                              hint: Text("Body Mark"),
+                              hint: Text("- Select -"),
                               items: bodymark.map((name) => DropdownMenuItem(
                                   value: name, child: Text("$name")))
                                   .toList(),
@@ -616,7 +616,7 @@ class _UpdateSire extends State<UpdateSire>{
                             child: FormBuilderDropdown(
                               attribute: "Breeder",
                               // initialValue: getinfo['horseDetails']['breederId'] != null ? getinfo['horseDetail']['breederName']['contactName']['name']:null,
-                              hint: Text("Breeder"),
+                              hint: Text("- Select -"),
                               items: breeder.map((name) => DropdownMenuItem(
                                   value: name, child: Text("$name")))
                                   .toList(),
@@ -646,7 +646,7 @@ class _UpdateSire extends State<UpdateSire>{
                             child: FormBuilderDropdown(
                               attribute: "vet",
                               //initialValue: getinfo['horseDetails']['vetId'] != null ? getinfo['horseDetails']['vetName']['contactName']['name']:null,
-                              hint: Text("Vet"),
+                              hint: Text("- Select -"),
                               items: vet.map((name) => DropdownMenuItem(
                                   value: name, child: Text("$name")))
                                   .toList(),
@@ -676,7 +676,7 @@ class _UpdateSire extends State<UpdateSire>{
                             child: FormBuilderDropdown(
                               attribute: "rider",
                               //initialValue: getinfo['horseDetails']['riderId'] != null ? getinfo['horseDetails']['riderName']['contactName']['name']:null,
-                              hint: Text("Rider"),
+                              hint: Text("- Select -"),
                               items: rider.map((name) => DropdownMenuItem(
                                   value: name, child: Text("$name")))
                                   .toList(),
@@ -708,7 +708,7 @@ class _UpdateSire extends State<UpdateSire>{
                             child: FormBuilderDropdown(
                               attribute: "incharge",
                               //initialValue: getinfo['horseDetails']['inchargeId'] != null ? getinfo['horseDetails']['inchargeName']['contactName']['name']:null,
-                              hint: Text("Incharge"),
+                              hint: Text("- Select -"),
                               items: incharge.map((name) => DropdownMenuItem(
                                   value: name, child: Text("$name")))
                                   .toList(),
@@ -738,12 +738,12 @@ class _UpdateSire extends State<UpdateSire>{
                             child: FormBuilderDropdown(
                               attribute: "associ",
                              // initialValue: horsedata['horseDetails']['associationId'] != null ?getinfo['horseDetails']['associationName']['name']:null,
-                              hint: Text("Association"),
+                              hint: Text("- Select -"),
                               items: association.map((name) => DropdownMenuItem(
                                   value: name, child: Text("$name")))
                                   .toList(),
                               style: Theme.of(context).textTheme.body1,
-                              decoration: InputDecoration(labelText: "Association",
+                              decoration: InputDecoration(labelText: "Associations",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(9.0),
                                     borderSide: BorderSide(color: Colors.teal, width: 1.0)

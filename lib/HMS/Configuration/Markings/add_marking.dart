@@ -78,7 +78,7 @@ class _add_marking extends State<add_marking>{
                             child: FormBuilderDropdown(
                               attribute: "Marking Type",
                               validators: [FormBuilderValidators.required()],
-                              hint: Text("Marking Type"),
+                              hint: Text("- Select -"),
                               items:marking_type!=null?marking_type.map((horse)=>DropdownMenuItem(
                                 child: Text(horse),
                                 value: horse,

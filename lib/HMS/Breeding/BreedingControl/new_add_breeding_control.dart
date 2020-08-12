@@ -127,7 +127,7 @@ class _new_breeding_control_form_state extends State<new_breeding_control_form> 
                           child: FormBuilderDropdown(
                             attribute: "Horse",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Horse"),
+                            hint: Text("- Select -"),
                             items: horses != null ? horses.map((horse) =>
                                 DropdownMenuItem(
                                   child: Text(horse),
@@ -210,7 +210,7 @@ class _new_breeding_control_form_state extends State<new_breeding_control_form> 
                         child: FormBuilderDropdown(
                           attribute: "Check Method",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Check Method"),
+                          hint: Text("- Select -"),
                           items: check_method_list.map((name) =>
                               DropdownMenuItem(
                                   value: name, child: Text("$name")))
@@ -244,7 +244,7 @@ class _new_breeding_control_form_state extends State<new_breeding_control_form> 
                           child: FormBuilderDropdown(
                             attribute: "Vet",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Vet"),
+                            hint: Text("- Select -"),
                             items: vet != null ? vet.map((horse) =>
                                 DropdownMenuItem(
                                   child: Text(horse),
@@ -297,7 +297,7 @@ class _new_breeding_control_form_state extends State<new_breeding_control_form> 
                           child: FormBuilderDropdown(
                             attribute: "Related Services",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Related Services"),
+                            hint: Text("- Select -"),
                             items: related_services != null ? related_services
                                 .map((horse) =>
                                 DropdownMenuItem(
@@ -354,7 +354,7 @@ class _new_breeding_control_form_state extends State<new_breeding_control_form> 
                           child: FormBuilderDropdown(
                             attribute: "Currency",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Currency"),
+                            hint: Text("- Select -"),
                             items: currency != null ? currency.map((horse) =>
                                 DropdownMenuItem(
                                   child: Text(horse),
@@ -392,7 +392,7 @@ class _new_breeding_control_form_state extends State<new_breeding_control_form> 
                           child: FormBuilderDropdown(
                             attribute: "Account Category",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Account Category"),
+                            hint: Text("- Select -"),
                             items: account_category != null ? account_category
                                 .map((horse) =>
                                 DropdownMenuItem(
@@ -432,7 +432,7 @@ class _new_breeding_control_form_state extends State<new_breeding_control_form> 
                           child: FormBuilderDropdown(
                             attribute: "Cost Center",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Cost Center"),
+                            hint: Text("- Select -"),
                             items: cost_center != null ? cost_center.map((
                                 horse) =>
                                 DropdownMenuItem(
@@ -472,7 +472,7 @@ class _new_breeding_control_form_state extends State<new_breeding_control_form> 
                           child: FormBuilderDropdown(
                             attribute: "Contact",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Contact"),
+                            hint: Text("- Select -"),
                             items: contacts != null ? contacts.map((horse) =>
                                 DropdownMenuItem(
                                   child: Text(horse),

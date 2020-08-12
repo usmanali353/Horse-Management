@@ -101,7 +101,7 @@ void initState() {
                       child: FormBuilderDropdown(
                         attribute: "Horse",
                         validators: [FormBuilderValidators.required()],
-                        hint: Text("Horse"),
+                        hint: Text("- Select -"),
                         items:horses!=null?horses.map((horse)=>DropdownMenuItem(
                           child: Text(horse),
                           value: horse,

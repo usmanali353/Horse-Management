@@ -101,7 +101,7 @@ class _add_tanks_form extends State<add_tanks_form>{
                       child: FormBuilderDropdown(
                         attribute: "Location",
                         validators: [FormBuilderValidators.required()],
-                        hint: Text("Location"),
+                        hint: Text("- Select -"),
                         items:tanks!=null?tanks.map((horse)=>DropdownMenuItem(
                           child: Text(horse),
                           value: horse,

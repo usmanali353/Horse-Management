@@ -55,7 +55,7 @@ class add_confirmationState extends State<add_confirmation>{
           ListTile(
             //leading: Text('Pet $_index : '),
             title: FormBuilderDropdown(attribute: "Horse",
-              hint: Text("select"),
+              hint: Text("- Select -"),
               items:forejoint!=null?forejoint.map((horse)=>DropdownMenuItem(
                 child: Text(horse),
                 value: horse,
@@ -82,7 +82,7 @@ class add_confirmationState extends State<add_confirmation>{
           ),
           ListTile(
             title: FormBuilderDropdown(attribute: "Horse",
-              hint: Text("select"),
+              hint: Text("- Select -"),
               items:confirmationstation!=null?confirmationstation.map((horse)=>DropdownMenuItem(
                 child: Text(horse),
                 value: horse,
@@ -106,7 +106,7 @@ class add_confirmationState extends State<add_confirmation>{
           ),
           ListTile(
             title: FormBuilderDropdown(attribute: "Horse",
-              hint: Text("select"),
+              hint: Text("- Select -"),
               items:confirmatioonmovement!=null?confirmatioonmovement.map((horse)=>DropdownMenuItem(
                 child: Text(horse),
                 value: horse,
@@ -130,7 +130,7 @@ class add_confirmationState extends State<add_confirmation>{
           ),
           ListTile(
             title: FormBuilderDropdown(attribute: "Horse",
-              hint: Text("select"),
+              hint: Text("- Select -"),
               items:lession!=null?lession.map((horse)=>DropdownMenuItem(
                 child: Text(horse),
                 value: horse,
@@ -170,7 +170,7 @@ class add_confirmationState extends State<add_confirmation>{
           ),
           ListTile(
             title: FormBuilderDropdown(attribute: "Horse",
-              hint: Text("Response"),
+              hint: Text("- Select -"),
               items:respons!=null?respons.map((horse)=>DropdownMenuItem(
                 child: Text(horse),
                 value: horse,
@@ -207,7 +207,7 @@ class add_confirmationState extends State<add_confirmation>{
           ListTile(
             //leading: Text('Pet $_index : '),
             title: FormBuilderDropdown(attribute: "Horse",
-              hint: Text("select"),
+              hint: Text("- Select -"),
               items:forejoint!=null?forejoint.map((horse)=>DropdownMenuItem(
                 child: Text(horse),
                 value: horse,
@@ -234,7 +234,7 @@ class add_confirmationState extends State<add_confirmation>{
           ),
           ListTile(
             title: FormBuilderDropdown(attribute: "Horse",
-              hint: Text("select"),
+              hint: Text("- Select -"),
               items:confirmationstation!=null?confirmationstation.map((horse)=>DropdownMenuItem(
                 child: Text(horse),
                 value: horse,
@@ -258,7 +258,7 @@ class add_confirmationState extends State<add_confirmation>{
           ),
           ListTile(
             title: FormBuilderDropdown(attribute: "Horse",
-              hint: Text("select"),
+              hint: Text("- Select -"),
               items:confirmatioonmovement!=null?confirmatioonmovement.map((horse)=>DropdownMenuItem(
                 child: Text(horse),
                 value: horse,
@@ -282,7 +282,7 @@ class add_confirmationState extends State<add_confirmation>{
           ),
           ListTile(
             title: FormBuilderDropdown(attribute: "Horse",
-              hint: Text("select"),
+              hint: Text("- Select -"),
               items:lession!=null?lession.map((horse)=>DropdownMenuItem(
                 child: Text(horse),
                 value: horse,
@@ -322,7 +322,7 @@ class add_confirmationState extends State<add_confirmation>{
           ),
           ListTile(
             title: FormBuilderDropdown(attribute: "Horses",
-              hint: Text("Response"),
+              hint: Text("- Select -"),
               items:respons!=null?respons.map((horse)=>DropdownMenuItem(
                 child: Text(horse),
                 value: horse,
@@ -359,7 +359,7 @@ class add_confirmationState extends State<add_confirmation>{
           ListTile(
             //leading: Text('Pet $_index : '),
             title: FormBuilderDropdown(attribute: "Horse",
-              hint: Text("select"),
+              hint: Text("- Select -"),
               items:hindjoint!=null?hindjoint.map((horse)=>DropdownMenuItem(
                 child: Text(horse),
                 value: horse,
@@ -410,7 +410,7 @@ class add_confirmationState extends State<add_confirmation>{
           ),
           ListTile(
             title: FormBuilderDropdown(attribute: "Horse",
-              hint: Text("select"),
+              hint: Text("- Select -"),
               items:confirmatioonmovement!=null?confirmatioonmovement.map((horse)=>DropdownMenuItem(
                 child: Text(horse),
                 value: horse,
@@ -434,7 +434,7 @@ class add_confirmationState extends State<add_confirmation>{
           ),
           ListTile(
             title: FormBuilderDropdown(attribute: "Horse",
-              hint: Text("select"),
+              hint: Text("- Select -"),
               items:lession!=null?lession.map((horse)=>DropdownMenuItem(
                 child: Text(horse),
                 value: horse,
@@ -474,7 +474,7 @@ class add_confirmationState extends State<add_confirmation>{
           ),
           ListTile(
             title: FormBuilderDropdown(attribute: "Horse",
-              hint: Text("Response"),
+              hint: Text("- Select -"),
               items:respons!=null?respons.map((horse)=>DropdownMenuItem(
                 child: Text(horse),
                 value: horse,
@@ -511,7 +511,7 @@ class add_confirmationState extends State<add_confirmation>{
           ListTile(
             //leading: Text('Pet $_index : '),
             title: FormBuilderDropdown(attribute: "Horse",
-              hint: Text("select"),
+              hint: Text("- Select -"),
               items:hindjoint!=null?hindjoint.map((horse)=>DropdownMenuItem(
                 child: Text(horse),
                 value: horse,
@@ -539,7 +539,7 @@ class add_confirmationState extends State<add_confirmation>{
           ),
           ListTile(
             title: FormBuilderDropdown(attribute: "Horse",
-              hint: Text("select"),
+              hint: Text("- Select -"),
               items:confirmationstation!=null?confirmationstation.map((horse)=>DropdownMenuItem(
                 child: Text(horse),
                 value: horse,
@@ -563,7 +563,7 @@ class add_confirmationState extends State<add_confirmation>{
           ),
           ListTile(
             title: FormBuilderDropdown(attribute: "Horse",
-              hint: Text("select"),
+              hint: Text("- Select -"),
               items:confirmatioonmovement!=null?confirmatioonmovement.map((horse)=>DropdownMenuItem(
                 child: Text(horse),
                 value: horse,
@@ -587,7 +587,7 @@ class add_confirmationState extends State<add_confirmation>{
           ),
           ListTile(
             title: FormBuilderDropdown(attribute: "Horse",
-              hint: Text("select"),
+              hint: Text("- Select -"),
               items:lession!=null?lession.map((horse)=>DropdownMenuItem(
                 child: Text(horse),
                 value: horse,
@@ -627,7 +627,7 @@ class add_confirmationState extends State<add_confirmation>{
           ),
           ListTile(
             title: FormBuilderDropdown(attribute: "Horse",
-              hint: Text("Response"),
+              hint: Text("- Select -"),
               items:respons!=null?respons.map((horse)=>DropdownMenuItem(
                 child: Text(horse),
                 value: horse,
@@ -756,7 +756,7 @@ class add_confirmationState extends State<add_confirmation>{
                     child: FormBuilderDropdown(
                       attribute: "Horse",
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("Horse"),
+                      hint: Text("- Select -"),
                       items:horses!=null?horses.map((horse)=>DropdownMenuItem(
                         child: Text(horse),
                         value: horse,
@@ -786,7 +786,7 @@ class add_confirmationState extends State<add_confirmation>{
                     child: FormBuilderDropdown(
                       attribute: "Vet",
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("Vet"),
+                      hint: Text("- Select -"),
                       items:vet!=null?vet.map((horse)=>DropdownMenuItem(
                         child: Text(horse),
                         value: horse,
@@ -816,7 +816,7 @@ class add_confirmationState extends State<add_confirmation>{
                     child: FormBuilderDropdown(
                       attribute: "Opinion",
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("Opinion"),
+                      hint: Text("- Select -"),
                       items:opinion!=null?opinion.map((horse)=>DropdownMenuItem(
                         child: Text(horse),
                         value: horse,

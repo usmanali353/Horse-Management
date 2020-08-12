@@ -101,7 +101,7 @@ class _AddSire extends State<AddSire>{
                             child: FormBuilderDropdown(
                               attribute: "Breed",
                               validators: [FormBuilderValidators.required()],
-                              hint: Text("Breed"),
+                              hint: Text("- Select -"),
                               items:breed!=null?breed.map((horse)=>DropdownMenuItem(
                                 child: Text(horse),
                                 value: horse,
@@ -131,7 +131,7 @@ class _AddSire extends State<AddSire>{
                             child: FormBuilderDropdown(
                               attribute: "Color",
                               validators: [FormBuilderValidators.required()],
-                              hint: Text("Color"),
+                              hint: Text("- Select -"),
                               items:color!=null?color.map((horse)=>DropdownMenuItem(
                                 child: Text(horse),
                                 value: horse,

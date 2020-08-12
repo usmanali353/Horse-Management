@@ -85,7 +85,7 @@ class _state_add_farrier extends State<add_competetion>{
                         child: FormBuilderDropdown(
                           attribute: "Horse",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Horse"),
+                          hint: Text("- Select -"),
                           items: horse!=null?horse.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -141,7 +141,7 @@ class _state_add_farrier extends State<add_competetion>{
                         child: FormBuilderDropdown(
                           attribute: "vaccination",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Vaccination"),
+                          hint: Text("- Select -"),
                           items: performance!=null?performance.map((types)=>DropdownMenuItem(
                             child: Text(types),
                             value: types,
@@ -252,16 +252,16 @@ class _state_add_farrier extends State<add_competetion>{
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: TextFormField(
+                        child: FormBuilderTextField(
                           controller: comment,
-                          maxLines: null,
-                          minLines: 5,
-                          decoration: InputDecoration(
-                              hintText: "Add Comment",
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15.0))
+                          attribute: "judges",
+                          decoration: InputDecoration(labelText: "Comments",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(9.0),
+                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                            ),
                           ),
-                          keyboardType: TextInputType.multiline,
+                          //keyboardType: TextInputType.number,
                         ),
                       ),
 

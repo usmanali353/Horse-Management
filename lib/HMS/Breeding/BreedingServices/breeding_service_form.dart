@@ -143,7 +143,7 @@ class _breeding_service_form extends State<breeding_service_form> {
                         ),
                       ),
                       // initialValue: 'Male',
-                      hint: Text('Select Horse'),
+                      hint: Text('- Select -'),
                       validators: [FormBuilderValidators.required()],
                       items: horse_name
                           .map((name) =>
@@ -187,7 +187,7 @@ class _breeding_service_form extends State<breeding_service_form> {
                     child: FormBuilderDropdown(
                       attribute: "It's programmed service",
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("It's programmed service"),
+                      hint: Text("- Select -"),
                       items: its_programmed_services != null
                           ? its_programmed_services.map((trainer) =>
                           DropdownMenuItem(
@@ -227,7 +227,7 @@ class _breeding_service_form extends State<breeding_service_form> {
                     child: FormBuilderDropdown(
                       attribute: "Is Flushed",
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("Is Flushed"),
+                      hint: Text("- Select -"),
                       items: is_flushed != null ? is_flushed.map((trainer) =>
                           DropdownMenuItem(
                             child: Text(trainer),
@@ -274,7 +274,7 @@ class _breeding_service_form extends State<breeding_service_form> {
                         ),
                       ),
                       // initialValue: 'Male',
-                      hint: Text('Select Dam'),
+                      hint: Text('- Select -'),
                       validators: [FormBuilderValidators.required()],
                       items: dam
                           .map((name) =>
@@ -305,7 +305,7 @@ class _breeding_service_form extends State<breeding_service_form> {
                         ),
                       ),
                       // initialValue: 'Male',
-                      hint: Text('Select Sire'),
+                      hint: Text('- Select -'),
                       validators: [FormBuilderValidators.required()],
                       items: sire
                           .map((name) =>
@@ -336,7 +336,7 @@ class _breeding_service_form extends State<breeding_service_form> {
                           ),
                         ),
                         // initialValue: 'Male',
-                        hint: Text('Select Service'),
+                        hint: Text('- Select -'),
                         validators: [FormBuilderValidators.required()],
                         items: service_type
                             .map((name) =>
@@ -398,15 +398,15 @@ class _breeding_service_form extends State<breeding_service_form> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: 16, left: 16, right: 16),
-                    child: Visibility(
-                      visible: semen_type_loaded,
+                  Visibility(
+                    visible: semen_type_loaded,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 16, left: 16, right: 16),
                       child: FormBuilderDropdown(
                         attribute: "Semen Type",
                         validators: [FormBuilderValidators.required()],
-                        hint: Text("Semen Type"),
+                        hint: Text("- Select -"),
                         items: semen_type_list.map((name) =>
                             DropdownMenuItem(
                                 value: name, child: Text("$name")))
@@ -448,7 +448,7 @@ class _breeding_service_form extends State<breeding_service_form> {
                           ),
                         ),
                         // initialValue: 'Male',
-                        hint: Text('Select Donor'),
+                        hint: Text('- Select -'),
                         validators: [FormBuilderValidators.required()],
                         items: donor
                             .map((name) =>
@@ -517,7 +517,7 @@ class _breeding_service_form extends State<breeding_service_form> {
                           ),
                         ),
                         // initialValue: 'Male',
-                        hint: Text('Select Currency'),
+                        hint: Text('- Select -'),
                         validators: [FormBuilderValidators.required()],
                         items: currency
                             .map((name) =>
@@ -550,7 +550,7 @@ class _breeding_service_form extends State<breeding_service_form> {
                           ),
                         ),
                         // initialValue: 'Male',
-                        hint: Text('Select Account Category'),
+                        hint: Text('- Select -'),
                         validators: [FormBuilderValidators.required()],
                         items: category
                             .map((name) =>
@@ -582,7 +582,7 @@ class _breeding_service_form extends State<breeding_service_form> {
                           ),
                         ),
                         // initialValue: 'Male',
-                        hint: Text('Select Cost Center'),
+                        hint: Text('- Select -'),
                         validators: [FormBuilderValidators.required()],
                         items: cost_center
                             .map((name) =>
@@ -615,7 +615,7 @@ class _breeding_service_form extends State<breeding_service_form> {
                           ),
                         ),
                         // initialValue: 'Male',
-                        hint: Text('Select Contact'),
+                        hint: Text('- Select -'),
                         items: contact
                             .map((name) =>
                             DropdownMenuItem(

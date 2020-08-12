@@ -149,7 +149,7 @@ class _health_record_form extends State<update_health>{
                             attribute: "Horse",
                             initialValue: healthrecordlist['horseName']['name'],
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Horse"),
+                            hint: Text("- Select -"),
                             items: horse!=null?horse.map((types)=>DropdownMenuItem(
                               child: Text(types),
                               value: types,
@@ -186,7 +186,7 @@ class _health_record_form extends State<update_health>{
                             attribute: "Record type",
                             initialValue: healthrecordlist['recordType'] != null ? testtypeinitial:null,
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Record Type"),
+                            hint: Text("- Select -"),
                             items:recordtype.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
@@ -218,7 +218,7 @@ class _health_record_form extends State<update_health>{
                             attribute: "Responsible",
                             initialValue: healthrecordlist['responsibleId'] != null ? healthrecordlist['responsibleName']['contactName']['name']:null,
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Responsible"),
+                            hint: Text("- Select -"),
                             items: responsible!=null?responsible.map((types)=>DropdownMenuItem(
                               child: Text(types),
                               value: types,
@@ -320,7 +320,7 @@ class _health_record_form extends State<update_health>{
                             attribute: "Currency",
                             initialValue: get_currency_by_id(healthrecordlist['currency']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Currency"),
+                            hint: Text("- Select -"),
                             items: currency!=null?currency.map((types)=>DropdownMenuItem(
                               child: Text(types),
                               value: types,
@@ -354,7 +354,7 @@ class _health_record_form extends State<update_health>{
                             attribute: "Category",
                             initialValue: get_category_by_id(healthrecordlist['categoryId']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Category"),
+                            hint: Text("- Select -"),
                             items:category!=null?category.map((types)=>DropdownMenuItem(
                               child: Text(types),
                               value: types,
@@ -388,7 +388,7 @@ class _health_record_form extends State<update_health>{
                             attribute: "Cost Center",
                             initialValue: get_costcenter_by_id(healthrecordlist['costCenterId']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Cost Center"),
+                            hint: Text("- Select -"),
                             items: costcenter!=null?costcenter.map((types)=>DropdownMenuItem(
                               child: Text(types),
                               value: types,
@@ -423,7 +423,7 @@ class _health_record_form extends State<update_health>{
                             attribute: "Contact",
                             //initialValue: get_contact_by_id(healthrecordlist['']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Contact"),
+                            hint: Text("- Select -"),
                             items: contact!=null?contact.map((types)=>DropdownMenuItem(
                               child: Text(types),
                               value: types,

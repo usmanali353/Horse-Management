@@ -149,7 +149,7 @@ class _update_embryo_stock extends State<update_embryo_stock>{
                               attribute: "Horse",
                               initialValue: stock_data['horseName']['name'],
                               validators: [FormBuilderValidators.required()],
-                              hint: Text("Horse"),
+                              hint: Text("- Select -"),
                               items:horses!=null?horses.map((horse)=>DropdownMenuItem(
                                 child: Text(horse),
                                 value: horse,
@@ -184,7 +184,7 @@ class _update_embryo_stock extends State<update_embryo_stock>{
                             attribute: "Tanks",
                             initialValue: stock_data['tankName']['name'],
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Tanks"),
+                            hint: Text("- Select -"),
                             items: tanks!=null?tanks.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,
@@ -218,7 +218,7 @@ class _update_embryo_stock extends State<update_embryo_stock>{
                             attribute: "Sire",
                             initialValue: stock_data['sireName']['name'],
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Sire"),
+                            hint: Text("- Select -"),
                             items: sire!=null?sire.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,
@@ -246,7 +246,7 @@ class _update_embryo_stock extends State<update_embryo_stock>{
                             attribute: "Gender",
                             initialValue: stock_data['genderId']!=null?gender[stock_data['genderId']]:null,
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Gender"),
+                            hint: Text("- Select -"),
                             items: gender!=null?gender.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,
@@ -316,7 +316,7 @@ class _update_embryo_stock extends State<update_embryo_stock>{
                             attribute: "On Sale",
                             initialValue: get_yesno(stock_data['onScale']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("onScale"),
+                            hint: Text("- Select -"),
                             items: on_sale!=null?on_sale.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,

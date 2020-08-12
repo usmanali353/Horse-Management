@@ -73,7 +73,7 @@ class _next_breeding_check extends State<next_breeding_check>{
                         child: FormBuilderDropdown(
                           attribute: "Reason",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Reason"),
+                          hint: Text("- Select -"),
                           items: reason_list.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),

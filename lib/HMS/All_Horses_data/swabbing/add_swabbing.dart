@@ -134,7 +134,7 @@ class _state_add_farrier extends State<add_swabbing>{
                         child: FormBuilderDropdown(
                           attribute: "Horse",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Horse"),
+                          hint: Text("- Select -"),
                           items: horse!=null?horse.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,

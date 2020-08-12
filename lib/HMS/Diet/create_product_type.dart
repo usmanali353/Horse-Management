@@ -68,7 +68,7 @@ class _add_new_note_state extends State<addProductType>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add Notes"),),
+        appBar: AppBar(title: Text("Create Product Type"),),
         body:ListView(
           children: <Widget>[
             Column(
@@ -82,7 +82,7 @@ class _add_new_note_state extends State<addProductType>{
                         child: FormBuilderDropdown(
                           attribute: "category",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Select category"),
+                          hint: Text("- Select -"),
                           items: category.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -195,6 +195,7 @@ class add_note_button extends StatelessWidget {
                       backgroundColor: Colors.green,
                       content: Text("prouct Added Sucessfully"),
                     ));
+                    Navigator.of(context).pop();
                   }else{
                     Scaffold.of(context).showSnackBar(SnackBar(
                       backgroundColor: Colors.red,

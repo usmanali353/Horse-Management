@@ -99,7 +99,7 @@ class _flushes_update extends State<flushes_update>{
                             initialValue: specificflushing['horseName']['name'],
                             attribute: "Horse",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Horse"),
+                            hint: Text("- Select -"),
                             items:horse_name!=null?horse_name.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -159,7 +159,7 @@ class _flushes_update extends State<flushes_update>{
                           attribute: "Vet",
                           initialValue: specificflushing['vetName']['contactName']['name'],
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Vet"),
+                          hint: Text("- Select -"),
                           items: vet!=null?vet.map((trainer)=>DropdownMenuItem(
                             child: Text(trainer),
                             value: trainer,
@@ -193,7 +193,7 @@ class _flushes_update extends State<flushes_update>{
                           attribute: "Success?",
                           initialValue: get_yesno(specificflushing['isSuccess']),
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Success?"),
+                          hint: Text("- Select -"),
                           items: success!=null?success.map((trainer)=>DropdownMenuItem(
                             child: Text(trainer),
                             value: trainer,

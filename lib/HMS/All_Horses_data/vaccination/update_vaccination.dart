@@ -90,7 +90,7 @@ class _state_add_farrier extends State<update_vaccination>{
                         child: FormBuilderDropdown(
                           attribute: "Horse",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Horse"),
+                          hint: Text("- Select -"),
                           initialValue: vaccinationlist['horseName']['name'],
                           items: horse!=null?horse.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
@@ -173,7 +173,7 @@ class _state_add_farrier extends State<update_vaccination>{
                           attribute: "vaccination",
                           initialValue: vaccinationlist['vaccinationTypeId']!= null ? vaccinationlist['vaccinationTypeName']['vaccinationType']:null,
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Vaccination"),
+                          hint: Text("- Select -"),
                           items: vaccinationtype!=null?vaccinationtype.map((types)=>DropdownMenuItem(
                             child: Text(types),
                             value: types,
@@ -207,7 +207,7 @@ class _state_add_farrier extends State<update_vaccination>{
                         child: FormBuilderDropdown(
                           attribute: "vaccine",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Vaccine"),
+                          hint: Text("- Select -"),
                           initialValue: vaccinationlist['vaccineId']!= null ? vaccinationlist['vaccineName']['name']:null,
                           items: vaccine!=null?vaccine.map((types)=>DropdownMenuItem(
                             child: Text(types),
@@ -259,7 +259,7 @@ class _state_add_farrier extends State<update_vaccination>{
                           attribute: "vet",
                           initialValue: vaccinationlist['vetId']!= null ? vaccinationlist['vetName']['contactName']['name']:null,
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Vet"),
+                          hint: Text("- Select -"),
                           items: vet!=null?vet.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -310,7 +310,7 @@ class _state_add_farrier extends State<update_vaccination>{
                         child: FormBuilderDropdown(
                           attribute: "Cost Center",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Select Center"),
+                          hint: Text("- Select -"),
                           initialValue: get_costcenter_by_id(vaccinationlist['costCenterId']),
                           items: costcenter!=null?costcenter.map((plans)=>DropdownMenuItem(
                             child: Text(plans), value: plans,
@@ -345,7 +345,7 @@ class _state_add_farrier extends State<update_vaccination>{
                           attribute: "Account Category",
                           initialValue: get_category_by_id(vaccinationlist['categoryId']),
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Select Category"),
+                          hint: Text("- Select -"),
                           items:  category!=null?category.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -384,7 +384,7 @@ class _state_add_farrier extends State<update_vaccination>{
                           attribute: "currency",
                           initialValue: get_currency_by_id(vaccinationlist['currencyId']),
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Select Currency"),
+                          hint: Text("- Select -"),
                           items:  currency!=null?currency.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,

@@ -33,7 +33,7 @@ class _add_training_state extends State<addInventory>{
   int selected_itemtype_id=0,selected_stock_id=0,selected_status_type=0,toberepaire,outofranch;
   sqlite_helper local_db;
 
-  List<String> itemtype=[],stock=[],status=[];
+  List<String> itemtype=[],stock=[],status=[],outofranchdd=["Yes","No"];
   var itemtyperes,stockRes,statusRes;
   //var training_types_list=['Simple','Endurance','Customized','Speed'];
   TextEditingController name,code,serial,batch,location,quantity,comment;
@@ -105,7 +105,7 @@ class _add_training_state extends State<addInventory>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(title: Text("Add "),),
+        appBar: AppBar(title: Text("Add Inventory"),),
         body: ListView(
           children: <Widget>[
             Column(
@@ -150,7 +150,7 @@ class _add_training_state extends State<addInventory>{
                         child: FormBuilderDropdown(
                           attribute: "Training Type",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Select Training"),
+                          hint: Text("- Select -"),
                           items: itemtype.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -247,12 +247,12 @@ class _add_training_state extends State<addInventory>{
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 16,right:16,bottom: 16),
+                        padding: EdgeInsets.all(16),
                         child: Visibility(
                           visible: _isvisible,
                           child:FormBuilderDropdown(
                             attribute: "status",
-                            hint: Text("select Status"),
+                            hint: Text("- Select -"),
                             items: status!=null?status.map((plans)=>DropdownMenuItem(
                               child: Text(plans),
                               value: plans,
@@ -277,17 +277,18 @@ class _add_training_state extends State<addInventory>{
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: Visibility(
-                          visible: _isvisible,
+                      Visibility(
+                        visible: _isvisible,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
-                            attribute: "repaire",
-                            hint: Text("Select"),
-                            items: ["Yes","No"].map((trainer)=>DropdownMenuItem(
+                            attribute: "Success?",
+                            validators: [FormBuilderValidators.required()],
+                            hint: Text("- Select -"),
+                            items: outofranchdd!=null?outofranchdd.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,
-                            )).toList().map((name) => DropdownMenuItem(
+                            )).toList():[""].map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
                             style: Theme.of(context).textTheme.body1,
@@ -308,22 +309,22 @@ class _add_training_state extends State<addInventory>{
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top:16,left: 16,right: 16),
-                        child: Visibility(
-                          visible: _isvisible,
+                      Visibility(
+                        visible: _isvisible,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
-
-                            attribute: "outofranch",
-                            hint: Text("Select"),
-                            items: ["Yes","No"].map((trainer)=>DropdownMenuItem(
+                            attribute: "Success?",
+                            validators: [FormBuilderValidators.required()],
+                            hint: Text("- Select -"),
+                            items: outofranchdd!=null?outofranchdd.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,
-                            )).toList().map((name) => DropdownMenuItem(
+                            )).toList():[""].map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
                             style: Theme.of(context).textTheme.body1,
-                            decoration: InputDecoration(labelText: "Out Of Ranch",
+                            decoration: InputDecoration(labelText: "Out of Ranch",
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(9.0),
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -365,7 +366,7 @@ class _add_training_state extends State<addInventory>{
                           visible: othersvisibility,
                           child: FormBuilderDropdown(
                             attribute: "stock",
-                            hint: Text("stock"),
+                            hint: Text("- Select -"),
                             items:stock!=null?stock.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,

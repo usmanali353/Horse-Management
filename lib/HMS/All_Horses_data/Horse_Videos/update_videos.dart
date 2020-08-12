@@ -116,7 +116,7 @@ class _state_update_videos extends State<update_videos>{
                     child: FormBuilderDropdown(
                       attribute: "Horse",
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("Horse"),
+                      hint: Text("- Select -"),
                       initialValue: video_data['horseName']['name'],
                       items:horses!=null?horses.map((horse)=>DropdownMenuItem(
                         child: Text(horse),

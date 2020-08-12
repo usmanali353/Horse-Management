@@ -204,7 +204,7 @@ class _update_breeding extends State<update_breeding> {
                         initialValue: specificservice['horseName']['name'],
                         attribute: "Horse",
                         validators: [FormBuilderValidators.required()],
-                        hint: Text("Horse"),
+                        hint: Text("- Select -"),
                         items:horse_name!=null?horse_name.map((horse)=>DropdownMenuItem(
                           child: Text(horse),
                           value: horse,
@@ -265,7 +265,7 @@ class _update_breeding extends State<update_breeding> {
                       initialValue: get_yesno(specificservice['isProgrammedService']),
                       attribute: "It's programmed service",
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("It's programmed service"),
+                      hint: Text("- Select -"),
                       items: its_programmed_services != null ? its_programmed_services.map((trainer) =>
                           DropdownMenuItem(
                             child: Text(trainer),
@@ -313,7 +313,7 @@ class _update_breeding extends State<update_breeding> {
                       attribute: "Is Flushed",
                       initialValue: get_yesno(specificservice['isFlushed']),
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("Is Flushed"),
+                      hint: Text("- Select -"),
                       items: is_flushed != null ? is_flushed.map((trainer) =>
                           DropdownMenuItem(
                             child: Text(trainer),
@@ -369,7 +369,7 @@ class _update_breeding extends State<update_breeding> {
                         ),
                       ),
                       // initialValue: 'Male',
-                      hint: Text('Select Dam'),
+                      hint: Text('- Select -'),
                       validators: [FormBuilderValidators.required()],
                       items: dam
                           .map((name) =>
@@ -407,7 +407,7 @@ class _update_breeding extends State<update_breeding> {
                         ),
                       ),
                       // initialValue: 'Male',
-                      hint: Text('Select Sire'),
+                      hint: Text('- Select -'),
                       validators: [FormBuilderValidators.required()],
                       items: sire
                           .map((name) =>
@@ -445,7 +445,7 @@ class _update_breeding extends State<update_breeding> {
                           ),
                         ),
                         // initialValue: 'Male',
-                        hint: Text('Select Service'),
+                        hint: Text('- Select -'),
                         validators: [FormBuilderValidators.required()],
                         items: service_type
                             .map((name) =>
@@ -525,16 +525,15 @@ class _update_breeding extends State<update_breeding> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: 16, left: 16, right: 16),
-                    child: Visibility(
-                      //visible: semen_type_loaded,
+                  Visibility(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 16, left: 16, right: 16),
                       child: FormBuilderDropdown(
                         attribute: "Semen Type",
                         //initialValue: specificservice['semenType']!=null?semen_type[specificservice['semenType']]:null,
                         validators: [FormBuilderValidators.required()],
-                        hint: Text("Semen Type"),
+                        hint: Text("- Select -"),
                         items: semen_type_list.map((name) =>
                             DropdownMenuItem(
                                 value: name, child: Text("$name")))
@@ -585,7 +584,7 @@ class _update_breeding extends State<update_breeding> {
                           ),
                         ),
                         // initialValue: 'Male',
-                        hint: Text('Select Donor'),
+                        hint: Text('- Select -'),
                         validators: [FormBuilderValidators.required()],
                         items: donor
                             .map((name) =>
@@ -650,7 +649,7 @@ class _update_breeding extends State<update_breeding> {
                       attribute: "Currency",
                       initialValue: get_currency_by_id(specificservice['currency'])!= null ?get_currency_by_id(specificservice['currency']):null,
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("Currency"),
+                      hint: Text("- Select -"),
                       items: currency!=null?currency.map((trainer)=>DropdownMenuItem(
                         child: Text(trainer),
                         value: trainer,
@@ -685,7 +684,7 @@ class _update_breeding extends State<update_breeding> {
                       attribute: "Account Category",
                     initialValue: get_category_by_id(specificservice['categoryId']),
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("Account Category"),
+                      hint: Text("- Select -"),
                       items: category!=null?category.map((trainer)=>DropdownMenuItem(
                         child: Text(trainer),
                         value: trainer,
@@ -721,7 +720,7 @@ class _update_breeding extends State<update_breeding> {
                       attribute: "Cost Center",
                       initialValue: get_costcenter_by_id(specificservice['costCenterId']),
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("Cost Center"),
+                      hint: Text("- Select -"),
                       items: cost_center!=null?cost_center.map((trainer)=>DropdownMenuItem(
                         child: Text(trainer),
                         value: trainer,
@@ -755,7 +754,7 @@ class _update_breeding extends State<update_breeding> {
                       attribute: "Contact",
                      initialValue: get_contact_by_id(specificservice['contactId']),
                       validators: [FormBuilderValidators.required()],
-                      hint: Text("Contact"),
+                      hint: Text("- Select -"),
                       items: contact!=null?contact.map((trainer)=>DropdownMenuItem(
                         child: Text(trainer),
                         value: trainer,

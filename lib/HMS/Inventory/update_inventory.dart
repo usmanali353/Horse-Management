@@ -35,7 +35,7 @@ class _add_training_state extends State<updateInventory>{
   int selected_itemtype_id=0,selected_stock_id=0,selected_status_type=0,toberepaire,outofranch;
   sqlite_helper local_db;
 
-  List<String> itemtype=[],stock=[],status=[];
+  List<String> itemtype=[],stock=[],status=[], outofranchdd=["Yes","No"];
   var itemtyperes,stockRes,statusRes;
   //var training_types_list=['Simple','Endurance','Customized','Speed'];
   TextEditingController name,code,serial,batch,location,quantity,comment;
@@ -144,7 +144,7 @@ class _add_training_state extends State<updateInventory>{
                           keyboardType: TextInputType.number,
                           controller: code,
                           initialValue: inventoryList['code'] != null ? inventoryList['code']:"",
-                          attribute: "Training Center",
+                          attribute: "Codes",
                           validators: [FormBuilderValidators.required()],
                           decoration: InputDecoration(labelText: "Code",
                             border: OutlineInputBorder(
@@ -162,7 +162,7 @@ class _add_training_state extends State<updateInventory>{
                           attribute: "Training Type",
 
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Select itemType"),
+                          hint: Text("- Select -"),
                           items: itemtype.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -264,7 +264,7 @@ class _add_training_state extends State<updateInventory>{
                           visible: _isvisible,
                           child:FormBuilderDropdown(
                             attribute: "status",
-                            hint: Text("select Status"),
+                            hint: Text("- Select -"),
                             items: status!=null?status.map((plans)=>DropdownMenuItem(
                               child: Text(plans),
                               value: plans,
@@ -289,17 +289,18 @@ class _add_training_state extends State<updateInventory>{
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom:16,left: 16,right: 16),
-                        child: Visibility(
-                          visible: _isvisible,
+                      Visibility(
+                        visible: _isvisible,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
-                            attribute: "repaire",
-                            hint: Text("Select"),
-                            items: ["Yes","No"].map((trainer)=>DropdownMenuItem(
+                            attribute: "Success?",
+                            validators: [FormBuilderValidators.required()],
+                            hint: Text("- Select -"),
+                            items: outofranchdd!=null?outofranchdd.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,
-                            )).toList().map((name) => DropdownMenuItem(
+                            )).toList():[""].map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
                             style: Theme.of(context).textTheme.body1,
@@ -320,22 +321,22 @@ class _add_training_state extends State<updateInventory>{
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom:16,left: 16,right: 16),
-                        child: Visibility(
-                          visible: _isvisible,
+                      Visibility(
+                        visible: _isvisible,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
-
-                            attribute: "outofranch",
-                            hint: Text("Select"),
-                            items: ["Yes","No"].map((trainer)=>DropdownMenuItem(
+                            attribute: "ranch",
+                            validators: [FormBuilderValidators.required()],
+                            hint: Text("- Select -"),
+                            items: outofranchdd!=null?outofranchdd.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,
-                            )).toList().map((name) => DropdownMenuItem(
+                            )).toList():[""].map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
                             style: Theme.of(context).textTheme.body1,
-                            decoration: InputDecoration(labelText: "Out Of Ranch",
+                            decoration: InputDecoration(labelText: "Out of Ranch",
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(9.0),
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)

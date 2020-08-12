@@ -112,7 +112,7 @@ class _health_record_form extends State<health_record_form>{
                       child: FormBuilderDropdown(
                         attribute: "Horse",
                         validators: [FormBuilderValidators.required()],
-                        hint: Text("Horse"),
+                        hint: Text("- Select -"),
                         items: horse!=null?horse.map((types)=>DropdownMenuItem(
                           child: Text(types),
                           value: types,
@@ -141,7 +141,7 @@ class _health_record_form extends State<health_record_form>{
                       child: FormBuilderDropdown(
                         attribute: "Record type",
                         validators: [FormBuilderValidators.required()],
-                        hint: Text("Record Type"),
+                        hint: Text("- Select -"),
                         items:recordtype.map((name) => DropdownMenuItem(
                             value: name, child: Text("$name")))
                             .toList(),
@@ -166,7 +166,7 @@ class _health_record_form extends State<health_record_form>{
                       child: FormBuilderDropdown(
                         attribute: "Responsible",
                         validators: [FormBuilderValidators.required()],
-                        hint: Text("Responsible"),
+                        hint: Text("- Select -"),
                         items: responsible!=null?responsible.map((types)=>DropdownMenuItem(
                           child: Text(types),
                           value: types,
@@ -229,7 +229,7 @@ class _health_record_form extends State<health_record_form>{
                       child: FormBuilderTextField(
                         attribute: "Comment",
                         controller: comment,
-                        decoration: InputDecoration(labelText: "Comment",
+                        decoration: InputDecoration(labelText: "Comments",
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(9.0),
                               borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -256,7 +256,7 @@ class _health_record_form extends State<health_record_form>{
                       child: FormBuilderDropdown(
                         attribute: "Currency",
                         validators: [FormBuilderValidators.required()],
-                        hint: Text("Currency"),
+                        hint: Text("- Select -"),
                         items: currency!=null?currency.map((types)=>DropdownMenuItem(
                           child: Text(types),
                           value: types,
@@ -282,7 +282,7 @@ class _health_record_form extends State<health_record_form>{
                       child: FormBuilderDropdown(
                         attribute: "Category",
                         validators: [FormBuilderValidators.required()],
-                        hint: Text("Category"),
+                        hint: Text("- Select -"),
                         items:category!=null?category.map((types)=>DropdownMenuItem(
                           child: Text(types),
                           value: types,
@@ -309,7 +309,7 @@ class _health_record_form extends State<health_record_form>{
                       child: FormBuilderDropdown(
                         attribute: "Cost Center",
                         validators: [FormBuilderValidators.required()],
-                        hint: Text("Cost Center"),
+                        hint: Text("- Select -"),
                         items: costcenter!=null?costcenter.map((types)=>DropdownMenuItem(
                           child: Text(types),
                           value: types,
@@ -337,7 +337,7 @@ class _health_record_form extends State<health_record_form>{
                       child: FormBuilderDropdown(
                         attribute: "Contact",
                         validators: [FormBuilderValidators.required()],
-                        hint: Text("Contact"),
+                        hint: Text("- Select -"),
                         items: contact!=null?contact.map((types)=>DropdownMenuItem(
                           child: Text(types),
                           value: types,

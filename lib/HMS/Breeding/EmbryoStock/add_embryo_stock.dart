@@ -90,7 +90,7 @@ class _add_embryo_stock extends State<add_embryo_stock>{
                           child: FormBuilderDropdown(
                             attribute: "Horse",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Horse"),
+                            hint: Text("- Select -"),
                             items:horses!=null?horses.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -118,7 +118,7 @@ class _add_embryo_stock extends State<add_embryo_stock>{
                         child: FormBuilderDropdown(
                           attribute: "Tanks",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Tanks"),
+                          hint: Text("- Select -"),
                           items: tanks!=null?tanks.map((trainer)=>DropdownMenuItem(
                             child: Text(trainer),
                             value: trainer,
@@ -145,7 +145,7 @@ class _add_embryo_stock extends State<add_embryo_stock>{
                         child: FormBuilderDropdown(
                           attribute: "Sire",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Sire"),
+                          hint: Text("- Select -"),
                           items: sire!=null?sire.map((trainer)=>DropdownMenuItem(
                             child: Text(trainer),
                             value: trainer,
@@ -172,7 +172,7 @@ class _add_embryo_stock extends State<add_embryo_stock>{
                         child: FormBuilderDropdown(
                           attribute: "Gender",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Gender"),
+                          hint: Text("- Select -"),
                           items: gender!=null?gender.map((trainer)=>DropdownMenuItem(
                             child: Text(trainer),
                             value: trainer,
@@ -225,7 +225,7 @@ class _add_embryo_stock extends State<add_embryo_stock>{
                         child: FormBuilderDropdown(
                           attribute: "On Sale",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("On Sale"),
+                          hint: Text("- Select -"),
                           items: on_sale!=null?on_sale.map((trainer)=>DropdownMenuItem(
                             child: Text(trainer),
                             value: trainer,

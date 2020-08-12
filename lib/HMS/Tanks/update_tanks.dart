@@ -149,7 +149,7 @@ class _update_tanks_form extends State<update_tanks_form>{
                         attribute: "Location",
                         initialValue: get_location_by_id(specifictank['locationId'])!= null ?get_location_by_id(specifictank['locationId']):null,
                         validators: [FormBuilderValidators.required()],
-                        hint: Text("Location"),
+                        hint: Text("- Select -"),
                         items:tanks!=null?tanks.map((horse)=>DropdownMenuItem(
                           child: Text(horse),
                           value: horse,

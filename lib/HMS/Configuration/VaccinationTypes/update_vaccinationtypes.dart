@@ -124,7 +124,7 @@ class _update_vaccinationtypes extends State<update_vaccinationtypes>{
                             attribute: "Can Be Delayed",
                             initialValue: get_yesno(specifictype['canBeDelayed']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Can Be Delayed"),
+                            hint: Text("- Select -"),
                             items: canBeDelayed!=null?canBeDelayed.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,

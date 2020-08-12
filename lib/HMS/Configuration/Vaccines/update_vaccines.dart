@@ -177,7 +177,7 @@ class _update_vaccines extends State<update_vaccines> {
                             attribute: "Show Reminder",
                             initialValue: get_yesno(specificvaccine['reminder']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Show Reminder"),
+                            hint: Text("- Select -"),
                             items: is_reminder != null ? is_reminder.map((trainer) =>
                                 DropdownMenuItem(
                                   child: Text(trainer),
@@ -190,7 +190,7 @@ class _update_vaccines extends State<update_vaccines> {
                                 .of(context)
                                 .textTheme
                                 .body1,
-                            decoration: InputDecoration(labelText: "Show Reminder",
+                            decoration: InputDecoration(labelText: "Reminder",
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(9.0),
                                   borderSide: BorderSide(color: Colors.teal,
@@ -236,7 +236,7 @@ class _update_vaccines extends State<update_vaccines> {
                                 ),
                               ),
                               // initialValue: 'Male',
-                              hint: Text('Select Service'),
+                              hint: Text('- Select -'),
                               validators: [FormBuilderValidators.required()],
                               items: usage_type
                                   .map((name) =>

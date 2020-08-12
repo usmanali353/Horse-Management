@@ -117,7 +117,7 @@ class _add_testtype extends State<add_testtype>{
                           child: FormBuilderDropdown(
                             attribute: "Reminder",
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Reminder"),
+                            hint: Text("- Select -"),
                             items: reminder!=null?reminder.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,

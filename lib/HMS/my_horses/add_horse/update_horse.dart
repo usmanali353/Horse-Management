@@ -239,7 +239,7 @@ class _update_horse_state extends State<update_horse>{
                             //initialValue: get_gender_info_by_id(horsedata['genderId'] != null ? horsedata['genderId']:null),
                             initialValue: intaial_gender_value,
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Gender"),
+                            hint: Text("- Select -"),
                             items: gender.map((name) => DropdownMenuItem(
                                 value: name,
                                 child: Text(name)))
@@ -289,7 +289,7 @@ class _update_horse_state extends State<update_horse>{
                           child: FormBuilderDropdown(
                            initialValue:horsedata['barnId'] != null ? get_barn_by_id(horsedata['barnId']):null,
                             attribute: "Barn",
-                            hint: Text("Barn"),
+                            hint: Text("- Select -"),
                             items: barn.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
@@ -352,7 +352,7 @@ class _update_horse_state extends State<update_horse>{
                           child: FormBuilderDropdown(
                             attribute: "Breed",
                            initialValue:horsedata['breedId'] != null ? horsedata['breedName']['name']:null,
-                            hint: Text("Breed"),
+                            hint: Text("- Select -"),
                             items: breeding.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
@@ -427,7 +427,7 @@ class _update_horse_state extends State<update_horse>{
                           child: FormBuilderDropdown(
                             attribute: "Color",
                             initialValue: horsedata['colorId'] != null ? horsedata['colorName']['name']:null,
-                            hint: Text("Color"),
+                            hint: Text("- Select -"),
                             items: colors.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
@@ -460,7 +460,7 @@ class _update_horse_state extends State<update_horse>{
                             attribute: "Category",
                            // initialValue: getinfo['categoryName']['name']!= null?getinfo['categoryName']['name']:Text(''),
                             initialValue: horsedata['horseCategoryId'] != null ? get_category_by_id(horsedata['horseCategoryId']):null,
-                            hint: Text("Category"),
+                            hint: Text("- Select -"),
                             items: category.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
@@ -492,7 +492,7 @@ class _update_horse_state extends State<update_horse>{
                           child: FormBuilderDropdown(
                             attribute: "sireName",
                             initialValue: horsedata['sireId'] != null ? horsedata['sireName']['name']:null,
-                            hint: Text("SirName"),
+                            hint: Text("- Select -"),
                             items: sire.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
@@ -524,7 +524,7 @@ class _update_horse_state extends State<update_horse>{
                           child: FormBuilderDropdown(
                             attribute: "damName",
                             initialValue: horsedata['damId'] != null ? horsedata['damName']['name']:null,
-                            hint: Text("DamName"),
+                            hint: Text("- Select -"),
                             items: dam.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
@@ -557,7 +557,7 @@ class _update_horse_state extends State<update_horse>{
                             attribute: "Diet",
                             //initialValue: horsedata['diet'] != null ? getinfo['dietName']['name']:null,
                             initialValue: horsedata['dietId'] != null ? get_diet_by_id(horsedata['dietId']):null ,
-                            hint: Text("Diet"),
+                            hint: Text("- Select -"),
                             items: diet.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
@@ -590,12 +590,12 @@ class _update_horse_state extends State<update_horse>{
                           child: FormBuilderDropdown(
                             attribute: "headMarking",
                             initialValue: horsedata['headmarkingId'] != null ? get_headmark_by_id(horsedata['headmarkingId']):null,
-                            hint: Text("Head Marking"),
+                            hint: Text("- Select -"),
                             items: headmark.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
                             style: Theme.of(context).textTheme.body1,
-                            decoration: InputDecoration(labelText: "Head Mark",
+                            decoration: InputDecoration(labelText: "Head Marking",
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(9.0),
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -622,12 +622,12 @@ class _update_horse_state extends State<update_horse>{
                           child: FormBuilderDropdown(
                             attribute: "Leg",
                             initialValue: horsedata['legmarkingId'] != null ? get_legmark_by_id(horsedata['legmarkingId']):null,
-                            hint: Text("Leg Mark"),
+                            hint: Text("- Select -"),
                             items: legmark.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
                             style: Theme.of(context).textTheme.body1,
-                            decoration: InputDecoration(labelText: "Leg MArking",
+                            decoration: InputDecoration(labelText: "Leg Marking",
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(9.0),
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -655,12 +655,12 @@ class _update_horse_state extends State<update_horse>{
                             attribute: "body",
                             //initialValue: getinfo['bodymarkingId'] != null ? getinfo['bodyMarkingName']['name']:null,
                             initialValue: horsedata['bodymarkingId'] != null ? get_bodymark_by_id(horsedata['bodymarkingId']):null,
-                            hint: Text("Body Mark"),
+                            hint: Text("- Select -"),
                             items: bodymark.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
                             style: Theme.of(context).textTheme.body1,
-                            decoration: InputDecoration(labelText: "BodyMark",
+                            decoration: InputDecoration(labelText: "Body Marking",
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(9.0),
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -687,7 +687,7 @@ class _update_horse_state extends State<update_horse>{
                             attribute: "Breeder",
                            // initialValue: getinfo['horseDetails']['breederId'] != null ? getinfo['horseDetail']['breederName']['contactName']['name']:null,
                            initialValue: horsedata['horseDetails']['breederId'] != null ? get_breeder_by_id(horsedata['horseDetails']['breederId']):null,
-                            hint: Text("Breeder"),
+                            hint: Text("- Select -"),
                             items: breeder.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
@@ -718,7 +718,7 @@ class _update_horse_state extends State<update_horse>{
                             attribute: "vet",
                            // initialValue: getinfo['horseDetails']['vetId'] != null ? getinfo['horseDetails']['vetName']['contactName']['name']:null,
                             initialValue: horsedata['horseDetails']['vetId'] != null? get_vet_by_id(horsedata['horseDetails']['vetId']):null,
-                            hint: Text("Vet"),
+                            hint: Text("- Select -"),
                             items: vet.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
@@ -748,7 +748,7 @@ class _update_horse_state extends State<update_horse>{
                         child: FormBuilderDropdown(
                           attribute: "",
                           initialValue: horsedata['brandId']!= null? get_ironbrand_by_id(horsedata['brandId']):null,
-                          hint: Text("IronBrand"),
+                          hint: Text("- Select -"),
                           items: ironbrand.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -781,7 +781,7 @@ class _update_horse_state extends State<update_horse>{
                             attribute: "rider",
                            // initialValue: getinfo['horseDetails']['riderId'] != null ? getinfo['horseDetails']['riderName']['contactName']['name']:null,
                             initialValue: horsedata['horseDetails']['riderId']!= null? get_rider_by_id(horsedata['horseDetails']['riderId']):null,
-                            hint: Text("Rider"),
+                            hint: Text("- Select -"),
                             items: rider.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
@@ -814,7 +814,7 @@ class _update_horse_state extends State<update_horse>{
                             attribute: "incharge",
                             //initialValue: getinfo['horseDetails']['inchargeId'] != null ? getinfo['horseDetails']['inchargeName']['contactName']['name']:null,
                             initialValue: horsedata['horseDetails']['inchargeId']!= null? get_incharge_by_id(horsedata['horseDetails']['inchargeId']):null,
-                            hint: Text("Incharge"),
+                            hint: Text("- Select -"),
                             items: incharge.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
@@ -843,7 +843,7 @@ class _update_horse_state extends State<update_horse>{
                           padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                           child: FormBuilderDropdown(
                             attribute: "location",
-                            hint: Text("Location"),
+                            hint: Text("- Select -"),
                             initialValue: horsedata['horseDetails']['locationId']!= null? get_location_by_id(horsedata['horseDetails']['locationId']):null,
                             items: location.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
@@ -875,12 +875,12 @@ class _update_horse_state extends State<update_horse>{
                             attribute: "associ",
                             initialValue: horsedata['horseDetails']['associationId']!= null? get_association_by_id(horsedata['horseDetails']['associationId']):null,
                             //initialValue: horsedata['horseDetails']['associationId'] != null ?getinfo['horseDetails']['associationName']['name']:null,
-                            hint: Text("Association"),
+                            hint: Text("- Select -"),
                             items: association.map((name) => DropdownMenuItem(
                                 value: name, child: Text("$name")))
                                 .toList(),
                             style: Theme.of(context).textTheme.body1,
-                            decoration: InputDecoration(labelText: "Association",
+                            decoration: InputDecoration(labelText: "Associations",
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(9.0),
                                   borderSide: BorderSide(color: Colors.teal, width: 1.0)

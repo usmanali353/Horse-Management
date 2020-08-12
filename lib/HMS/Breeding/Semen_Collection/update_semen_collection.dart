@@ -109,7 +109,7 @@ class _update_semen_collection_state extends State<update_semen_collection>{
                             attribute: "Horse",
                             initialValue: semen_collection_data['horseName']['name'],
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Horse"),
+                            hint: Text("- Select -"),
                             items:horses!=null?horses.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -198,7 +198,7 @@ class _update_semen_collection_state extends State<update_semen_collection>{
                             attribute: "To Freeze",
                             initialValue: get_yesno(semen_collection_data['toFreeze']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("To Freeze"),
+                            hint: Text("- Select -"),
                             items:['Yes','No'].map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,
@@ -240,7 +240,7 @@ class _update_semen_collection_state extends State<update_semen_collection>{
                             initialValue: semen_collection_data['inChargeName']['contactName']['name'],
                            // initialValue: semen_collection_data['contactName']!=null?semen_collection_data['contactName']['name']:null,
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Incharge"),
+                            hint: Text("- Select -"),
                             items:incharge!=null?incharge.map((horse)=>DropdownMenuItem(
                               child: Text(horse),
                               value: horse,

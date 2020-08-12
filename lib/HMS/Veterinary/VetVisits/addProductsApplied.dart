@@ -184,7 +184,7 @@ class addProductsAppliedState extends State<addProductsApplied> {
         Padding(
           padding: const EdgeInsets.all(16),
           child: DropdownButtonFormField(
-            hint: Text("Select Product"),
+            hint: Text("- Select -"),
             items: products != null
                 ? products
                     .map((trainer) => DropdownMenuItem(

@@ -126,7 +126,7 @@ class _update_training extends State<update_training>{
                             child: FormBuilderDropdown(
                               attribute: "Training Type",
                               validators: [FormBuilderValidators.required()],
-                              hint: Text("Training Type"),
+                              hint: Text("- Select -"),
                               initialValue: training_type_initial_value,
                               items: training_types_list.map((name) => DropdownMenuItem(
                                   value: name, child: Text("$name")))
@@ -180,7 +180,7 @@ class _update_training extends State<update_training>{
                               child:FormBuilderDropdown(
                                 attribute: "Exercise Plan",
                                initialValue: get_plan_by_id(training_data['planId']),
-                                hint: Text("Excercise Plan"),
+                                hint: Text("- Select -"),
                                 items: excercise_plans!=null?excercise_plans.map((plans)=>DropdownMenuItem(
                                   child: Text(plans),
                                   value: plans,
@@ -218,7 +218,7 @@ class _update_training extends State<update_training>{
                                 attribute: "Horse",
                                 initialValue: training_response!=null&&training_data['horseName']!=null?training_data['horseName']['name']:'',
                                 validators: [FormBuilderValidators.required()],
-                                hint: Text("Horse"),
+                                hint: Text("- Select -"),
                                 items:horses!=null?horses.map((horse)=>DropdownMenuItem(
                                   child: Text(horse),
                                   value: horse,
@@ -332,7 +332,7 @@ class _update_training extends State<update_training>{
                               attribute: "Trainer",
                               initialValue: get_traininer_by_id(training_data['trainerId']),
                               validators: [FormBuilderValidators.required()],
-                              hint: Text("Trainer"),
+                              hint: Text("- Select -"),
                               items: trainers!=null?trainers.map((trainer)=>DropdownMenuItem(
                                 child: Text(trainer),
                                 value: trainer,

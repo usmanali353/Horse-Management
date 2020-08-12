@@ -98,7 +98,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                         padding: const EdgeInsets.only(top: 16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Horse",
-                          hint: Text("Horse"),
+                          hint: Text("- Select -"),
                           items: horse!=null?horse.map((types)=>DropdownMenuItem(
                             child: Text(types),
                             value: types,
@@ -167,7 +167,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                           controller: amount,
                           attribute: "Currency",
                           validators: [FormBuilderValidators.required()],
-                          decoration: InputDecoration(labelText: "Currency",
+                          decoration: InputDecoration(labelText: "Amount",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)
@@ -180,7 +180,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                         padding: const EdgeInsets.only(left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Cuurency",
-                          hint: Text("Currency"),
+                          hint: Text("- Select -"),
                           items: currency!=null?currency.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -206,7 +206,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Category",
-                          hint: Text("Category"),
+                          hint: Text("- Select -"),
                           items: category!=null?category.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -232,7 +232,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "cost Center",
-                          hint: Text("Cost Center"),
+                          hint: Text("- Select -"),
                           items: costcenter!=null?costcenter.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -258,7 +258,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                         child: FormBuilderDropdown(
                           attribute: "Contact",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Contact"),
+                          hint: Text("- Select -"),
                           items: contact!=null?contact.map((types)=>DropdownMenuItem(
                             child: Text(types),
                             value: types,
@@ -287,7 +287,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                         padding: const EdgeInsets.only(left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Account",
-                          hint: Text(" Account"),
+                          hint: Text("- Select -"),
                           items: account!=null?account.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -295,7 +295,7 @@ class _state_add_farrier extends State<update_IncomeExpense>{
                               value: name, child: Text("$name")))
                               .toList(),
                           style: Theme.of(context).textTheme.body1,
-                          decoration: InputDecoration(labelText: "Acount",
+                          decoration: InputDecoration(labelText: "Account",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(9.0),
                                 borderSide: BorderSide(color: Colors.teal, width: 1.0)

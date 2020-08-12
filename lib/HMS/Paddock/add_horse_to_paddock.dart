@@ -75,7 +75,7 @@ class _add_horse_to_paddock extends State<add_horse_to_paddock>{
                             child: FormBuilderDropdown(
                               attribute: "Select Horse",
                               validators: [FormBuilderValidators.required()],
-                              hint: Text("Select Horse"),
+                              hint: Text("- Select -"),
                               items:paddock_horse!=null?paddock_horse.map((horse)=>DropdownMenuItem(
                                 child: Text(horse),
                                 value: horse,
@@ -83,7 +83,7 @@ class _add_horse_to_paddock extends State<add_horse_to_paddock>{
                                   value: name, child: Text("$name")))
                                   .toList(),
                               style: Theme.of(context).textTheme.body1,
-                              decoration: InputDecoration(labelText: "Select Horse",
+                              decoration: InputDecoration(labelText: "Horse",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(9.0),
                                     borderSide: BorderSide(color: Colors.teal, width: 1.0)

@@ -85,7 +85,7 @@ class _add_new_picture extends State<add_new_picture>{
                         child: FormBuilderDropdown(
                           attribute: "Horse",
                           validators: [FormBuilderValidators.required()],
-                          hint: Text("Horse"),
+                          hint: Text("- Select -"),
                           items: horse_name.map((name) => DropdownMenuItem(
                               value: name, child: Text("$name")))
                               .toList(),
@@ -120,16 +120,15 @@ class _add_new_picture extends State<add_new_picture>{
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: TextFormField(
+                        child:  FormBuilderTextField(
+                          attribute: "Desc",
                           controller: description,
-                          maxLines: null,
-                          minLines: 5,
-                          decoration: InputDecoration(
-                              hintText: "Description",
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15.0))
+                          decoration: InputDecoration(labelText: "Description",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(9.0),
+                                borderSide: BorderSide(color: Colors.teal, width: 1.0)
+                            ),
                           ),
-                          keyboardType: TextInputType.multiline,
                         ),
                       ),
                       Padding(

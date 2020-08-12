@@ -98,7 +98,7 @@ class _add_horse_state extends State<add_labTest>{
                         padding: const EdgeInsets.only(left: 16,right: 16,top: 20),
                         child: FormBuilderDropdown(
                           attribute: "Horse",
-                          hint: Text("Horse"),
+                          hint: Text("- Select -"),
                           items: horse!=null?horse.map((types)=>DropdownMenuItem(
                             child: Text(types),
                             value: types,
@@ -144,7 +144,7 @@ class _add_horse_state extends State<add_labTest>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Test Type",
-                          hint: Text("Test Type"),
+                          hint: Text("- Select -"),
                           items: testtype!=null?testtype.map((types)=>DropdownMenuItem(
                             child: Text(types),
                             value: types,
@@ -170,7 +170,7 @@ class _add_horse_state extends State<add_labTest>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "POsitive",
-                          hint: Text("Positive"),
+                          hint: Text("- Select -"),
                           items: positive.map((name) => DropdownMenuItem(
                               value: name,
                               child: Text("$name")))
@@ -196,7 +196,7 @@ class _add_horse_state extends State<add_labTest>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Responsible",
-                          hint: Text("Responsible"),
+                          hint: Text("- Select -"),
                           items: responsible!=null?responsible.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -268,7 +268,7 @@ class _add_horse_state extends State<add_labTest>{
                         padding: const EdgeInsets.only(left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Cuurency",
-                          hint: Text("Currency"),
+                          hint: Text("- Select -"),
                           items: currency!=null?currency.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -294,7 +294,7 @@ class _add_horse_state extends State<add_labTest>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "Category",
-                          hint: Text("Category"),
+                          hint: Text("- Select -"),
                           items: category!=null?category.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -320,7 +320,7 @@ class _add_horse_state extends State<add_labTest>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "cost Center",
-                          hint: Text("Cost Center"),
+                          hint: Text("- Select -"),
                           items: costcenter!=null?costcenter.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,
@@ -345,7 +345,7 @@ class _add_horse_state extends State<add_labTest>{
                         padding: const EdgeInsets.only(top:16,left: 16,right: 16),
                         child: FormBuilderDropdown(
                           attribute: "contact",
-                          hint: Text("Contact"),
+                          hint: Text("- Select -"),
                           items: contact!=null?contact.map((plans)=>DropdownMenuItem(
                             child: Text(plans),
                             value: plans,

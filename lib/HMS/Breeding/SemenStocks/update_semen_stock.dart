@@ -144,7 +144,7 @@ class _update_semen_stock_form extends State<update_semen_stock_form>{
                               attribute: "Horse",
                               initialValue: dose_data['horseName']['name'],
                               validators: [FormBuilderValidators.required()],
-                              hint: Text("Horse"),
+                              hint: Text("- Select -"),
                               items:horses!=null?horses.map((horse)=>DropdownMenuItem(
                                 child: Text(horse),
                                 value: horse,
@@ -179,7 +179,7 @@ class _update_semen_stock_form extends State<update_semen_stock_form>{
                             attribute: "Tanks",
                             initialValue: dose_data['tankName']['name'],
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Tanks"),
+                            hint: Text("- Select -"),
                             items: tanks!=null?tanks.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,
@@ -352,7 +352,7 @@ class _update_semen_stock_form extends State<update_semen_stock_form>{
                             attribute: "Was Bought",
                             initialValue: get_yesno(dose_data['isbrought']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("Was Bought"),
+                            hint: Text("- Select -"),
                             items: was_bought!=null?was_bought.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,
@@ -391,7 +391,7 @@ class _update_semen_stock_form extends State<update_semen_stock_form>{
                             attribute: "On Sale",
                             initialValue: get_yesno(dose_data['onSale']),
                             validators: [FormBuilderValidators.required()],
-                            hint: Text("On Sale"),
+                            hint: Text("- Select -"),
                             items: on_sale!=null?on_sale.map((trainer)=>DropdownMenuItem(
                               child: Text(trainer),
                               value: trainer,
