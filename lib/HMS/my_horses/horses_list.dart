@@ -331,7 +331,31 @@ class horse_list extends StatefulWidget{
                     leading:  horse_list[index]['image']!=null?Image.memory(base64.decode(horse_list[index]['image'])):Image.asset("assets/horse_icon.png", fit: BoxFit.cover),
                     //leading: Image.asset("assets/horse_icon.png", fit: BoxFit.cover),
                     title: Text(horse_list!=null?(horse_list[index]['name']):''),
-                    subtitle: Text(horse_list[index]['dateOfBirth']!=null?horse_list[index]['dateOfBirth'].toString().substring(0,10):''),
+                    //subtitle: Text(horse_list[index]['dateOfBirth']!=null?horse_list[index]['dateOfBirth'].toString().substring(0,10):''),
+                   subtitle: Column(
+                     children: <Widget>[
+                       Row(
+                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                         children: <Widget>[
+                           Text(horse_list[index]['colorName']['name']!=null?horse_list[index]['colorName']['name'].toString():''),
+                           Text(horse_list[index]['dateOfBirth']!=null?horse_list[index]['dateOfBirth'].toString().substring(0,10):''),
+
+
+                         ],
+                       ),
+                       Row(
+                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                 children: <Widget>[
+
+                                   Text(horse_list[index]['breedName']['name']!=null?horse_list[index]['breedName']['name'].toString():''),
+
+
+
+                              ],
+                             ),
+
+                     ],
+                   ),
                     //leading: Image.asset("Assets/horses_icon.png"),
                     onTap: (){
                       print((horse_list[index]));

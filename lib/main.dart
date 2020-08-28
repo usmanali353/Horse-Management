@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:horse_management/Model/theme_notifier.dart';
+import 'package:horse_management/NewDashboardScreen.dart';
+import 'package:horse_management/NewHomeScreen.dart';
 import 'package:horse_management/screens/ContactHome.dart';
 import 'package:horse_management/screens/home.dart';
 import 'package:horse_management/Utils.dart';
@@ -78,7 +80,7 @@ class myAppState extends State<MyApp>{
     if(isLogin&&userRole=='user'){
       return ContactHome();
     } if(isLogin&&userRole=='admin'){
-      return Home();
+      return NewDashboardScreen();
     }else
       return WelcomeScreen();
   }

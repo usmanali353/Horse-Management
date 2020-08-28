@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:horse_management/NewDashboardScreen.dart';
 import 'package:horse_management/screens/ContactHome.dart';
 import 'package:horse_management/screens/home.dart';
 import 'package:horse_management/Network_Operations.dart';
@@ -198,7 +199,7 @@ class scrollview extends StatelessWidget {
                                        print(parsedJson['contactResult']);
                                        if(parsedJson['contactResult']['Trainer']==null&&parsedJson['contactResult']['Breeder']==null&&parsedJson['contactResult']['Vet']==null&&parsedJson['contactResult']['Farrier']==null){
                                          prefs.setString("role", 'admin');
-                                         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Home()), (Route<dynamic> route) => false);
+                                         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => NewDashboardScreen()), (Route<dynamic> route) => false);
                                        }else {
                                          prefs.setString("role", 'user');
                                          prefs.setString("loginJson",response_json);

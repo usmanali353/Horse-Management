@@ -48,6 +48,8 @@ dependencies:
   pie_chart:
   draggable_scrollbar: ^0.0.4
   need_resume: ^1.0.4
+  spincircle_bottom_bar: 1.0.0
+
 
 
 
@@ -77,6 +79,7 @@ flutter:
     - assets/dashbaord.jpg
     - assets/horsegroup2.jpg
     - assets/ss.png
+    - assets/horse1.jpg
     - assets/ss2.png
     - assets/ss3.png
     - assets/ss4.jpg

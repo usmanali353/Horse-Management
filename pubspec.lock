@@ -289,13 +289,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
-  nested:
-    dependency: transitive
-    description:
-      name: nested
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.4"
   page_transition:
     dependency: "direct main"
     description:
@@ -379,7 +372,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.4"
+    version: "3.2.0"
   quiver:
     dependency: transitive
     description:
@@ -434,6 +427,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
+  spincircle_bottom_bar:
+    dependency: "direct main"
+    description:
+      name: spincircle_bottom_bar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   sqflite:
     dependency: "direct main"
     description:

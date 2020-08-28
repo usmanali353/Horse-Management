@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/breeding_control_details.dart';
-import 'package:horse_management/HMS/Breeding/BreedingControl/breeding_control_form.dart';
+import 'package:horse_management/HMS/Breeding/BreedingControl/breeding_control_form_old_screen.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/new_add_breeding_control.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/next_breeding_check.dart';
 import 'package:horse_management/HMS/Breeding/BreedingControl/update_breeding_control.dart';
