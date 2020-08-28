@@ -10,6 +10,8 @@ import 'package:intl/intl.dart';
 import 'package:horse_management/HMS/my_horses/services/add_horse_services.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
+import 'add_more_breeding_control.dart';
+
 
 
 class new_breeding_control_form extends StatefulWidget{
@@ -611,37 +613,52 @@ class add_breeding_control_button extends StatelessWidget {
     return Center(
       child: Padding(
         padding: const EdgeInsets.only(top: 16),
-        child: MaterialButton(
-          color: Colors.teal,
-          onPressed: (){
-            if (_fbKey.currentState.validate()) {
-              Utils.check_connectivity().then((result){
-                if(result){
-                  ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
-                  pd.show();
-                  network_operations.add_breeding_control_req(token, 0, breeding_control_list['horseDropDown'][selected_horse_id]['id'], date,hour, selected_check_method_id, breeding_control_list['relatedServiceDropDown'][selected_related_services_id]['id'],double.parse(amount.text), breeding_control_list['currencyDropDown'][selected_currency_id]['id'], '', comments.text, breeding_control_list['categoryDropDown'][selected_account_category_id]['id'], breeding_control_list['costCenterDropDown'][selected_costcenter_id]['id'], breeding_control_list['contactsDropDown'][selected_contact_id]['id'],breeding_control_list['vetDropDown'][seleced_vet_id]['id'],true)
-                      .then((response){
-                    pd.dismiss();
-                    if(response!=null){
-                      Scaffold.of(context).showSnackBar(SnackBar(
-                        content: Text("Breeding Control Added Sucessfully"),
-                        backgroundColor: Colors.green,
-                      ));
-                      Navigator.pop(context);
-                    }else{
-                      Scaffold.of(context).showSnackBar(SnackBar(
-                        content: Text("Breeding Control not Added Sucessfully"),
-                        backgroundColor: Colors.red,
-                      ));
+        child: Row(
+          children: <Widget>[
+            MaterialButton(
+              color: Colors.teal,
+              onPressed: (){
+                if (_fbKey.currentState.validate()) {
+                  Utils.check_connectivity().then((result){
+                    if(result){
+                      ProgressDialog pd= ProgressDialog(context,isDismissible: true,type: ProgressDialogType.Normal);
+                      pd.show();
+                      network_operations.add_breeding_control_req(token, 0, breeding_control_list['horseDropDown'][selected_horse_id]['id'], date,hour, selected_check_method_id, breeding_control_list['relatedServiceDropDown'][selected_related_services_id]['id'],double.parse(amount.text), breeding_control_list['currencyDropDown'][selected_currency_id]['id'], '', comments.text, breeding_control_list['categoryDropDown'][selected_account_category_id]['id'], breeding_control_list['costCenterDropDown'][selected_costcenter_id]['id'], breeding_control_list['contactsDropDown'][selected_contact_id]['id'],breeding_control_list['vetDropDown'][seleced_vet_id]['id'],true)
+                          .then((response){
+                        pd.dismiss();
+                        if(response!=null){
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text("Breeding Control Added Sucessfully"),
+                            backgroundColor: Colors.green,
+                          ));
+                          Navigator.pop(context);
+                        }else{
+                          pd.dismiss();
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text("Breeding Control not Added Sucessfully"),
+                            backgroundColor: Colors.red,
+                          ));
+                        }
+                      });
                     }
                   });
+
                 }
-              });
+              },
 
-            }
-          },
-
-          child: Text("Save",style: TextStyle(color: Colors.white),),
+              child: Text("Save",style: TextStyle(color: Colors.white),),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: MaterialButton(
+                child: Text("Add More",),
+                onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>add_BreedingControl_Details(token,date,hour,comments.text,amount.text,breeding_control_list["contactsDropDown"][selected_contact_id]["id"],breeding_control_list["costCenterDropDown"][selected_costcenter_id]["id"],breeding_control_list["categoryDropDown"][selected_account_category_id]["id"],breeding_control_list["currencyDropDown"][selected_currency_id]["id"],breeding_control_list["horseDropDown"][selected_horse_id]["id"],selected_check_method_id,breeding_control_list["vetDropDown"][seleced_vet_id]["id"],breeding_control_list["relatedServiceDropDown"][selected_related_services_id]["id"])));
+                },
+                color: Colors.teal,
+              ),
+            )
+          ],
         ),
       ),
     );

@@ -303,7 +303,7 @@ static Future<String> add_semen_collection(String token, int id,DateTime selecte
   }else
     return null;
 }
-static Future<String> add_breeding_control(String token, int id, int horseId,DateTime date,DateTime hour,int check_method_id,int serviceid,bool empty,bool pregnancy,bool abortion,bool reabsorption,bool follicle,bool ovule,bool twins,bool volvoplasty,double amount, int currencyid, String Createdby,String comments,String lo,String ro,String uterus,String vagina,String cervix,int accountcategory,int costcenterid,int contactid,int vetId, bool nextcheck) async{
+static Future<String> add_breeding_control({String token, int id, int horseId,DateTime date,DateTime hour,int check_method_id,int serviceid,bool empty,bool pregnancy,bool abortion,bool reabsorption,bool follicle,bool ovule,bool twins,bool volvoplasty,double amount, int currencyid, String Createdby,String comments,String lo,String ro,String uterus,String vagina,String cervix,int accountcategory,int costcenterid,int contactid,int vetId, bool nextcheck}) async{
   Map<String,String> headers = {
     HttpHeaders.contentTypeHeader: 'application/json',
     HttpHeaders.authorizationHeader : 'Bearer '+token
