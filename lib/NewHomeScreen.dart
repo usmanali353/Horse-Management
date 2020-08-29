@@ -645,7 +645,7 @@ class _NewHomeScreen_State extends State<NewHomeScreen> {
                     SharedPreferences prefs=await SharedPreferences.getInstance();
                     Navigator.push(context, MaterialPageRoute(builder: (context)=> configuration_Category(prefs.getString('token')) ));
                   },
-                  child: FadeInDownBig(
+                  child: FadeInRightBig(
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.3,
                       width: MediaQuery.of(context).size.width * 0.47,
