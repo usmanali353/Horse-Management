@@ -49,6 +49,7 @@ dependencies:
   draggable_scrollbar: ^0.0.4
   need_resume: ^1.0.4
   spincircle_bottom_bar: 1.0.0
+  flutter_animator: ^2.1.0
 
 
 

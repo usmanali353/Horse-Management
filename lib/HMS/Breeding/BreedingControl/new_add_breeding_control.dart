@@ -651,7 +651,10 @@ class add_breeding_control_button extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(16),
               child: MaterialButton(
-                child: Text("Add More",),
+                child: Text("Add More", style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold
+                ),),
                 onPressed: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>add_BreedingControl_Details(token,date,hour,comments.text,amount.text,breeding_control_list["contactsDropDown"][selected_contact_id]["id"],breeding_control_list["costCenterDropDown"][selected_costcenter_id]["id"],breeding_control_list["categoryDropDown"][selected_account_category_id]["id"],breeding_control_list["currencyDropDown"][selected_currency_id]["id"],breeding_control_list["horseDropDown"][selected_horse_id]["id"],selected_check_method_id,breeding_control_list["vetDropDown"][seleced_vet_id]["id"],breeding_control_list["relatedServiceDropDown"][selected_related_services_id]["id"])));
                 },
