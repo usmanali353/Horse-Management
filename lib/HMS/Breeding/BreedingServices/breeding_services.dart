@@ -272,8 +272,62 @@ class _breeding_services_State extends State<breeding_services>{
                            leading: FaIcon(FontAwesomeIcons.dharmachakra, color: Color(0xFFd4af37), size: 40,),
                            //leading: Text((index+1).toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
                            title: Text(breeding_services_list!=null?breeding_services_list[index]['horseName']['name']:''),
-                          subtitle: Text(breeding_services_list!=null?breeding_services_list[index]['sireName']['name'].toString():''),
-                          trailing: Text(breeding_services_list[index]['serviceDate']!=null?breeding_services_list[index]['serviceDate'].toString().substring(0,10):'') ,
+                         // trailing: Text(breeding_services_list[index]['serviceDate']!=null?breeding_services_list[index]['serviceDate'].toString().substring(0,10):'') ,
+                           subtitle: Padding(
+                             padding: const EdgeInsets.only(top: 5),
+                             child: Column(
+                               children: <Widget>[
+                                 Row(
+                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                   children: <Widget>[
+                                     Row(children: <Widget>[
+                                       FaIcon(FontAwesomeIcons.chessKnight, color: Colors.brown, size: 12,),
+                                       Padding(
+                                         padding: EdgeInsets.only(left: 3, right:3),
+                                       ),
+                                       Text(breeding_services_list!=null?breeding_services_list[index]['sireName']['name'].toString():''),
+                                     ],
+                                     ),
+                                   Row(children: <Widget>[
+                                     FaIcon(FontAwesomeIcons.calendarAlt, color: Colors.lightBlue, size: 12,),
+                                     Padding(
+                                       padding: EdgeInsets.only(left: 3, right:3),
+                                     ),
+                                     Text(breeding_services_list[index]['serviceDate']!=null?breeding_services_list[index]['serviceDate'].toString().substring(0,10):'') ,
+                                   ],
+                                   ),
+
+                                   ],
+                                 ),
+                                 Padding(
+                                   padding: EdgeInsets.only(top: 3, bottom: 3),
+                                 ),
+                                 Row(
+                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                   children: <Widget>[
+                                   Row(children: <Widget>[
+                                     FaIcon(FontAwesomeIcons.wrench, color: Color(0XFFb8b7ba), size: 12,),
+                                     Padding(
+                                       padding: EdgeInsets.only(left: 3, right:3),
+                                     ),
+                                     Text(breeding_services_list!=null?get_check_service_by_id(breeding_services_list[index]['serviceType']):''),
+                                   ],
+                                   ),
+                                   Row(children: <Widget>[
+                                     FaIcon(FontAwesomeIcons.horse, color: Colors.amber, size: 12,),
+                                     Padding(
+                                       padding: EdgeInsets.only(left: 3, right:3),
+                                     ),
+                                     Text(breeding_services_list!=null?breeding_services_list[index]['donorName']['name'].toString():''),
+
+                                   ],
+                                   ),
+                                   ],
+                                 ),
+                               ],
+                             ),
+                           ),
+                           //Text(breeding_services_list!=null?breeding_services_list[index]['sireName']['name'].toString():''),
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context) => breeding_services_details_page(breeding_services_list[index], get_check_service_by_id(breeding_services_list[index]['serviceType']))));
 //                          Navigator.push(context, MaterialPageRoute(builder: (context)=>update_breeding(token,breeding_services_list[index])));

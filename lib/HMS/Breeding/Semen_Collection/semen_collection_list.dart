@@ -272,8 +272,60 @@ class _semen_collection_list_state extends State<semen_collection_list>{
                         enabled: siemen_col_list[index]['isActive'],
                         leading: FaIcon(FontAwesomeIcons.warehouse, color: Colors.lightBlueAccent, size: 30,),
                         title: Text(siemen_col_list!=null?siemen_col_list[index]['horseName']['name']:''),
-                        trailing: Text(siemen_col_list[index]['date']!=null?siemen_col_list[index]['date'].toString().substring(0,10):''),
-                        subtitle: Text(siemen_col_list!=null?siemen_col_list[index]['inChargeName']['contactName']['name']:''),
+                        subtitle: Padding(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: Column(
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Row(children: <Widget>[
+                                    FaIcon(FontAwesomeIcons.userTie, color: Colors.purple.shade200, size: 12,),
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 3, right:3),
+                                    ),
+                                    Text(siemen_col_list[index]['inChargeName']['contactName']['name']!=null?siemen_col_list[index]['inChargeName']['contactName']['name'].toString():''),
+                                  ],
+                                  ),
+                                  Row(children: <Widget>[
+                                    FaIcon(FontAwesomeIcons.calendarAlt, color: Colors.lightBlue, size: 12,),
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 3, right:3),
+                                    ),
+                                    Text(siemen_col_list[index]['date']!=null?siemen_col_list[index]['date'].toString().substring(0,10):''),
+                                  ],
+                                  ),
+
+                                ],
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 3, bottom: 3),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Row(children: <Widget>[
+                                    FaIcon(FontAwesomeIcons.checkCircle, color: Colors.lightGreen, size: 12,),
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 3, right:3),
+                                    ),
+                                    Text(siemen_col_list[index]['toFreeze'] == true ?"To Freeze: "+"Yes": "To Freeze: No"),
+                                  ],
+                                  ),
+                                  Row(children: <Widget>[
+                                    FaIcon(FontAwesomeIcons.clock, color: Colors.amber, size: 12,),
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 3, right:3),
+                                    ),
+                                    Text(siemen_col_list[index]['hour'].toString()!=null?siemen_col_list[index]['hour'].toString():''),
+                                  ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        //Text(siemen_col_list!=null?siemen_col_list[index]['inChargeName']['contactName']['name']:''),
                         //leading: Image.asset("assets/horse_icon.png"),
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context) => semen_collection_details_page(siemen_col_list[index])));

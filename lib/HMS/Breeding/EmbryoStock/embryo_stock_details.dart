@@ -52,6 +52,10 @@ class _embryo_stock_details_page extends State<embryo_stock_details_page>{
                   title: Text("Tank:"),
                   trailing: Text(embryo_stock_data['tankName']['name']!=null?embryo_stock_data['tankName']['name']:''),
                 ),
+                ListTile(
+                  title: Text("On Sale:"),
+                  trailing: Text(embryo_stock_data['onScale'] == true ? "Yes":"No" ),
+                ),
                ListTile(
                   title: Text("Price:"),
                   trailing: Text(embryo_stock_data['price'].toString()!=null?embryo_stock_data['price'].toString():''),

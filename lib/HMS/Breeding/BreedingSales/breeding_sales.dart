@@ -273,9 +273,62 @@ class _breeding_sales extends State<breeding_sales>{
                            //leading: Text((index+1).toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
                            leading: FaIcon(FontAwesomeIcons.handHoldingUsd, color: Colors.green, size: 40,),
                            title: Text(sales_list!=null?sales_list[index]['horseName']['name']:''),
+                           //trailing: Text(sales_list[index]['date']!=null?sales_list[index]['date'].toString().substring(0,10):''),
                            //subtitle: Text(sales_list!=null?sales_list[index]['status'].toString():''),
-                         // subtitle: Text(sales_list!=null?sales_list[index]['customerName']['contactName']['name']:''),
-                          trailing: Text(sales_list[index]['date']!=null?sales_list[index]['date'].toString().substring(0,10):''),
+                         subtitle: Padding(
+                           padding: const EdgeInsets.only(top: 5),
+                           child: Column(
+                             children: <Widget>[
+                               Row(
+                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                 children: <Widget>[
+                                   Row(children: <Widget>[
+                                     FaIcon(FontAwesomeIcons.userTie, color: Colors.yellowAccent, size: 12,),
+                                     Padding(
+                                       padding: EdgeInsets.only(left: 3, right:3),
+                                     ),
+                                     Text(sales_list!=null?sales_list[index]['customerName']['contactName']['name'].toString():''),
+                                   ],
+                                   ),
+                                   Row(children: <Widget>[
+                                     FaIcon(FontAwesomeIcons.calendarAlt, color: Colors.lightBlue, size: 12,),
+                                     Padding(
+                                       padding: EdgeInsets.only(left: 3, right:3),
+                                     ),
+                                     Text(sales_list[index]['date']!=null?sales_list[index]['date'].toString().substring(0,10):''),
+                                   ],
+                                   ),
+
+                                 ],
+                               ),
+                               Padding(
+                                 padding: EdgeInsets.only(top: 3, bottom: 3),
+                               ),
+                               Row(
+                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                 children: <Widget>[
+                                   Row(children: <Widget>[
+                                     FaIcon(FontAwesomeIcons.checkCircle, color: Colors.lightGreen, size: 12,),
+                                     Padding(
+                                       padding: EdgeInsets.only(left: 3, right:3),
+                                     ),
+                                     Text(sales_list!=null?get_status_by_id(sales_list[index]['status']):''),
+                                   ],
+                                   ),
+                                   Row(children: <Widget>[
+                                     FaIcon(FontAwesomeIcons.userMd, color: Colors.red, size: 12,),
+                                     Padding(
+                                       padding: EdgeInsets.only(left: 3, right:3),
+                                     ),
+                                     Text(sales_list[index]['assignedVetName']['contactName']['name']!=null?sales_list[index]['assignedVetName']['contactName']['name'].toString():''),
+
+                                   ],
+                                   ),
+                                 ],
+                               ),
+                             ],
+                           ),
+                         ),
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context) => breeding_sales_details_page(sales_list[index], get_status_by_id(sales_list[index]['status']))));
 

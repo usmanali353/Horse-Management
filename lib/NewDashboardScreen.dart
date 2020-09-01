@@ -35,7 +35,7 @@ class _NewDashboardScreen_State extends State<NewDashboardScreen> {
         //Adding SpinCircleBottomBarHolder to body of Scaffold
         body: SpinCircleBottomBarHolder(
           bottomNavigationBar: SCBottomBarDetails(
-              circleColors: [Colors.teal.shade200, Colors.teal.shade400, Colors.teal.shade600],
+              circleColors: [Colors.transparent, Colors.transparent, Colors.white10],
 
               iconTheme: IconThemeData(color: Colors.black),
               activeIconTheme: IconThemeData(color: Colors.teal.shade700, size: 35),
@@ -74,16 +74,16 @@ class _NewDashboardScreen_State extends State<NewDashboardScreen> {
               ],
               circleItems: [
                 //Suggested Count: 3
-                SCItem(icon: Icon(FontAwesomeIcons.objectGroup), onPressed: () async {
+                SCItem(icon: Icon(FontAwesomeIcons.objectGroup, color: Colors.teal), onPressed: () async {
                   SharedPreferences prefs=await SharedPreferences.getInstance();
                   Navigator.push(context, MaterialPageRoute(builder: (context)=> horseGroup_list(prefs.getString('token')) ));
                 }),
-                SCItem(icon: Icon(FontAwesomeIcons.solidStickyNote), onPressed: () async {
+                SCItem(icon: Icon(FontAwesomeIcons.solidStickyNote, color: Colors.teal), onPressed: () async {
                   SharedPreferences prefs=await SharedPreferences.getInstance();
                   Navigator.push(context, MaterialPageRoute(builder: (context)=> operational_noteList(prefs.getString('token')) ));
                 }),
 
-                SCItem(icon: Icon(FontAwesomeIcons.landmark), onPressed: () async {
+                SCItem(icon: Icon(FontAwesomeIcons.landmark, color: Colors.teal), onPressed: () async {
                   SharedPreferences prefs=await SharedPreferences.getInstance();
                   Navigator.push(context, MaterialPageRoute(builder: (context)=> paddocks_list(prefs.getString('token')) ));
                 }),

@@ -48,6 +48,10 @@ class _semen_collection_details_page extends State<semen_collection_details_page
                   title: Text("Comments:"),
                   trailing: Text(semen_collection_data['comments'].toString()!=null?semen_collection_data['comments'].toString():''),
                 ),
+                ListTile(
+                  title: Text("To Freeze:"),
+                  trailing: Text(semen_collection_data['toFreeze'] == true ? "Yes":"No" ),
+                ),
 //              ListTile(
 //                title: Text("Assigned Vet"),
 //                trailing: Text(semen_collection_data['assignedVetName']['contactName']['name']!=null?semen_collection_data['assignedVetName']['contactName']['name']:''),

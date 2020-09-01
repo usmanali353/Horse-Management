@@ -6,6 +6,8 @@ import 'package:horse_management/HMS/my_horses/add_horse/add_horse_new.dart';
 import 'package:horse_management/HMS/my_horses/add_horse/add_horse_req.dart';
 import 'package:horse_management/HMS/my_horses/services/add_horse_services.dart';
 import 'package:horse_management/Utils.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:progress_dialog/progress_dialog.dart';
 import 'horse_detail_page.dart';
 import 'package:need_resume/need_resume.dart';
@@ -328,7 +330,10 @@ class horse_list extends StatefulWidget{
                   ],
                   child: ListTile(
                     enabled: horse_list[index]['isActive'],
-                    leading:  horse_list[index]['image']!=null?Image.memory(base64.decode(horse_list[index]['image'])):Image.asset("assets/horse_icon.png", fit: BoxFit.cover),
+                    leading:
+                    //horse_list[index]['image']!=null?Container(width: 50,child: Image.memory(base64.decode(horse_list[index]['image']))):Text(''),
+
+          horse_list[index]['image']!=null?Image.memory(base64.decode(horse_list[index]['image'])):Image.asset("assets/horse_icon.png", fit: BoxFit.cover),
                     //leading: Image.asset("assets/horse_icon.png", fit: BoxFit.cover),
                     title: Text(horse_list!=null?(horse_list[index]['name']):''),
                     //subtitle: Text(horse_list[index]['dateOfBirth']!=null?horse_list[index]['dateOfBirth'].toString().substring(0,10):''),
@@ -337,20 +342,45 @@ class horse_list extends StatefulWidget{
                        Row(
                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                          children: <Widget>[
-                           Text(horse_list[index]['colorName']['name']!=null?horse_list[index]['colorName']['name'].toString():''),
-                           Text(horse_list[index]['dateOfBirth']!=null?horse_list[index]['dateOfBirth'].toString().substring(0,10):''),
-
+                           Row(children: <Widget>[
+                             FaIcon(FontAwesomeIcons.palette, color: Colors.red, size: 12,),
+                             Padding(
+                               padding: EdgeInsets.only(left: 3, right:3),
+                             ),
+                             Text(horse_list[index]['colorName']['name']!=null?horse_list[index]['colorName']['name'].toString():''),
+                           ],
+                           ),
+                           Row(children: <Widget>[
+                             FaIcon(FontAwesomeIcons.calendarAlt, color: Colors.lightBlue, size: 12,),
+                             Padding(
+                               padding: EdgeInsets.only(left: 3, right:3),
+                             ),
+                             Text(horse_list[index]['dateOfBirth']!=null?horse_list[index]['dateOfBirth'].toString().substring(0,10):''),
+                           ],
+                           ),
+                           //Text(horse_list[index]['colorName']['name']!=null?horse_list[index]['colorName']['name'].toString():''),
 
                          ],
                        ),
                        Row(
                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                  children: <Widget>[
-
-                                   Text(horse_list[index]['breedName']['name']!=null?horse_list[index]['breedName']['name'].toString():''),
-
-
-
+                                   Row(children: <Widget>[
+                                     FaIcon(FontAwesomeIcons.horse, color: Colors.brown, size: 12,),
+                                     Padding(
+                                       padding: EdgeInsets.only(left: 3, right:3),
+                                     ),
+                                     Text(horse_list[index]['breedName']['name']!=null?horse_list[index]['breedName']['name'].toString():''),
+                                   ],
+                                   ),
+                                   Row(children: <Widget>[
+                                     FaIcon(FontAwesomeIcons.venusMars, color: Colors.pink.shade100, size: 12,),
+                                     Padding(
+                                       padding: EdgeInsets.only(left: 3, right:3),
+                                     ),
+                                     Text(horse_list!=null?get_check_method_by_id(horse_list[index]['genderId']):''),
+                                   ],
+                                   ),
                               ],
                              ),
 
@@ -376,7 +406,19 @@ class horse_list extends StatefulWidget{
     );
   }
 
-
+   String get_check_method_by_id(int id){
+     var gender;
+     if(horse_list!=null&&id!=null){
+       if(id==1){
+         gender="Male";
+       }else if(id==2){
+         gender="Female";
+       }else if(id==3){
+         gender="Geilding";
+       }
+     }
+     return gender;
+   }
    void _startSearch() {
      print("open search box");
      ModalRoute

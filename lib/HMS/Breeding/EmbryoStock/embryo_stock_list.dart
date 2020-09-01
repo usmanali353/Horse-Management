@@ -273,8 +273,61 @@ class _embryo_stock_list extends State< embryo_stock_list>{
                           leading: FaIcon(FontAwesomeIcons.dna, color: Colors.purpleAccent, size: 30,),
                           //leading: Text((index+1).toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
                           title: Text(embryo_list!=null?embryo_list[index]['horseName']['name']:''),
-                          subtitle: Text(embryo_list!=null?embryo_list[index]['sireName']['name']:''),
-                          trailing: Text(embryo_list[index]['collectionDate']!=null?embryo_list[index]['collectionDate'].toString().substring(0,10):''),
+                          //trailing: Text(embryo_list[index]['collectionDate']!=null?embryo_list[index]['collectionDate'].toString().substring(0,10):''),
+                          subtitle: Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Column(
+                              children: <Widget>[
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Row(children: <Widget>[
+                                      FaIcon(FontAwesomeIcons.chessKnight, color: Colors.brown, size: 12,),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 3, right:3),
+                                      ),
+                                      Text(embryo_list!=null?embryo_list[index]['sireName']['name']:''),
+                                    ],
+                                    ),
+                                    Row(children: <Widget>[
+                                      FaIcon(FontAwesomeIcons.calendarAlt, color: Colors.lightBlue.shade700, size: 12,),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 3, right:3),
+                                      ),
+                                      Text(embryo_list[index]['collectionDate']!=null?embryo_list[index]['collectionDate'].toString().substring(0,10):''),
+                                    ],
+                                    ),
+
+                                  ],
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 3, bottom: 3),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Row(children: <Widget>[
+                                      FaIcon(FontAwesomeIcons.monument, color: Colors.lightBlueAccent.shade100, size: 12,),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 3, right:3),
+                                      ),
+                                      Text(embryo_list!=null?embryo_list[index]['tankName']['name']:''),
+                                    ],
+                                    ),
+                                    Row(children: <Widget>[
+                                      FaIcon(FontAwesomeIcons.dollarSign, color: Colors.green, size: 12,),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 3, right:3),
+                                      ),
+                                      Text(embryo_list[index]['onScale'] == true ?"On Sale: "+"Yes": "On Sale: No"),
+                                    ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          //Text(embryo_list!=null?embryo_list[index]['sireName']['name']:''),
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context) => embryo_stock_details_page(embryo_list[index])));
                           },

@@ -49,6 +49,10 @@ class _flushes_details_page extends State<flushes_details_page>{
                   trailing: Text(flushes_data['comments']!=null?flushes_data['comments']:''),
                 ),
                 ListTile(
+                  title: Text("Success:"),
+                  trailing: Text(flushes_data['isSuccess'] == true ? "Yes":"No" ),
+                ),
+                ListTile(
                   title: Text("Embryos:"),
                   trailing: Text(flushes_data['embryos'].toString()!=null?flushes_data['embryos'].toString():''),
                 ),

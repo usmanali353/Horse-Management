@@ -270,8 +270,62 @@ class _semen_stocks extends State<semen_stocks>{
                            enabled: semen_stock_list[index]['isActive'],
                            leading: FaIcon(FontAwesomeIcons.layerGroup, color:Colors.redAccent, size: 40,),
                            title: Text(semen_stock_list!=null?semen_stock_list[index]['horseName']['name']:''),
-                         subtitle: Text(semen_stock_list!=null?semen_stock_list[index]['tankName']['name']:''),
-                          trailing: Text(semen_stock_list[index]['enterDate']!=null?semen_stock_list[index]['enterDate'].toString().substring(0,10):''),
+
+                          //trailing: Text(semen_stock_list[index]['enterDate']!=null?semen_stock_list[index]['enterDate'].toString().substring(0,10):''),
+                           subtitle: Padding(
+                             padding: const EdgeInsets.only(top: 5),
+                             child: Column(
+                               children: <Widget>[
+                                 Row(
+                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                   children: <Widget>[
+                                     Row(children: <Widget>[
+                                       FaIcon(FontAwesomeIcons.monument, color: Colors.lightBlue.shade100, size: 12,),
+                                       Padding(
+                                         padding: EdgeInsets.only(left: 3, right:3),
+                                       ),
+                                       Text(semen_stock_list!=null?semen_stock_list[index]['tankName']['name']:''),
+                                     ],
+                                     ),
+                                     Row(children: <Widget>[
+                                       FaIcon(FontAwesomeIcons.calendarAlt, color: Colors.lightBlue, size: 12,),
+                                       Padding(
+                                         padding: EdgeInsets.only(left: 3, right:3),
+                                       ),
+                                       Text(semen_stock_list[index]['enterDate']!=null?semen_stock_list[index]['enterDate'].toString().substring(0,10):''),
+                                     ],
+                                     ),
+
+                                   ],
+                                 ),
+                                 Padding(
+                                   padding: EdgeInsets.only(top: 3, bottom: 3),
+                                 ),
+                                 Row(
+                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                   children: <Widget>[
+                                     Row(children: <Widget>[
+                                       FaIcon(FontAwesomeIcons.checkCircle, color: Colors.lightGreen, size: 12,),
+                                       Padding(
+                                         padding: EdgeInsets.only(left: 3, right:3),
+                                       ),
+                                       Text(semen_stock_list[index]['onSale'] == true ?"On Sale: "+"Yes": "On Sale: No"),
+                                     ],
+                                     ),
+                                     Row(children: <Widget>[
+                                       FaIcon(FontAwesomeIcons.calendarWeek, color: Colors.amber, size: 12,),
+                                       Padding(
+                                         padding: EdgeInsets.only(left: 3, right:3),
+                                       ),
+                                       Text(semen_stock_list[index]['collectionDate']!=null?semen_stock_list[index]['collectionDate'].toString().substring(0,10):''),
+                                     ],
+                                     ),
+                                   ],
+                                 ),
+                               ],
+                             ),
+                           ),
+                           //Text(semen_stock_list!=null?semen_stock_list[index]['tankName']['name']:''),
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context) => semen_stock_details_page(semen_stock_list[index])));
                           },

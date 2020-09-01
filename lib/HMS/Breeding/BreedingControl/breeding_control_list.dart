@@ -292,11 +292,64 @@ class _breeding_control_list extends State< breeding_control_list>{
                         child: FadeAnimation(2.0,
                           ListTile(
                             enabled: control_list[index]['isActive'],
-                            leading: FaIcon(FontAwesomeIcons.whmcs, color: Colors.grey.shade500, size: 40,),
+                            leading: FaIcon(FontAwesomeIcons.whmcs, color: Colors.grey.shade600, size: 40,),
                             //leading: Text((index+1).toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
-                            trailing:Text(control_list[index]['date']!=null?control_list[index]['date'].toString().substring(0,10):''),
+                            //trailing:Text(control_list[index]['c']!=null?control_list[index]['date'].toString().substring(0,10):''),
                             title: Text(control_list!=null?control_list[index]['horseName']['name']:''),
-                            subtitle: Text(control_list!=null?get_check_method_by_id(control_list[index]['check_Method']):''),
+                            subtitle: Padding(
+                              padding: const EdgeInsets.only(top: 5),
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Row(children: <Widget>[
+                                        FaIcon(FontAwesomeIcons.procedures, color: Colors.purple.shade200, size: 12,),
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 3, right:3),
+                                        ),
+                                        Text(control_list!=null?get_check_method_by_id(control_list[index]['check_Method']):'')
+                                      ],
+                                      ),
+                                      Row(children: <Widget>[
+                                        FaIcon(FontAwesomeIcons.calendarAlt, color: Colors.lightBlue, size: 12,),
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 3, right:3),
+                                        ),
+                                        Text(control_list[index]['date']!=null?control_list[index]['date'].toString().substring(0,10):''),
+                                      ],
+                                      ),
+
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 3, bottom: 3),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Row(children: <Widget>[
+                                        FaIcon(FontAwesomeIcons.userMd, color: Colors.red, size: 12,),
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 3, right:3),
+                                        ),
+                                        Text(control_list[index]['vetName']['contactName']['name']!=null?control_list[index]['vetName']['contactName']['name'].toString():''),
+                                      ],
+                                      ),
+                                          Row(children: <Widget>[
+                                            FaIcon(FontAwesomeIcons.clock, color: Colors.amber, size: 12,),
+                                            Padding(
+                                              padding: EdgeInsets.only(left: 3, right:3),
+                                            ),
+                                            Text(control_list[index]['hour'].toString()!=null?control_list[index]['hour'].toString():''),
+                                          ],
+                                          ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            //Text(control_list!=null?get_check_method_by_id(control_list[index]['check_Method']):''),
                             //leading: Icon(Icons.pets,size: 40,color: Colors.teal,),
                             onTap: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context) => breeding_control_details_page(control_list[index], get_check_method_by_id(control_list[index]['check_Method']))));

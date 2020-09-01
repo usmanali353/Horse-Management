@@ -45,6 +45,10 @@ class _semen_stock_details_page extends State<semen_stock_details_page>{
                   trailing: Text(semen_stock_data['enterDate'].toString()!=null?semen_stock_data['enterDate'].toString().substring(0,10):''),
                 ),
                 ListTile(
+                  title: Text("On Sale:"),
+                  trailing: Text(semen_stock_data['onSale'] == true ? "Yes":"No" ),
+                ),
+                ListTile(
                   title: Text("Serial Number:"),
                   trailing: Text(semen_stock_data['serialNumber'].toString()!=null?semen_stock_data['serialNumber'].toString():''),
                 ),

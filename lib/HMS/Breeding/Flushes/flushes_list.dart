@@ -272,8 +272,61 @@ class _flushes_list extends State<flushes_list>{
                           enabled: flushes_list[index]['isActive'],
                           leading: FaIcon(FontAwesomeIcons.seedling, color: Colors.lightGreenAccent, size: 30,),
                           title: Text(flushes_list!=null?flushes_list[index]['horseName']['name']:''),
-                          subtitle: Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
-                          trailing: Text(flushes_list[index]['date']!=null?flushes_list[index]['date'].toString().substring(0,10):''),
+                          //trailing: Text(flushes_list[index]['date']!=null?flushes_list[index]['date'].toString().substring(0,10):''),
+                          subtitle:Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Column(
+                              children: <Widget>[
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Row(children: <Widget>[
+                                      FaIcon(FontAwesomeIcons.userMd, color: Colors.red, size: 12,),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 3, right:3),
+                                      ),
+                                      Text(flushes_list[index]['vetName']['contactName']['name']!=null?flushes_list[index]['vetName']['contactName']['name'].toString():''),
+                                    ],
+                                    ),
+                                    Row(children: <Widget>[
+                                      FaIcon(FontAwesomeIcons.calendarAlt, color: Colors.lightBlue.shade700, size: 12,),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 3, right:3),
+                                      ),
+                                      Text(flushes_list[index]['date']!=null?flushes_list[index]['date'].toString().substring(0,10):''),
+                                    ],
+                                    ),
+
+                                  ],
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 3, bottom: 3),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Row(children: <Widget>[
+                                      FaIcon(FontAwesomeIcons.checkCircle, color: Colors.lightGreen, size: 12,),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 3, right:3),
+                                      ),
+                                      Text(flushes_list[index]['isSuccess'] == true ?"Success: "+"Yes": "Success: No"),
+                                    ],
+                                    ),
+//                                    Row(children: <Widget>[
+//                                      FaIcon(FontAwesomeIcons.dollarSign, color: Colors.green, size: 12,),
+//                                      Padding(
+//                                        padding: EdgeInsets.only(left: 3, right:3),
+//                                      ),
+//                                      Text(flushes_list[index]['onScale'] == true ?"On Sale: "+"Yes": "On Sale: No"),
+//                                    ],
+//                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          //Text(flushes_list!=null?flushes_list[index]['vetName']['contactName']['name']:''),
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context) => flushes_details_page(flushes_list[index])));
                             // Navigator.push(context, MaterialPageRoute(builder: (context) => hypothetic_pedegree_page(flushes_list[index])));
