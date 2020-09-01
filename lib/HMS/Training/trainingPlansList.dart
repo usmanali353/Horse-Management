@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Training/training_plans.dart';
 import 'package:horse_management/Network_Operations.dart';
+import 'package:horse_management/animations/fadeAnimation.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import '../../Utils.dart';
 
@@ -266,30 +268,96 @@ class trainingPlanListState extends State<trainingPlanList>{
                         },
                       ),
                     ],
-                    child: ExpansionTile(
-                     // enabled: training_list[index]['isActive'],
-                      title: Text(training_list!=null?training_list[index]['name']:''),
-                      //trailing: Text(training_list!=null?training_list[index]['startDate'].toString().replaceAll("T00:00:00",''):''),
-                     // subtitle: Text(training_list!=null?get_training_type_by_id(training_list[index]['trainingType']):''),
-                      leading: Icon(Icons.fitness_center,size: 40,color: Colors.teal,),
-//                      onTap: (){
-//                       // Navigator.push(context, MaterialPageRoute(builder: (context)=>training_details_page(training_list[index],get_training_type_by_id(training_list[index]['trainingType']))));
-//                      },
-                    children: <Widget>[
-                      ListTile(
-                        title: Text("Execise"),
-                        trailing: Text(training_list[index]['exercises']!=null?training_list[index]['exercises'].toString():''),
-                      ),
-                      ListTile(
-                        title: Text("Plan Exercise Name"),
-                       trailing: Text(training_list[index]['planExercises']!=null?training_list[index]['planExercises'][0]['name'].toString():''),
-                      ),
-                      ListTile(
-                        title: Text("Plan Exercise Description"),
-                        trailing: Text(training_list[index]['planExercises'][0]!=null?training_list[index]['planExercises'][0]['description'].toString():''),
-                      ),
-                    ],
-                    ),
+child: FadeAnimation(2.0,
+  ListTile(
+    enabled: training_list[index]['isActive'],
+    leading: FaIcon(FontAwesomeIcons.dumbbell, color:Colors.teal.shade700, size: 40,),
+    title: Text(training_list!=null?training_list[index]['name']:''),
+
+    //trailing: Text(semen_stock_list[index]['enterDate']!=null?semen_stock_list[index]['enterDate'].toString().substring(0,10):''),
+    subtitle: Padding(
+      padding: const EdgeInsets.only(top: 5),
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(children: <Widget>[
+                FaIcon(FontAwesomeIcons.clipboard, color: Color(0XFFb8b7ba), size: 12,),
+                Padding(
+                  padding: EdgeInsets.only(left: 3, right:3),
+                ),
+                Text(training_list[index]['planExercises']!=null?training_list[index]['planExercises'][0]['name'].toString():''),
+              //Text(training_list[index]['exercises']!=null?training_list[index]['exercises'].toString():''),
+              ],
+              ),
+//              Row(children: <Widget>[
+//                FaIcon(FontAwesomeIcons.clipboard, color: Color(0XFFb8b7ba), size: 12,),
+//                Padding(
+//                  padding: EdgeInsets.only(left: 3, right:3),
+//                ),
+//                Text(training_list[index]['planExercises']!=null?training_list[index]['planExercises'][0]['name'].toString():''),
+//              ],
+//              ),
+
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 3, bottom: 3),
+          ),
+          Row(
+            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(children: <Widget>[
+                FaIcon(FontAwesomeIcons.comment, color: Colors.amber, size: 12,),
+                Padding(
+                  padding: EdgeInsets.only(left: 3, right:3),
+                ),
+                Text(training_list[index]['planExercises'][0]!=null?training_list[index]['planExercises'][0]['description'].toString():''),
+              ],
+              ),
+//              Row(children: <Widget>[
+//                FaIcon(FontAwesomeIcons.comment, color: Colors.amber, size: 12,),
+//                Padding(
+//                  padding: EdgeInsets.only(left: 3, right:3),
+//                ),
+//              Text(training_list[index]['planExercises'][0]!=null?training_list[index]['planExercises'][0]['description'].toString():''),
+//              ],
+//              ),
+            ],
+          ),
+        ],
+      ),
+    ),
+    //Text(semen_stock_list!=null?semen_stock_list[index]['tankName']['name']:''),
+    onTap: () {
+      //Navigator.push(context, MaterialPageRoute(builder: (context)=>training_details_page(training_list[index],get_training_type_by_id(training_list[index]['trainingType']))));    },
+    }),
+),
+//                    child: ExpansionTile(
+//                     // enabled: training_list[index]['isActive'],
+//                      title: Text(training_list!=null?training_list[index]['name']:''),
+//                      //trailing: Text(training_list!=null?training_list[index]['startDate'].toString().replaceAll("T00:00:00",''):''),
+//                     // subtitle: Text(training_list!=null?get_training_type_by_id(training_list[index]['trainingType']):''),
+//                      leading: Icon(Icons.fitness_center,size: 40,color: Colors.teal,),
+////                      onTap: (){
+////                       // Navigator.push(context, MaterialPageRoute(builder: (context)=>training_details_page(training_list[index],get_training_type_by_id(training_list[index]['trainingType']))));
+////                      },
+//                    children: <Widget>[
+//                      ListTile(
+//                        title: Text("Execise"),
+//                        trailing: Text(training_list[index]['exercises']!=null?training_list[index]['exercises'].toString():''),
+//                      ),
+//                      ListTile(
+//                        title: Text("Plan Exercise Name"),
+//                       trailing: Text(training_list[index]['planExercises']!=null?training_list[index]['planExercises'][0]['name'].toString():''),
+//                      ),
+//                      ListTile(
+//                        title: Text("Plan Exercise Description"),
+//                        trailing: Text(training_list[index]['planExercises'][0]!=null?training_list[index]['planExercises'][0]['description'].toString():''),
+//                      ),
+//                    ],
+//                    ),
 
 
                   ),

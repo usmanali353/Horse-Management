@@ -32,6 +32,10 @@ class _training_detail_page_state extends State<training_details_page>{
                ),
                Divider(),
                ListTile(
+                 title: Text("Trainer"),
+                 trailing: Text(training_data['trainerName']['contactName']['name'].toString()!=null?training_data['trainerName']['contactName']['name'].toString():''),
+               ),
+               ListTile(
                  title: Text("Training Center"),
                  trailing: Text(training_data['trainingCenter']!=null?training_data['trainingCenter']:''),
                ),

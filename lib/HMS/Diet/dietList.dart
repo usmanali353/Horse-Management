@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Diet/add_Diet.dart';
 import 'package:horse_management/HMS/Diet/diet_services.dart';
 import 'package:horse_management/HMS/Training/training_plans.dart';
@@ -273,28 +274,140 @@ class dietListState extends State<dietList>{
                     ),
                   ],
                   child: FadeAnimation(2.0,
-                     ExpansionTile(
+                    ListTile(
+                      enabled: diet_list[index]['isActive'],
+                      leading: FaIcon(FontAwesomeIcons.userMd, color: Colors.blue.shade400, size: 35,),
+                      //trailing:Text(diet_list[index]['visitDate']!=null?diet_list[index]['visitDate'].toString().substring(0,10):''),
                       title: Text(diet_list!=null?diet_list[index]['name']:''),
-                      leading: Icon(Icons.fastfood,size: 40,color: Colors.teal,),
-                      children: <Widget>[
-                        ListTile(
-                          title: Text("\$daily per 1"),
-                          trailing: Text(diet_list[index]['dailyPer1']!=null?diet_list[index]['dailyPer1'].toString():''),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Row(children: <Widget>[
+                                  FaIcon(FontAwesomeIcons.commentDollar, color: Colors.lightGreen, size: 12,),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 3, right:3),
+                                  ),
+                                  Text(diet_list[index]['dailyPer1']!=null?"Daily Per 1: "+diet_list[index]['dailyPer1'].toString():''),
+                                ],
+                                ),
+//                                Row(children: <Widget>[
+//                                  FaIcon(FontAwesomeIcons.fileInvoiceDollar, color: Colors.lightGreenAccent, size: 12,),
+//                                  Padding(
+//                                    padding: EdgeInsets.only(left: 3, right:3),
+//                                  ),
+//
+//                                ],
+//                                ),
+
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 3, bottom: 3),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Row(children: <Widget>[
+                                  FaIcon(FontAwesomeIcons.fileInvoiceDollar, color: Colors.amberAccent, size: 12,),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 3, right:3),
+                                  ),
+                                  Text(diet_list[index]['monthlyPer1']!=null?"Monthly Per 1: "+diet_list[index]['monthlyPer1'].toString():''),
+                                ],
+                                ),
+//                                Row(children: <Widget>[
+//                                  FaIcon(FontAwesomeIcons.calendarWeek, color: Colors.amber, size: 12,),
+//                                  Padding(
+//                                    padding: EdgeInsets.only(left: 3, right:3),
+//                                  ),
+//                                  Text(diet_list[index]['collectionDate']!=null?diet_list[index]['collectionDate'].toString().substring(0,10):''),
+//                                ],
+//                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 3, bottom: 3),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Row(children: <Widget>[
+                                  FaIcon(FontAwesomeIcons.commentsDollar, color: Colors.purpleAccent.shade100, size: 12,),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 3, right:3),
+                                  ),
+                                  Text(diet_list[index]['dailyTotal']!=null?"Daily Total: "+diet_list[index]['dailyTotal'].toString():''),
+                                ],
+                                ),
+//                                Row(children: <Widget>[
+//                                  FaIcon(FontAwesomeIcons.calendarWeek, color: Colors.amber, size: 12,),
+//                                  Padding(
+//                                    padding: EdgeInsets.only(left: 3, right:3),
+//                                  ),
+//                                  Text(diet_list[index]['collectionDate']!=null?diet_list[index]['collectionDate'].toString().substring(0,10):''),
+//                                ],
+//                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 3, bottom: 3),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Row(children: <Widget>[
+                                  FaIcon(FontAwesomeIcons.handHoldingUsd, color: Colors.yellowAccent, size: 12,),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 3, right:3),
+                                  ),
+                                  Text(diet_list[index]['monthlyTotal']!=null?"Monthly Total: "+diet_list[index]['monthlyTotal'].toString():''),
+                                ],
+                                ),
+//                                Row(children: <Widget>[
+//                                  FaIcon(FontAwesomeIcons.calendarWeek, color: Colors.amber, size: 12,),
+//                                  Padding(
+//                                    padding: EdgeInsets.only(left: 3, right:3),
+//                                  ),
+//                                  Text(diet_list[index]['collectionDate']!=null?diet_list[index]['collectionDate'].toString().substring(0,10):''),
+//                                ],
+//                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                        ListTile(
-                          title: Text("\$daily Total"),
-                          trailing: Text(diet_list[index]['dailyTotal']!=null?diet_list[index]['dailyTotal'].toString():''),
-                        ),
-                        ListTile(
-                          title: Text("\$Month per 1"),
-                          trailing: Text(diet_list[index]['monthlyPer1']!=null?diet_list[index]['monthlyPer1'].toString():''),
-                        ),
-                        ListTile(
-                          title: Text("\$Month Total"),
-                          trailing: Text(diet_list[index]['monthlyTotal']!=null?diet_list[index]['monthlyTotal'].toString():''),
-                        ),
-                      ],
+                      ),
+                      //leading: Icon(Icons.local_hospital,size: 40,color: Colors.teal,),
+//                      onTap: (){
+//                        push(context, MaterialPageRoute(builder: (context) => vet_visit_details_page(diet_list[index])));
+//
+//                      },
                     ),
+//                     ExpansionTile(
+//                      title: Text(diet_list!=null?diet_list[index]['name']:''),
+//                      leading: Icon(Icons.fastfood,size: 40,color: Colors.teal,),
+//                      children: <Widget>[
+//                        ListTile(
+//                          title: Text("\$daily per 1"),
+//                          trailing: Text(diet_list[index]['dailyPer1']!=null?diet_list[index]['dailyPer1'].toString():''),
+//                        ),
+//                        ListTile(
+//                          title: Text("\$daily Total"),
+//                          trailing: Text(diet_list[index]['dailyTotal']!=null?diet_list[index]['dailyTotal'].toString():''),
+//                        ),
+//                        ListTile(
+//                          title: Text("\$Month per 1"),
+//                          trailing: Text(diet_list[index]['monthlyPer1']!=null?diet_list[index]['monthlyPer1'].toString():''),
+//                        ),
+//                        ListTile(
+//                          title: Text("\$Month Total"),
+//                          trailing: Text(diet_list[index]['monthlyTotal']!=null?diet_list[index]['monthlyTotal'].toString():''),
+//                        ),
+//                      ],
+//                    ),
                   ),
 
 

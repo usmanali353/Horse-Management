@@ -313,15 +313,67 @@ class _training_list_state extends State<training_list>{
                       title: Text(training_list != null
                           ? training_list[index]['horseName']['name']
                           : ''),
-                      trailing: Text(training_list != null
-                          ? training_list[index]['startDate']
-                          .toString()
-                          .replaceAll("T00:00:00", '')
-                          : ''),
-                      subtitle: Text(training_list != null
-                          ? get_training_type_by_id(
-                          training_list[index]['trainingType'])
-                          : ''),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Row(children: <Widget>[
+                                  FaIcon(FontAwesomeIcons.userTie, color: Colors.lightBlue.shade100, size: 12,),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 3, right:3),
+                                  ),
+                                  Text(training_list!=null?training_list[index]['trainerName']['contactName']['name']:''),
+                                ],
+                                ),
+                                Row(children: <Widget>[
+                                  FaIcon(FontAwesomeIcons.calendarAlt, color: Colors.lightBlue, size: 12,),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 3, right:3),
+                                  ),
+                                  Text(training_list != null
+                                      ? training_list[index]['startDate']
+                                      .toString()
+                                      .toString().substring(0,10):''
+                                      ),
+                                ],
+                                ),
+
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 3, bottom: 3),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Row(children: <Widget>[
+                                  FaIcon(FontAwesomeIcons.dumbbell, color: Color(0XFFb8b7ba), size: 12,),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 3, right:3),
+                                  ),
+                                  Text(training_list != null
+                                      ? get_training_type_by_id(
+                                      training_list[index]['trainingType'])
+                                      : ''),
+                                ],
+                                ),
+                                Row(children: <Widget>[
+                                  FaIcon(FontAwesomeIcons.calendarWeek, color: Colors.amber, size: 12,),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 3, right:3),
+                                  ),
+                                  Text(training_list[index]['endDate']!=null?training_list[index]['endDate'].toString().substring(0,10):''),
+                                ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+
                       leading: Icon(Icons.fitness_center, size: 40,
                         color: Colors.teal,),
                       onTap: () {

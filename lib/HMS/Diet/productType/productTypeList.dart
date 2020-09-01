@@ -271,8 +271,61 @@ class _notes_list_state extends State<productList>{
                   ],
                   child: ListTile(
                     title: Text(itemList!=null?itemList[index]['name']:''),
-                    subtitle: Text(itemList[index]['costPerUnit']!=null?"Cost: "+itemList[index]['costPerUnit'].toString():''),
-                    leading: Icon(FontAwesomeIcons.box,size: 40,color: Colors.teal,),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Row(children: <Widget>[
+                                FaIcon(FontAwesomeIcons.dollarSign, color: Colors.green, size: 12,),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 3, right:3),
+                                ),
+                                Text(itemList[index]['costPerUnit']!=null?"Cost Per Unit: "+itemList[index]['costPerUnit'].toString():'')
+                              ],
+                              ),
+//                              Row(children: <Widget>[
+//                                FaIcon(FontAwesomeIcons.calendarAlt, color: Colors.lightBlue, size: 12,),
+//                                Padding(
+//                                  padding: EdgeInsets.only(left: 3, right:3),
+//                                ),
+//                                Text(itemList[index]['enterDate']!=null?itemList[index]['enterDate'].toString().substring(0,10):''),
+//                              ],
+//                              ),
+
+                            ],
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 3, bottom: 3),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Row(children: <Widget>[
+                                FaIcon(FontAwesomeIcons.boxes, color: Colors.blue, size: 12,),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 3, right:3),
+                                ),
+                                Text(itemList[index]['unit'] != null ? itemList[index]['unit'].toString():""),
+                              ],
+                              ),
+//                              Row(children: <Widget>[
+//                                FaIcon(FontAwesomeIcons.calendarWeek, color: Colors.amber, size: 12,),
+//                                Padding(
+//                                  padding: EdgeInsets.only(left: 3, right:3),
+//                                ),
+//                                Text(itemList[index]['collectionDate']!=null?itemList[index]['collectionDate'].toString().substring(0,10):''),
+//                              ],
+//                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    //Text(itemList[index]['costPerUnit']!=null?"Cost: "+itemList[index]['costPerUnit'].toString():''),
+                    leading: Icon(FontAwesomeIcons.box,size: 40,color: Colors.brown,),
                     trailing: Text(itemList[index]['unit'] != null ? itemList[index]['unit'].toString():""),
                     onTap: (){
                     },
@@ -285,7 +338,7 @@ class _notes_list_state extends State<productList>{
                 ListTile(
                   title: Text(itemList!=null?itemList[index]['name']:''),
                   subtitle: Text(itemList[index]['costPerUnit']!=null?"Cost: "+itemList[index]['costPerUnit'].toString():''),
-                  leading: Icon(FontAwesomeIcons.box,size: 40,color: Colors.teal,),
+                  leading: Icon(FontAwesomeIcons.box,size: 40,color: Colors.brown,),
                   trailing: Text(itemList[index]['unit'] != null ? itemList[index]['unit'].toString():""),
                   onTap: (){
                   },
@@ -295,7 +348,7 @@ class _notes_list_state extends State<productList>{
                 ListTile(
                   title: Text(itemList!=null?itemList[index]['name']:''),
                   subtitle: Text(itemList[index]['costPerUnit']!=null?"Cost: "+itemList[index]['costPerUnit'].toString():''),
-                  leading: Icon(FontAwesomeIcons.box,size: 40,color: Colors.teal,),
+                  leading: Icon(FontAwesomeIcons.box,size: 40,color: Colors.brown,),
                   trailing: Text(itemList[index]['unit'] != null ? itemList[index]['unit'].toString():""),
                   onTap: (){
                   },

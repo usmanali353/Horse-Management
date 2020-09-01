@@ -285,8 +285,61 @@ class vetVisitListState extends ResumableState<vetVisitList>{
                     child: ListTile(
                       enabled: vetvisits_list[index]['isActive'],
                       leading: FaIcon(FontAwesomeIcons.userMd, color: Colors.blue.shade400, size: 35,),
-                      trailing:Text(vetvisits_list[index]['visitDate']!=null?vetvisits_list[index]['visitDate'].toString().substring(0,10):''),
+                      //trailing:Text(vetvisits_list[index]['visitDate']!=null?vetvisits_list[index]['visitDate'].toString().substring(0,10):''),
                       title: Text(vetvisits_list!=null?vetvisits_list[index]['horseName']['name']:''),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Row(children: <Widget>[
+                                  FaIcon(FontAwesomeIcons.userMd, color: Colors.redAccent, size: 12,),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 3, right:3),
+                                  ),
+                                  Text(vetvisits_list!=null?vetvisits_list[index]['vetName']['contactName']['name']:''),
+                                ],
+                                ),
+                                Row(children: <Widget>[
+                                  FaIcon(FontAwesomeIcons.calendarAlt, color: Colors.lightBlue, size: 12,),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 3, right:3),
+                                  ),
+                                  Text(vetvisits_list[index]['visitDate']!=null?vetvisits_list[index]['visitDate'].toString().substring(0,10):''),
+                                ],
+                                ),
+
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 3, bottom: 3),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Row(children: <Widget>[
+                                  FaIcon(FontAwesomeIcons.userNurse, color: Colors.deepPurpleAccent.shade100, size: 12,),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 3, right:3),
+                                  ),
+                                  Text(vetvisits_list!=null?vetvisits_list[index]['responsibleName']['contactName']['name']:''),
+                                ],
+                                ),
+//                                Row(children: <Widget>[
+//                                  FaIcon(FontAwesomeIcons.calendarWeek, color: Colors.amber, size: 12,),
+//                                  Padding(
+//                                    padding: EdgeInsets.only(left: 3, right:3),
+//                                  ),
+//                                  Text(vetvisits_list[index]['collectionDate']!=null?vetvisits_list[index]['collectionDate'].toString().substring(0,10):''),
+//                                ],
+//                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                       //leading: Icon(Icons.local_hospital,size: 40,color: Colors.teal,),
                       onTap: (){
                         push(context, MaterialPageRoute(builder: (context) => vet_visit_details_page(vetvisits_list[index])));

@@ -49,10 +49,10 @@ class _vet_visit_details_page extends State<vet_visit_details_page>{
                 title: Text("Responsible:"),
                 trailing: Text(vet_visit_data['responsibleName']['contactName']['name']!=null?vet_visit_data['responsibleName']['contactName']['name']:''),
               ),
-              ListTile(
-                title: Text("Products:"),
-                trailing: Text(vet_visit_data['vetVisitsProducts'][0]['inventoryProductName']['name']!=null?vet_visit_data['vetVisitsProducts'][0]['inventoryProductName']['name']:''),
-              ),
+//              ListTile(
+//                title: Text("Products:"),
+//                trailing: Text(vet_visit_data['vetVisitsProducts'][0]['inventoryProductName']['name']!=null?vet_visit_data['vetVisitsProducts'][0]['inventoryProductName']['name']:''),
+//              ),
               Divider(),
             ],
           ),

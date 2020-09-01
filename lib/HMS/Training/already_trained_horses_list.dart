@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horse_management/HMS/Training/training_detail_page.dart';
 import 'package:horse_management/Network_Operations.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -213,8 +214,62 @@ class _already_trained_horses_list_state extends State<already_trained_horses_li
                     child: ListTile(
                       enabled: already_trained_list[index]['isActive'],
                       title: Text(already_trained_list!=null?already_trained_list[index]['horseName']['name']:''),
-                      trailing: Text(already_trained_list!=null?already_trained_list[index]['startDate'].replaceAll("T00:00:00",''):''),
-                      subtitle: Text(already_trained_list!=null?get_training_type_by_id(already_trained_list[index]['trainingType']):''),
+                      //trailing: Text(already_trained_list!=null?already_trained_list[index]['startDate'].replaceAll("T00:00:00",''):''),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Row(children: <Widget>[
+                                  FaIcon(FontAwesomeIcons.clipboard, color: Colors.brown, size: 12,),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 3, right:3),
+                                  ),
+                                  Text(already_trained_list!=null?already_trained_list[index]['trainingPlanName']['name'].toString():''),
+                                ],
+                                ),
+                                Row(children: <Widget>[
+                                  FaIcon(FontAwesomeIcons.calendarAlt, color: Colors.lightBlue, size: 12,),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 3, right:3),
+                                  ),
+                                  Text(already_trained_list!=null?already_trained_list[index]['startDate'].toString().substring(0,10):'') ,
+                                ],
+                                ),
+
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 3, bottom: 3),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Row(children: <Widget>[
+                                  FaIcon(FontAwesomeIcons.dumbbell, color: Color(0XFFb8b7ba), size: 12,),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 3, right:3),
+                                  ),
+                                  Text(already_trained_list!=null?get_training_type_by_id(already_trained_list[index]['trainingType']):''),
+                                ],
+                                ),
+//                                Row(children: <Widget>[
+//                                  FaIcon(FontAwesomeIcons.dumbbell, color: Color(0XFFb8b7ba), size: 12,),
+//                                  Padding(
+//                                    padding: EdgeInsets.only(left: 3, right:3),
+//                                  ),
+//                                  Text(already_trained_list!=null?already_trained_list[index]['donorName']['name'].toString():''),
+//
+//                                ],
+//                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      //Text(already_trained_list!=null?get_training_type_by_id(already_trained_list[index]['trainingType']):''),
                       leading: Image.asset("assets/horse_icon.png"),
                       onTap: (){
                        Navigator.push(context, MaterialPageRoute(builder: (context)=>training_details_page(already_trained_list[index],'')));

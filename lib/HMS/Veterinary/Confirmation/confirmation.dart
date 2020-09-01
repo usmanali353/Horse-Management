@@ -274,8 +274,61 @@ class _confirmation_list extends State<confirmation_list>{
                           leading: FaIcon(FontAwesomeIcons.laptopMedical, color: Colors.red.shade400, size: 30,),
                           title: Text(confirmation_lists!=null?confirmation_lists[index]['horseName']['name']:''),
                           //title: Text("data"),
-                          subtitle: Text(confirmation_lists!=null?confirmation_lists[index]['vetName']['contactName']['name'].toString():''),
-                         trailing: Text(confirmation_lists[index]['date']!=null?confirmation_lists[index]['date'].toString().substring(0,10) :''),
+                          subtitle:Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Column(
+                              children: <Widget>[
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Row(children: <Widget>[
+                                      FaIcon(FontAwesomeIcons.userMd, color: Colors.red, size: 12,),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 3, right:3),
+                                      ),
+                                      Text(confirmation_lists!=null?confirmation_lists[index]['vetName']['contactName']['name'].toString():''),
+                                    ],
+                                    ),
+                                    Row(children: <Widget>[
+                                      FaIcon(FontAwesomeIcons.calendarAlt, color: Colors.lightBlue, size: 12,),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 3, right:3),
+                                      ),
+                                      Text(confirmation_lists[index]['date']!=null?confirmation_lists[index]['date'].toString().substring(0,10) :''),
+                                    ],
+                                    ),
+
+                                  ],
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 3, bottom: 3),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Row(children: <Widget>[
+                                      FaIcon(FontAwesomeIcons.comment, color: Colors.amber, size: 12,),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 3, right:3),
+                                      ),
+                                      Text(confirmation_lists!=null?get_opinion_by_id(confirmation_lists[index]['opinion']):'')
+                                    ],
+                                    ),
+//                                    Row(children: <Widget>[
+//                                      FaIcon(FontAwesomeIcons.calendarWeek, color: Colors.amber, size: 12,),
+//                                      Padding(
+//                                        padding: EdgeInsets.only(left: 3, right:3),
+//                                      ),
+//                                      Text(confirmation_lists[index]['collectionDate']!=null?confirmation_lists[index]['collectionDate'].toString().substring(0,10):''),
+//                                    ],
+//                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          //Text(confirmation_lists!=null?confirmation_lists[index]['vetName']['contactName']['name'].toString():''),
+                       //  trailing: Text(confirmation_lists[index]['date']!=null?confirmation_lists[index]['date'].toString().substring(0,10) :''),
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context)=>confirmation_details_page(confirmation_lists[index])));
                           },
@@ -290,6 +343,19 @@ class _confirmation_list extends State<confirmation_list>{
         ),
       ),
     );
+  }
+  String get_opinion_by_id(int id){
+    var check_method;
+    if(confirmation_lists!=null&&id!=null){
+      if(id==1){
+        check_method="Well";
+      }else if(id==2){
+        check_method="Appropriate";
+      }else if(id==3){
+        check_method="Deficient";
+      }
+    }
+    return check_method;
   }
 
   void _startSearch() {
